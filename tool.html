@@ -234,14 +234,14 @@
 
 <div class="container" id="app">
   <!-- UPDATED: dash.html → index.html -->
-  <a class="back-link" href="index.html"> ← MAIN AI DASH </a>
+  <a class="back-link" href="./"> ← MAIN AI DASH </a>
 
   <div id="loading" class="not-found">Loading tool details...</div>
 
   <div id="not-found" class="not-found hidden">
     <p>Couldn't find that tool in the catalog.</p>
     <!-- UPDATED: dash.html → index.html -->
-    <p><a href="index.html">← Return to the directory</a></p>
+    <p><a href="./">← Return to the directory</a></p>
   </div>
 
   <div id="tool-detail" class="tool-detail hidden">
@@ -381,7 +381,7 @@ async function loadTool() {
     tool.categories.forEach(cat => {
       const a = document.createElement('a');
       a.className = 'meta-badge';
-      a.href = `index.html?category=${encodeURIComponent(cat)}`;
+      a.href = `./?category=${encodeURIComponent(cat)}`;
       a.textContent = categoryNames[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
       
       const catColor = categoryColors[cat];
@@ -397,7 +397,7 @@ async function loadTool() {
     const freeSpan = document.createElement('a');
     freeSpan.className = 'meta-badge ' + (tool.free ? 'free' : 'paid');
     // UPDATED: dash.html → index.html in the href below
-    freeSpan.href = `index.html?free=${tool.free ? 'true' : 'false'}`;
+    freeSpan.href = `./?free=${tool.free ? 'true' : 'false'}`;
     freeSpan.textContent = tool.free ? 'Free Tier' : 'Paid Only';
     metaBadges.appendChild(freeSpan);
 
