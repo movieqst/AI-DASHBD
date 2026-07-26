@@ -3148,7 +3148,8 @@
     "url": "vidu.com",
     "free": true,
     "categories": [
-      "video"
+      "video",
+      "image"
     ],
     "affiliate": false
   },
@@ -3489,20 +3490,6 @@
     "affiliate": false
   },
   {
-    "name": "Vidu AI",
-    "icon": "🌀",
-    "desc": "Multimodal AI video generator supporting text-to-video and reference-consistent characters.",
-    "rating": 8.3,
-    "traffic": 400000,
-    "url": "vidu.com",
-    "free": true,
-    "categories": [
-      "video",
-      "image"
-    ],
-    "affiliate": false
-  },
-  {
     "name": "Fal.ai",
     "icon": "▲",
     "desc": "Generative media platform offering fast, scalable inference APIs for image, video, and code.",
@@ -3620,6 +3607,29 @@
     "drawbacks": [
       "Built as a developer/API-first platform rather than a polished consumer app — there's no traditional subscription plan, which makes it less approachable for casual users who just want simple, predictable pricing",
       "The company's rapid pivot toward robotics and physical AI means some of its newest capabilities (like Flux 3 and Flux-mimic) are still early-stage and not yet broadly available outside trial partnerships"
+    ]
+  },
+  {
+    "name": "Giphy",
+    "icon": "🎞",
+    "desc": "The web's largest GIF search engine and creation platform, now with AI-assisted GIF and sticker generation.",
+    "rating": 8.0,
+    "traffic": 5000000,
+    "url": "giphy.com",
+    "free": true,
+    "categories": [
+      "image",
+      "niche"
+    ],
+    "affiliate": false,
+    "overview": "Giphy is the most widely used platform for searching, sharing, and creating GIFs and stickers, powering the GIF search experience inside apps like iMessage, Slack, Instagram, and X. As of mid-2026, the platform has layered in AI-assisted tools that let users generate original GIFs and stickers from text prompts, in addition to its core library of billions of user-uploaded and branded GIFs. It's used more as a content-discovery and communication utility than a creative studio, though its AI generation tools have made it a lightweight option for quick, shareable animated content.",
+    "benefits": [
+      "Massive, instantly searchable library of GIFs and stickers with deep integration across major messaging and social platforms, making it the default choice for reaction content",
+      "AI-assisted generation adds the ability to create original, on-brand GIFs and stickers from a text prompt without needing separate animation software"
+    ],
+    "drawbacks": [
+      "AI generation quality and controls are far more limited than dedicated AI video/image tools, since Giphy's core product remains search and discovery rather than generation",
+      "Monetization for creators is limited, and most of the platform's value still comes from its existing GIF library rather than net-new AI-generated content"
     ]
   }
 ]
