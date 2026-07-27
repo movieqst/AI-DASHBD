@@ -2611,8 +2611,8 @@
   },
   {
     "name": "Revin",
-    "icon": "☎️",
-    "desc": "AI-powered customer service agents for home service businesses, handling scheduling, marketing, and membership calls.",
+    "icon": "🧠",
+    "desc": "AI platform positioned for service/operations teams (service operators).",
     "rating": 8.3,
     "traffic": 20000,
     "url": "revin.ai",
@@ -2622,7 +2622,16 @@
       "niche"
     ],
     "affiliate": false,
-    "order": 110
+    "order": 110,
+    "overview": "Revin is positioned as an AI platform for service operators and operations-focused teams. It appears to be a sales-led product intended to improve service delivery and operational workflows using AI.",
+    "benefits": [
+      "Business/ops oriented positioning (not just a general chatbot)",
+      "Likely designed for real operational workflows (service operations)"
+    ],
+    "drawbacks": [
+      "Pricing and limits are not clearly self-serve on the marketing site",
+      "Capabilities may require a demo/sales process to evaluate"
+    ]
   },
   {
     "name": "Drillbit",
@@ -3242,7 +3251,7 @@
   {
     "name": "InVideo AI",
     "icon": "🎬",
-    "desc": "Text-to-video AI generator that turns prompts or scripts into full edited videos with AI voiceovers, subtitles, and stock media.",
+    "desc": "AI video creation tool that generates videos from text prompts/scripts using templates and stock assets.",
     "rating": 10,
     "traffic": 900000,
     "url": "invideo.io",
@@ -3251,12 +3260,23 @@
       "video"
     ],
     "affiliate": false,
-    "order": 135
+    "order": 135,
+    "overview": "InVideo AI is positioned as an AI-powered video creator that can turn prompts or scripts into publishable videos, typically using templates, stock media, captions, and voiceover options.",
+    "benefits": [
+      "Fast way to produce marketing/social videos from text",
+      "Template-based workflow can reduce editing complexity",
+      "Often includes voiceover/captions tooling"
+    ],
+    "drawbacks": [
+      "Template look can feel generic without customization",
+      "Quality depends heavily on prompt/script and chosen assets",
+      "Export/usage limits vary by plan"
+    ]
   },
   {
     "name": "Vidu",
-    "icon": "🌀",
-    "desc": "AI video generator for text-to-video, image-to-video, and multi-reference consistency, with fast generation and free monthly credits.",
+    "icon": "🎥",
+    "desc": "AI video generation platform (text/image to video).",
     "rating": 10,
     "traffic": 500000,
     "url": "vidu.com",
@@ -3266,12 +3286,21 @@
       "image"
     ],
     "affiliate": false,
-    "order": 136
+    "order": 136,
+    "overview": "Vidu is an AI video generation product focused on generating videos from text prompts and/or images, oriented toward creative generation workflows.",
+    "benefits": [
+      "Designed specifically for generative video workflows",
+      "Useful for concepting and quick iterations"
+    ],
+    "drawbacks": [
+      "Output quality and consistency can vary",
+      "Pricing/usage limits may require careful budgeting"
+    ]
   },
   {
     "name": "Text-to-Speech Online",
     "icon": "🗣️",
-    "desc": "Free online tool that converts typed text into natural-sounding speech audio, with multiple voices and languages.",
+    "desc": "Web-based text-to-speech tool for generating spoken audio from text.",
     "rating": 9.9,
     "traffic": 100000,
     "url": "text-to-speech.online",
@@ -3281,27 +3310,21 @@
       "notai"
     ],
     "affiliate": false,
-    "order": 137
-  },
-  {
-    "name": "Windsurf",
-    "icon": "🌊",
-    "desc": "Agentic AI code editor with deep codebase awareness and multi-file autonomous editing.",
-    "rating": 8.6,
-    "traffic": 700000,
-    "url": "windsurf.com",
-    "free": true,
-    "categories": [
-      "code",
-      "chat"
+    "order": 137,
+    "overview": "Text-to-Speech Online is a browser-based TTS tool intended for quickly converting text into audio, often used for narration, accessibility, and content creation.",
+    "benefits": [
+      "Simple web UI; low friction to generate TTS",
+      "Useful for quick narration drafts and accessibility use cases"
     ],
-    "affiliate": false,
-    "order": 138
+    "drawbacks": [
+      "Voice quality varies by engine/voice options",
+      "Commercial usage rights and export limits depend on plan/terms"
+    ]
   },
   {
     "name": "Mistral Le Chat",
-    "icon": "🌬",
-    "desc": "Mistral AI's chat assistant with web search, image generation, and coding support.",
+    "icon": "🧠",
+    "desc": "Mistral's consumer assistant (rebranded to \"Vibe\") with Free and paid tiers.",
     "rating": 8.5,
     "traffic": 1000000,
     "url": "chat.mistral.ai",
@@ -3311,12 +3334,22 @@
       "code"
     ],
     "affiliate": false,
-    "order": 139
+    "order": 139,
+    "overview": "Mistral's consumer assistant experience at chat.mistral.ai (formerly branded \"Le Chat\", now \"Vibe\") offers a general-purpose assistant for writing, productivity, and coding use cases.",
+    "benefits": [
+      "Free tier available for trying it",
+      "Strong option if you prefer Mistral ecosystem/models",
+      "General-purpose assistant interface"
+    ],
+    "drawbacks": [
+      "Limits/quotas vary by plan and may not be obvious until use",
+      "Model/tooling feature set can change over time"
+    ]
   },
   {
     "name": "Luma Dream Machine",
-    "icon": "🌠",
-    "desc": "Fast, high-quality text-to-video and image-to-video generation from Luma AI.",
+    "icon": "🎞️",
+    "desc": "AI video generation product from Luma Labs (text/image to video).",
     "rating": 8.5,
     "traffic": 600000,
     "url": "lumalabs.ai",
@@ -3326,12 +3359,21 @@
       "image"
     ],
     "affiliate": false,
-    "order": 140
+    "order": 140,
+    "overview": "Dream Machine by Luma Labs is a generative video tool that produces videos from prompts and/or images, oriented toward creators and rapid ideation.",
+    "benefits": [
+      "Strong creative iteration workflow",
+      "Helpful for concepting, storyboards, and short clips"
+    ],
+    "drawbacks": [
+      "Consistency and control can be challenging in generative video",
+      "Usage is typically credit/queue based"
+    ]
   },
   {
     "name": "Hailuo AI",
-    "icon": "🎥",
-    "desc": "MiniMax's text-to-video and image-to-video generator known for cinematic motion.",
+    "icon": "🎬",
+    "desc": "AI video generation platform (text/image to video) at hailuoai.video.",
     "rating": 8.4,
     "traffic": 500000,
     "url": "hailuoai.video",
@@ -3341,12 +3383,21 @@
       "image"
     ],
     "affiliate": false,
-    "order": 141
+    "order": 141,
+    "overview": "Hailuo AI is positioned as a generative video platform for creating videos from prompts and possibly images, with typical creator-style workflows and plan limits.",
+    "benefits": [
+      "Purpose-built for AI video creation",
+      "Useful for rapid creative prototyping"
+    ],
+    "drawbacks": [
+      "Quality/control depends on model capabilities and settings",
+      "Plan limits/credits require budgeting for production use"
+    ]
   },
   {
     "name": "Meshy AI",
-    "icon": "🗿",
-    "desc": "AI 3D model generation from text or images for games and design.",
+    "icon": "🧱",
+    "desc": "AI 3D generation platform for turning text/images into 3D assets.",
     "rating": 8.3,
     "traffic": 300000,
     "url": "meshy.ai",
@@ -3356,12 +3407,21 @@
       "niche"
     ],
     "affiliate": false,
-    "order": 142
+    "order": 142,
+    "overview": "Meshy focuses on AI-assisted 3D asset creation, typically offering workflows like text-to-3D and image-to-3D, and often outputs meshes/textures suitable for iteration and downstream editing.",
+    "benefits": [
+      "Speeds up early 3D asset ideation",
+      "Can reduce time to first mesh for concept work"
+    ],
+    "drawbacks": [
+      "Meshes often need cleanup/retopo for production",
+      "Texture/UV quality may vary; manual work still common"
+    ]
   },
   {
     "name": "Tripo AI",
-    "icon": "🔺",
-    "desc": "Fast text-to-3D and image-to-3D model generation platform.",
+    "icon": "🧊",
+    "desc": "AI 3D generator (text/image to 3D) with Studio and API offerings.",
     "rating": 8.1,
     "traffic": 150000,
     "url": "tripo3d.ai",
@@ -3371,12 +3431,21 @@
       "niche"
     ],
     "affiliate": false,
-    "order": 143
+    "order": 143,
+    "overview": "Tripo provides 3D generation via a Studio product and developer APIs, typically credit-based. It targets creators and developers needing programmatic text/image to 3D workflows.",
+    "benefits": [
+      "Has both UI (Studio) and developer API paths",
+      "Good for rapid 3D prototyping"
+    ],
+    "drawbacks": [
+      "Outputs often require post-processing for production pipelines",
+      "Credit-based usage can be hard to forecast"
+    ]
   },
   {
     "name": "Flowise",
-    "icon": "🌀",
-    "desc": "Open-source drag-and-drop builder for LLM workflows and AI agents.",
+    "icon": "🧩",
+    "desc": "Open-source visual builder for LLM apps/agents (node-based) with APIs and SDKs.",
     "rating": 8.3,
     "traffic": 200000,
     "url": "flowiseai.com",
@@ -3386,12 +3455,22 @@
       "chat"
     ],
     "affiliate": false,
-    "order": 144
+    "order": 144,
+    "overview": "Flowise is an open-source, node-based visual builder for LLM workflows (often used for RAG and agentic flows). It's commonly used to prototype and deploy chatflows with integrations and API access.",
+    "benefits": [
+      "Fast prototyping with a visual graph editor",
+      "Open-source/self-host options",
+      "Common fit for RAG workflows and tool integrations"
+    ],
+    "drawbacks": [
+      "Production hardening (security, scaling, secrets) is on you when self-hosting",
+      "Graph complexity can grow quickly without conventions"
+    ]
   },
   {
     "name": "Langflow",
-    "icon": "🔗",
-    "desc": "Visual framework for building and deploying multi-agent LLM applications.",
+    "icon": "🧩",
+    "desc": "Open-source, Python-based visual builder for AI apps (agents + RAG), with built-in API/MCP patterns.",
     "rating": 8.2,
     "traffic": 150000,
     "url": "langflow.org",
@@ -3401,12 +3480,21 @@
       "chat"
     ],
     "affiliate": false,
-    "order": 145
+    "order": 145,
+    "overview": "Langflow is an open-source, Python-based visual framework for building AI workflows and applications with a drag-and-drop editor, commonly used for RAG and agent-style systems.",
+    "benefits": [
+      "Visual workflow building with Python extensibility",
+      "Good fit for prototyping RAG/agent flows"
+    ],
+    "drawbacks": [
+      "Self-hosting requires security/ops maturity for production",
+      "Quality depends on chosen models, embeddings, and retrieval setup"
+    ]
   },
   {
     "name": "CrewAI",
     "icon": "👥",
-    "desc": "Framework for orchestrating role-playing autonomous AI agents that collaborate on tasks.",
+    "desc": "Framework for orchestrating multiple AI agents (\"crews\") with roles and tasks for automation workflows.",
     "rating": 8.4,
     "traffic": 250000,
     "url": "crewai.com",
@@ -3416,12 +3504,21 @@
       "code"
     ],
     "affiliate": false,
-    "order": 146
+    "order": 146,
+    "overview": "CrewAI is a framework oriented around coordinating multiple agents with roles, tools, and tasks—useful for building agentic automations that decompose work across specialized agents.",
+    "benefits": [
+      "Clear multi-agent orchestration concept (roles/tasks)",
+      "Extensible with tools and integrations"
+    ],
+    "drawbacks": [
+      "Agent workflows can be brittle without evaluation/guardrails",
+      "Costs can rise with multi-agent, multi-step executions"
+    ]
   },
   {
     "name": "Open WebUI",
-    "icon": "🖥",
-    "desc": "Self-hosted, extensible chat interface for running local and remote LLMs.",
+    "icon": "🖧",
+    "desc": "Self-hosted web UI for chatting with local/remote models; commonly paired with local model runtimes.",
     "rating": 8.5,
     "traffic": 300000,
     "url": "openwebui.com",
@@ -3431,12 +3528,21 @@
       "code"
     ],
     "affiliate": false,
-    "order": 147
+    "order": 147,
+    "overview": "Open WebUI provides a self-hostable chat UI to interact with LLM backends (often local runtimes) and can serve as a lightweight internal chat front-end for teams or individuals.",
+    "benefits": [
+      "Self-hostable and privacy-friendly",
+      "Useful UI layer over local model servers"
+    ],
+    "drawbacks": [
+      "Security is your responsibility when exposed to networks",
+      "Feature set depends on connected backend/model capabilities"
+    ]
   },
   {
     "name": "Ollama",
     "icon": "🦙",
-    "desc": "Run open-source large language models locally with a simple command-line interface.",
+    "desc": "Local LLM runtime for running models on your machine and serving them to apps.",
     "rating": 9.0,
     "traffic": 2000000,
     "url": "ollama.com",
@@ -3445,12 +3551,21 @@
       "local"
     ],
     "affiliate": false,
-    "order": 148
+    "order": 148,
+    "overview": "Ollama is widely used to run LLMs locally and expose them for use by developer tools and UIs, enabling privacy-focused and offline-friendly workflows depending on the model and hardware.",
+    "benefits": [
+      "Local-first privacy and control",
+      "Common integration target for many apps/UIs"
+    ],
+    "drawbacks": [
+      "Limited by local hardware (RAM/VRAM)",
+      "Requires careful network configuration to avoid accidental exposure"
+    ]
   },
   {
     "name": "LM Studio",
-    "icon": "🎛",
-    "desc": "Desktop app for discovering, downloading, and running local LLMs with a chat UI.",
+    "icon": "🖥️",
+    "desc": "Desktop app for running LLMs locally; can expose a local API server for integrations.",
     "rating": 8.8,
     "traffic": 800000,
     "url": "lmstudio.ai",
@@ -3459,12 +3574,21 @@
       "local"
     ],
     "affiliate": false,
-    "order": 149
+    "order": 149,
+    "overview": "LM Studio provides a desktop experience for downloading/running local models and often includes a local server mode so other apps can call the model via an API interface.",
+    "benefits": [
+      "User-friendly local model management",
+      "Useful for local testing and integration via API server mode"
+    ],
+    "drawbacks": [
+      "Performance constrained by local hardware",
+      "Model quality varies; configuration still matters"
+    ]
   },
   {
     "name": "Tavily",
     "icon": "🔎",
-    "desc": "Search API purpose-built for AI agents and LLM applications.",
+    "desc": "Search API designed for LLM/RAG use cases (retrieval augmentation).",
     "rating": 8.3,
     "traffic": 100000,
     "url": "tavily.com",
@@ -3474,12 +3598,21 @@
       "code"
     ],
     "affiliate": false,
-    "order": 150
+    "order": 150,
+    "overview": "Tavily provides a search API that is commonly used to ground LLM applications with fresh web results, supporting RAG-style retrieval augmentation and agent browsing workflows.",
+    "benefits": [
+      "Purpose-built for LLM grounding and RAG pipelines",
+      "API-based integration for apps and agents"
+    ],
+    "drawbacks": [
+      "Requires careful prompt/retrieval design to avoid noisy sources",
+      "API usage costs can grow with heavy retrieval"
+    ]
   },
   {
     "name": "Jina AI",
-    "icon": "🔷",
-    "desc": "Search foundation and embedding APIs for building neural search and RAG applications.",
+    "icon": "🧬",
+    "desc": "AI infrastructure/tooling company; offers components and services for retrieval/search and multimodal pipelines.",
     "rating": 8.2,
     "traffic": 200000,
     "url": "jina.ai",
@@ -3489,12 +3622,21 @@
       "code"
     ],
     "affiliate": false,
-    "order": 151
+    "order": 151,
+    "overview": "Jina AI provides developer-facing infrastructure and tooling often used for retrieval, embeddings, and search/RAG workflows, positioned for building AI systems that need robust data access and indexing.",
+    "benefits": [
+      "Developer-oriented building blocks for retrieval/search",
+      "Useful for production-grade RAG components"
+    ],
+    "drawbacks": [
+      "Choosing the right components/services requires technical evaluation",
+      "Costs/complexity depend on scale and deployment choice"
+    ]
   },
   {
     "name": "Consensus",
-    "icon": "🎓",
-    "desc": "AI-powered search engine that finds and summarizes findings from scientific papers.",
+    "icon": "📚",
+    "desc": "AI research assistant/search engine focused on scientific papers and evidence-backed answers.",
     "rating": 8.3,
     "traffic": 300000,
     "url": "consensus.app",
@@ -3504,12 +3646,21 @@
       "niche"
     ],
     "affiliate": false,
-    "order": 152
+    "order": 152,
+    "overview": "Consensus is a research-oriented AI assistant that focuses on finding and summarizing scientific literature and returning evidence-backed answers to questions.",
+    "benefits": [
+      "Good for quick literature discovery and evidence-oriented summaries",
+      "Useful starting point for research questions"
+    ],
+    "drawbacks": [
+      "Not a substitute for reading and critically appraising papers",
+      "Coverage/recency depends on indexed sources and retrieval quality"
+    ]
   },
   {
     "name": "SciSpace",
-    "icon": "🔬",
-    "desc": "AI research assistant for reading, understanding, and summarizing academic papers.",
+    "icon": "📄",
+    "desc": "AI research assistant with Chat-with-PDF and literature workflows for reading and writing.",
     "rating": 8.2,
     "traffic": 400000,
     "url": "scispace.com",
@@ -3519,12 +3670,21 @@
       "niche"
     ],
     "affiliate": false,
-    "order": 153
+    "order": 153,
+    "overview": "SciSpace provides research workflows such as chat-with-PDF, summarization, and writing/citation assistance oriented around scientific papers and academic documents.",
+    "benefits": [
+      "Useful for paper reading and comprehension",
+      "Chat-with-PDF workflow speeds up navigation of long documents"
+    ],
+    "drawbacks": [
+      "Accuracy depends on PDF quality and retrieval/citation handling",
+      "Users still need to verify claims in the original papers"
+    ]
   },
   {
     "name": "Glean",
     "icon": "🔍",
-    "desc": "Enterprise AI search assistant that connects across company apps and knowledge sources.",
+    "desc": "Enterprise workplace search + AI assistant connecting across company apps and knowledge sources.",
     "rating": 8.6,
     "traffic": 250000,
     "url": "glean.com",
@@ -3534,12 +3694,21 @@
       "niche"
     ],
     "affiliate": false,
-    "order": 154
+    "order": 154,
+    "overview": "Glean is positioned as an enterprise search and workplace AI assistant that connects across internal tools (docs, tickets, chat, etc.) to help employees find answers and information quickly.",
+    "benefits": [
+      "Unifies knowledge discovery across many workplace systems",
+      "Enterprise-oriented approach for internal knowledge"
+    ],
+    "drawbacks": [
+      "Typically sales-led; evaluation may require enterprise process",
+      "Quality depends on connector coverage and access controls"
+    ]
   },
   {
     "name": "Harvey AI",
-    "icon": "⚖",
-    "desc": "Generative AI platform built for law firms, covering research, drafting, and review.",
+    "icon": "⚖️",
+    "desc": "Legal AI copilot for research, drafting, and document workflows with enterprise controls.",
     "rating": 8.8,
     "traffic": 100000,
     "url": "harvey.ai",
@@ -3549,12 +3718,21 @@
       "niche"
     ],
     "affiliate": false,
-    "order": 155
+    "order": 155,
+    "overview": "Harvey is positioned as an AI assistant for legal work, focused on legal research and drafting workflows for law firms and in-house legal teams, with enterprise-grade controls and governance.",
+    "benefits": [
+      "Legal-focused positioning and workflows",
+      "Enterprise posture for governance and security"
+    ],
+    "drawbacks": [
+      "Not self-serve for many teams; procurement may be required",
+      "Legal outputs require careful verification and responsible use"
+    ]
   },
   {
     "name": "Clay",
-    "icon": "🧱",
-    "desc": "AI-powered data enrichment and outreach platform for sales and go-to-market teams.",
+    "icon": "🧩",
+    "desc": "Go-to-market / sales prospecting and enrichment platform with AI-assisted workflows.",
     "rating": 8.5,
     "traffic": 300000,
     "url": "clay.com",
@@ -3564,12 +3742,21 @@
       "niche"
     ],
     "affiliate": false,
-    "order": 156
+    "order": 156,
+    "overview": "Clay is commonly used for lead sourcing, enrichment, and GTM workflows, combining data sources and automation with AI to build prospect lists and personalize outreach inputs.",
+    "benefits": [
+      "Powerful enrichment + workflow automation for GTM",
+      "Can accelerate research and personalization steps"
+    ],
+    "drawbacks": [
+      "Data quality depends on sources and matching logic",
+      "Costs can scale with enrichment volume and credits"
+    ]
   },
   {
     "name": "Browser Use",
-    "icon": "🌐",
-    "desc": "Open-source AI agent framework that lets LLMs control a web browser to complete tasks.",
+    "icon": "🧭",
+    "desc": "Tooling/library for letting agents use a browser to complete tasks (web automation for AI agents).",
     "rating": 8.4,
     "traffic": 150000,
     "url": "browser-use.com",
@@ -3579,12 +3766,21 @@
       "code"
     ],
     "affiliate": false,
-    "order": 157
+    "order": 157,
+    "overview": "Browser Use provides tooling intended to make it easier for AI agents to interact with websites and browser sessions programmatically for task execution and web automation.",
+    "benefits": [
+      "Useful building block for agentic browsing workflows",
+      "Can enable automated web tasks with agent control loops"
+    ],
+    "drawbacks": [
+      "Web automation is brittle across site changes and anti-bot measures",
+      "Security risks if agents can click/submit actions without guardrails"
+    ]
   },
   {
     "name": "Continue.dev",
-    "icon": "➡",
-    "desc": "Open-source AI code assistant that plugs into VS Code and JetBrains IDEs.",
+    "icon": "🧑‍💻",
+    "desc": "Open-source AI coding assistant for VS Code/JetBrains/CLI supporting multiple model providers.",
     "rating": 8.2,
     "traffic": 200000,
     "url": "continue.dev",
@@ -3593,12 +3789,22 @@
       "code"
     ],
     "affiliate": false,
-    "order": 158
+    "order": 158,
+    "overview": "Continue is an open-source coding assistant that integrates into popular IDEs, supports multiple LLM providers (including local), and offers chat/edit workflows with configurable context injection.",
+    "benefits": [
+      "Open-source and configurable across providers",
+      "Strong IDE integration and developer workflow fit",
+      "Works with local models for privacy-conscious setups"
+    ],
+    "drawbacks": [
+      "Quality depends on model choice and context settings",
+      "Usage costs depend on connected hosted model providers"
+    ]
   },
   {
     "name": "OpenHands",
     "icon": "🙌",
-    "desc": "Open-source autonomous coding agent that can write, run, and debug code end-to-end.",
+    "desc": "Open platform for coding agents including a local visual workspace (\"Agent Canvas\").",
     "rating": 8.3,
     "traffic": 150000,
     "url": "all-hands.dev",
@@ -3608,12 +3814,21 @@
       "chat"
     ],
     "affiliate": false,
-    "order": 159
+    "order": 159,
+    "overview": "OpenHands is positioned as an open platform for running coding agents with a visual workspace (Agent Canvas) and developer tooling for agentic workflows.",
+    "benefits": [
+      "Open-source foundation enables self-hosting and inspection",
+      "Agent workspace concept can simplify iterative agent runs"
+    ],
+    "drawbacks": [
+      "Agents need strong review and permission boundaries",
+      "Operational overhead if self-hosting for teams"
+    ]
   },
   {
     "name": "Hedra",
     "icon": "🎭",
-    "desc": "AI platform for generating expressive talking-avatar videos synced to audio.",
+    "desc": "AI video/character content creation platform (creator-oriented generative media).",
     "rating": 8.4,
     "traffic": 200000,
     "url": "hedra.com",
@@ -3624,12 +3839,21 @@
       "image"
     ],
     "affiliate": false,
-    "order": 160
+    "order": 160,
+    "overview": "Hedra is positioned as a creator-facing generative media product, oriented around creating character/video content with AI-driven workflows.",
+    "benefits": [
+      "Creator-friendly tooling for quick media generation",
+      "Useful for rapid experimentation"
+    ],
+    "drawbacks": [
+      "Consistency and IP/usage considerations require attention",
+      "Plan limits/credits can affect production use"
+    ]
   },
   {
     "name": "Fal.ai",
-    "icon": "▲",
-    "desc": "Generative media platform offering fast, scalable inference APIs for image, video, and code.",
+    "icon": "⚡",
+    "desc": "Developer platform for running generative media models (serverless inference / fast deployments).",
     "rating": 8.5,
     "traffic": 300000,
     "url": "fal.ai",
@@ -3640,12 +3864,21 @@
       "code"
     ],
     "affiliate": false,
-    "order": 161
+    "order": 161,
+    "overview": "fal.ai provides developer infrastructure to run and deploy generative AI models (often image/video) with API access and performance-oriented serving.",
+    "benefits": [
+      "Developer-friendly model serving for generative media",
+      "Can reduce infra burden versus self-hosting GPUs"
+    ],
+    "drawbacks": [
+      "Costs depend on usage and model choice",
+      "Requires engineering to integrate safely and reliably"
+    ]
   },
   {
     "name": "ComfyUI",
-    "icon": "🕸",
-    "desc": "Node-based interface for building custom Stable Diffusion image and video pipelines.",
+    "icon": "🧬",
+    "desc": "Node-based UI for Stable Diffusion and related image generation workflows (high control).",
     "rating": 8.5,
     "traffic": 500000,
     "url": "comfy.org",
@@ -3655,12 +3888,21 @@
       "code"
     ],
     "affiliate": false,
-    "order": 162
+    "order": 162,
+    "overview": "ComfyUI is a node/graph-based interface for image generation workflows (commonly Stable Diffusion/SDXL), offering high control via composable nodes and reproducible pipelines.",
+    "benefits": [
+      "Highly controllable and modular workflow system",
+      "Great for advanced pipelines (ControlNet, upscalers, compositing)"
+    ],
+    "drawbacks": [
+      "Steeper learning curve than simpler UIs",
+      "Local setup and GPU requirements can be significant"
+    ]
   },
   {
     "name": "Fooocus",
-    "icon": "🎯",
-    "desc": "Simplified, open-source Stable Diffusion interface focused on ease of use.",
+    "icon": "🖼️",
+    "desc": "Simplified SDXL image generation UI emphasizing strong defaults (minimal tuning).",
     "rating": 8.1,
     "traffic": 150000,
     "url": "github.com/lllyasviel/Fooocus",
@@ -3669,12 +3911,22 @@
       "image"
     ],
     "affiliate": false,
-    "order": 163
+    "order": 163,
+    "overview": "Fooocus is an open-source SDXL-focused image generation UI designed for ease of use and strong defaults, reducing the need for deep parameter tuning compared to advanced node-based tools.",
+    "benefits": [
+      "Beginner-friendly compared with advanced SD tooling",
+      "Runs locally and is free/open-source",
+      "Strong defaults speed up iteration"
+    ],
+    "drawbacks": [
+      "Less flexible than node-based workflows for advanced users",
+      "Local GPU/VRAM constraints still apply"
+    ]
   },
   {
     "name": "Jan AI",
-    "icon": "🪐",
-    "desc": "Open-source, privacy-first desktop app for running AI models locally.",
+    "icon": "🧠",
+    "desc": "Local-first desktop app for running and managing AI models/assistants on-device.",
     "rating": 8.2,
     "traffic": 200000,
     "url": "jan.ai",
@@ -3684,12 +3936,21 @@
       "supercomputer"
     ],
     "affiliate": false,
-    "order": 164
+    "order": 164,
+    "overview": "Jan is positioned as a local-first AI assistant desktop application that helps users run models and build a private assistant experience, typically integrating with local runtimes and/or provider backends depending on configuration.",
+    "benefits": [
+      "Local-first posture for privacy-conscious users",
+      "Desktop UX can simplify local model usage"
+    ],
+    "drawbacks": [
+      "Local hardware constraints (RAM/VRAM)",
+      "Feature depth depends on backend/model compatibility"
+    ]
   },
   {
     "name": "AnythingLLM",
-    "icon": "🧩",
-    "desc": "Open-source, all-in-one desktop app for local AI chat and document-grounded RAG.",
+    "icon": "📦",
+    "desc": "RAG/document chat app that can run locally or self-host; supports multiple model providers/backends.",
     "rating": 8.2,
     "traffic": 200000,
     "url": "anythingllm.com",
@@ -3699,12 +3960,22 @@
       "supercomputer"
     ],
     "affiliate": false,
-    "order": 165
+    "order": 165,
+    "overview": "AnythingLLM is positioned as a flexible RAG/document chat solution you can run locally or self-host for multi-user use, connecting to different inference backends and supporting knowledge-base style workflows.",
+    "benefits": [
+      "Good for personal/team knowledge bases with RAG",
+      "Flexible across local and hosted model providers",
+      "Self-hosting option for privacy and control"
+    ],
+    "drawbacks": [
+      "RAG quality depends on ingestion settings and document quality",
+      "Self-hosting requires security and maintenance work"
+    ]
   },
   {
     "name": "OpenRouter",
-    "icon": "🔀",
-    "desc": "Unified API that routes requests across hundreds of AI models from different providers.",
+    "icon": "🛣️",
+    "desc": "OpenAI-compatible API gateway to access many models/providers with routing and credit-based billing.",
     "rating": 8.7,
     "traffic": 500000,
     "url": "openrouter.ai",
@@ -3714,12 +3985,22 @@
       "supercomputer"
     ],
     "affiliate": false,
-    "order": 166
+    "order": 166,
+    "overview": "OpenRouter offers an OpenAI-compatible API surface that routes requests to multiple model providers, typically with routing features and credit-based billing to simplify experimentation and deployment across models.",
+    "benefits": [
+      "One API for many models/providers",
+      "Routing and fallback options can improve reliability",
+      "Simplifies model switching and evaluation"
+    ],
+    "drawbacks": [
+      "Costs depend on chosen models and usage patterns",
+      "Adds a dependency layer versus direct-to-provider integrations"
+    ]
   },
   {
     "name": "LiteLLM",
-    "icon": "🪶",
-    "desc": "Open-source library and proxy server for calling 100+ LLM APIs in a unified format.",
+    "icon": "🔌",
+    "desc": "Open-source LLM gateway/proxy to unify many provider APIs; adds routing, logging, and governance features.",
     "rating": 8.4,
     "traffic": 200000,
     "url": "litellm.ai",
@@ -3729,7 +4010,17 @@
       "supercomputer"
     ],
     "affiliate": false,
-    "order": 167
+    "order": 167,
+    "overview": "LiteLLM provides a proxy/gateway layer that normalizes different LLM provider APIs and can add production features such as routing, logging, spend tracking, guardrails, and keys/governance in front of LLM usage.",
+    "benefits": [
+      "Unifies provider differences behind one interface",
+      "Helpful production controls (logging, cost tracking, routing)",
+      "Self-hostable for enterprise/security needs"
+    ],
+    "drawbacks": [
+      "Additional operational complexity (deployment, upgrades, secrets, uptime)",
+      "Still pay underlying model/provider costs plus your infra"
+    ]
   },
   {
     "name": "Black Forest Labs",
@@ -3801,5 +4092,127 @@
       "Like most TTS tools, pronunciation of unusual names, jargon, or non-standard text can occasionally sound unnatural"
     ],
     "order": 170
+  },
+  {
+    "name": "Elicit",
+    "icon": "🔍",
+    "desc": "AI research assistant that searches academic literature, extracts key findings, and summarizes papers to speed up literature reviews.",
+    "rating": 8.6,
+    "traffic": 1500000,
+    "url": "elicit.com",
+    "free": true,
+    "categories": [
+      "chat",
+      "niche"
+    ],
+    "affiliate": false,
+    "overview": "Elicit is an AI-powered research assistant built to help academics, students, and researchers work through the literature review process faster. Given a research question, it searches a database of millions of academic papers, surfaces the most relevant ones, and extracts key details like study design, sample size, and findings into a structured, comparable table. It's positioned less as a general chatbot and more as a purpose-built workflow tool for evidence synthesis, systematic reviews, and early-stage research exploration.",
+    "benefits": [
+      "Automatically extracts and tabulates findings across many papers at once, dramatically cutting down manual literature review time",
+      "Purpose-built for academic research workflows, with structured outputs (tables, summaries) rather than generic chat responses",
+      "Free tier covers core search and summarization features, making it accessible to students and independent researchers"
+    ],
+    "drawbacks": [
+      "Focused specifically on academic literature, so it's not a general-purpose research or writing tool outside that context",
+      "Like any AI summarization tool, extracted findings should be verified against the original papers before being relied on"
+    ],
+    "order": 171
+  },
+  {
+    "name": "Google Antigravity",
+    "icon": "🚀",
+    "desc": "Google's agentic development platform and AI-powered IDE that lets autonomous agents plan, execute, and verify complex coding tasks.",
+    "rating": 9.0,
+    "traffic": 2500000,
+    "url": "antigravity.google",
+    "free": true,
+    "categories": [
+      "local",
+      "code"
+    ],
+    "affiliate": false,
+    "overview": "Google Antigravity is an agentic software development platform built as a heavily modified fork of VS Code, running locally on macOS, Windows, and Linux. It offers two ways to work: a traditional Editor View with AI-powered tab completions and inline commands, and an agent-first mode where autonomous agents can plan, execute, and verify multi-step coding tasks with minimal supervision. The platform supports multiple underlying models, including Google's own Gemini 3 family alongside Anthropic's Claude and OpenAI's GPT-OSS, and introduces an 'Artifacts' system so agents produce human-verifiable deliverables rather than opaque code diffs.",
+    "benefits": [
+      "Runs locally as a full desktop IDE with an agent-first workflow, letting agents plan and carry out complex, multi-step coding tasks autonomously",
+      "Model-flexible: supports Gemini 3 Pro with generous free-tier rate limits, plus Claude and GPT-OSS models, rather than locking users to one provider",
+      "Built-in 'Artifacts' and verification layers aim to make agent work auditable and trustworthy rather than a black box"
+    ],
+    "drawbacks": [
+      "Still in public preview, so features, pricing, and stability are actively evolving and may change",
+      "As with any agentic coding tool, autonomous multi-step changes still need human review before being trusted in production"
+    ],
+    "order": 172
+  },
+  {
+    "name": "Mammouth AI",
+    "icon": "🦣",
+    "desc": "Multi-model AI aggregator giving access to 30+ leading LLMs and image models under one subscription.",
+    "rating": 8.4,
+    "traffic": 400000,
+    "url": "mammouth.ai",
+    "free": false,
+    "categories": [
+      "chat",
+      "niche"
+    ],
+    "affiliate": false,
+    "overview": "Mammouth AI is a multi-model aggregator platform that gives users access to dozens of leading AI models — including GPT, Claude, Gemini, Llama, Mistral, DeepSeek, Qwen, and Kimi for text, plus Midjourney, Stable Diffusion, FLUX, and Nano Banana for images — through a single subscription rather than juggling separate accounts for each provider. The platform is organized around project-based workspaces (\"Projects Mammouths\") that keep custom instructions, chat history, and uploaded files together per task or client, along with document analysis, one-click reprompting to compare model outputs, and voice chat. It's positioned as a cost-saving alternative to subscribing to ChatGPT, Claude, and other AI products individually.",
+    "benefits": [
+      "Single subscription unlocks 30+ text and image models, which can be meaningfully cheaper than paying for several individual AI subscriptions",
+      "Project-based workspaces with persistent context, file uploads, and one-click model comparison make it easy to pick the best model for a given task without switching apps"
+    ],
+    "drawbacks": [
+      "No meaningful free tier — most real usage requires a paid plan, and unused monthly credits for premium models and image generation expire rather than rolling over",
+      "As an aggregator, it depends entirely on the underlying providers' models, so quality and feature availability shift whenever those partners update or restrict their own APIs"
+    ],
+    "order": 173
+  },
+  {
+    "name": "Open Design",
+    "icon": "🎨",
+    "desc": "Open-source, local-first AI design platform that turns existing coding-agent CLIs into design engines for prototypes, slides, and brand systems.",
+    "rating": 8.2,
+    "traffic": 60000,
+    "url": "open-design.ai",
+    "free": true,
+    "categories": [
+      "local",
+      "image"
+    ],
+    "affiliate": false,
+    "overview": "Open Design is an open-source, local-first AI design platform positioned as a transparent alternative to closed tools like Claude Design. Rather than shipping its own AI agent, it delegates execution to coding-agent CLIs a developer already has installed — Claude Code, Codex, Cursor, Gemini CLI, OpenCode, Qwen, or GitHub Copilot CLI — and turns them into design engines that can generate web, desktop, and mobile prototypes, presentations (exportable as PPTX), and brand visuals from prompts. It ships with dozens of preset brand-grade design systems and built-in \"skills,\" runs locally with SQLite-based project persistence, and is released under the Apache-2.0 license for full self-hosting and inspection.",
+    "benefits": [
+      "Fully open-source and local-first — runs entirely on a developer's machine using coding-agent CLIs they already have, with no vendor lock-in or proprietary agent required",
+      "Ships with dozens of ready-made, brand-grade design systems and reusable skills, letting teams produce consistent prototypes, decks, and visuals fast without starting from a blank canvas"
+    ],
+    "drawbacks": [
+      "Requires at least one coding-agent CLI (Claude Code, Cursor, Gemini CLI, etc.) already installed and configured, so it's not a zero-setup tool for non-technical users",
+      "As a newly released project (2026), it has a much smaller community, track record, and polish than established design tools"
+    ],
+    "order": 174
+  },
+  {
+    "name": "Devin",
+    "icon": "🤖",
+    "desc": "Agentic AI software engineer that plans, writes, tests, and ships code across multi-step development tasks.",
+    "rating": 8.5,
+    "traffic": 300000,
+    "url": "app.devin.ai",
+    "free": false,
+    "categories": [
+      "local",
+      "code"
+    ],
+    "affiliate": false,
+    "overview": "Devin, from Cognition, is an agentic AI software engineer built for higher-autonomy development work than a standard in-IDE chat assistant. Given a task, it can plan a multi-step approach, write and edit code across a codebase, run and iterate on tests, and carry work through to a finished result with less step-by-step supervision than typical coding copilots. It's positioned for scoped engineering tasks — bug fixes, feature implementation, migrations — that a team wants handled end-to-end rather than suggested inline.",
+    "benefits": [
+      "Designed for multi-step, agentic task execution rather than just question-and-answer coding help, so it can carry a scoped task through to completion",
+      "Can meaningfully speed up well-defined engineering work by handling planning, implementation, and testing in one autonomous run"
+    ],
+    "drawbacks": [
+      "Autonomous agent output still requires strong human review and guardrails before merging into production",
+      "Access and pricing are not purely self-serve for teams, and typically involve a sales conversation rather than an instant signup"
+    ],
+    "order": 175
   }
 ]
