@@ -301,6 +301,7 @@
       <option value="rating" selected>Rating</option>
       <option value="traffic">Traffic</option>
       <option value="name">Name</option>
+      <option value="recent">Recently Added</option>
     </select>
   </div>
   <div class="control-group">
@@ -463,6 +464,14 @@ function getFilteredData() {
   data.sort((a, b) => {
     if (currentSort === 'name') return a.name.localeCompare(b.name);
     if (currentSort === 'traffic') return b.traffic - a.traffic;
+    if (currentSort === 'recent') return (b.order ?? 0) - (a.order ?? 0);
+    // Default "Rating" sort: perfect 10/10s first, then Free Tier tools first, then by rating
+    const aTen = a.rating === 10 ? 1 : 0;
+    const bTen = b.rating === 10 ? 1 : 0;
+    if (bTen !== aTen) return bTen - aTen;
+    const aFree = a.free ? 1 : 0;
+    const bFree = b.free ? 1 : 0;
+    if (bFree !== aFree) return bFree - aFree;
     return b.rating - a.rating;
   });
   

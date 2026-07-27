@@ -21,7 +21,8 @@
     "drawbacks": [
       "Pricing has become genuinely complex — six overlapping tiers (including two different \"Pro\" price points) make it easy to pick the wrong plan or overpay",
       "Ads have been introduced on the cheaper tiers, and the \"unbiased\" shopping recommendations may be influenced by advertising revenue over time"
-    ]
+    ],
+    "order": 0
   },
   {
     "name": "Claude",
@@ -44,7 +45,8 @@
     "drawbacks": [
       "Usage limits on Free and Pro plans are not published precisely, so heavy users may hit unpredictable rate limits without warning",
       "Some advanced features (like the top-tier Fable/Mythos models) are API-only or gated behind higher-cost plans, not available in the standard consumer chat interface"
-    ]
+    ],
+    "order": 1
   },
   {
     "name": "Higgsfield",
@@ -68,7 +70,8 @@
     "drawbacks": [
       "Credit-based pricing is unpredictable at scale — high-end models like Sora 2 can consume 40–70 credits per video, and credits expire after 90 days without rollover",
       "Lacks production-grade workflow features like shot tracking, dailies review, and role-based collaboration, so it cannot serve as a complete filmmaking pipeline on its own"
-    ]
+    ],
+    "order": 2
   },
   {
     "name": "Kimi",
@@ -92,7 +95,8 @@
     "drawbacks": [
       "Full open-weight downloads for the newest model (K3) lag behind the API launch, so local/self-hosted deployment isn't immediately available at release",
       "English-language polish and Western-market documentation/support are less mature than U.S.-based competitors, reflecting its origin as a China-first product"
-    ]
+    ],
+    "order": 3
   },
   {
     "name": "Gemini",
@@ -116,7 +120,8 @@
     "drawbacks": [
       "Regional feature availability is inconsistent and dependent on evolving regulatory decisions (e.g., pending EU rulings affecting the Gemini/Android integration)",
       "The subscription structure has changed repeatedly within 2026 alone (new tiers, price cuts, retired add-ons), making it harder to know what a given plan currently includes"
-    ]
+    ],
+    "order": 4
   },
   {
     "name": "DeepSeek",
@@ -139,7 +144,8 @@
     "drawbacks": [
       "As a China-based service, data handling, censorship of politically sensitive topics, and geopolitical/regulatory scrutiny are ongoing concerns for some users and organizations",
       "New official pricing introduces a peak/off-peak surcharge structure (prices reportedly double at peak hours), adding cost unpredictability compared to flat-rate competitors"
-    ]
+    ],
+    "order": 5
   },
   {
     "name": "Ideogram",
@@ -161,7 +167,8 @@
     "drawbacks": [
       "Credits deplete quickly during iterative refinement — users report budgeting 3–5× their final asset count for realistic planning, and unused Priority credits do not roll over monthly",
       "Narrow focus on text rendering means it lacks the broad aesthetic range and artistic versatility of Midjourney, making it less suitable for purely artistic or abstract image generation"
-    ]
+    ],
+    "order": 6
   },
   {
     "name": "Superhuman",
@@ -183,7 +190,8 @@
     "drawbacks": [
       "No free tier and a high price point ($25–40/user/month) relative to native email AI bundled into Google Workspace or Microsoft 365, which many users already pay for",
       "Best suited to solo power users; teams that need deep collaborative email workflows may find purpose-built team tools a better fit"
-    ]
+    ],
+    "order": 7
   },
   {
     "name": "Grok",
@@ -206,7 +214,8 @@
     "drawbacks": [
       "Independent evaluations have reported higher hallucination rates than xAI's own published figures, so answers on factual/high-stakes topics warrant extra verification",
       "The tiered pricing structure is confusing (six overlapping plans, with full flagship-model access effectively reserved for the $300/month Heavy tier), and free/lower tiers may use conversations for model training by default"
-    ]
+    ],
+    "order": 8
   },
   {
     "name": "Copilot (Microsoft)",
@@ -229,7 +238,8 @@
     "drawbacks": [
       "Licensing is complex — it requires a specific qualifying Microsoft 365 base plan plus several supporting services (Entra ID, OneDrive for Business, Teams, Exchange, SharePoint), which raises the effective total cost beyond the headline $30/seat price",
       "Real-world enterprise deployments often see 30–40% of purchased licenses go unused within the first 90 days, meaning ROI depends heavily on disciplined rollout rather than the tool itself"
-    ]
+    ],
+    "order": 9
   },
   {
     "name": "Suno",
@@ -251,7 +261,8 @@
     "drawbacks": [
       "Credits burn unpredictably — failed generations and iterative \"regen until acceptable\" sessions still cost credits, meaning the headline 500-songs-per-month figure is realistically much lower for polished output",
       "Active lawsuits from major record labels (UMG, Sony) create legal uncertainty for commercial use, and free-tier output can never be retroactively licensed for monetization even after upgrading"
-    ]
+    ],
+    "order": 10
   },
   {
     "name": "Stable Diffusion",
@@ -273,7 +284,8 @@
     "drawbacks": [
       "Extremely steep learning curve — ComfyUI workflows resemble engineering schematics, and achieving polished output requires significant prompt engineering, model tuning, and hardware investment",
       "Requires a capable GPU (12GB+ VRAM for Large variant, ~$300–800+ hardware investment) and raw out-of-the-box quality lags behind Midjourney's default aesthetic without LoRA tuning"
-    ]
+    ],
+    "order": 11
   },
   {
     "name": "ElevenLabs",
@@ -297,7 +309,8 @@
     "drawbacks": [
       "Credit consumption is unpredictable — the v3 model burns credits faster than the base rate suggests, and voice-agent minutes bill separately from the core credit pool, making real-world costs higher than headline prices",
       "No credit rollover on monthly plans means unused credits disappear at billing, and the jump from Creator ($22/month) to Pro ($99/month) leaves a large gap with no mid-tier option for growing creators"
-    ]
+    ],
+    "order": 12
   },
   {
     "name": "Vapi AI",
@@ -320,7 +333,8 @@
     "drawbacks": [
       "Pricing is genuinely complex and unpredictable — the headline $0.05/min is only the platform fee; real-world costs of $0.13–0.50+/min require managing 4–6 separate provider accounts and invoices",
       "No free tier beyond a $10 trial credit, and the $1,000/month HIPAA compliance add-on makes regulated industries prohibitively expensive for smaller operations"
-    ]
+    ],
+    "order": 13
   },
   {
     "name": "Adobe Firefly",
@@ -343,7 +357,8 @@
     "drawbacks": [
       "Image and video quality lags behind dedicated competitors like Midjourney, FLUX, and Runway — Firefly is optimized for safe, usable output rather than artistic excellence or photorealistic detail",
       "Premium credits burn quickly for video work (~100 credits per 5-second clip), and credits do not roll over, making cost prediction difficult for production teams with variable monthly output"
-    ]
+    ],
+    "order": 14
   },
   {
     "name": "Codex (OpenAI)",
@@ -365,7 +380,8 @@
     "drawbacks": [
       "No real-time interactivity — once a task is queued, you cannot redirect or course-correct mid-execution, making it poorly suited for exploratory development or live debugging sessions",
       "Requires a $200/month ChatGPT Pro subscription minimum with no standalone option or per-task billing, and repository-level issue resolution (64.6% SWE-bench Pro) trails Claude Code"
-    ]
+    ],
+    "order": 15
   },
   {
     "name": "Topaz Labs",
@@ -387,7 +403,8 @@
     "drawbacks": [
       "Subscription-only pricing ($199–468/year) is expensive relative to competitors, and noise reduction quality has fallen behind DxO PureRAW while sharpening defaults frequently produce oversharpened, unnatural results",
       "Slow preview rendering (5–10 seconds per adjustment) disrupts iterative editing flow, and the forced transition from perpetual licenses to subscriptions alienated many long-time users"
-    ]
+    ],
+    "order": 16
   },
   {
     "name": "HeyGen",
@@ -410,7 +427,8 @@
     "drawbacks": [
       "Premium Credit system for advanced features (Avatar IV, lip-sync translation) creates unpredictable costs that can exceed plan limits quickly",
       "UI is reported as buggy and confusing by multiple reviewers, and customer support is slow unless on the expensive Enterprise tier"
-    ]
+    ],
+    "order": 17
   },
   {
     "name": "Hugging Face",
@@ -433,7 +451,8 @@
     "drawbacks": [
       "Pricing is genuinely complex across five separate billing lines (Hub seats, GPU hours, token usage, Spaces compute, Enterprise features), making cost prediction difficult for finance approvers",
       "Finding the right model among 900,000+ options is overwhelming for beginners, and documentation quality varies wildly between community-contributed models"
-    ]
+    ],
+    "order": 18
   },
   {
     "name": "Remove.bg",
@@ -455,7 +474,8 @@
     "drawbacks": [
       "Free tier only outputs low-resolution (625×400) watermarked images that are unusable for professional work; HD requires paid credits starting at ~$0.20/image",
       "No manual refinement tools — what the AI produces is final — and it struggles with semi-transparent objects (glass, veils, reflections) that require manual cleanup"
-    ]
+    ],
+    "order": 19
   },
   {
     "name": "Kling 3.0",
@@ -478,7 +498,8 @@
     "drawbacks": [
       "Quality degrades past the 2-minute mark with clothing inconsistencies and lighting shifts, and 1080p resolution on non-Ultra tiers limits cinematic production",
       "Extremely strict content filtering blocks even harmless prompts occasionally, and native audio quality degrades with three or more speakers in a scene"
-    ]
+    ],
+    "order": 20
   },
   {
     "name": "Leonardo AI",
@@ -500,7 +521,8 @@
     "drawbacks": [
       "Opaque token-based pricing makes cost prediction nearly impossible — Alchemy enhancement multiplies costs 4–8×, and premium models consume tokens at unpredictable rates",
       "Generation speed (15–90 seconds) is slower than competitors, and image quality on default settings lags behind Midjourney for artistic output and FLUX for photorealism"
-    ]
+    ],
+    "order": 21
   },
   {
     "name": "Pi",
@@ -522,7 +544,8 @@
     "drawbacks": [
       "Active development has slowed significantly since the 2024 Microsoft deal, so it now lags well behind competitors on raw capability, multimodal features, and integrations",
       "The product's long-term roadmap and consumer support quality are uncertain, given Inflection's stated strategic shift toward enterprise clients over the consumer app"
-    ]
+    ],
+    "order": 22
   },
   {
     "name": "Synthesia",
@@ -545,7 +568,8 @@
     "drawbacks": [
       "Avatar expressiveness is limited compared to real actors — corporate training is the sweet spot, but marketing and entertainment use cases still feel artificial in close-up shots",
       "The pricing gap between Creator ($67/month, 30 minutes) and Enterprise (custom, typically $10K+) leaves mid-sized teams without a practical middle tier for moderate volume"
-    ]
+    ],
+    "order": 23
   },
   {
     "name": "Udio",
@@ -567,7 +591,8 @@
     "drawbacks": [
       "Vocal quality is inconsistent and can sound synthetic compared to instrumental generation, limiting its use for vocal-forward commercial releases without significant post-processing",
       "Active lawsuits from major record labels over training data copyright create legal uncertainty for commercial use, similar to the legal challenges facing Suno"
-    ]
+    ],
+    "order": 24
   },
   {
     "name": "Cursor",
@@ -590,7 +615,8 @@
     "drawbacks": [
       "Premium request cap (500 fast/month on Pro) burns quickly during intensive development, forcing users into the slow queue or requiring Business-tier upgrades",
       "Can generate subtly buggy code that compiles but fails logically — developers report needing careful review of AI-generated logic, especially for edge cases and security-sensitive code"
-    ]
+    ],
+    "order": 25
   },
   {
     "name": "Gamma",
@@ -612,7 +638,8 @@
     "drawbacks": [
       "Export to PowerPoint (PPTX) is widely reported as the weakest part of the toolchain, with formatting issues when moving decks into traditional slide software",
       "The free tier's 400 one-time credits burn quickly (roughly 8–10 full generations total, not renewed monthly), making it impractical as an ongoing free option for regular use"
-    ]
+    ],
+    "order": 26
   },
   {
     "name": "Grammarly",
@@ -635,7 +662,8 @@
     "drawbacks": [
       "Billed-monthly pricing is dramatically higher than annual ($30/mo monthly vs. ~$12/mo annual), a gap many users miss until they see the bill, and there's no standalone trial of the paid tier",
       "The company faced public criticism in March 2026 after its \"Expert Review\" feature briefly attached real writers' names to AI-generated feedback without consent — worth knowing when evaluating trust in its AI-authored suggestions"
-    ]
+    ],
+    "order": 27
   },
   {
     "name": "Luminar Neo",
@@ -657,7 +685,8 @@
     "drawbacks": [
       "AI masking precision falls short of manual selection for professional work — fine details like flyaway hairs and complex edges frequently require manual cleanup in Photoshop",
       "Application performance is slower than Lightroom on large RAW files, and the noise reduction/sharpening AI models lag behind dedicated competitors like DxO PureRAW"
-    ]
+    ],
+    "order": 28
   },
   {
     "name": "Manus AI",
@@ -679,7 +708,8 @@
     "drawbacks": [
       "Credit-based pricing makes costs unpredictable at scale — complex or long-running tasks can consume credits quickly, and unused monthly credits don't roll over",
       "Reliability is capped by the underlying \"LLM-planner\" limitation shared by all autonomous agents: it has more tools than a chatbot but not fundamentally more reliable planning, so failure modes like broken clicks or stalled browser tasks still occur"
-    ]
+    ],
+    "order": 29
   },
   {
     "name": "Runway",
@@ -702,7 +732,8 @@
     "drawbacks": [
       "Expensive relative to competitors — $35–95/month for serious use versus $6.99–29.99 for Kling 3.0, with the \"Unlimited\" tier throttling speed during peak hours rather than truly removing limits",
       "16-second maximum duration on Gen-4 forces segment-based generation for longer scenes, and credit consumption during iterative refinement burns through monthly allowances unpredictably fast"
-    ]
+    ],
+    "order": 30
   },
   {
     "name": "Zapier",
@@ -724,7 +755,8 @@
     "drawbacks": [
       "Pricing has risen substantially and is widely reported as the most expensive option per task compared to alternatives like Make.com or n8n (often 3–5x more at scale)",
       "The free tier was cut from 750 tasks to just 100 tasks in recent years, making it usable only for light testing rather than any real production workflow"
-    ]
+    ],
+    "order": 31
   },
   {
     "name": "Bolt",
@@ -746,7 +778,8 @@
     "drawbacks": [
       "Token consumption is opaque and burns unpredictably fast — users report exhausting 10M-token Pro plans on minor edits, with no transparency into why a given prompt consumed 200K+ tokens",
       "Context retention degrades past 15–20 components, causing the AI to misinterpret follow-up requests and inadvertently break existing functionality during \"simple\" changes"
-    ]
+    ],
+    "order": 32
   },
   {
     "name": "Clipdrop",
@@ -768,7 +801,8 @@
     "drawbacks": [
       "Free tier exports are downsampled and watermarked, making them unusable for professional or commercial work without upgrading to the $14.99/month Pro plan",
       "No native video or motion tools, and text-to-image generation quality falls short of dedicated competitors like Midjourney or FLUX for original creative work"
-    ]
+    ],
+    "order": 33
   },
   {
     "name": "Fish Audio",
@@ -791,7 +825,8 @@
     "drawbacks": [
       "Free tier is heavily restricted to ~7 minutes of generation with a 500-character cap per request, making it a brief demo rather than a practical ongoing tool",
       "Commercial usage terms are reported as ambiguous in the FAQ, creating legal uncertainty for monetized content on YouTube, games, and branded material"
-    ]
+    ],
+    "order": 34
   },
   {
     "name": "Jasper",
@@ -814,7 +849,8 @@
     "drawbacks": [
       "Significantly more expensive than general-purpose alternatives for solo users — $49–69/month for one seat versus $20/month for ChatGPT Plus or Claude Pro, which can produce comparable raw text",
       "The single-seat Pro plan hits caps quickly (limited Brand Voices/Knowledge assets), pushing freelancers or consultants managing multiple client brands into the much pricier custom Business tier sooner than expected"
-    ]
+    ],
+    "order": 35
   },
   {
     "name": "Microsoft Designer",
@@ -836,7 +872,8 @@
     "drawbacks": [
       "Severely limited free tier at just 15 AI credits per month — roughly one image every two days — making it impractical for any regular content production without a Microsoft 365 subscription",
       "Template library and design depth are thin compared to Canva, with no vector editing, limited typography control, and zero video or animation capabilities"
-    ]
+    ],
+    "order": 36
   },
   {
     "name": "Notion AI",
@@ -858,7 +895,8 @@
     "drawbacks": [
       "Full AI capability now requires the $20/user/month Business tier at minimum — solo users or small teams who only want the AI features can no longer buy a cheaper standalone AI add-on",
       "Autonomous Custom Agents add a third, separate billing line (credits on top of the seat price), making total cost harder to predict for teams that lean heavily on agent automation"
-    ]
+    ],
+    "order": 37
   },
   {
     "name": "OpenArt",
@@ -882,7 +920,8 @@
     "drawbacks": [
       "Base subscription credits expire monthly with no rollover, and failed generations frequently still consume credits — a combination that wastes budget and frustrates heavy experimenters",
       "Commercial usage rights are locked behind the $14.50/month Advanced plan, rendering the $7/month Essential tier unsuitable for any paid client work"
-    ]
+    ],
+    "order": 38
   },
   {
     "name": "Opus Clip",
@@ -904,7 +943,8 @@
     "drawbacks": [
       "20–40% of AI-generated clips require discarding due to awkward cuts or missed context, meaning the effective output is lower than the headline clip count suggests",
       "Multiple Trustpilot reviews document billing issues — projects vanishing after cancellation, continued charges post-cancellation, and a refund process that is hidden and time-restricted to pre-processing only"
-    ]
+    ],
+    "order": 39
   },
   {
     "name": "Viktor AI",
@@ -926,7 +966,8 @@
     "drawbacks": [
       "As a newer, less widely reviewed product, independent benchmarking, pricing transparency, and long-term reliability data are far more limited than for established competitors",
       "Giving an AI agent its own cloud compute environment with code execution and access to thousands of connected business tools raises meaningfully higher security/governance considerations than a standard read-only chatbot"
-    ]
+    ],
+    "order": 40
   },
   {
     "name": "n8n",
@@ -948,7 +989,8 @@
     "drawbacks": [
       "Self-hosting requires real engineering capacity — infrastructure setup, maintenance, and updates fall on the user's team, making it a poor fit for non-technical teams without in-house DevOps support",
       "Fewer native integrations (roughly 400) than Zapier (7,000+) or Make (~1,500), so teams needing niche, pre-built app connectors may still need Zapier or custom coding to fill gaps"
-    ]
+    ],
+    "order": 41
   },
   {
     "name": "Amazon Q Developer",
@@ -971,7 +1013,8 @@
     "drawbacks": [
       "Value drops sharply for non-AWS or multi-cloud teams, where AWS-specific suggestions become irrelevant noise and the tool offers no model flexibility or local execution",
       "The 50-request free tier is exhausted in 2–3 days of real evaluation, and Java/.NET transformation overages at $0.003/line can produce unexpected bills on large legacy codebases"
-    ]
+    ],
+    "order": 42
   },
   {
     "name": "CapCut AI",
@@ -993,7 +1036,8 @@
     "drawbacks": [
       "Trustpilot rating of 1.3/5 reflects widespread billing complaints — forced plan migrations, continued charges post-cancellation, and unresponsive email-only support with 2–4 week response times",
       "Free tier has been progressively restricted to just 6 watermark-free exports per week, making it impractical for regular content creators without upgrading to the $19.99/month Pro plan"
-    ]
+    ],
+    "order": 43
   },
   {
     "name": "Copy.ai",
@@ -1015,7 +1059,8 @@
     "drawbacks": [
       "Pricing is opaque above the entry tier — the workflow-automation features that define its \"GTM platform\" positioning require a sales call and often run $1,000–$3,000+/month, a steep jump from the $29 entry point",
       "Built for enterprise GTM teams, so smaller businesses or solo users often pay for far more capability (multi-step workflows, deep CRM integrations) than they'll actually use"
-    ]
+    ],
+    "order": 44
   },
   {
     "name": "Granola",
@@ -1037,7 +1082,8 @@
     "drawbacks": [
       "It only adds real value if the user actively types notes during the call — someone who doesn't type gets comparatively little benefit versus fully automated competitors",
       "Speaker attribution degrades with three or more participants, and the free tier's meeting-history cap (roughly 25 notes) is reached quickly by anyone in frequent meetings"
-    ]
+    ],
+    "order": 45
   },
   {
     "name": "Lindy",
@@ -1059,7 +1105,8 @@
     "drawbacks": [
       "No free tier and a genuinely high price floor ($49.99/month minimum) with a credit-metered usage model that can consume an entire monthly allowance in surprisingly few tasks (voice-agent calls in particular are credit-expensive)",
       "Switching to a stronger underlying model (e.g., GPT-4o or Claude Opus) for better reasoning burns credits much faster, effectively creating a \"quality tax\" on top of the already metered pricing"
-    ]
+    ],
+    "order": 46
   },
   {
     "name": "Lovable",
@@ -1081,7 +1128,8 @@
     "drawbacks": [
       "Hits a hard ceiling on the \"last 20%\" of real products — custom business logic, complex auth, and non-default integrations require manual coding outside the platform",
       "Message-based pricing burns unpredictably fast; the $20/month Starter plan's 100 daily messages last roughly 3 hours of real development work, forcing serious users to the $50/month Launch tier"
-    ]
+    ],
+    "order": 47
   },
   {
     "name": "Motion",
@@ -1103,7 +1151,8 @@
     "drawbacks": [
       "Genuinely steep learning curve with a real setup investment (commonly cited as 2–4 weeks) before the tool delivers its promised value — users who abandon it early see no ROI",
       "No free tier and a premium price point relative to simpler task managers, and the mobile app is consistently rated far worse than the desktop experience"
-    ]
+    ],
+    "order": 48
   },
   {
     "name": "PhotoRoom",
@@ -1125,7 +1174,8 @@
     "drawbacks": [
       "Dual-meter billing (separate AI credits and batch export limits) creates genuine confusion and unexpected overages when one meter runs out before the other",
       "Pricing structure changes frequently without clear notice, with users reporting surprise rate hikes and weekly billing options that feel designed to obscure true monthly costs"
-    ]
+    ],
+    "order": 49
   },
   {
     "name": "Photopea AI",
@@ -1147,7 +1197,8 @@
     "drawbacks": [
       "Performance degrades significantly on large or complex files — users report lag, crashes, and long load times on 500MB+ PSDs, making it unsuitable for heavy professional retouching",
       "Free tier displays intrusive ads that disrupt workflow, and the AI generative features (powered by 3,000 monthly credits on Premium) lag behind dedicated tools like Photoshop Generative Fill in quality and speed"
-    ]
+    ],
+    "order": 50
   },
   {
     "name": "Pika Labs",
@@ -1169,7 +1220,8 @@
     "drawbacks": [
       "Unpredictable output quality between generations — reviewers report needing 3–5 attempts per usable clip, meaning real-world credit consumption is 3–5× higher than headline rates suggest",
       "Hard 5-second duration cap and no shot-to-shot consistency make it unsuitable for professional production, narrative content, or brand campaigns requiring visual continuity"
-    ]
+    ],
+    "order": 51
   },
   {
     "name": "Wispr Flow",
@@ -1191,7 +1243,8 @@
     "drawbacks": [
       "Among the most expensive consumer dictation apps on the market, with no lifetime/one-time purchase option and multiple cheaper competitors (some with offline processing) available at a fraction of the price",
       "The free tier's 2,000-words-per-week cap is exhausted very quickly by any regular user, effectively functioning as a short trial rather than a sustainable free option, and the AI cleanup can occasionally over-edit and alter what was actually said"
-    ]
+    ],
+    "order": 52
   },
   {
     "name": "Adobe Express",
@@ -1214,7 +1267,8 @@
     "drawbacks": [
       "Free tier's 25 AI credits per month are exhausted in minutes of real use, and exhausted credits lock out core AI features entirely until the next billing cycle — making the free tier a brief demo only",
       "Teams plan requires a 2-seat minimum and 12-month annual commitment, creating a pricing barrier for solo freelancers who need collaboration features"
-    ]
+    ],
+    "order": 53
   },
   {
     "name": "CleanUp.pictures",
@@ -1236,7 +1290,8 @@
     "drawbacks": [
       "No zoom or precision controls make editing intricate details genuinely difficult, and no batch processing means each image must be handled individually — a major friction point for high-volume workflows",
       "Free tier is limited to 720p exports, making it unsuitable for professional print or high-resolution e-commerce work without the $3/month Pro upgrade"
-    ]
+    ],
+    "order": 54
   },
   {
     "name": "Cline",
@@ -1258,7 +1313,8 @@
     "drawbacks": [
       "Approval-per-step workflow slows down large-scale refactoring and multi-file changes significantly compared to fully autonomous agents like Claude Code or Codex CLI",
       "No team analytics, centralized billing, or enterprise governance features — VS Code-only primary surface and lack of JetBrains parity make it a poor fit for regulated or large-team environments"
-    ]
+    ],
+    "order": 55
   },
   {
     "name": "D-ID",
@@ -1281,7 +1337,8 @@
     "drawbacks": [
       "Commercial usage rights are locked behind the $108/month Advanced plan, and the \"failed render tax\" means users pay for unusable outputs — with unused minutes expiring monthly",
       "Manual scene-by-scene scripting with no automated document-to-video workflow makes it poorly scalable for L&D and marketing teams producing content at volume"
-    ]
+    ],
+    "order": 56
   },
   {
     "name": "Elicit",
@@ -1304,7 +1361,8 @@
     "drawbacks": [
       "The features that matter most for serious systematic reviews (bulk extraction, Research Agents, full systematic review workflow) are locked behind the $42–49/month Pro tier, a real cost for individual researchers or students",
       "It's a narrow, single-purpose tool — not a general assistant — so anyone needing broader writing, coding, or non-academic research help will need a separate product alongside it"
-    ]
+    ],
+    "order": 57
   },
   {
     "name": "Make",
@@ -1326,7 +1384,8 @@
     "drawbacks": [
       "The August 2025 shift from \"operations\" to \"credits\" — with AI features consuming credits inconsistently versus standard modules — has made cost prediction harder, and audited accounts have reportedly burned $500/month in wasted credits from inefficient scenario design",
       "Steeper learning curve for non-technical users than Zapier — building with APIs and data structures typically requires 10–20 hours of learning before real productivity, and Make counts more elements (triggers, filters) as billable operations than Zapier counts as tasks"
-    ]
+    ],
+    "order": 58
   },
   {
     "name": "Otter.ai",
@@ -1348,7 +1407,8 @@
     "drawbacks": [
       "The free tier is fairly restrictive — a hard 30-minute-per-conversation cutoff that stops transcribing mid-meeting for longer calls, and only 3 lifetime (non-renewing) file imports",
       "Because it joins calls as a visible bot rather than capturing audio silently, participants always know they're being recorded/transcribed, which some users and clients find intrusive compared to bot-free alternatives"
-    ]
+    ],
+    "order": 59
   },
   {
     "name": "Playground AI",
@@ -1370,7 +1430,8 @@
     "drawbacks": [
       "Free tier was severely reduced from 1,000 images/day to just 10 per 3-hour window, damaging user trust and making the free plan impractical for anything beyond brief testing",
       "Image quality on premium models lags behind Midjourney and DALL-E 3 for artistic work, English-only prompt support limits global use, and documentation-only customer support leaves users without live help"
-    ]
+    ],
+    "order": 60
   },
   {
     "name": "Sora",
@@ -1392,7 +1453,8 @@
     "drawbacks": [
       "No standalone app or API — access is locked behind ChatGPT subscriptions, and the $200/month Pro tier is the only practical option for regular video production, making it expensive for video-only users",
       "Strict safety policies block real-person likenesses and sensitive content, and generation limits on lower tiers are exhausted after just 5–10 clips, forcing heavy users to upgrade prematurely"
-    ]
+    ],
+    "order": 61
   },
   {
     "name": "Submagic",
@@ -1414,7 +1476,8 @@
     "drawbacks": [
       "Magic Clips — the primary reason most users subscribe — is a $19/month add-on on top of base plans, making real-world costs significantly higher than headline pricing suggests",
       "Public reviews document stuck exports, credit-consumption bugs, and billing friction; the free tier's 3-video cap makes it little more than a brief trial"
-    ]
+    ],
+    "order": 62
   },
   {
     "name": "v0 (Vercel)",
@@ -1436,7 +1499,8 @@
     "drawbacks": [
       "Token-based pricing burns unpredictably fast — heavy users report $10–$30/day in credit costs, with no refunds when v0 breaks its own code and requires regeneration",
       "Locked to the React/Next.js ecosystem with no Vue, Svelte, or Angular support; March 2026 update introduced reliability regressions including prompt-ignoring and broken states after extended sessions"
-    ]
+    ],
+    "order": 63
   },
   {
     "name": "Colossyan",
@@ -1459,7 +1523,8 @@
     "drawbacks": [
       "Minute-based billing is consumed by iterative drafts and script revisions, not just final exports — Starter's 10–15 minute monthly cap is exhausted in 2–3 real projects",
       "Cannot capture or demonstrate real software workflows — avatars describe processes rather than showing actual interfaces, creating a translation gap for technical training"
-    ]
+    ],
+    "order": 64
   },
   {
     "name": "Littlebird",
@@ -1481,7 +1546,8 @@
     "drawbacks": [
       "Requires trusting an AI assistant with continuous access to on-screen activity across all applications, which is a meaningfully higher privacy/security bar than tools that only see explicitly shared context (like a single meeting recording)",
       "As a very new product (launched March 2026), it currently lacks team-collaboration features and has a much smaller track record than established meeting/notetaking competitors like Granola or Otter"
-    ]
+    ],
+    "order": 65
   },
   {
     "name": "Napkin AI",
@@ -1504,7 +1570,8 @@
     "drawbacks": [
       "It's a narrow tool focused on generating individual diagrams/visuals, not a full presentation or design platform — for building complete slide decks, tools like Gamma or full design suites like Canva offer more end-to-end capability",
       "The free tier's weekly credit reset (500 credits, roughly 1 credit per word generated) limits sustained heavy use, and the small watermark on free visuals means anything meant for external/client use effectively requires a paid plan"
-    ]
+    ],
+    "order": 66
   },
   {
     "name": "Picsart AI",
@@ -1527,7 +1594,8 @@
     "drawbacks": [
       "Free tier's 5 AI credits per week are exhausted in a single session, and credits do not roll over — making the free plan a brief demo rather than a working tool for regular creators",
       "AI image generation quality lags behind dedicated tools like Midjourney and DALL-E 3, and the feature-heavy interface overwhelms first-time users who only need a subset of capabilities"
-    ]
+    ],
+    "order": 67
   },
   {
     "name": "Replit",
@@ -1550,7 +1618,8 @@
     "drawbacks": [
       "Credit-based billing produces genuine \"bill shock\" — one developer reported $5,000+ in overages after discovering annual plan credits are issued monthly, not as a yearly pool",
       "Agent 3 trial on the free tier expires quickly, pushing all serious users to paid plans, and Teams pricing at $35/user/month makes multi-person development expensive compared to GitHub Codespaces or Cursor"
-    ]
+    ],
+    "order": 68
   },
   {
     "name": "Tabnine",
@@ -1573,7 +1642,8 @@
     "drawbacks": [
       "Completion quality is measurably behind Cursor and GitHub Copilot on general coding tasks — multiple teams describe the gap as persistent and noticeable in daily use",
       "No free tier (retired 2024) and the cheapest paid plan at $39/user/month is 4× the cost of GitHub Copilot Pro, making it hard to justify for teams without strict compliance requirements"
-    ]
+    ],
+    "order": 69
   },
   {
     "name": "Tensor.Art",
@@ -1595,7 +1665,8 @@
     "drawbacks": [
       "Free tier watermarks every output, making it unusable for commercial work, and failed generations do not always automatically refund consumed credits",
       "Inconsistent quality across 10,000+ community models and a cluttered parameter interface create a steep learning curve that frustrates users seeking fast, predictable results"
-    ]
+    ],
+    "order": 70
   },
   {
     "name": "Upscale.media",
@@ -1617,7 +1688,8 @@
     "drawbacks": [
       "Free tier capped at 3 images per day and 1500×1500 input resolution — unusable for any professional or high-volume workflow without the $25/month Premium subscription",
       "No granular controls for noise reduction, sharpening, or RAW processing, and output quality lags behind dedicated tools like Topaz Gigapixel AI on fine detail and artifact suppression"
-    ]
+    ],
+    "order": 71
   },
   {
     "name": "Weavy AI",
@@ -1639,7 +1711,8 @@
     "drawbacks": [
       "As an orchestration layer over third-party models, output quality is only as good as the underlying models it's calling — any limitation in a given model (Flux, Runway, etc.) carries directly into the workflow",
       "The product is mid-acquisition and rebranding (transitioning from standalone Weavy to \"Figma Weave\"), creating uncertainty about the long-term roadmap, pricing, and whether standalone access will continue post-migration"
-    ]
+    ],
+    "order": 72
   },
   {
     "name": "Writesonic",
@@ -1661,7 +1734,8 @@
     "drawbacks": [
       "The most differentiated features — GEO/AI-visibility tracking that sets it apart from a plain AI writer — are locked behind the $249+/month Professional tier, out of reach for many individual users or small teams",
       "For pure writing quality, some users report output comparable to general chatbots like ChatGPT at a meaningfully higher price, meaning the value proposition rests specifically on the bundled SEO/GEO tooling rather than raw writing capability"
-    ]
+    ],
+    "order": 73
   },
   {
     "name": "Artbreeder",
@@ -1683,7 +1757,8 @@
     "drawbacks": [
       "Maximum resolution of 2048px on paid tiers and 640px on free is well below the 4K+ standard of competitors like FLUX and Midjourney, limiting use for print or high-resolution digital work",
       "Steep learning curve for users coming from text-prompt tools, and the Outpainter extension feature is widely reported as producing blurry, incoherent results"
-    ]
+    ],
+    "order": 74
   },
   {
     "name": "BasedLabs",
@@ -1705,7 +1780,8 @@
     "drawbacks": [
       "No single feature matches the best-in-class dedicated tool in its category — FLUX on BasedLabs is the same FLUX available elsewhere, and video quality lags behind Runway or Kling's native interfaces",
       "Premium video models burn credits at extreme rates — Veo 3.1 at 42 credits/second means a 10-second clip consumes 420 credits, nearly half the Pro plan's 2,500 monthly allowance in one generation"
-    ]
+    ],
+    "order": 75
   },
   {
     "name": "Bing Image Creator",
@@ -1727,7 +1803,8 @@
     "drawbacks": [
       "Severely limited to 15 fast generations per week (~2 per day) before falling into 2–5 minute slow queues, with square-only 1024×1024 output unsuitable for most social and print formats",
       "Aggressive content filtering blocks even harmless prompts frequently, no commercial rights by default, and zero editing features (no inpainting, outpainting, or image-to-image)"
-    ]
+    ],
+    "order": 76
   },
   {
     "name": "Canva AI",
@@ -1750,7 +1827,8 @@
     "drawbacks": [
       "Credit system burns faster than headline numbers suggest — failed generations count, Ultra AI tier drains 50+ credits per presentation, and users report exhausting significant monthly allowances in a single afternoon of experimentation",
       "AI image quality lags behind Midjourney and DALL-E 3 for artistic or client-facing work, and Business plan at $200/user/year is a steep jump for small teams needing collaboration features"
-    ]
+    ],
+    "order": 77
   },
   {
     "name": "Codeium",
@@ -1773,7 +1851,8 @@
     "drawbacks": [
       "Chat and agentic capabilities lag behind Cursor and Claude Code — the free tier's context window is limited to local files, making cross-file refactoring suggestions noticeably weaker",
       "No native multi-file agentic editing comparable to Cursor's Composer or Codex's autonomous PR workflow — Codeium is primarily an autocomplete and chat tool, not a full coding agent"
-    ]
+    ],
+    "order": 78
   },
   {
     "name": "DALL-E",
@@ -1795,7 +1874,8 @@
     "drawbacks": [
       "No standalone app or subscription — consumer access is locked behind ChatGPT Plus ($20/month) or Pro ($200/month), forcing image-only users to pay for chat features they may not need",
       "Artistic and stylized output consistently lags behind Midjourney for fantasy, painterly, and abstract aesthetics, and API costs scale to $120+ per 1,000 HD images at volume"
-    ]
+    ],
+    "order": 79
   },
   {
     "name": "Descript",
@@ -1819,7 +1899,8 @@
     "drawbacks": [
       "Transcription accuracy drops significantly on accents, jargon, and overlapping speakers, and misaligned transcripts can produce wrong cuts that accidentally remove wanted words — proofreading is mandatory, not optional",
       "Overdub voice cloning sounds robotic on passages longer than a few sentences, and the platform is unsuitable for cinematic editing, music videos, or any content where visual storytelling matters more than speech"
-    ]
+    ],
+    "order": 80
   },
   {
     "name": "Elai",
@@ -1842,7 +1923,8 @@
     "drawbacks": [
       "Minute-based billing is consumed by iterative drafts and revisions — a 3-minute video needing three edit rounds burns 9 minutes, over half the Creator plan's ~15-minute monthly allowance",
       "Avatar expressiveness is corporate-functional rather than cinematic or emotional, making it unsuitable for marketing, entertainment, or any content requiring human warmth and subtlety"
-    ]
+    ],
+    "order": 81
   },
   {
     "name": "Exa",
@@ -1864,7 +1946,8 @@
     "drawbacks": [
       "Pricing can be harder to predict than flat-rate tools — costs scale with the number of results requested (extra results beyond the first 10 add a per-1,000 surcharge) and with which content types are requested on the Contents endpoint, so real-world bills can run above the advertised headline rate",
       "As a pure API/developer product with no consumer chat interface, it's only useful to teams with engineering resources to integrate it — not a direct option for non-technical end users"
-    ]
+    ],
+    "order": 82
   },
   {
     "name": "Flux",
@@ -1886,7 +1969,8 @@
     "drawbacks": [
       "Self-hosting requires 24GB+ VRAM and technical expertise with ComfyUI workflows — a steep barrier that excludes casual users and non-technical creators",
       "Base model has a strong photographic bias; achieving painterly or highly stylized outputs requires LoRA fine-tuning, and the highest-quality [max] variants are API-only with ongoing costs"
-    ]
+    ],
+    "order": 83
   },
   {
     "name": "Gemini Code Assist",
@@ -1911,7 +1995,8 @@
       "Product direction shifted in June 2026: free users must migrate to Antigravity, creating uncertainty about the legacy Gemini Code Assist experience",
       "Standard and Enterprise editions require a Google Cloud project and sales engagement, making adoption complex for individuals",
       "Best suited for Google Cloud-aligned teams; value drops outside that ecosystem"
-    ]
+    ],
+    "order": 84
   },
   {
     "name": "GitHub Copilot",
@@ -1936,7 +2021,8 @@
       "Free tier is severely limited (2,000 completions/month, 50 premium requests), making it a trial rather than a sustainable option",
       "New individual sign-ups paused as of April 2026, limiting immediate access for new users",
       "Credit-based billing creates unpredictability in monthly costs, with overage charges beyond flex allotment"
-    ]
+    ],
+    "order": 85
   },
   {
     "name": "Krea",
@@ -1961,7 +2047,8 @@
       "Krea 2 is API-first; the consumer web experience may lag behind the API's capabilities",
       "Resolution currently capped at 1K, limiting print and high-res use cases",
       "Less established than Midjourney or DALL-E for mainstream consumer adoption; still a newer entrant"
-    ]
+    ],
+    "order": 86
   },
   {
     "name": "Lensa",
@@ -1985,7 +2072,8 @@
       "Subscription-first with no clear free tier beyond limited features—annual pricing ranges from $29.99-$49.99",
       "Limited desktop or web presence; mobile-only experience",
       "Advanced features (Magic Avatars packs) are locked behind one-time in-app purchases on top of subscription"
-    ]
+    ],
+    "order": 87
   },
   {
     "name": "Media.io",
@@ -2011,7 +2099,8 @@
       "Free tier still includes watermarks on exports, limiting commercial use without paid upgrade",
       "Quality of ToMoviee Lite model for image generation may lag behind dedicated tools like Midjourney or FLUX",
       "Video enhancement tools are less established than dedicated competitors like Topaz or Runway"
-    ]
+    ],
+    "order": 88
   },
   {
     "name": "Midjourney",
@@ -2035,7 +2124,8 @@
       "No API or programmatic access—all interaction is through Discord or the web interface, making automation impossible",
       "No free tier; the Basic plan's 3.3 fast hours with no Relax Mode functions more as a trial than a sustainable option",
       "GPU-hour pricing is opaque and hard to predict—users cannot easily estimate how many images their hours will produce"
-    ]
+    ],
+    "order": 89
   },
   {
     "name": "NightCafe",
@@ -2060,7 +2150,8 @@
       "Credit-based pricing is complex and expensive at scale compared to pay-per-use APIs",
       "Commercial licensing terms are unclear, creating risk for business use",
       "No batch processing—each image requires separate manual generation"
-    ]
+    ],
+    "order": 90
   },
   {
     "name": "NotebookLM",
@@ -2082,7 +2173,8 @@
     "drawbacks": [
       "Cannot be purchased as a standalone product — access requires subscribing to one of Google's broader AI plans, so someone who wants only this tool pays for capacity across Google's whole AI suite",
       "The July 2026 rename and ongoing integration into the main Gemini app/Search AI Mode add a layer of product-identity churn, meaning bookmarked instructions, reviews, or team documentation referencing \"NotebookLM\" may already be out of date"
-    ]
+    ],
+    "order": 91
   },
   {
     "name": "Perplexity",
@@ -2104,7 +2196,8 @@
     "drawbacks": [
       "Perplexity's CEO has publicly stated the browser strategy is partly about collecting data outside the core app to build user profiles for targeted advertising, which some privacy analyses describe as structurally similar to how Chrome collects data — worth knowing for privacy-conscious users",
       "A security researcher flagged a \"CometJacking\" vulnerability (August 2025) — a one-click URL attack capable of exfiltrating Gmail and Calendar data — a reminder that agentic browsing carries different security risks than passive browsing"
-    ]
+    ],
+    "order": 92
   },
   {
     "name": "Pixlr AI",
@@ -2126,7 +2219,8 @@
     "drawbacks": [
       "Prompt fidelity is inconsistent across the model catalog—some engines follow instructions faithfully while others improvise, requiring users to learn which model best matches their prompting style",
       "The entry tier's 80 credits/month can be consumed quickly, limiting experimentation for free users"
-    ]
+    ],
+    "order": 93
   },
   {
     "name": "Recraft",
@@ -2148,7 +2242,8 @@
     "drawbacks": [
       "V2 models, while still available, lack accurate in-image text generation and may produce typographic errors compared to V3/V4 models",
       "Some style names exist across different model versions but produce visually different results, requiring users to test which model fits their aesthetic needs"
-    ]
+    ],
+    "order": 94
   },
   {
     "name": "Writer",
@@ -2171,7 +2266,8 @@
     "drawbacks": [
       "Pricing and product depth are architected for teams automating serious workflows at scale — reviewers consistently note it's difficult to justify or explain for a single user who doesn't need the full enterprise feature set",
       "New capabilities (like the April 2026 agent-observability and admin-control updates) land almost exclusively at the Enterprise tier, meaning Starter-tier customers see a product that's visibly iterating around them without direct access to the newest features"
-    ]
+    ],
+    "order": 95
   },
   {
     "name": "BlueWillow",
@@ -2193,7 +2289,8 @@
     "drawbacks": [
       "Generations happen in public Discord channels by default, which may not be suitable for users requiring privacy",
       "No progress indicator during image generation, making it difficult to track creation status"
-    ]
+    ],
+    "order": 96
   },
   {
     "name": "Facetune",
@@ -2215,7 +2312,8 @@
     "drawbacks": [
       "Narrow focus on portrait and selfie enhancement with no general-purpose photo editing capabilities",
       "Free tier is heavily restricted with watermarks and limited tools, with advanced features behind subscription"
-    ]
+    ],
+    "order": 97
   },
   {
     "name": "Fotor AI",
@@ -2237,7 +2335,8 @@
     "drawbacks": [
       "The sheer number of features and tools can feel cluttered or overwhelming to new users",
       "As a one-stop-shop, it may lack the depth or precision of specialized applications for professional-grade retouching"
-    ]
+    ],
+    "order": 98
   },
   {
     "name": "Quarkle",
@@ -2259,7 +2358,8 @@
     "drawbacks": [
       "Narrow single-purpose scope — it's built exclusively for long-form fiction editing and won't help with business writing, marketing copy, or non-narrative content, so users need separate tools for other writing needs",
       "As a small, newer company (founded 2023), it has a much smaller track record, support infrastructure, and feature-maturity than long-established writing tools, and some users report occasional bugs on extended manuscript reviews"
-    ]
+    ],
+    "order": 99
   },
   {
     "name": "Reve AI",
@@ -2281,7 +2381,8 @@
     "drawbacks": [
       "A relatively new platform with a smaller community and track record compared to established tools like Midjourney or DALL-E",
       "Complex multi-step changes may require chaining multiple requests, as the model is best suited for single, clear edits"
-    ]
+    ],
+    "order": 100
   },
   {
     "name": "Deep Dream Generator",
@@ -2303,7 +2404,8 @@
     "drawbacks": [
       "The distinctive DeepDream aesthetic is a niche style that may not suit all purposes or user preferences",
       "Compared to modern tools, it may have slower generation speeds and less sophisticated prompt interpretation for non-surreal outputs"
-    ]
+    ],
+    "order": 101
   },
   {
     "name": "DeepAI",
@@ -2327,7 +2429,8 @@
     "drawbacks": [
       "Output quality across the board — image, video, and music generation — is consistently reported as behind dedicated best-in-class tools like Midjourney, Sora, or Suno, positioning it as a budget sandbox rather than production-grade infrastructure",
       "It's a broad, shallow content generator, not an agent-building or business-workflow platform, so it doesn't fit use cases needing deployable AI agents or serious customer-facing conversational deployment"
-    ]
+    ],
+    "order": 102
   },
   {
     "name": "Phygital",
@@ -2349,7 +2452,8 @@
     "drawbacks": [
       "The node-based pipeline system has a real learning curve for users unfamiliar with this kind of workflow builder, unlike simpler single-prompt generators",
       "Because it's an orchestration layer over many third-party models rather than its own proprietary generation engine, output quality and capability are ultimately capped by whichever underlying model is selected for a given step"
-    ]
+    ],
+    "order": 103
   },
   {
     "name": "Dream by Wombo",
@@ -2373,7 +2477,8 @@
       "Free tier generates only one image per prompt, while paid subscriptions show four variants simultaneously",
       "English-only prompt input with limited support for other languages",
       "Common AI image generation errors persist: issues with hands, limbs, proportions, and occasional misinterpretation of complex prompts"
-    ]
+    ],
+    "order": 104
   },
   {
     "name": "StarryAI",
@@ -2397,7 +2502,8 @@
       "Free tier's daily allowance is limited compared to unlimited generation platforms like Dream by Wombo",
       "Some advanced styles require 2 'coins' per generation, with only 1 free coin awarded daily, creating a paywall for certain aesthetic options",
       "Relies heavily on mobile app interface, which may feel less versatile than web-based platforms for some users"
-    ]
+    ],
+    "order": 105
   },
   {
     "name": "Craiyon",
@@ -2421,7 +2527,8 @@
       "Not photorealistic or clean compared to paid, high-end models; faces, hands, and small text often render inaccurately",
       "Limited advanced controls and fine-tuning options—users get what the AI gives them with minimal parameter adjustment",
       "Licensing terms can be unclear, requiring extra verification before commercial use"
-    ]
+    ],
+    "order": 106
   },
   {
     "name": "Aider",
@@ -2446,7 +2553,8 @@
       "Command-line interface has a steeper learning curve than graphical IDE plugins, particularly for developers new to terminal workflows",
       "Requires API keys for cloud models, meaning users must manage their own API costs and billing accounts",
       "Best-in-class when paired with premium models like Claude 3.7 Sonnet or DeepSeek—performance with free or lower-tier models may be inconsistent"
-    ]
+    ],
+    "order": 107
   },
   {
     "name": "DupDub",
@@ -2472,7 +2580,8 @@
       "Core product remains browser-extension focused, which may not appeal to users who prefer standalone applications",
       "Talking Photos feature on Google Play has a low rating of 2.4/5, indicating potential quality or user experience issues with the lab product",
       "As a relatively new player compared to established TTS platforms like ElevenLabs or Murf, the platform's voice quality and language coverage may not match category leaders"
-    ]
+    ],
+    "order": 108
   },
   {
     "name": "Avoca",
@@ -2497,7 +2606,8 @@
       "Narrow focus exclusively on home service businesses—not useful for other industries or general-purpose customer service",
       "Pricing is not publicly disclosed, requiring custom quotes for each customer",
       "Relatively young company (founded 2022) with limited long-term track record compared to more established customer service platforms"
-    ]
+    ],
+    "order": 109
   },
   {
     "name": "Revin",
@@ -2511,7 +2621,8 @@
       "audio",
       "niche"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 110
   },
   {
     "name": "Drillbit",
@@ -2536,7 +2647,8 @@
       "No publicly disclosed pricing—requires contacting the company directly for a quote",
       "Narrow focus exclusively on residential contractors; not suitable for other industries or general business use",
       "Company is still in growth phase as of mid-2026, so the product may lack the maturity and feature depth of more established industry CRMs"
-    ]
+    ],
+    "order": 111
   },
   {
     "name": "Trunk Tools",
@@ -2559,7 +2671,8 @@
     "drawbacks": [
       "Fully opaque pricing — with no published tiers or self-serve option, every prospective customer must go through a sales process before knowing the actual cost, which slows evaluation for smaller contractors",
       "Effectiveness is explicitly noted by users to depend on how well the underlying project data is curated and organized — a construction team with messy or incomplete document management may see weaker results than the platform's marketing implies"
-    ]
+    ],
+    "order": 112
   },
   {
     "name": "Supio",
@@ -2582,7 +2695,8 @@
     "drawbacks": [
       "Pricing is completely opaque with no public tiers, and independent reviewers explicitly note the vendor's headline outcome statistics (settlement totals, precision percentages) are self-reported and not independently verified",
       "It's a narrow vertical tool exclusively for plaintiff personal injury/mass tort practices — meaningless outside that specific legal niche, so firms with broader practice areas need separate tools for other case types"
-    ]
+    ],
+    "order": 113
   },
   {
     "name": "GC AI",
@@ -2605,7 +2719,8 @@
     "drawbacks": [
       "Pricing starts at a genuinely high $500/seat/month with published tiers, and the full picture (custom integrations, advanced enterprise features, dedicated support) requires an opaque sales process before a buyer knows the true total cost",
       "The claimed 30% reduction in outside counsel spend is vendor-provided and explicitly requires the company's own ROI-estimator tool to calculate for a given firm, meaning individual results are not independently guaranteed or verified"
-    ]
+    ],
+    "order": 114
   },
   {
     "name": "Sixfold",
@@ -2630,7 +2745,8 @@
       "Built exclusively for insurance underwriting—not applicable to any other industry or use case",
       "Pricing is not publicly disclosed; requires contacting the company for a custom quote",
       "Effectiveness depends on quality of the carrier's existing data and guidelines—the AI is a powerful colleague but requires clean inputs to perform at its best"
-    ]
+    ],
+    "order": 115
   },
   {
     "name": "Monto",
@@ -2654,7 +2770,8 @@
       "Narrow focus on B2B accounts receivable—not useful for consumer payments, B2C businesses, or general finance operations",
       "No publicly disclosed pricing; requires contacting the company for a quote",
       "Integration complexity may vary depending on the specific ERPs and AP portals a supplier's customers use"
-    ]
+    ],
+    "order": 116
   },
   {
     "name": "Range",
@@ -2677,7 +2794,8 @@
     "drawbacks": [
       "Some users report the tool works best only in a healthy team culture — in environments with interpersonal tension or micromanaging, the same daily-check-in format can reportedly become a tool for surveillance rather than connection",
       "Users note occasional friction: some third-party integrations (GitHub, Jira, Google Calendar) give \"questionable suggestions,\" and parts of the interface (like the Objectives/OKR section) are reported as difficult to navigate with hidden functionality that takes time to discover"
-    ]
+    ],
+    "order": 117
   },
   {
     "name": "Abridge",
@@ -2702,7 +2820,8 @@
       "Available only on iPhone and iPad (iOS 17.6 or later) with no Android app or web-based interface currently listed",
       "Pricing is not publicly disclosed; requires contacting the company or healthcare institution for access",
       "As an ambient AI scribe, it requires a quiet, clear audio environment to generate accurate notes; noisy clinics or overlapping speech may reduce accuracy"
-    ]
+    ],
+    "order": 118
   },
   {
     "name": "Freed",
@@ -2727,7 +2846,8 @@
       "Pricing is steep at approximately $179/month, which may be prohibitive for individual clinicians or small practices",
       "As an ambient AI scribe, it requires a clear audio environment; noisy clinics or overlapping speech may impact accuracy",
       "Android app may not be available in all regions; users should confirm availability in their country's Google Play Store"
-    ]
+    ],
+    "order": 119
   },
   {
     "name": "Collate",
@@ -2752,7 +2872,8 @@
       "Narrow focus on enterprise data governance and discovery—not useful for general AI work or consumer use",
       "Pricing is not publicly disclosed; requires contacting Collate for a custom quote",
       "The platform is built on OpenMetadata, meaning organizations using other metadata standards may face migration or integration complexity"
-    ]
+    ],
+    "order": 120
   },
   {
     "name": "Prepared",
@@ -2777,7 +2898,8 @@
       "Built exclusively for public safety and 911 emergency communications—not applicable to any other industry or use case",
       "Pricing is not publicly disclosed; agencies must contact Prepared or Axon for custom quotes",
       "Video features require caller consent and a smartphone; not all 911 callers will be able or willing to participate"
-    ]
+    ],
+    "order": 121
   },
   {
     "name": "Axon",
@@ -2802,7 +2924,8 @@
       "Built exclusively for public safety, law enforcement, and enterprise security—not applicable to other industries or general AI use .",
       "Pricing is not publicly disclosed; agencies must contact Axon for custom quotes, with contracts often at enterprise scale.",
       "AI effectiveness depends on the quality and volume of data an agency has—smaller departments with limited digital infrastructure may see less dramatic ROI ."
-    ]
+    ],
+    "order": 122
   },
   {
     "name": "MagicSchool",
@@ -2827,7 +2950,8 @@
       "Free tier limits access to some advanced features; full enterprise deployment requires district-level subscriptions .",
       "While it generates lesson plans and materials quickly, teachers must still review and customize outputs for their specific classroom needs .",
       "Student-facing tools require teacher-created 'rooms' with access links, adding an administrative step before students can use the platform ."
-    ]
+    ],
+    "order": 123
   },
   {
     "name": "SchoolAI",
@@ -2852,7 +2976,8 @@
       "Building sophisticated Spaces requires some setup time; while Dot speeds lesson creation, teachers need to invest initial effort in designing their AI environments .",
       "Fully leveraging the platform's personalization capabilities requires teachers to integrate it consistently into their classroom workflow .",
       "As a relatively young platform (founded 2023), SchoolAI has less established track record than some legacy education technology providers ."
-    ]
+    ],
+    "order": 124
   },
   {
     "name": "CoreWeave",
@@ -2877,7 +3002,8 @@
       "As a specialized cloud, CoreWeave may not offer the full breadth of services (e.g., managed databases, analytics, serverless functions) available on general-purpose clouds like AWS or Azure .",
       "Pricing is consumption-based and may not be suitable for teams with limited budgets or unpredictable workloads .",
       "The platform's GPU focus means it's less suitable for traditional web applications or workloads that don't require significant GPU acceleration ."
-    ]
+    ],
+    "order": 125
   },
   {
     "name": "Nebius",
@@ -2902,7 +3028,8 @@
       "As a specialized AI cloud, Nebius may not offer the breadth of general-purpose cloud services available on AWS, Azure, or GCP .",
       "Pricing is consumption-based; teams should model expected GPU usage before committing to a deployment .",
       "The platform's focus on AI/ML means it's not suitable for traditional web applications or non-AI workloads ."
-    ]
+    ],
+    "order": 126
   },
   {
     "name": "Crusoe",
@@ -2927,7 +3054,8 @@
       "Pricing is not publicly disclosed; requires contacting Crusoe for custom quotes .",
       "The energy-first model means data center locations may be remote or not ideal for all latency-sensitive workloads .",
       "As a specialized AI cloud, Crusoe may not offer the broad set of general-purpose services available from AWS, Azure, or GCP ."
-    ]
+    ],
+    "order": 127
   },
   {
     "name": "Lambda",
@@ -2952,7 +3080,8 @@
       "Public cloud on-demand pricing can be expensive for long-running workloads; private cloud contracts require significant commitment .",
       "Lambda's specialized infrastructure is designed for AI/ML workloads and not suitable for general-purpose cloud computing .",
       "Private cloud contracts for enterprise customers require sales engagement; public cloud may have capacity limitations during periods of high demand ."
-    ]
+    ],
+    "order": 128
   },
   {
     "name": "Nscale",
@@ -2977,7 +3106,8 @@
       "Pricing is not publicly disclosed; requires contacting Nscale for custom enterprise quotes.",
       "As a relatively young company (founded ~2020), Nscale has a shorter track record than established cloud providers like AWS or Azure.",
       "The company's focus on hyperscale infrastructure is built for enterprise customers—not suitable for individual developers or small teams."
-    ]
+    ],
+    "order": 129
   },
   {
     "name": "TensorWave",
@@ -3002,7 +3132,8 @@
       "AMD GPU ecosystem is less mature than NVIDIA's CUDA ecosystem; some AI frameworks and libraries may have limited ROCm optimization.",
       "Pricing is not publicly disclosed; requires contacting TensorWave for custom enterprise quotes.",
       "As a specialist AMD cloud, TensorWave is not suitable for teams requiring NVIDIA-specific features like NVLink or CUDA-only libraries."
-    ]
+    ],
+    "order": 130
   },
   {
     "name": "MeluXina-AI",
@@ -3027,7 +3158,8 @@
       "Capacity allocation is split between European and national use; availability for commercial workloads may be limited.",
       "Pricing and access mechanisms are not publicly disclosed; researchers and businesses must apply through the EuroHPC or national AI Factory programs.",
       "As a national infrastructure project, MeluXina-AI is not designed for general commercial cloud use—it serves research and strategic AI development."
-    ]
+    ],
+    "order": 131
   },
   {
     "name": "Oracle Cloud Infrastructure (OCI)",
@@ -3052,7 +3184,8 @@
       "Oracle's cloud ecosystem is less mature than AWS for non-database workloads, with fewer third-party integrations and AI services.",
       "Enterprise-focused platform with complex licensing and pricing that can be difficult to navigate for smaller teams.",
       "While OCI offers competitive pricing, scaling to zettascale capacity requires significant financial commitment and enterprise contracts."
-    ]
+    ],
+    "order": 132
   },
   {
     "name": "OCI Zettascale10",
@@ -3077,7 +3210,8 @@
       "Targeted at the largest AI workloads—excessive overkill for most enterprise and all individual use cases.",
       "Pricing and access are not publicly disclosed; orders require enterprise contracts with significant commitment.",
       "Availability is Q2 2026 at the earliest, and initial capacity is likely reserved for marquee customers like OpenAI."
-    ]
+    ],
+    "order": 133
   },
   {
     "name": "Project Ceiba",
@@ -3102,7 +3236,8 @@
       "Built exclusively for NVIDIA's internal research—not available as a commercial cloud service for external customers.",
       "Massive scale and specialized infrastructure make this an extreme outlier, not representative of typical AI deployment.",
       "As an internal NVIDIA research system, detailed performance metrics and operational data are not publicly released."
-    ]
+    ],
+    "order": 134
   },
   {
     "name": "InVideo AI",
@@ -3115,7 +3250,8 @@
     "categories": [
       "video"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 135
   },
   {
     "name": "Vidu",
@@ -3129,7 +3265,8 @@
       "video",
       "image"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 136
   },
   {
     "name": "Text-to-Speech Online",
@@ -3143,7 +3280,8 @@
       "txtspeech",
       "notai"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 137
   },
   {
     "name": "Windsurf",
@@ -3157,7 +3295,8 @@
       "code",
       "chat"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 138
   },
   {
     "name": "Mistral Le Chat",
@@ -3171,7 +3310,8 @@
       "chat",
       "code"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 139
   },
   {
     "name": "Luma Dream Machine",
@@ -3185,7 +3325,8 @@
       "video",
       "image"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 140
   },
   {
     "name": "Hailuo AI",
@@ -3199,7 +3340,8 @@
       "video",
       "image"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 141
   },
   {
     "name": "Meshy AI",
@@ -3213,7 +3355,8 @@
       "image",
       "niche"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 142
   },
   {
     "name": "Tripo AI",
@@ -3227,7 +3370,8 @@
       "image",
       "niche"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 143
   },
   {
     "name": "Flowise",
@@ -3241,7 +3385,8 @@
       "code",
       "chat"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 144
   },
   {
     "name": "Langflow",
@@ -3255,7 +3400,8 @@
       "code",
       "chat"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 145
   },
   {
     "name": "CrewAI",
@@ -3269,7 +3415,8 @@
       "chat",
       "code"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 146
   },
   {
     "name": "Open WebUI",
@@ -3283,7 +3430,8 @@
       "chat",
       "code"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 147
   },
   {
     "name": "Ollama",
@@ -3296,7 +3444,8 @@
     "categories": [
       "local"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 148
   },
   {
     "name": "LM Studio",
@@ -3309,7 +3458,8 @@
     "categories": [
       "local"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 149
   },
   {
     "name": "Tavily",
@@ -3323,7 +3473,8 @@
       "chat",
       "code"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 150
   },
   {
     "name": "Jina AI",
@@ -3337,7 +3488,8 @@
       "chat",
       "code"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 151
   },
   {
     "name": "Consensus",
@@ -3351,7 +3503,8 @@
       "chat",
       "niche"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 152
   },
   {
     "name": "SciSpace",
@@ -3365,7 +3518,8 @@
       "chat",
       "niche"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 153
   },
   {
     "name": "Glean",
@@ -3379,7 +3533,8 @@
       "chat",
       "niche"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 154
   },
   {
     "name": "Harvey AI",
@@ -3393,7 +3548,8 @@
       "chat",
       "niche"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 155
   },
   {
     "name": "Clay",
@@ -3407,7 +3563,8 @@
       "chat",
       "niche"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 156
   },
   {
     "name": "Browser Use",
@@ -3421,7 +3578,8 @@
       "chat",
       "code"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 157
   },
   {
     "name": "Continue.dev",
@@ -3434,7 +3592,8 @@
     "categories": [
       "code"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 158
   },
   {
     "name": "OpenHands",
@@ -3448,7 +3607,8 @@
       "code",
       "chat"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 159
   },
   {
     "name": "Hedra",
@@ -3463,7 +3623,8 @@
       "audio",
       "image"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 160
   },
   {
     "name": "Fal.ai",
@@ -3472,13 +3633,14 @@
     "rating": 8.5,
     "traffic": 300000,
     "url": "fal.ai",
-    "free": true,
+    "free": false,
     "categories": [
       "image",
       "video",
       "code"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 161
   },
   {
     "name": "ComfyUI",
@@ -3492,7 +3654,8 @@
       "image",
       "code"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 162
   },
   {
     "name": "Fooocus",
@@ -3505,7 +3668,8 @@
     "categories": [
       "image"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 163
   },
   {
     "name": "Jan AI",
@@ -3519,7 +3683,8 @@
       "chat",
       "supercomputer"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 164
   },
   {
     "name": "AnythingLLM",
@@ -3533,7 +3698,8 @@
       "chat",
       "supercomputer"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 165
   },
   {
     "name": "OpenRouter",
@@ -3547,7 +3713,8 @@
       "code",
       "supercomputer"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 166
   },
   {
     "name": "LiteLLM",
@@ -3561,7 +3728,8 @@
       "code",
       "supercomputer"
     ],
-    "affiliate": false
+    "affiliate": false,
+    "order": 167
   },
   {
     "name": "Black Forest Labs",
@@ -3583,7 +3751,8 @@
     "drawbacks": [
       "Built as a developer/API-first platform rather than a polished consumer app — there's no traditional subscription plan, which makes it less approachable for casual users who just want simple, predictable pricing",
       "The company's rapid pivot toward robotics and physical AI means some of its newest capabilities (like Flux 3 and Flux-mimic) are still early-stage and not yet broadly available outside trial partnerships"
-    ]
+    ],
+    "order": 168
   },
   {
     "name": "Giphy",
@@ -3606,7 +3775,8 @@
     "drawbacks": [
       "AI generation quality and controls are far more limited than dedicated AI video/image tools, since Giphy's core product remains search and discovery rather than generation",
       "Monetization for creators is limited, and most of the platform's value still comes from its existing GIF library rather than net-new AI-generated content"
-    ]
+    ],
+    "order": 169
   },
   {
     "name": "NaturalReaders",
@@ -3629,6 +3799,7 @@
     "drawbacks": [
       "Premium voices, faster processing, and some file-conversion features are locked behind paid plans",
       "Like most TTS tools, pronunciation of unusual names, jargon, or non-standard text can occasionally sound unnatural"
-    ]
+    ],
+    "order": 170
   }
 ]
