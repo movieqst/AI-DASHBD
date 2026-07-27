@@ -85,8 +85,20 @@
   .tab-local:hover, .tab-local.active   { background: rgba(248,81,73,0.1); }
 
   .header {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
     padding: 25px 20px 10px;
+  }
+  .header-logo {
+    width: 76px;
+    height: 76px;
+    flex-shrink: 0;
+    border-radius: 14px;
+  }
+  .header-text {
+    text-align: center;
   }
   .header h1 {
     font-size: 2.08rem;
@@ -260,6 +272,7 @@
   @media (max-width: 640px) {
     .cards-grid { grid-template-columns: 1fr; padding: 0 12px; }
     .header h1 { font-size: 1.56rem; letter-spacing: 2px; }
+    .header-logo { width: 52px; height: 52px; }
     .nav-tab { padding: 5px 10px; font-size: 0.91rem; }
     .ad-banner { grid-template-columns: repeat(2, 1fr); }
   }
@@ -286,8 +299,11 @@
 </div>
 
 <div class="header">
-  <h1>AI-DASHBD</h1>
-  <div class="subtitle" id="appCounter">Loading...</div>
+  <img src="aidashbd.gif" alt="AI DASHBD" class="header-logo">
+  <div class="header-text">
+    <h1>AI-DASHBD</h1>
+    <div class="subtitle" id="appCounter">Loading...</div>
+  </div>
 </div>
 
 <div class="search-bar">
