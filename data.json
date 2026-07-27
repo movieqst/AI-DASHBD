@@ -2252,7 +2252,7 @@
     "rating": 8.0,
     "traffic": 100000,
     "url": "writer.com",
-    "free": false,
+    "free": true,
     "categories": [
       "chat",
       "niche"
