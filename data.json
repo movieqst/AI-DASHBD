@@ -431,30 +431,6 @@
     "order": 17
   },
   {
-    "name": "Hugging Face",
-    "icon": "🤗",
-    "desc": "Open-source AI model hub with 900K+ models and developer tools.",
-    "rating": 8.7,
-    "traffic": 2000000,
-    "url": "huggingface.co",
-    "free": true,
-    "categories": [
-      "code",
-      "niche"
-    ],
-    "affiliate": false,
-    "overview": "Hugging Face is the largest open-source AI platform and model hub in the world, serving as the de facto distribution channel for open-weight AI models — the equivalent of npm for JavaScript or PyPI for Python, but for machine learning. As of early 2026, the Hub hosts over 900,000 models, 200,000+ datasets, and 300,000+ Spaces (interactive ML demos), spanning everything from massive language models like Llama 4, Mistral Large, and Qwen 2.5 to specialized models for text classification, image generation, speech recognition, and scientific computing. The core platform is free to use for public repositories, with the Transformers library serving as the industry-standard Python framework for loading, fine-tuning, and deploying transformer-based models.\n\nThe platform's business model is built around five separate billing lines: Hub Pro ($9/user/month for private repos and faster inference), Inference Endpoints (pay-as-you-go GPU compute from $0.03/hour for CPU to $10/hour for H100s), Spaces Hardware ($0–$23.50/hour for GPU-powered demos), Inference Providers (per-token API access to hosted models), and Enterprise Hub (custom pricing with SSO, audit logs, and on-prem connectors). The 2026 addition of serverless Inference API endpoints for popular models (Llama 4, Mistral, Qwen) positions Hugging Face as a direct alternative to AWS Bedrock and Google Vertex AI for teams preferring open models without infrastructure overhead.\n\nUser feedback is overwhelmingly positive among developers and ML engineers, who praise the platform's model diversity, community contributions, and the ease of loading a model in three lines of code. Enterprise teams value the separation of model management (Hub) from model serving (Inference Endpoints or self-hosted), which avoids vendor lock-in. The primary drawbacks are the complexity of pricing across five separate billing lines, which makes cost prediction genuinely difficult for finance teams, and the overwhelming model selection — with 900,000+ models, finding the right one for a production task requires significant expertise. The free tier's Inference API is rate-limited and unsuitable for production traffic, pushing serious workloads to paid compute tiers that can escalate quickly at scale.",
-    "benefits": [
-      "Largest collection of open-source AI models (900K+) with the industry-standard Transformers library, making it the essential platform for any developer working with open-weight AI",
-      "Serverless Inference API and dedicated GPU endpoints provide flexible deployment paths from prototype to production without managing Kubernetes or cloud GPU instances directly"
-    ],
-    "drawbacks": [
-      "Pricing is genuinely complex across five separate billing lines (Hub seats, GPU hours, token usage, Spaces compute, Enterprise features), making cost prediction difficult for finance approvers",
-      "Finding the right model among 900,000+ options is overwhelming for beginners, and documentation quality varies wildly between community-contributed models"
-    ],
-    "order": 18
-  },
-  {
     "name": "Remove.bg",
     "icon": "🚫",
     "desc": "Instant AI background removal for photos, fast and accurate.",
@@ -528,7 +504,7 @@
     "name": "Pi",
     "icon": "π",
     "desc": "Inflection AI's conversational assistant focused on empathy and emotional intelligence.",
-    "rating": 8.6,
+    "rating": 10,
     "traffic": 200000,
     "url": "pi.ai",
     "free": true,
@@ -3274,7 +3250,7 @@
   {
     "name": "Vidu",
     "icon": "🎥",
-    "desc": "AI video generation platform (text/image to video).",
+    "desc": "AI video generator known for fast, low-cost generation, multi-reference character consistency, and strong anime-style output.",
     "rating": 10,
     "traffic": 500000,
     "url": "vidu.com",
@@ -3285,14 +3261,14 @@
     ],
     "affiliate": false,
     "order": 136,
-    "overview": "Vidu is an AI video generation product focused on generating videos from text prompts and/or images, oriented toward creative generation workflows.",
+    "overview": "Vidu is an AI video generation platform built by Shengshu Technology, a Beijing-based startup founded by Tsinghua University researchers and backed by Baidu, Ant Group, and other major Chinese investors. Using it feels similar to other prompt-to-video tools — type a description or upload reference images, and Vidu generates a clip in roughly 10 seconds at up to 1080p — but its standout feature is multi-reference consistency: feed it multiple reference images of a character, object, or style, and it keeps that subject visually consistent across separate generations, which is harder to pull off on many rival platforms. The tool has built a particular reputation for strong anime-style output and fast iteration, and with 10+ million users across 200+ countries, it has carved out a niche between premium Western tools (Runway, Sora) and cheaper budget generators.\n\nDay to day, the workflow is quick and low-friction: describe or reference what you want, generate, and either accept the clip or spend more credits regenerating. Off-peak mode offers unlimited generation at slower processing speed, which is a genuinely useful way to test prompts and quality before spending credits on faster, priority-queue generation. The tradeoff is that Vidu's per-clip duration is short by design — typically 4-8 seconds per generation — so producing a longer continuous scene means stitching multiple clips together in separate editing software rather than generating one long take natively.\n\nPricing is built around a free plan (800 credits/month, up to ~200 videos, unlimited off-peak generation, no card required) plus three paid tiers: Standard (~$8/month annual, ~$10 monthly — 800 credits), Premium/Pro (~$28/month annual, ~$35 monthly — 2,000-4,000 credits, unlocks Cinema-quality output and longer generation up to 32 seconds), and Ultimate (~$79/month annual, ~$99 monthly — 8,000 credits, up to 200 videos/day, priority processing). Custom Enterprise plans run up to roughly $1,399/month with API access and negotiated credit pools for agencies and production houses. Independent cost breakdowns put Vidu at 3-7x cheaper per second of finished video than Western competitors like Sora and Runway at comparable quality, making it one of the most budget-friendly ways to get into AI video generation.",
     "benefits": [
-      "Designed specifically for generative video workflows",
-      "Useful for concepting and quick iterations"
+      "Multi-reference consistency lets you lock a character, object, or art style across multiple separate generations — a genuine differentiator from platforms where every clip looks slightly different",
+      "One of the cheapest ways into AI video by a wide margin (3-7x less per second than Sora or Runway at comparable quality), with a genuinely usable free tier and unlimited off-peak generation for testing prompts before spending credits"
     ],
     "drawbacks": [
-      "Output quality and consistency can vary",
-      "Pricing/usage limits may require careful budgeting"
+      "Per-clip generation is short (typically 4-8 seconds, up to 32 seconds only on the Pro tier), so longer continuous scenes require stitching multiple generations together in separate editing software",
+      "Cinema-quality output and the longest generation durations are locked behind the Premium/Pro tier and above, so the free and Standard plans only show a fraction of what the platform can actually do"
     ]
   },
   {
@@ -3522,8 +3498,8 @@
     "url": "openwebui.com",
     "free": true,
     "categories": [
-      "chat",
-      "code"
+      "local",
+      "chat"
     ],
     "affiliate": false,
     "order": 147,
