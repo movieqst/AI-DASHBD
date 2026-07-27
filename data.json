@@ -577,8 +577,8 @@
     "url": "cursor.com",
     "free": true,
     "categories": [
-      "code",
-      "niche"
+      "local",
+      "code"
     ],
     "affiliate": false,
     "overview": "Cursor is an AI-native code editor built as a fork of Visual Studio Code, designed specifically around AI-assisted development rather than bolting AI features onto a traditional editor. As of mid-2026, Cursor has become the most popular AI coding editor among professional developers, surpassing GitHub Copilot in developer mindshare for certain workflows. The platform integrates multiple AI models (GPT-4o, Claude 3.5 Sonnet, Claude 3.7, o3-mini, and custom models) directly into the editing experience through three core features: Tab (predictive autocomplete that suggests multi-line edits), Cmd+K (inline code generation and editing via natural language), and Composer (multi-file agentic editing that can plan, write, and refactor across an entire codebase).\n\nPricing as of mid-2026: Hobby (free, 2,000 completions/month, 50 slow premium requests, limited Composer usage), Pro ($20/month, 500 fast premium requests/month, unlimited slow premium requests, unlimited Tab completions, full Composer access), and Business ($40/user/month, everything in Pro plus centralized billing, admin dashboard, team-wide model selection, and enforced privacy mode). The \"premium requests\" system is the key billing mechanism — fast requests use high-performance models with immediate response, while slow requests queue behind other users. Pro users get 500 fast requests monthly; beyond that, requests fall back to the slow queue. The platform also offers a \"Privacy Mode\" that prevents code from being stored or used for model training, though this requires explicit activation.\n\nUser feedback is overwhelmingly positive on productivity gains — developers report 30–50% faster coding for boilerplate, refactoring, and test generation. The Composer feature is particularly praised for its ability to understand cross-file dependencies and make coherent changes across multiple files simultaneously. However, common complaints include the premium request cap burning faster than expected during heavy development sessions, occasional generation of subtly buggy code that passes syntax checks but fails logically, and the fact that Cursor sends code snippets to cloud AI providers unless Privacy Mode is explicitly enabled — a concern for teams working with proprietary code. For developers already using VS Code, the migration is seamless since Cursor is fully compatible with all VS Code extensions and settings.",
@@ -2977,31 +2977,6 @@
     ]
   },
   {
-    "name": "SkyPilot",
-    "icon": "🚀",
-    "desc": "Open-source framework for running AI and ML workloads across any cloud, automatically finding the cheapest available GPUs.",
-    "rating": 8.9,
-    "traffic": 150000,
-    "url": "skypilot.co",
-    "free": true,
-    "categories": [
-      "supercomputer",
-      "code"
-    ],
-    "affiliate": false,
-    "overview": "SkyPilot is an open-source multi-cloud orchestration framework founded at the Sky Computing Lab at UC Berkeley that enables ML teams to run training and batch jobs seamlessly across any cloud provider . The framework abstracts cloud complexity by automatically selecting the cheapest and most optimal cloud, region, and GPU type for a given workload, making it possible to avoid vendor lock-in while dramatically reducing costs . It supports 20+ cloud providers including AWS, GCP, Azure, Lambda, RunPod, CoreWeave, and Kubernetes clusters .\n\nKey features include automatic cost optimization with cloud/region selection, spot instance support with 3-6x cost savings and auto-recovery, multi-node distributed training with gang scheduling, managed jobs with automatic checkpointing and fault tolerance, and Sky Serve for model serving with autoscaling . SkyPilot tasks are defined through simple YAML files that specify resource requirements (CPU, memory, disk, GPU type/count) and run commands, with the framework handling provisioning, environment setup, and log management .\n\nSkyPilot has become an essential tool for AI teams that want to avoid vendor lock-in and optimize GPU costs across providers . It integrates natively with major AI clouds including CoreWeave (with InfiniBand support), and supports GPU configurations from T4 and L4 through A100 and H100 clusters . The framework is entirely free and open-source, with a thriving community and active development. As noted in CoreWeave's announcement, SkyPilot on CoreWeave enables 'SLURM-like convenience with the reliability and flexibility of Kubernetes,' and can provision hundreds or thousands of GPUs with a single command .",
-    "benefits": [
-      "Automatically selects the cheapest cloud/region/GPU combination for any workload, delivering 3-6x cost savings through spot instance orchestration with auto-recovery.",
-      "Unified interface for 20+ cloud providers eliminates vendor lock-in while supporting distributed multi-node training and managed jobs with fault tolerance.",
-      "Completely free and open-source framework with native integrations including CoreWeave, Lambda, and RunPod."
-    ],
-    "drawbacks": [
-      "Orchestration layer requires learning YAML-based task definitions and cloud credential configuration—not as simple as a single provider's CLI.",
-      "Cost optimization depends on accurate pricing data and spot availability across clouds; unpredictable spot pricing can occasionally impact job continuity.",
-      "As an open-source tool, there is no commercial support tier; teams must rely on community support or internal expertise for troubleshooting."
-    ]
-  },
-  {
     "name": "TensorWave",
     "icon": "📡",
     "desc": "AI and HPC cloud built exclusively on AMD Instinct GPUs, offering liquid-cooled clusters for large-scale training.",
@@ -3316,8 +3291,7 @@
     "url": "ollama.com",
     "free": true,
     "categories": [
-      "code",
-      "supercomputer"
+      "local"
     ],
     "affiliate": false
   },
@@ -3330,8 +3304,7 @@
     "url": "lmstudio.ai",
     "free": true,
     "categories": [
-      "code",
-      "supercomputer"
+      "local"
     ],
     "affiliate": false
   },
@@ -3630,6 +3603,29 @@
     "drawbacks": [
       "AI generation quality and controls are far more limited than dedicated AI video/image tools, since Giphy's core product remains search and discovery rather than generation",
       "Monetization for creators is limited, and most of the platform's value still comes from its existing GIF library rather than net-new AI-generated content"
+    ]
+  },
+  {
+    "name": "NaturalReaders",
+    "icon": "📖",
+    "desc": "Text-to-speech reader that converts documents, PDFs, and web pages into natural-sounding audio with a range of AI voices.",
+    "rating": 8.5,
+    "traffic": 2000000,
+    "url": "naturalreaders.com",
+    "free": true,
+    "categories": [
+      "txtspeech"
+    ],
+    "affiliate": false,
+    "overview": "NaturalReaders is a text-to-speech platform that converts written content such as documents, PDFs, web pages, and pasted text into spoken audio using natural-sounding AI voices. It's commonly used for proofreading, accessibility, and studying, offering browser extensions, desktop apps, and mobile apps so people can listen to content while multitasking. The platform provides a range of voices and languages, along with adjustable reading speed and highlighting that follows along with the audio.",
+    "benefits": [
+      "Wide range of natural-sounding AI voices and languages, useful for accessibility, proofreading, and hands-free reading",
+      "Available across browser extension, desktop, and mobile, making it easy to listen to content from almost any source",
+      "Free tier covers core text-to-speech functionality without requiring a subscription"
+    ],
+    "drawbacks": [
+      "Premium voices, faster processing, and some file-conversion features are locked behind paid plans",
+      "Like most TTS tools, pronunciation of unusual names, jargon, or non-standard text can occasionally sound unnatural"
     ]
   }
 ]

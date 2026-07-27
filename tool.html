@@ -302,7 +302,8 @@ const categoryColors = {
   supercomputer: { accent: '#ff2d78', bg: 'rgba(255,45,120,0.1)' },
   niche: { accent: '#d29922', bg: 'rgba(210,153,34,0.1)' },
   notai: { accent: '#8b949e', bg: 'rgba(139,148,158,0.1)' },
-  txtspeech: { accent: '#ff9bce', bg: 'rgba(255,155,206,0.1)' }
+  txtspeech: { accent: '#ff9bce', bg: 'rgba(255,155,206,0.1)' },
+  local: { accent: '#f85149', bg: 'rgba(248,81,73,0.1)' }
 };
 
 function formatTraffic(n) {
@@ -375,7 +376,7 @@ async function loadTool() {
     // Meta badges
     const metaBadges = document.getElementById('meta-badges');
     metaBadges.innerHTML = '';
-    const categoryNames = { code: 'Coding', niche: 'Niche AI', supercomputer: 'Supercomputer', notai: 'Not AI', txtspeech: 'Text-to-Speech' };
+    const categoryNames = { code: 'Coding', niche: 'Niche AI', supercomputer: 'Supercomputer', notai: 'Not AI', txtspeech: 'Text-to-Speech', local: 'Local AI' };
     
     // UPDATED: dash.html → index.html in the href below
     tool.categories.forEach(cat => {
