@@ -84,30 +84,38 @@
   .tab-local     { color: #f85149; }
   .tab-local:hover, .tab-local.active   { background: rgba(248,81,73,0.1); }
 
-  .header {
+  .top-hero {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    padding: 25px 20px 10px;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 25px 20px 20px;
   }
   .header-logo {
-    width: 76px;
-    height: 76px;
+    width: 150px;
+    height: 150px;
     flex-shrink: 0;
     border-radius: 14px;
+    object-fit: contain;
   }
-  .header-text {
-    text-align: center;
+  .top-hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+    flex: 1;
+    min-width: 0;
   }
-  .header h1 {
+  .header-text { text-align: left; }
+  .header-text h1 {
     font-size: 2.08rem;
     font-weight: 700;
     color: #e6edf3;
     letter-spacing: 3px;
     text-transform: uppercase;
   }
-  .header .subtitle {
+  .header-text .subtitle {
     font-size: 1.82rem;
     color: #ff6b6b;
     letter-spacing: 6px;
@@ -118,8 +126,8 @@
 
   .search-bar {
     max-width: 500px;
-    margin: 0 auto 20px;
-    padding: 0 20px;
+    margin: 0;
+    padding: 0;
   }
   .search-bar input {
     width: 100%;
@@ -137,9 +145,9 @@
 
   .controls {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 12px;
-    padding: 0 20px 20px;
+    padding: 0;
     flex-wrap: wrap;
   }
   .control-group {
@@ -271,8 +279,13 @@
 
   @media (max-width: 640px) {
     .cards-grid { grid-template-columns: 1fr; padding: 0 12px; }
-    .header h1 { font-size: 1.56rem; letter-spacing: 2px; }
-    .header-logo { width: 52px; height: 52px; }
+    .top-hero { flex-direction: column; align-items: center; text-align: center; }
+    .header-logo { width: 90px; height: 90px; }
+    .top-hero-content { height: auto; align-items: center; gap: 14px; width: 100%; }
+    .header-text { text-align: center; }
+    .header-text h1 { font-size: 1.56rem; letter-spacing: 2px; }
+    .search-bar { max-width: 100%; }
+    .controls { justify-content: center; }
     .nav-tab { padding: 5px 10px; font-size: 0.91rem; }
     .ad-banner { grid-template-columns: repeat(2, 1fr); }
   }
@@ -298,35 +311,37 @@
   <div class="nav-tab tab-local" data-filter="local" onclick="selectNavTab(this, 'local')">🏠 Local AI</div>
 </div>
 
-<div class="header">
+<div class="top-hero">
   <img src="aidashbd.gif" alt="AI DASHBD" class="header-logo">
-  <div class="header-text">
-    <h1>AI-DASHBD</h1>
-    <div class="subtitle" id="appCounter">Loading...</div>
-  </div>
-</div>
+  <div class="top-hero-content">
+    <div class="header-text">
+      <h1>AI-DASHBD</h1>
+      <div class="subtitle" id="appCounter">Loading...</div>
+    </div>
 
-<div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search AI tools...">
-</div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search AI tools...">
+    </div>
 
-<div class="controls">
-  <div class="control-group">
-    <label>Sort by:</label>
-    <select id="sortSelect">
-      <option value="rating" selected>Rating</option>
-      <option value="traffic">Traffic</option>
-      <option value="name">Name</option>
-      <option value="recent">Recently Added</option>
-    </select>
-  </div>
-  <div class="control-group">
-    <label>Filter:</label>
-    <select id="filterSelect">
-      <option value="all">All</option>
-      <option value="free">Free Only</option>
-      <option value="paid">Paid Only</option>
-    </select>
+    <div class="controls">
+      <div class="control-group">
+        <label>Sort by:</label>
+        <select id="sortSelect">
+          <option value="rating" selected>Rating</option>
+          <option value="traffic">Traffic</option>
+          <option value="name">Name</option>
+          <option value="recent">Recently Added</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Filter:</label>
+        <select id="filterSelect">
+          <option value="all">All</option>
+          <option value="free">Free Only</option>
+          <option value="paid">Paid Only</option>
+        </select>
+      </div>
+    </div>
   </div>
 </div>
 
