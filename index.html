@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Control Dashboard</title>
+<title>AI-DASH-BoarD</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -563,7 +563,7 @@ function render() {
       return `<span class="card-tag" style="background:${c.bg};color:${c.accent};border:1px solid ${c.accent}" onclick="event.stopPropagation(); filterByCategory('${cat}')">${displayCat(cat)}</span>`;
     }).join('');
     
-    const toolPage = `tool.html?slug=${encodeURIComponent(slugify(item.name))}`;
+    const toolPage = `tool/${slugify(item.name)}.html`;
 
     return `
       <div class="card" style="--accent:${colors.accent};--accent-bg:${colors.bg}" onclick="window.location.href='${toolPage}'">
