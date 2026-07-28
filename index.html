@@ -370,7 +370,7 @@
 
 <div class="ad-banner">
   <div class="ad-slot">
-    <a id="logo-link" href="https://www.moviequest.ca/"><img src="https://www.moviequest.ca/logo.jpg" alt="MOVIE QUEST CANADA" width="70" height="70"></a>
+    <a id="logo-link" href="https://www.moviequest.ca/"><img src="logo.jpg" alt="MOVIE QUEST CANADA" width="70" height="70"></a>
   </div>
   <div class="ad-slot empty">Ad Space</div>
   <div class="ad-slot empty">Ad Space</div>
@@ -403,7 +403,7 @@ let searchQuery = '';
 
 async function loadData() {
   try {
-    const res = await fetch('data.json');
+    const res = await fetch('data.json', { cache: 'no-cache' });
     allData = await res.json();
     applyUrlParams();
     render();

@@ -328,7 +328,7 @@ async function loadTool() {
   const detail = document.getElementById('tool-detail');
 
   try {
-    const res = await fetch('data.json');
+    const res = await fetch('data.json', { cache: 'no-cache' });
     const data = await res.json();
 
     const tool = data.find(t => slugify(t.name) === slug);
