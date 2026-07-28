@@ -79,10 +79,12 @@
   .tab-niche:hover, .tab-niche.active   { background: rgba(210,153,34,0.1); }
   .tab-notai     { color: #8b949e; }
   .tab-notai:hover, .tab-notai.active   { background: rgba(139,148,158,0.1); }
-  .tab-txtspeech { color: #ff9bce; }
-  .tab-txtspeech:hover, .tab-txtspeech.active { background: rgba(255,155,206,0.1); }
+  .tab-voice     { color: #ff9bce; }
+  .tab-voice:hover, .tab-voice.active   { background: rgba(255,155,206,0.1); }
   .tab-local     { color: #f85149; }
   .tab-local:hover, .tab-local.active   { background: rgba(248,81,73,0.1); }
+  .tab-architectural { color: #7ee787; }
+  .tab-architectural:hover, .tab-architectural.active { background: rgba(126,231,135,0.1); }
 
   .top-hero {
     display: grid;
@@ -317,9 +319,10 @@
   <div class="nav-tab tab-code" data-filter="code" onclick="selectNavTab(this, 'code')">💻 Coding AI</div>
   <div class="nav-tab tab-supercomputer" data-filter="supercomputer" onclick="selectNavTab(this, 'supercomputer')">🖥️ Super Cmptr</div>
   <div class="nav-tab tab-niche" data-filter="niche" onclick="selectNavTab(this, 'niche')">🧩 Niche AI</div>
-  <div class="nav-tab tab-txtspeech" data-filter="txtspeech" onclick="selectNavTab(this, 'txtspeech')">🗣️ Txt-Speech</div>
+  <div class="nav-tab tab-voice" data-filter="voice" onclick="selectNavTab(this, 'voice')">🗣️ Voice AI</div>
   <div class="nav-tab tab-notai" data-filter="notai" onclick="selectNavTab(this, 'notai')">🚫 Not AI</div>
   <div class="nav-tab tab-local" data-filter="local" onclick="selectNavTab(this, 'local')">🏠 Local AI</div>
+  <div class="nav-tab tab-architectural" data-filter="architectural" onclick="selectNavTab(this, 'architectural')">🏛️ Architectural AI</div>
 </div>
 
 <div class="top-hero">
@@ -384,8 +387,9 @@ const categoryColors = {
   supercomputer: { accent: '#ff2d78', bg: 'rgba(255,45,120,0.1)' },
   niche: { accent: '#d29922', bg: 'rgba(210,153,34,0.1)' },
   notai: { accent: '#8b949e', bg: 'rgba(139,148,158,0.1)' },
-  txtspeech: { accent: '#ff9bce', bg: 'rgba(255,155,206,0.1)' },
-  local: { accent: '#f85149', bg: 'rgba(248,81,73,0.1)' }
+  voice: { accent: '#ff9bce', bg: 'rgba(255,155,206,0.1)' },
+  local: { accent: '#f85149', bg: 'rgba(248,81,73,0.1)' },
+  architectural: { accent: '#7ee787', bg: 'rgba(126,231,135,0.1)' }
 };
 
 const slugify = (name) => name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -551,7 +555,7 @@ function render() {
   
   grid.innerHTML = data.map(item => {
     const colors = categoryColors[item.categories[0]] || categoryColors.chat;
-    const categoryDisplayNames = { code: 'coding', niche: 'niche ai', supercomputer: 'super cmptr', notai: 'not ai', txtspeech: 'txt-speech', local: 'local ai' };
+    const categoryDisplayNames = { code: 'coding', niche: 'niche ai', supercomputer: 'super cmptr', notai: 'not ai', voice: 'voice ai', local: 'local ai', architectural: 'architectural ai' };
     const displayCat = c => categoryDisplayNames[c] || c;
     const categoryLabel = displayCat(item.categories[0]);
     const secondaryTags = item.categories.slice(1).map(cat => {
