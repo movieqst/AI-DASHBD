@@ -1577,7 +1577,7 @@
     "name": "Replit",
     "icon": "🔄",
     "desc": "Autonomous AI app builder that deploys while you're away.",
-    "rating": 8.1,
+    "rating": 9.9,
     "traffic": 2000000,
     "url": "replit.com",
     "free": true,
@@ -1763,7 +1763,7 @@
     "name": "Bing Image Creator",
     "icon": "🔍",
     "desc": "DALL·E powered image generation free with Microsoft account.",
-    "rating": 8.0,
+    "rating": 9.9,
     "traffic": 3000000,
     "url": "bing.com/create",
     "free": true,
@@ -1834,7 +1834,7 @@
     "name": "DALL-E",
     "icon": "🔍",
     "desc": "OpenAI's image generation model for creating images from text descriptions.",
-    "rating": 8.0,
+    "rating": 9.9,
     "traffic": 2000000,
     "url": "labs.openai.com",
     "free": false,
@@ -1879,30 +1879,6 @@
     "order": 80
   },
   {
-    "name": "Elai",
-    "icon": "🎬",
-    "desc": "Professional animated avatars for business presentations and training.",
-    "rating": 8.0,
-    "traffic": 30000,
-    "url": "elai.io",
-    "free": false,
-    "categories": [
-      "video",
-      "audio"
-    ],
-    "affiliate": false,
-    "overview": "Elai is an AI video creation platform focused on corporate training, e-learning, and customer education, distinguished by its interactive quiz features and PowerPoint-to-video conversion workflow. As of mid-2026, the platform offers 85+ built-in avatars, custom avatar creation, support for 75+ languages with AI voiceovers, text-to-video, URL-to-video, and voice cloning. A key differentiator is the ability to embed interactive quizzes and clickable elements directly into videos — turning passive training content into active assessments. The platform was acquired by Panopto in 2025, integrating its avatar generation into Panopto's video management ecosystem for enterprise learning.\n\nPricing follows a minute-based model: Free ($0, ~1 minute of video generation per month, watermarked, non-commercial), Creator ($23/month billed annually or $29/month-to-month, ~15 minutes Full HD per month, commercial rights, basic avatars), Team ($100/month, ~50 minutes 4K per month, multiple editor seats, priority support), and Enterprise (custom pricing, SOC 2 governance, SSO, API access, volume discounts). Extra minutes beyond plan limits cost approximately $2 each. Voice cloning and selfie avatars are paid annual add-ons, not included in base plans. Every script revision and re-generation consumes minutes from the monthly allocation — a 3-minute video that needs three rounds of edits can consume 9 minutes, over half a Creator plan's budget.\n\nUser feedback is strongest among L&D teams who value the interactive quiz embedding and PowerPoint-to-video workflow for converting existing training decks into engaging video content. The multilingual voiceover is genuinely useful for global organizations localizing training. However, reviewers consistently flag the minute-based billing as restrictive — the ~15-minute Creator cap is exhausted quickly when iterating on scripts, and the $2/overage-minute cost adds up fast. Avatar expressiveness is described as \"corporate-appropriate but not cinematic\" — suitable for training modules but not marketing or entertainment. The Panopto acquisition has also raised questions about long-term standalone roadmap independence. For corporate training and e-learning at moderate volume, Elai delivers solid value; for high-volume production or polished marketing content, competitors offer more generous billing and expressive avatars.",
-    "benefits": [
-      "Interactive quiz embedding and PowerPoint-to-video conversion are genuinely differentiated for L&D teams turning static training decks into engaging, assessable video content",
-      "75+ language voiceover support makes it scalable for global organizations localizing compliance and onboarding content across regions"
-    ],
-    "drawbacks": [
-      "Minute-based billing is consumed by iterative drafts and revisions — a 3-minute video needing three edit rounds burns 9 minutes, over half the Creator plan's ~15-minute monthly allowance",
-      "Avatar expressiveness is corporate-functional rather than cinematic or emotional, making it unsuitable for marketing, entertainment, or any content requiring human warmth and subtlety"
-    ],
-    "order": 81
-  },
-  {
     "name": "Exa",
     "icon": "🔬",
     "desc": "Semantic search API for developers building AI applications.",
@@ -1929,7 +1905,7 @@
     "name": "Flux",
     "icon": "⚡",
     "desc": "Best-in-class photorealistic image generation with stunning detail.",
-    "rating": 8.0,
+    "rating": 9.9,
     "traffic": 500000,
     "url": "flux.ai",
     "free": false,
@@ -2082,7 +2058,7 @@
     "name": "Midjourney",
     "icon": "🔥",
     "desc": "AI image generation tool known for stunning artistic and photorealistic images.",
-    "rating": 8.0,
+    "rating": 9.9,
     "traffic": 5000000,
     "url": "midjourney.com",
     "free": false,
@@ -2613,7 +2589,7 @@
     "name": "Drillbit",
     "icon": "🔧",
     "desc": "AI back-office platform automating quoting, communications, and payments for home service businesses.",
-    "rating": 8.0,
+    "rating": 9.9,
     "traffic": 15000,
     "url": "drillbit.com",
     "free": false,
@@ -4383,5 +4359,53 @@
       "The first model is free but ongoing use, higher polygon counts, and batch processing require a paid plan"
     ],
     "order": 183
+  },
+  {
+    "name": "Pixelcut",
+    "icon": "✂️",
+    "desc": "AI photo and video editor for product photography — background removal, magic eraser, upscaling, and AI-generated product scenes.",
+    "rating": 8.5,
+    "traffic": 5000000,
+    "url": "pixelcut.ai",
+    "free": true,
+    "categories": [
+      "image",
+      "video"
+    ],
+    "affiliate": false,
+    "overview": "Pixelcut is an AI photo and video editing platform built primarily for e-commerce sellers, marketers, and social content creators, used by tens of millions of people through its web app and mobile apps. Core tools include instant background removal, a magic eraser for removing unwanted objects, an image upscaler, and an AI product photoshoot generator that places a product photo into dozens of AI-generated backgrounds and styles (with matching shadows and lighting) instead of a studio shoot. It also offers batch editing for processing many product images at once, basic video tools including a background remover for video and an animate feature that adds motion to still product shots, and an AI copywriting assistant for product descriptions.",
+    "benefits": [
+      "Turns a single product photo into many polished, on-brand marketing images in seconds, replacing the need for a studio photoshoot for most small e-commerce sellers",
+      "Batch editing can process dozens of images at once, which is a real time-saver for stores refreshing an entire catalog"
+    ],
+    "drawbacks": [
+      "Its video tools are noticeably less capable than dedicated video-editing platforms, better suited to quick social clips than polished production",
+      "Complex products with fine detail (transparent materials, stray reflections) can still need manual touch-ups after the AI pass"
+    ],
+    "order": 184
+  },
+  {
+    "name": "Magnific",
+    "icon": "🔍",
+    "desc": "AI creative suite (formerly Freepik) for image/video upscaling, generative enhancement, and design — built on Magnific's upscaling technology plus 40+ AI models.",
+    "rating": 8.7,
+    "traffic": 4000000,
+    "url": "magnific.com",
+    "free": true,
+    "categories": [
+      "image",
+      "video"
+    ],
+    "affiliate": false,
+    "overview": "Magnific began as a standalone AI image upscaler known for adding convincing extra detail and texture rather than just sharpening pixels. After Freepik acquired it in 2024, the two brands merged and fully rebranded as Magnific in 2026, folding the upscaler into a much larger creative suite: AI image and video generation across 40+ underlying models (including Flux, Kling, and Google Veo), a video upscaler (up to 4K), mockup generation, collaborative 'Spaces,' and Freepik's original library of 250M+ stock photos, vectors, and templates. The upscaler itself offers a Creative mode (the original Magnific engine, for AI-enhanced added detail) and a Precision mode for more faithful enlargement, scaling up to 16x/10K depending on the tool.",
+    "benefits": [
+      "The Magnific upscaling engine remains a standout for adding believable fine detail and texture to low-res or AI-generated images, not just sharpening them",
+      "Bundles generation, upscaling, video, and a huge stock-asset library into one subscription, useful for teams that previously needed separate tools for each"
+    ],
+    "drawbacks": [
+      "At very high scale factors or large-format print sizes, output can show over-sharpening or texture artifacts compared to more specialized print-upscaling tools",
+      "The platform has grown large and multi-purpose since the Freepik merger, which can make it feel less focused than the original single-purpose Magnific upscaler"
+    ],
+    "order": 185
   }
 ]
