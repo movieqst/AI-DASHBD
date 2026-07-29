@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI-DASH-BoarD</title>
+<title>AI Control Dashboard</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -85,6 +85,8 @@
   .tab-local:hover, .tab-local.active   { background: rgba(248,81,73,0.1); }
   .tab-architectural { color: #7ee787; }
   .tab-architectural:hover, .tab-architectural.active { background: rgba(126,231,135,0.1); }
+  .tab-aggregator { color: #ffcc66; }
+  .tab-aggregator:hover, .tab-aggregator.active { background: rgba(255,204,102,0.1); }
 
   .top-hero {
     display: grid;
@@ -323,6 +325,7 @@
   <div class="nav-tab tab-notai" data-filter="notai" onclick="selectNavTab(this, 'notai')">🚫 Not AI</div>
   <div class="nav-tab tab-local" data-filter="local" onclick="selectNavTab(this, 'local')">🏠 Local AI</div>
   <div class="nav-tab tab-architectural" data-filter="architectural" onclick="selectNavTab(this, 'architectural')">🏛️ Architectural AI</div>
+  <div class="nav-tab tab-aggregator" data-filter="aggregator" onclick="selectNavTab(this, 'aggregator')">🔀 AI Aggregator</div>
 </div>
 
 <div class="top-hero">
@@ -389,7 +392,8 @@ const categoryColors = {
   notai: { accent: '#8b949e', bg: 'rgba(139,148,158,0.1)' },
   voice: { accent: '#ff9bce', bg: 'rgba(255,155,206,0.1)' },
   local: { accent: '#f85149', bg: 'rgba(248,81,73,0.1)' },
-  architectural: { accent: '#7ee787', bg: 'rgba(126,231,135,0.1)' }
+  architectural: { accent: '#7ee787', bg: 'rgba(126,231,135,0.1)' },
+  aggregator: { accent: '#ffcc66', bg: 'rgba(255,204,102,0.1)' }
 };
 
 const slugify = (name) => name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -555,7 +559,7 @@ function render() {
   
   grid.innerHTML = data.map(item => {
     const colors = categoryColors[item.categories[0]] || categoryColors.chat;
-    const categoryDisplayNames = { code: 'coding', niche: 'niche ai', supercomputer: 'super cmptr', notai: 'not ai', voice: 'voice ai', local: 'local ai', architectural: 'architectural ai' };
+    const categoryDisplayNames = { code: 'coding', niche: 'niche ai', supercomputer: 'super cmptr', notai: 'not ai', voice: 'voice ai', local: 'local ai', architectural: 'architectural ai', aggregator: 'ai aggregator' };
     const displayCat = c => categoryDisplayNames[c] || c;
     const categoryLabel = displayCat(item.categories[0]);
     const secondaryTags = item.categories.slice(1).map(cat => {
@@ -563,7 +567,7 @@ function render() {
       return `<span class="card-tag" style="background:${c.bg};color:${c.accent};border:1px solid ${c.accent}" onclick="event.stopPropagation(); filterByCategory('${cat}')">${displayCat(cat)}</span>`;
     }).join('');
     
-    const toolPage = `tool/${slugify(item.name)}.html`;
+    const toolPage = `tool.html?slug=${encodeURIComponent(slugify(item.name))}`;
 
     return `
       <div class="card" style="--accent:${colors.accent};--accent-bg:${colors.bg}" onclick="window.location.href='${toolPage}'">

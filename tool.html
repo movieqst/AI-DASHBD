@@ -304,7 +304,8 @@ const categoryColors = {
   notai: { accent: '#8b949e', bg: 'rgba(139,148,158,0.1)' },
   voice: { accent: '#ff9bce', bg: 'rgba(255,155,206,0.1)' },
   local: { accent: '#f85149', bg: 'rgba(248,81,73,0.1)' },
-  architectural: { accent: '#7ee787', bg: 'rgba(126,231,135,0.1)' }
+  architectural: { accent: '#7ee787', bg: 'rgba(126,231,135,0.1)' },
+  aggregator: { accent: '#ffcc66', bg: 'rgba(255,204,102,0.1)' }
 };
 
 function formatTraffic(n) {
@@ -377,7 +378,7 @@ async function loadTool() {
     // Meta badges
     const metaBadges = document.getElementById('meta-badges');
     metaBadges.innerHTML = '';
-    const categoryNames = { code: 'Coding', niche: 'Niche AI', supercomputer: 'Supercomputer', notai: 'Not AI', voice: 'Voice AI', local: 'Local AI', architectural: 'Architectural AI' };
+    const categoryNames = { code: 'Coding', niche: 'Niche AI', supercomputer: 'Supercomputer', notai: 'Not AI', voice: 'Voice AI', local: 'Local AI', architectural: 'Architectural AI', aggregator: 'AI Aggregator' };
     
     // UPDATED: dash.html → index.html in the href below
     tool.categories.forEach(cat => {
