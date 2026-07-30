@@ -3,614 +3,490 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Control Dashboard</title>
+<title>Movie Quest Canada — DVD, Blu-ray, VHS &amp; Music CDs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: #0a0e1a;
-    color: #c9d1d9;
-    min-height: 100vh;
-    padding-bottom: 40px;
+  :root{
+    --ink:#131211;
+    --paper:#FAF8F3;
+    --card:#F1ECE0;
+    --red:#C8102E;
+    --red-dark:#98081F;
+    --stone:#8C8578;
+    --line:#E1DACB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  /* ---------- Header / Marquee ---------- */
+  header{
+    background:var(--ink);
+    color:var(--paper);
+    padding:18px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    border-bottom:6px solid var(--red);
+  }
+  .wordmark{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(1.6rem,3.2vw,2.4rem);
+    letter-spacing:1px;
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    text-decoration:none;
+  }
+  .wordmark span{color:var(--red);}
+  .header-right{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .search-wrap{
+    position:relative;
+  }
+  #searchInput{
+    background:#1f1e1c;
+    border:1px solid #3a3833;
+    color:var(--paper);
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.9rem;
+    padding:10px 14px 10px 34px;
+    border-radius:4px;
+    width:220px;
+    outline:none;
+  }
+  #searchInput::placeholder{color:#8a877e;}
+  .search-wrap::before{
+    content:"⌕";
+    position:absolute;
+    left:12px; top:50%;
+    transform:translateY(-50%);
+    color:#8a877e;
+    font-size:1.1rem;
+  }
+  .store-link{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.8rem;
+    font-weight:700;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    background:var(--red);
+    color:var(--paper);
+    padding:10px 16px;
+    border-radius:4px;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:background 0.15s;
+  }
+  .store-link:hover{background:var(--red-dark);}
+
+  /* ---------- Category strip (film-reel nav) ---------- */
+  .reel-nav{
+    background:var(--ink);
+    padding:0 20px 14px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    border-bottom:1px solid #2a2925;
+  }
+  .reel-tab{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    font-weight:700;
+    letter-spacing:0.4px;
+    text-transform:uppercase;
+    color:#c9c4b8;
+    background:#1f1e1c;
+    border:1px solid #34322d;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:all 0.15s;
+    position:relative;
+  }
+  .reel-tab::before{
+    content:"○";
+    color:#514f48;
+    margin-right:6px;
+    font-size:0.7rem;
+  }
+  .reel-tab:hover{ border-color:var(--red); color:var(--paper); }
+  .reel-tab.active{
+    background:var(--red);
+    border-color:var(--red);
+    color:var(--paper);
+  }
+  .reel-tab.active::before{ color:var(--paper); }
+
+  .year-strip{
+    background:#0f0e0d;
+    padding:12px 20px;
+    display:none;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  .year-strip.visible{ display:flex; }
+  .year-chip{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    font-weight:500;
+    color:#a29d90;
+    background:transparent;
+    border:1px solid #2f2d28;
+    padding:5px 11px;
+    border-radius:3px;
+    cursor:pointer;
+    transition:all 0.15s;
+  }
+  .year-chip:hover{ color:var(--paper); border-color:var(--stone); }
+  .year-chip.active{
+    color:var(--ink);
+    background:var(--paper);
+    border-color:var(--paper);
   }
 
-  .affiliate-notice {
-    text-align: center;
-    padding: 8px 16px;
-    background: #0d1117;
-    border-bottom: 1px solid #1c2128;
-    font-size: 14.3px;
-    color: #8b949e;
-    letter-spacing: 0.3px;
+  /* ---------- Controls ---------- */
+  .controls-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 28px 6px;
+    flex-wrap:wrap;
+    gap:12px;
   }
-  .affiliate-notice .notice-word {
-    font-size: 16.9px;
-    font-weight: 700;
-    color: #ff6b6b;
-    text-decoration: underline;
-    text-underline-offset: 2px;
+  .result-count{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.85rem;
+    color:var(--stone);
   }
-
-  .top-nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 12px 16px;
-    background: #0d1117;
-    border-bottom: 1px solid #1c2128;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .nav-tab {
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 1.01rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
-    background: transparent;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .nav-tab:hover { transform: translateY(-1px); }
-  .nav-tab.active { border-color: currentColor; box-shadow: 0 0 10px currentColor; }
-
-  .tab-all       { color: #ff4444; }
-  .tab-all:hover, .tab-all.active       { background: rgba(255,68,68,0.1); }
-  .tab-chat      { color: #58a6ff; }
-  .tab-chat:hover, .tab-chat.active     { background: rgba(88,166,255,0.1); }
-  .tab-image     { color: #f0883e; }
-  .tab-image:hover, .tab-image.active   { background: rgba(240,136,62,0.1); }
-  .tab-audio     { color: #a371f7; }
-  .tab-audio:hover, .tab-audio.active   { background: rgba(163,113,247,0.1); }
-  .tab-video     { color: #39c5cf; }
-  .tab-video:hover, .tab-video.active   { background: rgba(57,197,207,0.1); }
-  .tab-code      { color: #3fb950; }
-  .tab-code:hover, .tab-code.active     { background: rgba(63,185,80,0.1); }
-  .tab-supercomputer  { color: #ff2d78; }
-  .tab-supercomputer:hover, .tab-supercomputer.active { background: rgba(255,45,120,0.1); }
-  .tab-niche     { color: #d29922; }
-  .tab-niche:hover, .tab-niche.active   { background: rgba(210,153,34,0.1); }
-  .tab-notai     { color: #8b949e; }
-  .tab-notai:hover, .tab-notai.active   { background: rgba(139,148,158,0.1); }
-  .tab-voice     { color: #ff9bce; }
-  .tab-voice:hover, .tab-voice.active   { background: rgba(255,155,206,0.1); }
-  .tab-local     { color: #f85149; }
-  .tab-local:hover, .tab-local.active   { background: rgba(248,81,73,0.1); }
-  .tab-architectural { color: #7ee787; }
-  .tab-architectural:hover, .tab-architectural.active { background: rgba(126,231,135,0.1); }
-  .tab-aggregator { color: #ffcc66; }
-  .tab-aggregator:hover, .tab-aggregator.active { background: rgba(255,204,102,0.1); }
-
-  .top-hero {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: start;
-    gap: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 25px 20px 20px;
-  }
-  .hero-left {
-    display: flex;
-    justify-content: center;
-  }
-  .hero-right {
-    display: flex;
-    justify-content: flex-end;
-  }
-  .header-logo {
-    width: 150px;
-    height: 150px;
-    flex-shrink: 0;
-    border-radius: 14px;
-    object-fit: contain;
-  }
-  .top-hero-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 14px;
-  }
-  .header-text { text-align: center; }
-  .header-text h1 {
-    font-size: 2.08rem;
-    font-weight: 700;
-    color: #e6edf3;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-  }
-  .header-text .subtitle {
-    font-size: 1.82rem;
-    color: #ff6b6b;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    margin-top: 4px;
-    font-weight: 600;
+  select{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.8rem;
+    padding:7px 10px;
+    border-radius:4px;
+    border:1px solid var(--line);
+    background:var(--paper);
+    color:var(--ink);
   }
 
-  .search-bar {
-    width: 100%;
-    max-width: 500px;
-    margin: 0;
-    padding: 0;
+  /* ---------- Card grid ---------- */
+  .cards-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:22px;
+    padding:18px 28px 60px;
   }
-  .search-bar input {
-    width: 100%;
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: 1px solid #1c2128;
-    background: #0d1117;
-    color: #c9d1d9;
-    font-size: 1.17rem;
-    outline: none;
-    transition: border-color 0.2s;
+  .card{
+    background:var(--card);
+    border-radius:6px;
+    overflow:hidden;
+    text-decoration:none;
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    box-shadow:0 2px 0 var(--line);
+    transition:transform 0.15s, box-shadow 0.15s;
   }
-  .search-bar input:focus { border-color: #58a6ff; }
-  .search-bar input::placeholder { color: #484f58; }
-
-  .controls {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    padding: 0;
-    flex-wrap: wrap;
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 24px rgba(0,0,0,0.18);
   }
-  .control-group {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.98rem;
-    color: #8b949e;
+  .card-poster{
+    position:relative;
+    aspect-ratio:5/7;
+    background:#e5ded0;
+    overflow:hidden;
   }
-  .control-group select {
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid #1c2128;
-    background: #0d1117;
-    color: #c9d1d9;
-    font-size: 0.98rem;
-    cursor: pointer;
-    outline: none;
+  .card-poster img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
   }
-
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    padding: 0 20px;
-    max-width: 1400px;
-    margin: 0 auto;
+  .format-tag{
+    position:absolute;
+    top:0; right:0;
+    background:var(--red);
+    color:var(--paper);
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:0.68rem;
+    letter-spacing:0.5px;
+    padding:5px 10px 5px 14px;
+    clip-path:polygon(15px 0, 100% 0, 100% 100%, 0 100%);
   }
-
-  .card {
-    background: #161b22;
-    border: 2px solid var(--accent, #1c2128);
-    border-radius: 12px;
-    padding: 18px;
-    transition: all 0.25s ease;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+  .card-body{
+    padding:12px 14px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    flex:1;
   }
-  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--accent, #58a6ff);
-    opacity: 0;
-    transition: opacity 0.25s;
+  .card-title{
+    font-weight:700;
+    font-size:0.95rem;
+    line-height:1.25;
   }
-  .card:hover::before { opacity: 1; }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-    padding-right: 70px;
+  .card-barcode{
+    margin-top:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    color:var(--stone);
+    padding-top:8px;
+    border-top:1px dashed var(--line);
   }
-  .card-icon {
-    width: 42px; height: 42px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.69rem;
-    background: var(--accent-bg, rgba(88,166,255,0.1));
-    flex-shrink: 0;
-  }
-  .card-title { font-size: 1.82rem; font-weight: 700; color: #e6edf3; line-height: 1.2; }
-  .card-category {
-    font-size: 1.18rem; text-transform: uppercase; letter-spacing: 1px;
-    color: var(--accent, #58a6ff); font-weight: 600; margin-top: 2px; cursor: pointer;
+  .card-price{
+    font-weight:700;
+    color:var(--red);
   }
 
-  .card-meta {
-    margin-top: auto; margin-bottom: auto;
-    display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+  .empty-state{
+    grid-column:1/-1;
+    text-align:center;
+    padding:60px 20px;
+    color:var(--stone);
+    font-family:'JetBrains Mono',monospace;
   }
-  .card-rating { text-align: right; line-height: 1.2; color: #ffffff; }
-  .card-rating-label { display: block; font-size: 0.635rem; font-weight: 600; }
-  .card-rating-value { display: block; font-size: 1.27rem; font-weight: 700; }
-  .card-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .card-tag {
-    font-size: 1rem; padding: 3px 8px; border-radius: 4px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer;
-  }
-  .card-badge {
-    font-size: 1.18rem; padding: 3px 8px; border-radius: 4px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer;
-  }
-  .badge-free { background: rgba(139,148,158,0.15); color: #8b949e; border: 1px solid #8b949e; }
-  .badge-paid { background: rgba(193,140,90,0.15); color: #c18c5a; border: 1px solid #c18c5a; }
-  .badge-affiliate { background: rgba(255,107,107,0.15); color: #ff6b6b; border: 1px solid #ff6b6b; }
 
-  .card-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-top: auto; padding-top: 12px; border-top: 1px solid #1c2128;
+  /* ---------- Ad banner ---------- */
+  .ad-banner{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    padding:0 28px 40px;
   }
-  .card-url { font-size: 1.51rem; color: #ffffff; text-decoration: underline; opacity: 0.7; transition: opacity 0.2s; }
-  .card-url:hover { opacity: 1; }
-  .card-traffic { color: #ffffff; }
-  .card-traffic-corner {
-    position: absolute; top: 14px; right: 16px; text-align: right; line-height: 1.2;
+  .ad-slot{
+    background:var(--card);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    min-height:90px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'JetBrains Mono',monospace;
+    color:var(--stone);
+    font-size:0.8rem;
   }
-  .card-traffic-label { display: block; font-size: 0.635rem; }
-  .card-traffic-value { display: block; font-size: 1.27rem; }
+  .ad-slot img{ max-height:160px; }
 
-  .no-results { text-align: center; padding: 60px 20px; color: #484f58; font-size: 1.17rem; }
-
-  .ad-banner {
-    max-width: 1400px;
-    margin: 30px auto 0;
-    padding: 16px 20px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    border-top: 1px solid #1c2128;
-  }
-  .ad-slot {
-    display: flex; align-items: center; justify-content: center;
-    min-height: 76px;
-    background: #0d1117;
-    border: 1px solid #1c2128;
-    border-radius: 10px;
-    padding: 8px;
-  }
-  .ad-slot img { max-width: 100%; height: auto; border-radius: 10px; }
-  .ad-slot.empty { color: #484f58; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; border-style: dashed; }
-
-  @media (max-width: 640px) {
-    .cards-grid { grid-template-columns: 1fr; padding: 0 12px; }
-    .top-hero { grid-template-columns: 1fr; justify-items: center; text-align: center; }
-    .hero-left { justify-content: center; }
-    .hero-right { display: none; }
-    .header-logo { width: 90px; height: 90px; }
-    .top-hero-content { align-items: center; gap: 14px; width: 100%; }
-    .header-text { text-align: center; }
-    .header-text h1 { font-size: 1.56rem; letter-spacing: 2px; }
-    .search-bar { max-width: 100%; }
-    .controls { justify-content: center; }
-    .nav-tab { padding: 5px 10px; font-size: 0.91rem; }
-    .ad-banner { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width:640px){
+    header{padding:14px 16px;}
+    .reel-nav, .year-strip{ padding-left:16px; padding-right:16px; }
+    .controls-bar{ padding-left:16px; padding-right:16px; }
+    .cards-grid{ padding-left:16px; padding-right:16px; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:14px; }
+    #searchInput{ width:160px; }
+    .ad-banner{ grid-template-columns:repeat(2,1fr); padding-left:16px; padding-right:16px; }
   }
 </style>
+<base target="_blank">
 </head>
 <body>
 
-<div class="affiliate-notice">
-  <span class="notice-word">NOTICE:</span> AFFILIATE LINKS ARE EMBEDDED. BY USING THIS APP AND CLICKING THE LINK YOU ARE PROVIDING SUPPORT. THANK YOU!
-</div>
-
-<div class="top-nav" id="topNav">
-  <div class="nav-tab tab-all active" data-filter="all" onclick="selectNavTab(this, 'all')">● ALL</div>
-  <div class="nav-tab tab-chat" data-filter="chat" onclick="selectNavTab(this, 'chat')">💬 Chat AI</div>
-  <div class="nav-tab tab-image" data-filter="image" onclick="selectNavTab(this, 'image')">🎨 Image AI</div>
-  <div class="nav-tab tab-video" data-filter="video" onclick="selectNavTab(this, 'video')">🎬 Video AI</div>
-  <div class="nav-tab tab-audio" data-filter="audio" onclick="selectNavTab(this, 'audio')">🔊 Audio AI</div>
-  <div class="nav-tab tab-code" data-filter="code" onclick="selectNavTab(this, 'code')">💻 Coding AI</div>
-  <div class="nav-tab tab-supercomputer" data-filter="supercomputer" onclick="selectNavTab(this, 'supercomputer')">🖥️ Super Cmptr</div>
-  <div class="nav-tab tab-niche" data-filter="niche" onclick="selectNavTab(this, 'niche')">🧩 Niche AI</div>
-  <div class="nav-tab tab-voice" data-filter="voice" onclick="selectNavTab(this, 'voice')">🗣️ Voice AI</div>
-  <div class="nav-tab tab-notai" data-filter="notai" onclick="selectNavTab(this, 'notai')">🚫 Not AI</div>
-  <div class="nav-tab tab-local" data-filter="local" onclick="selectNavTab(this, 'local')">🏠 Local AI</div>
-  <div class="nav-tab tab-architectural" data-filter="architectural" onclick="selectNavTab(this, 'architectural')">🏛️ Architectural AI</div>
-  <div class="nav-tab tab-aggregator" data-filter="aggregator" onclick="selectNavTab(this, 'aggregator')">🔀 AI Aggregator</div>
-</div>
-
-<div class="top-hero">
-  <div class="hero-left">
-    <img src="aidashbd.gif" alt="AI DASHBD" class="header-logo">
-  </div>
-
-  <div class="top-hero-content">
-    <div class="header-text">
-      <h1>AI-DASHBD</h1>
-      <div class="subtitle" id="appCounter">Loading...</div>
+<header>
+  <a class="wordmark" href="./">MOVIE QUEST<span>·</span>CANADA</a>
+  <div class="header-right">
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="Search titles...">
     </div>
-
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search AI tools...">
-    </div>
-
-    <div class="controls">
-      <div class="control-group">
-        <label>Sort by:</label>
-        <select id="sortSelect">
-          <option value="rating" selected>Rating</option>
-          <option value="traffic">Traffic</option>
-          <option value="name">Name</option>
-          <option value="recent">Recently Added</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>Filter:</label>
-        <select id="filterSelect">
-          <option value="all">All</option>
-          <option value="free">Free Only</option>
-          <option value="paid">Paid Only</option>
-        </select>
-      </div>
-    </div>
+    <a class="store-link" href="https://www.ebay.ca/str/moviequest?mkcid=1&mkrid=706-53473-19255-0&siteid=2&campid=5339133571&customid=header&toolid=10001&mkevt=1" target="_blank" rel="noopener">Visit eBay Store →</a>
   </div>
+</header>
 
-  <div class="hero-right" id="heroRight">
-    <!-- Reserved for future Claude AI agent chat window -->
-  </div>
+<nav class="reel-nav" id="reelNav"></nav>
+<div class="year-strip" id="yearStrip"></div>
+
+<div class="controls-bar">
+  <div class="result-count" id="resultCount">Loading catalogue…</div>
+  <select id="sortSelect">
+    <option value="title">Sort: Title A–Z</option>
+    <option value="year-desc">Sort: Newest first</option>
+    <option value="year-asc">Sort: Oldest first</option>
+    <option value="price">Sort: Price low–high</option>
+  </select>
 </div>
 
 <div class="cards-grid" id="cardsGrid"></div>
 
 <div class="ad-banner">
-  <div class="ad-slot">
-    <a id="logo-link" href="https://www.moviequest.ca/"><img src="https://moviequest.ca/logo.jpg" alt="MOVIE QUEST CANADA" width="70" height="70"></a>
-  </div>
-  <div class="ad-slot empty">Ad Space</div>
-  <div class="ad-slot empty">Ad Space</div>
-  <div class="ad-slot empty">Ad Space</div>
+
+ <div class="ad-slot"> <a id="logo-link" href="https://www.moviequest.ca/"><img src="https://moviequest.ca/logo.jpg" alt="MOVIE QUEST CANADA" width="150" height="150"></a></div>
+ 
+  <div class="ad-slot"><a id="logo-link" href="https://www.aidashbd.com/"><img src="https://www.aidashbd.com/aidashbd.gif" alt="AI-DASHBoarD" width="150" height="150"></a></div>
+ 
+   <div class="ad-slot"><a id="logo-link" href="https://www.aidashbd.com/PDF-FLATTENER.html"><img src="https://www.aidashbd.com/PDF-FLATTENER.jpg" alt="PDF FLATTENER" width="150" height="150"></a></div>
+  <div class="ad-slot">Ad Space</div>
 </div>
 
 <script>
-const categoryColors = {
-  chat:  { accent: '#58a6ff', bg: 'rgba(88,166,255,0.1)' },
-  image: { accent: '#f0883e', bg: 'rgba(240,136,62,0.1)' },
-  video: { accent: '#39c5cf', bg: 'rgba(57,197,207,0.1)' },
-  audio: { accent: '#a371f7', bg: 'rgba(163,113,247,0.1)' },
-  code:  { accent: '#3fb950', bg: 'rgba(63,185,80,0.1)' },
-  supercomputer: { accent: '#ff2d78', bg: 'rgba(255,45,120,0.1)' },
-  niche: { accent: '#d29922', bg: 'rgba(210,153,34,0.1)' },
-  notai: { accent: '#8b949e', bg: 'rgba(139,148,158,0.1)' },
-  voice: { accent: '#ff9bce', bg: 'rgba(255,155,206,0.1)' },
-  local: { accent: '#f85149', bg: 'rgba(248,81,73,0.1)' },
-  architectural: { accent: '#7ee787', bg: 'rgba(126,231,135,0.1)' },
-  aggregator: { accent: '#ffcc66', bg: 'rgba(255,204,102,0.1)' }
-};
+const CATEGORIES = [
+  { code:'all',      label:'All' },
+  { code:'pre1949',  label:'Pre-1949' },
+  { code:'1950s',    label:'1950s' },
+  { code:'1960s',    label:'1960s' },
+  { code:'1970s',    label:'1970s' },
+  { code:'1980s',    label:'1980s', years:[1980,1981,1982,1983,1984,1985,1986,1987,1988,1989] },
+  { code:'1990s',    label:'1990s', years:[1990,1991,1992,1993,1994,1995,1996,1997,1998,1999] },
+  { code:'2000s',    label:'2000s', years:[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009] },
+  { code:'2010s',    label:'2010s', years:[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019] },
+  { code:'2020s',    label:'2020s' },
+  { code:'tvseries', label:'TV Series' },
+  { code:'etc',      label:'ETC' },
+  { code:'music',    label:'Music CDs' }
+];
 
 const slugify = (name) => name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-let allData = [];
-let currentFilter = 'all';
-let currentSort = 'rating';
-let currentFreeFilter = 'all';
-let currentAffiliateFilter = false;
-let searchQuery = '';
+let allItems = [];
+let activeCategory = 'all';
+let activeYear = null;
+let searchTerm = '';
 
-async function loadData() {
-  try {
-    const res = await fetch('data.json');
-    allData = await res.json();
-    applyUrlParams();
-    render();
-    const counter = document.getElementById('appCounter');
-    if (counter) counter.textContent = allData.length + ' AI APPS';
-  } catch (e) {
-    document.getElementById('cardsGrid').innerHTML = 
-      '<div class="no-results">Error loading data. Please check that data.json is in the same folder.</div>';
-  }
-}
+const reelNav = document.getElementById('reelNav');
+const yearStrip = document.getElementById('yearStrip');
+const cardsGrid = document.getElementById('cardsGrid');
+const resultCount = document.getElementById('resultCount');
+const sortSelect = document.getElementById('sortSelect');
+const searchInput = document.getElementById('searchInput');
 
-function applyUrlParams() {
-  const params = new URLSearchParams(window.location.search);
-  const cat = params.get('category');
-  const free = params.get('free');
-
-  if (cat) {
-    currentFilter = cat;
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    const tab = document.querySelector(`.nav-tab[data-filter="${cat}"]`);
-    if (tab) tab.classList.add('active');
-  }
-
-  if (free === 'true' || free === 'false') {
-    currentFreeFilter = free === 'true' ? 'free' : 'paid';
-    const filterSelect = document.getElementById('filterSelect');
-    if (filterSelect) filterSelect.value = currentFreeFilter;
-  }
-}
-
-function formatTraffic(n) {
-  let value;
-  if (n >= 1000000) {
-    value = (n / 1000000).toFixed(n % 1000000 === 0 ? 0 : 1) + 'M';
-  } else if (n >= 1000) {
-    value = Math.round(n / 1000) + 'K';
-  } else {
-    value = String(n);
-  }
-  return `<span class="card-traffic-label">DAILY TRAFFIC </span><span class="card-traffic-value">${value}</span>`;
-}
-
-function selectNavTab(el, filterValue) {
-  currentFilter = filterValue;
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  render();
-}
-
-function filterByCategory(cat) {
-  currentFilter = cat;
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  const tab = document.querySelector(`.nav-tab[data-filter="${cat}"]`);
-  if (tab) tab.classList.add('active');
-  currentFreeFilter = 'all';
-  currentAffiliateFilter = false;
-  const filterSelect = document.getElementById('filterSelect');
-  if (filterSelect) filterSelect.value = 'all';
-  render();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function showOnly(type) {
-  currentFilter = 'all';
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector('.tab-all').classList.add('active');
-
-  if (type === 'free') {
-    currentFreeFilter = 'free';
-    currentAffiliateFilter = false;
-  } else if (type === 'paid') {
-    currentFreeFilter = 'paid';
-    currentAffiliateFilter = false;
-  } else if (type === 'affiliate') {
-    currentFreeFilter = 'all';
-    currentAffiliateFilter = true;
-  }
-
-  const filterSelect = document.getElementById('filterSelect');
-  if (filterSelect) filterSelect.value = currentFreeFilter;
-
-  render();
-}
-
-function getFilteredData() {
-  let data = [...allData];
-  
-  if (currentFilter !== 'all') {
-    data = data.filter(item => item.categories.includes(currentFilter));
-  }
-  
-  if (currentFreeFilter === 'free') {
-    data = data.filter(item => item.free === true);
-  } else if (currentFreeFilter === 'paid') {
-    data = data.filter(item => item.free === false);
-  }
-  
-  if (currentAffiliateFilter) {
-    data = data.filter(item => item.affiliate === true);
-  }
-  
-  if (searchQuery) {
-    const q = searchQuery.toLowerCase();
-    data = data.filter(item => 
-      item.name.toLowerCase().includes(q) ||
-      item.desc.toLowerCase().includes(q) ||
-      item.categories.some(c => c.toLowerCase().includes(q))
-    );
-  }
-  
-  data.sort((a, b) => {
-    if (currentSort === 'name') return a.name.localeCompare(b.name);
-    if (currentSort === 'traffic') return b.traffic - a.traffic;
-    if (currentSort === 'recent') return (b.order ?? 0) - (a.order ?? 0);
-    // Default "Rating" sort: perfect 10/10s first, then Free Tier tools first, then by rating
-    const aTen = a.rating === 10 ? 1 : 0;
-    const bTen = b.rating === 10 ? 1 : 0;
-    if (bTen !== aTen) return bTen - aTen;
-    const aFree = a.free ? 1 : 0;
-    const bFree = b.free ? 1 : 0;
-    if (bFree !== aFree) return bFree - aFree;
-    return b.rating - a.rating;
+function buildReelNav(){
+  reelNav.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const tab = document.createElement('div');
+    tab.className = 'reel-tab' + (cat.code === activeCategory ? ' active' : '');
+    tab.textContent = cat.label;
+    tab.onclick = () => {
+      activeCategory = cat.code;
+      activeYear = null;
+      buildReelNav();
+      buildYearStrip();
+      render();
+    };
+    reelNav.appendChild(tab);
   });
-  
-  const counter = document.getElementById('appCounter');
-  if (counter) {
-    const total = allData.length;
-    const showing = data.length;
-    const catColor = currentFilter !== 'all' ? (categoryColors[currentFilter] || {}).accent : null;
-    const showingSpan = catColor ? `<span style="color:${catColor}">${showing}</span>` : showing;
-    if (currentFilter === 'all' && !searchQuery && currentFreeFilter === 'all' && !currentAffiliateFilter) {
-      counter.innerHTML = total + ' AI APPS';
-    } else {
-      counter.innerHTML = showingSpan + ' OF ' + total + ' AI APPS';
-    }
-  }
-  
-  return data;
 }
 
-function render() {
-  const grid = document.getElementById('cardsGrid');
-  const data = getFilteredData();
-  
-  if (data.length === 0) {
-    grid.innerHTML = '<div class="no-results">No tools found matching your criteria.</div>';
+function buildYearStrip(){
+  const cat = CATEGORIES.find(c => c.code === activeCategory);
+  if (!cat || !cat.years){
+    yearStrip.classList.remove('visible');
+    yearStrip.innerHTML = '';
     return;
   }
-  
-  grid.innerHTML = data.map(item => {
-    const colors = categoryColors[item.categories[0]] || categoryColors.chat;
-    const categoryDisplayNames = { code: 'coding', niche: 'niche ai', supercomputer: 'super cmptr', notai: 'not ai', voice: 'voice ai', local: 'local ai', architectural: 'architectural ai', aggregator: 'ai aggregator' };
-    const displayCat = c => categoryDisplayNames[c] || c;
-    const categoryLabel = displayCat(item.categories[0]);
-    const secondaryTags = item.categories.slice(1).map(cat => {
-      const c = categoryColors[cat] || categoryColors.chat;
-      return `<span class="card-tag" style="background:${c.bg};color:${c.accent};border:1px solid ${c.accent}" onclick="event.stopPropagation(); filterByCategory('${cat}')">${displayCat(cat)}</span>`;
-    }).join('');
-    
-    const toolPage = `tool.html?slug=${encodeURIComponent(slugify(item.name))}`;
+  yearStrip.classList.add('visible');
+  yearStrip.innerHTML = '';
+  cat.years.forEach(y => {
+    const chip = document.createElement('div');
+    chip.className = 'year-chip' + (activeYear === y ? ' active' : '');
+    chip.textContent = y;
+    chip.onclick = () => {
+      activeYear = (activeYear === y) ? null : y;
+      buildYearStrip();
+      render();
+    };
+    yearStrip.appendChild(chip);
+  });
+}
 
-    return `
-      <div class="card" style="--accent:${colors.accent};--accent-bg:${colors.bg}" onclick="window.location.href='${toolPage}'">
-        <span class="card-traffic card-traffic-corner">${formatTraffic(item.traffic)}</span>
-        <div class="card-header">
-          <div class="card-icon">${item.icon}</div>
-          <div>
-            <div class="card-title">${item.name}</div>
-            <div class="card-category" onclick="event.stopPropagation(); filterByCategory('${item.categories[0]}')">${categoryLabel}</div>
-          </div>
-        </div>
-        <div class="card-meta">
-          <div class="card-badges">
-            ${secondaryTags}
-            <span class="card-badge ${item.free ? 'badge-free' : 'badge-paid'}" onclick="event.stopPropagation(); showOnly('${item.free ? 'free' : 'paid'}')">${item.free ? 'Free' : 'Paid'}</span>
-            ${item.affiliate ? `<span class="card-badge badge-affiliate" onclick="event.stopPropagation(); showOnly('affiliate')">Affiliate</span>` : ''}
-          </div>
-        </div>
-        <div class="card-footer">
-          <a class="card-url" href="${toolPage}" onclick="event.stopPropagation()">${item.url}</a>
-          <div class="card-rating"><span class="card-rating-value">${item.rating}</span><span class="card-rating-label">RATING</span></div>
+function formatPrice(p){
+  if (p === undefined || p === null) return '—';
+  return '$' + Number(p).toFixed(2);
+}
+
+function render(){
+  let items = allItems.filter(item => {
+    if (activeCategory !== 'all' && !(item.categories || []).includes(activeCategory)) return false;
+    if (activeYear){
+      const itemYears = item.years || (item.year != null ? [item.year] : []);
+      if (!itemYears.includes(activeYear)) return false;
+    }
+    if (searchTerm && !item.title.toLowerCase().includes(searchTerm)) return false;
+    return true;
+  });
+
+  switch(sortSelect.value){
+    case 'year-desc': items.sort((a,b) => (b.year||0) - (a.year||0)); break;
+    case 'year-asc':  items.sort((a,b) => (a.year||0) - (b.year||0)); break;
+    case 'price':     items.sort((a,b) => (a.price||0) - (b.price||0)); break;
+    default:          items.sort((a,b) => a.title.localeCompare(b.title));
+  }
+
+  resultCount.textContent = `${items.length} item${items.length === 1 ? '' : 's'} in the catalogue`;
+
+  cardsGrid.innerHTML = '';
+  if (items.length === 0){
+    cardsGrid.innerHTML = '<div class="empty-state">No titles match that search. Try another year, category, or keyword.</div>';
+    return;
+  }
+
+  items.forEach(item => {
+    const a = document.createElement('a');
+    a.className = 'card';
+    a.href = `item.html?id=${encodeURIComponent(item.id)}`;
+    a.innerHTML = `
+      <div class="card-poster">
+        <img src="${item.image}" alt="${item.title}" loading="lazy">
+        <div class="format-tag">${item.format}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${item.title}</div>
+        <div class="card-barcode">
+          <span>${item.year || ''}</span>
+          <span class="card-price">${formatPrice(item.price)}</span>
         </div>
       </div>
     `;
-  }).join('');
+    cardsGrid.appendChild(a);
+  });
 }
 
-document.getElementById('searchInput').addEventListener('input', e => {
-  searchQuery = e.target.value;
+async function init(){
+  const params = new URLSearchParams(window.location.search);
+  const catParam = params.get('cat');
+  const yearParam = params.get('year');
+  const qParam = params.get('q');
+
+  if (catParam && CATEGORIES.some(c => c.code === catParam)) activeCategory = catParam;
+  if (yearParam) activeYear = parseInt(yearParam, 10);
+  if (qParam){
+    searchTerm = qParam.toLowerCase().trim();
+    searchInput.value = qParam;
+  }
+
+  buildReelNav();
+  buildYearStrip();
+  try {
+    const res = await fetch('data.json');
+    allItems = await res.json();
+    render();
+  } catch (err){
+    resultCount.textContent = 'Error loading catalogue.';
+    console.error(err);
+  }
+}
+
+sortSelect.addEventListener('change', render);
+searchInput.addEventListener('input', (e) => {
+  searchTerm = e.target.value.toLowerCase().trim();
   render();
 });
 
-document.getElementById('sortSelect').addEventListener('change', e => {
-  currentSort = e.target.value;
-  render();
-});
-
-document.getElementById('filterSelect').addEventListener('change', e => {
-  currentFreeFilter = e.target.value;
-  render();
-});
-
-loadData();
+init();
 </script>
 </body>
 </html>
