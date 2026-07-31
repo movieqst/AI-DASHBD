@@ -72,17 +72,17 @@
   .tab-video     { color: #39c5cf; }
   .tab-video:hover, .tab-video.active   { background: rgba(57,197,207,0.1); }
   .tab-code      { color: #3fb950; }
-  .tab-code:hover, .tab-code.active     { background: rgba(63,185,80,0.1); }
+  .tab-code:hover, .tab-code.active    { background: rgba(63,185,80,0.1); }
   .tab-supercomputer  { color: #ff2d78; }
   .tab-supercomputer:hover, .tab-supercomputer.active { background: rgba(255,45,120,0.1); }
   .tab-niche     { color: #d29922; }
-  .tab-niche:hover, .tab-niche.active   { background: rgba(210,153,34,0.1); }
+  .tab-niche:hover, .tab-niche.active  { background: rgba(210,153,34,0.1); }
   .tab-notai     { color: #8b949e; }
-  .tab-notai:hover, .tab-notai.active   { background: rgba(139,148,158,0.1); }
+  .tab-notai:hover, .tab-notai.active  { background: rgba(139,148,158,0.1); }
   .tab-voice     { color: #ff9bce; }
-  .tab-voice:hover, .tab-voice.active   { background: rgba(255,155,206,0.1); }
+  .tab-voice:hover, .tab-voice.active  { background: rgba(255,155,206,0.1); }
   .tab-local     { color: #f85149; }
-  .tab-local:hover, .tab-local.active   { background: rgba(248,81,73,0.1); }
+  .tab-local:hover, .tab-local.active  { background: rgba(248,81,73,0.1); }
   .tab-architectural { color: #7ee787; }
   .tab-architectural:hover, .tab-architectural.active { background: rgba(126,231,135,0.1); }
   .tab-aggregator { color: #ffcc66; }
@@ -268,6 +268,38 @@
   .card-traffic-label { display: block; font-size: 0.635rem; }
   .card-traffic-value { display: block; font-size: 1.27rem; }
 
+  #loadingOverlay {
+    text-align: center;
+    padding: 80px 20px;
+    color: #58a6ff;
+    font-size: 1.3rem;
+  }
+  #loadingOverlay::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(88,166,255,0.2);
+    border-top-color: #58a6ff;
+    border-radius: 50%;
+    margin: 20px auto 0;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #errorMessage {
+    text-align: center;
+    padding: 40px 20px;
+    color: #ff6b6b;
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 40px auto;
+    background: rgba(255,107,107,0.08);
+    border: 1px solid rgba(255,107,107,0.3);
+    border-radius: 10px;
+  }
+  #errorMessage strong { display: block; font-size: 1.4rem; margin-bottom: 8px; }
+
   .no-results { text-align: center; padding: 60px 20px; color: #484f58; font-size: 1.17rem; }
 
   .ad-banner {
@@ -313,19 +345,19 @@
 </div>
 
 <div class="top-nav" id="topNav">
-  <div class="nav-tab tab-all active" data-filter="all" onclick="selectNavTab(this, 'all')">● ALL</div>
-  <div class="nav-tab tab-chat" data-filter="chat" onclick="selectNavTab(this, 'chat')">💬 Chat AI</div>
-  <div class="nav-tab tab-image" data-filter="image" onclick="selectNavTab(this, 'image')">🎨 Image AI</div>
-  <div class="nav-tab tab-video" data-filter="video" onclick="selectNavTab(this, 'video')">🎬 Video AI</div>
-  <div class="nav-tab tab-audio" data-filter="audio" onclick="selectNavTab(this, 'audio')">🔊 Audio AI</div>
-  <div class="nav-tab tab-code" data-filter="code" onclick="selectNavTab(this, 'code')">💻 Coding AI</div>
-  <div class="nav-tab tab-supercomputer" data-filter="supercomputer" onclick="selectNavTab(this, 'supercomputer')">🖥️ Super Cmptr</div>
-  <div class="nav-tab tab-niche" data-filter="niche" onclick="selectNavTab(this, 'niche')">🧩 Niche AI</div>
-  <div class="nav-tab tab-voice" data-filter="voice" onclick="selectNavTab(this, 'voice')">🗣️ Voice AI</div>
-  <div class="nav-tab tab-notai" data-filter="notai" onclick="selectNavTab(this, 'notai')">🚫 Not AI</div>
-  <div class="nav-tab tab-local" data-filter="local" onclick="selectNavTab(this, 'local')">🏠 Local AI</div>
-  <div class="nav-tab tab-architectural" data-filter="architectural" onclick="selectNavTab(this, 'architectural')">🏛️ Architectural AI</div>
-  <div class="nav-tab tab-aggregator" data-filter="aggregator" onclick="selectNavTab(this, 'aggregator')">🔀 AI Aggregator</div>
+  <div class="nav-tab tab-all active" data-filter="all" onclick="selectNavTab(this, 'all')">ALL</div>
+  <div class="nav-tab tab-chat" data-filter="chat" onclick="selectNavTab(this, 'chat')">Chat AI</div>
+  <div class="nav-tab tab-image" data-filter="image" onclick="selectNavTab(this, 'image')">Image AI</div>
+  <div class="nav-tab tab-video" data-filter="video" onclick="selectNavTab(this, 'video')">Video AI</div>
+  <div class="nav-tab tab-audio" data-filter="audio" onclick="selectNavTab(this, 'audio')">Audio AI</div>
+  <div class="nav-tab tab-code" data-filter="code" onclick="selectNavTab(this, 'code')">Coding AI</div>
+  <div class="nav-tab tab-supercomputer" data-filter="supercomputer" onclick="selectNavTab(this, 'supercomputer')">Super Cmptr</div>
+  <div class="nav-tab tab-niche" data-filter="niche" onclick="selectNavTab(this, 'niche')">Niche AI</div>
+  <div class="nav-tab tab-voice" data-filter="voice" onclick="selectNavTab(this, 'voice')">Voice AI</div>
+  <div class="nav-tab tab-notai" data-filter="notai" onclick="selectNavTab(this, 'notai')">Not AI</div>
+  <div class="nav-tab tab-local" data-filter="local" onclick="selectNavTab(this, 'local')">Local AI</div>
+  <div class="nav-tab tab-architectural" data-filter="architectural" onclick="selectNavTab(this, 'architectural')">Architectural AI</div>
+  <div class="nav-tab tab-aggregator" data-filter="aggregator" onclick="selectNavTab(this, 'aggregator')">AI Aggregator</div>
 </div>
 
 <div class="top-hero">
@@ -350,7 +382,7 @@
           <option value="rating" selected>Rating</option>
           <option value="traffic">Traffic</option>
           <option value="name">Name</option>
-          <option value="recent">Recently Added</option>
+          <option value="order">Recently Added</option>
         </select>
       </div>
       <div class="control-group">
@@ -369,6 +401,8 @@
   </div>
 </div>
 
+<div id="loadingOverlay">Loading AI tools...</div>
+<div id="errorMessage" style="display:none"></div>
 <div class="cards-grid" id="cardsGrid"></div>
 
 <div class="ad-banner">
@@ -381,6 +415,46 @@
 </div>
 
 <script>
+// Category normalization: maps spaced display names to slugs (for categories.json compatibility)
+// Also handles the reverse: slug to display name mapping
+const categorySlugMap = {
+  'voice ai': 'voice',
+  'local ai': 'local',
+  'architectural ai': 'architectural',
+  'ai aggregator': 'aggregator'
+};
+
+const slugToDisplay = {
+  chat: 'Chat AI',
+  image: 'Image AI',
+  video: 'Video AI',
+  audio: 'Audio AI',
+  code: 'Coding AI',
+  supercomputer: 'Super Cmptr',
+  niche: 'Niche AI',
+  notai: 'Not AI',
+  voice: 'Voice AI',
+  local: 'Local AI',
+  architectural: 'Architectural AI',
+  aggregator: 'AI Aggregator'
+};
+
+// Normalize a category name from data: handle spaced names like "VOICE AI" -> slug "voice"
+function normalizeCategory(cat) {
+  if (!cat) return '';
+  const lower = cat.toLowerCase().trim();
+  return categorySlugMap[lower] || lower.replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+}
+
+// Check if a tool's categories array includes a given filter (handles both slug and spaced names)
+function toolMatchesFilter(toolCategories, filter) {
+  if (filter === 'all') return true;
+  return toolCategories.some(c => {
+    const normalized = normalizeCategory(c);
+    return normalized === filter;
+  });
+}
+
 const categoryColors = {
   chat:  { accent: '#58a6ff', bg: 'rgba(88,166,255,0.1)' },
   image: { accent: '#f0883e', bg: 'rgba(240,136,62,0.1)' },
@@ -404,25 +478,53 @@ let currentSort = 'rating';
 let currentFreeFilter = 'all';
 let currentAffiliateFilter = false;
 let searchQuery = '';
+let loadErrors = [];
 
 async function loadData() {
-  try {
-    const parts = await Promise.all([
-      fetch('data-part1.json').then(r => r.json()),
-      fetch('data-part2.json').then(r => r.json()),
-      fetch('data-part3.json').then(r => r.json()),
-      fetch('data-part4.json').then(r => r.json()),
-      fetch('data-part5.json').then(r => r.json())
-    ]);
-    allData = parts.flat();
-    applyUrlParams();
-    render();
-    const counter = document.getElementById('appCounter');
-    if (counter) counter.textContent = allData.length + ' AI APPS';
-  } catch (e) {
-    document.getElementById('cardsGrid').innerHTML = 
-      '<div class="no-results">Error loading data. Please check that data.json is in the same folder.</div>';
+  const loadingEl = document.getElementById('loadingOverlay');
+  const errorEl = document.getElementById('errorMessage');
+  const gridEl = document.getElementById('cardsGrid');
+
+  const parts = await Promise.allSettled([
+    fetch('data-part1.json').then(r => { if (!r.ok) throw new Error('data-part1.json'); return r.json(); }),
+    fetch('data-part2.json').then(r => { if (!r.ok) throw new Error('data-part2.json'); return r.json(); }),
+    fetch('data-part3.json').then(r => { if (!r.ok) throw new Error('data-part3.json'); return r.json(); })
+  ]);
+
+  loadErrors = [];
+  const successfulParts = [];
+  parts.forEach((result, idx) => {
+    if (result.status === 'fulfilled') {
+      successfulParts.push(result.value);
+    } else {
+      const partName = 'data-part' + (idx + 1) + '.json';
+      loadErrors.push(partName + ': ' + (result.reason ? result.reason.message : 'failed'));
+    }
+  });
+
+  if (successfulParts.length === 0) {
+    loadingEl.style.display = 'none';
+    errorEl.style.display = 'block';
+    errorEl.innerHTML = '<strong>Failed to load data</strong>Could not load data-part1.json, data-part2.json, or data-part3.json. Please ensure all three files are in the same folder.';
+    return;
   }
+
+  allData = successfulParts.flat();
+
+  if (loadErrors.length > 0) {
+    const warningMsg = 'Partial load: ' + loadErrors.join('; ') + ' could not be loaded. Showing ' + allData.length + ' tools.';
+    const warnEl = document.createElement('div');
+    warnEl.style.cssText = 'text-align:center;padding:10px 20px;background:rgba(210,153,34,0.1);border-bottom:1px solid rgba(210,153,34,0.3);color:#d29922;font-size:0.95rem;';
+    warnEl.textContent = warningMsg;
+    document.body.insertBefore(warnEl, document.body.firstChild);
+  }
+
+  loadingEl.style.display = 'none';
+  applyUrlParams();
+  render();
+
+  const counter = document.getElementById('appCounter');
+  if (counter) counter.textContent = allData.length + ' AI APPS';
 }
 
 function applyUrlParams() {
@@ -433,7 +535,7 @@ function applyUrlParams() {
   if (cat) {
     currentFilter = cat;
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    const tab = document.querySelector(`.nav-tab[data-filter="${cat}"]`);
+    const tab = document.querySelector('.nav-tab[data-filter="' + cat + '"]');
     if (tab) tab.classList.add('active');
   }
 
@@ -445,6 +547,7 @@ function applyUrlParams() {
 }
 
 function formatTraffic(n) {
+  if (typeof n !== 'number') n = 0;
   let value;
   if (n >= 1000000) {
     value = (n / 1000000).toFixed(n % 1000000 === 0 ? 0 : 1) + 'M';
@@ -453,7 +556,7 @@ function formatTraffic(n) {
   } else {
     value = String(n);
   }
-  return `<span class="card-traffic-label">DAILY TRAFFIC </span><span class="card-traffic-value">${value}</span>`;
+  return '<span class="card-traffic-label">DAILY TRAFFIC </span><span class="card-traffic-value">' + value + '</span>';
 }
 
 function selectNavTab(el, filterValue) {
@@ -466,7 +569,7 @@ function selectNavTab(el, filterValue) {
 function filterByCategory(cat) {
   currentFilter = cat;
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  const tab = document.querySelector(`.nav-tab[data-filter="${cat}"]`);
+  const tab = document.querySelector('.nav-tab[data-filter="' + cat + '"]');
   if (tab) tab.classList.add('active');
   currentFreeFilter = 'all';
   currentAffiliateFilter = false;
@@ -479,7 +582,8 @@ function filterByCategory(cat) {
 function showOnly(type) {
   currentFilter = 'all';
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector('.tab-all').classList.add('active');
+  const allTab = document.querySelector('.tab-all');
+  if (allTab) allTab.classList.add('active');
 
   if (type === 'free') {
     currentFreeFilter = 'free';
@@ -500,124 +604,127 @@ function showOnly(type) {
 
 function getFilteredData() {
   let data = [...allData];
-  
+
   if (currentFilter !== 'all') {
-    data = data.filter(item => item.categories.includes(currentFilter));
+    data = data.filter(item => toolMatchesFilter(item.categories, currentFilter));
   }
-  
+
   if (currentFreeFilter === 'free') {
     data = data.filter(item => item.free === true);
   } else if (currentFreeFilter === 'paid') {
     data = data.filter(item => item.free === false);
   }
-  
+
   if (currentAffiliateFilter) {
     data = data.filter(item => item.affiliate === true);
   }
-  
+
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
-    data = data.filter(item => 
+    data = data.filter(item =>
       item.name.toLowerCase().includes(q) ||
-      item.desc.toLowerCase().includes(q) ||
-      item.categories.some(c => c.toLowerCase().includes(q))
+      (item.desc && item.desc.toLowerCase().includes(q)) ||
+      item.categories.some(c => normalizeCategory(c).includes(q))
     );
   }
-  
+
   data.sort((a, b) => {
     if (currentSort === 'name') return a.name.localeCompare(b.name);
-    if (currentSort === 'traffic') return b.traffic - a.traffic;
-    if (currentSort === 'recent') return (b.order ?? 0) - (a.order ?? 0);
-    // Default "Rating" sort: perfect 10/10s first, then Free Tier tools first, then by rating
+    if (currentSort === 'traffic') return (b.traffic || 0) - (a.traffic || 0);
+    if (currentSort === 'order') return (b.order || 0) - (a.order || 0);
+    // Default "Rating" sort: perfect 10/10s first, then Free Tier tools first, then by rating desc
     const aTen = a.rating === 10 ? 1 : 0;
     const bTen = b.rating === 10 ? 1 : 0;
     if (bTen !== aTen) return bTen - aTen;
     const aFree = a.free ? 1 : 0;
     const bFree = b.free ? 1 : 0;
     if (bFree !== aFree) return bFree - aFree;
-    return b.rating - a.rating;
+    return (b.rating || 0) - (a.rating || 0);
   });
-  
+
   const counter = document.getElementById('appCounter');
   if (counter) {
     const total = allData.length;
     const showing = data.length;
     const catColor = currentFilter !== 'all' ? (categoryColors[currentFilter] || {}).accent : null;
-    const showingSpan = catColor ? `<span style="color:${catColor}">${showing}</span>` : showing;
+    const showingSpan = catColor ? '<span style="color:' + catColor + '">' + showing + '</span>' : showing;
     if (currentFilter === 'all' && !searchQuery && currentFreeFilter === 'all' && !currentAffiliateFilter) {
       counter.innerHTML = total + ' AI APPS';
     } else {
       counter.innerHTML = showingSpan + ' OF ' + total + ' AI APPS';
     }
   }
-  
+
   return data;
+}
+
+function getDisplayCat(cat) {
+  return slugToDisplay[cat] || cat;
 }
 
 function render() {
   const grid = document.getElementById('cardsGrid');
   const data = getFilteredData();
-  
+
   if (data.length === 0) {
     grid.innerHTML = '<div class="no-results">No tools found matching your criteria.</div>';
     return;
   }
-  
-  grid.innerHTML = data.map(item => {
-    const colors = categoryColors[item.categories[0]] || categoryColors.chat;
-    const categoryDisplayNames = { code: 'coding', niche: 'niche ai', supercomputer: 'super cmptr', notai: 'not ai', voice: 'voice ai', local: 'local ai', architectural: 'architectural ai', aggregator: 'ai aggregator' };
-    const displayCat = c => categoryDisplayNames[c] || c;
-    const categoryLabel = displayCat(item.categories[0]);
-    const secondaryTags = item.categories.slice(1).map(cat => {
-      const c = categoryColors[cat] || categoryColors.chat;
-      return `<span class="card-tag" style="background:${c.bg};color:${c.accent};border:1px solid ${c.accent}" onclick="event.stopPropagation(); filterByCategory('${cat}')">${displayCat(cat)}</span>`;
-    }).join('');
-    
-    const toolPage = `tool.html?slug=${encodeURIComponent(slugify(item.name))}`;
 
-    return `
-      <div class="card" style="--accent:${colors.accent};--accent-bg:${colors.bg}" onclick="window.location.href='${toolPage}'">
-        <span class="card-traffic card-traffic-corner">${formatTraffic(item.traffic)}</span>
-        <div class="card-header">
-          <div class="card-icon">${item.icon}</div>
-          <div>
-            <div class="card-title">${item.name}</div>
-            <div class="card-category" onclick="event.stopPropagation(); filterByCategory('${item.categories[0]}')">${categoryLabel}</div>
-          </div>
-        </div>
-        <div class="card-meta">
-          <div class="card-badges">
-            ${secondaryTags}
-            <span class="card-badge ${item.free ? 'badge-free' : 'badge-paid'}" onclick="event.stopPropagation(); showOnly('${item.free ? 'free' : 'paid'}')">${item.free ? 'Free' : 'Paid'}</span>
-            ${item.affiliate ? `<span class="card-badge badge-affiliate" onclick="event.stopPropagation(); showOnly('affiliate')">Affiliate</span>` : ''}
-          </div>
-        </div>
-        <div class="card-footer">
-          <a class="card-url" href="${toolPage}" onclick="event.stopPropagation()">${item.url}</a>
-          <div class="card-rating"><span class="card-rating-value">${item.rating}</span><span class="card-rating-label">RATING</span></div>
-        </div>
-      </div>
-    `;
+  grid.innerHTML = data.map(item => {
+    const primaryCat = item.categories[0] || 'chat';
+    const colors = categoryColors[normalizeCategory(primaryCat)] || categoryColors.chat;
+    const categoryLabel = getDisplayCat(normalizeCategory(primaryCat));
+    const secondaryTags = item.categories.slice(1).map(cat => {
+      const slug = normalizeCategory(cat);
+      const c = categoryColors[slug] || categoryColors.chat;
+      return '<span class="card-tag" style="background:' + c.bg + ';color:' + c.accent + ';border:1px solid ' + c.accent + '" onclick="event.stopPropagation(); filterByCategory(\'' + slug + '\')">' + getDisplayCat(slug) + '</span>';
+    }).join('');
+
+    const toolPage = 'tool.html?id=' + encodeURIComponent(item.name);
+
+    return '<div class="card" style="--accent:' + colors.accent + ';--accent-bg:' + colors.bg + '" onclick="window.location.href=\'' + toolPage + '\'">' +
+      '<span class="card-traffic card-traffic-corner">' + formatTraffic(item.traffic) + '</span>' +
+      '<div class="card-header">' +
+        '<div class="card-icon">' + (item.icon || '') + '</div>' +
+        '<div>' +
+          '<div class="card-title">' + item.name + '</div>' +
+          '<div class="card-category" onclick="event.stopPropagation(); filterByCategory(\'' + normalizeCategory(primaryCat) + '\')">' + categoryLabel + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card-meta">' +
+        '<div class="card-badges">' +
+          secondaryTags +
+          '<span class="card-badge ' + (item.free ? 'badge-free' : 'badge-paid') + '" onclick="event.stopPropagation(); showOnly(\'' + (item.free ? 'free' : 'paid') + '\')">' + (item.free ? 'Free' : 'Paid') + '</span>' +
+          (item.affiliate ? '<span class="card-badge badge-affiliate" onclick="event.stopPropagation(); showOnly(\'affiliate\')">Affiliate</span>' : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="card-footer">' +
+        '<a class="card-url" href="' + toolPage + '" onclick="event.stopPropagation()">' + (item.url || '') + '</a>' +
+        '<div class="card-rating"><span class="card-rating-value">' + (item.rating || 'N/A') + '</span><span class="card-rating-label">RATING</span></div>' +
+      '</div>' +
+    '</div>';
   }).join('');
 }
 
-document.getElementById('searchInput').addEventListener('input', e => {
+document.getElementById('searchInput').addEventListener('input', function(e) {
   searchQuery = e.target.value;
   render();
 });
 
-document.getElementById('sortSelect').addEventListener('change', e => {
+document.getElementById('sortSelect').addEventListener('change', function(e) {
   currentSort = e.target.value;
   render();
 });
 
-document.getElementById('filterSelect').addEventListener('change', e => {
+document.getElementById('filterSelect').addEventListener('change', function(e) {
   currentFreeFilter = e.target.value;
   render();
 });
 
 loadData();
 </script>
+
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"8607d2a720d14b038279025b2b5a82e5"}' crossorigin="anonymous"></script>
 </body>
 </html>
