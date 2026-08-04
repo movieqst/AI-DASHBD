@@ -8,9 +8,9 @@
     "url": "https://chatgpt.com/",
     "free": true,
     "categories": [
-      "chat",
+      "conversational",
       "code",
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "ChatGPT is OpenAI's flagship conversational AI assistant and the most widely used chatbot in the world, with several hundred million weekly active users. As of mid-2026 it runs on the GPT-5.5/5.6 model family (Instant for fast everyday answers, Thinking/Sol for deeper reasoning, and Pro for maximum compute on hard problems). The product has expanded well past simple chat: it now includes Deep Research (multi-step web investigations), Agent Mode/Operator for autonomous multi-step tasks (booking, browsing, ordering), Codex for agentic coding, Sora for video, native image generation, custom GPTs, and a growing shopping/commerce layer with product recommendations. Pricing spans six tiers: Free (ad-supported in the US, limited GPT-5.3/mini access), Go ($8/mo), Plus ($20/mo — the mainstream sweet spot), Pro ($100 and $200/mo tiers with 5x–20x usage and the full model family), Business ($20–25/seat), and Enterprise (custom). OpenAI has also begun showing ads on Free and Go tiers.",
@@ -33,7 +33,7 @@
     "url": "claude.ai",
     "free": true,
     "categories": [
-      "chat",
+      "conversational",
       "code"
     ],
     "affiliate": false,
@@ -57,8 +57,8 @@
     "url": "higgsfield.ai",
     "free": false,
     "categories": [
-      "video",
-      "image",
+      "video-gen",
+      "image-gen",
       "supercomputer"
     ],
     "affiliate": true,
@@ -82,7 +82,7 @@
     "url": "kimi.moonshot.cn",
     "free": true,
     "categories": [
-      "chat",
+      "conversational",
       "code",
       "supercomputer"
     ],
@@ -107,9 +107,9 @@
     "url": "gemini.google.com",
     "free": true,
     "categories": [
-      "chat",
+      "conversational",
       "code",
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Gemini is Google's multimodal AI assistant, deeply woven into Search, Gmail, Docs, Android, and Chrome. The free tier is notably generous: it includes Gemini 3.5 Flash as the everyday default, limited daily access to the more powerful Gemini Pro model, image generation, voice mode (Gemini Live), and a handful of Deep Research reports per month. Paid consumer tiers were restructured at Google I/O 2026 into Google AI Plus ($7.99/mo), Pro ($19.99/mo, with the large 2M-token-context Gemini 3.5 Pro model), and Ultra (cut from $250 to $99.99–$199.99/mo, adding the Gemini Spark autonomous agent and large Veo video-generation allotments). Gemini is also bundled into Google Workspace business plans (Business Standard and above) at no separate add-on cost, replacing the old standalone Gemini Business/Enterprise add-ons.",
@@ -132,7 +132,7 @@
     "url": "deepseek.com",
     "free": true,
     "categories": [
-      "chat",
+      "conversational",
       "code"
     ],
     "affiliate": false,
@@ -156,7 +156,7 @@
     "url": "ideogram.ai",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": true,
     "overview": "Ideogram is an AI image generation platform that has carved out a dominant position in one critical niche: rendering legible, correctly spelled text inside images. While competitors like Midjourney and DALL-E struggle with typography — often producing garbled or misspelled words — Ideogram's architecture treats text rendering as a first-class requirement, achieving 90–95% text accuracy versus 30–40% for rival tools. This makes it the default choice for marketing teams creating logos, banners, posters, social media ads, infographics, and any visual asset that includes words. The latest flagship model, Ideogram 4.0 (released in 2026), adds native transparency support, Prompt Edit for targeted revisions without full regeneration, Layerize Text for editable typography layers post-generation, and enhanced Magic Fill for adding or replacing image elements.\n\nThe platform operates on a dual-credit system where Priority credits process instantly while Slow credits queue behind other users. Pricing as of mid-2026: Free (10 slow credits/week, public generations only), Plus ($20/month or $15/month annually, 1,000 Priority credits, private generation, PNG downloads), Pro ($60/month or $42/month annually, 3,500 Priority credits, batch generation via CSV, 32 concurrent slots), and Team ($30/user/month or $20/user annually). Credit costs vary by model and quality tier — Ideogram 3.0/4.0 in Quality mode costs 6 credits per 4-image generation, while the budget 2a model in Turbo mode costs just 0.5 credits. The model weights are also open-source, allowing developers to self-host and fine-tune.\n\nIndependent reviews consistently praise Ideogram's text accuracy as a genuine differentiator, with users reporting it saves hours of manual correction on typography-heavy projects. Trustpilot scores hover around 4.2/5. The main complaints center on credit consumption burning faster than expected during iterative refinement, and the fact that the free tier's public-only visibility makes it unsuitable for any client or proprietary work. For marketing teams and designers who regularly produce text-inclusive visuals, Ideogram's accuracy advantage often justifies the subscription cost over cheaper alternatives.",
@@ -179,7 +179,7 @@
     "url": "superhuman.com",
     "free": false,
     "categories": [
-      "chat"
+      "drafting"
     ],
     "affiliate": false,
     "overview": "Superhuman is a premium, keyboard-driven email client (for Gmail and Outlook accounts) built around speed and, increasingly, AI. Its standout AI feature is proactive Auto Drafts, which writes replies before the user even opens an email, plus Auto Labels for automatic triage, Ask AI for natural-language querying of your inbox, and Smart Send/Auto Summarize. Grammarly acquired Superhuman in July 2025 and, in October 2025, rebranded its whole parent company under the Superhuman name, bundling it with Grammarly's writing tools, Coda, and a new \"Superhuman Go\" proactive assistant. Pricing (as of July 2026) runs $25–30/month (Starter, billed annually or monthly) and $33–40/month (Business, adding Ask AI, Smart Send, and CRM integrations with Salesforce/HubSpot/Pipedrive); Enterprise is custom-quoted.",
@@ -202,8 +202,8 @@
     "url": "x.com/grok",
     "free": true,
     "categories": [
-      "chat",
-      "image"
+      "conversational",
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Grok is SpaceXAI's (formerly xAI's) conversational assistant, distinguished by native, real-time access to X (formerly Twitter) for current-events and social-sentiment answers, and a deliberately less-restricted conversational tone than most competitors. The current flagship, Grok 4.5 (launched July 8, 2026), offers a 500K-token context window and native video input; older variants (Grok 4.3, Grok 4 Fast with a 2M context, Grok 4.20) remain accessible via API. Consumer pricing spans a Free tier, SuperGrok Lite (~$10/mo), SuperGrok (~$30/mo), X Premium+ (~$40/mo, bundling Grok with X platform perks), and SuperGrok Heavy ($300/mo, the only tier with guaranteed full Grok 4.5 access). All paid tiers include DeepSearch (live web research), \"Big Brain\" extended thinking, and voice mode.",
@@ -226,7 +226,7 @@
     "url": "copilot.microsoft.com",
     "free": true,
     "categories": [
-      "chat",
+      "conversational",
       "code"
     ],
     "affiliate": false,
@@ -273,7 +273,7 @@
     "url": "stability.ai",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Stable Diffusion is the foundational open-weights text-to-image model family from Stability AI, and it remains the most important open-source AI image generator in 2026. Unlike closed platforms that require subscriptions and host your data on corporate servers, Stable Diffusion lets users download the actual model files and run them locally — completely offline, with zero recurring costs and no content restrictions. The current flagship is Stable Diffusion 3.5, built on a new MMDiT (Multi-Modal Diffusion Transformer) architecture with 8.1 billion parameters in the Large variant. It comes in three variants: Large (highest quality, requires 12GB+ VRAM), Large Turbo (faster inference), and Medium (lower VRAM at 2.5B parameters, compatible with most modern consumer GPUs). The model is free for commercial and non-commercial use under the Stability AI Community License for organizations under $1M revenue.\n\nThe true power of Stable Diffusion lies not in the base model alone but in its massive ecosystem of community-built tools. Platforms like Civitai host tens of thousands of custom LoRAs (lightweight style/character modifications), ControlNet enables exact pose and composition control via skeleton or depth maps, and ComfyUI provides a node-based visual editor for building automated, shareable generation pipelines. This infrastructure allows technical users to achieve precision and customization that no closed platform offers — from consistent character generation to architectural layout control to completely uncensored content creation. For non-technical users, Stability AI also offers cloud API access at roughly $0.03–0.065 per image, and third-party hosts like RunPod provide GPU rental for batch processing.\n\nPerformance benchmarks place SD 3.5 Large around 1150–1180 on the Elo rating system — below proprietary leaders like GPT Image 1.5 and Gemini 3 Pro Image, but competitive with many open-source alternatives. Real-world testing shows strong results on product photography, architectural renders, and graphic design elements, though it can struggle with dynamic action scenes and extreme perspectives. User feedback consistently highlights the trade-off: absolute control and zero cost versus a steep learning curve and hardware requirements. For technical artists, developers, and privacy-conscious professionals, it is the most cost-effective option available; for casual users wanting instant beautiful results, closed platforms like Midjourney remain dramatically easier.",
@@ -297,8 +297,8 @@
     "free": true,
     "categories": [
       "audio",
-      "niche",
-      "voice"
+      "voice",
+      "niche"
     ],
     "affiliate": true,
     "overview": "ElevenLabs is the industry-leading AI voice platform, widely regarded as producing the most natural-sounding synthetic speech available as of 2026. The company serves three distinct audiences: individual content creators, developers integrating voice into applications, and enterprise teams doing audio production at scale. Its v3 model, released February 2026, covers 74 languages and scored the highest pronunciation accuracy (~82%) in independent testing, with a blind study of 200 listeners finding 94% rated v3 output as human-like on neutral narration. The platform offers four core TTS models: Eleven v3 (most expressive, 5,000-character limit, inline audio tags for emotional control), Multilingual v2 (most lifelike for long-form like audiobooks, 29 languages, 10,000-character limit), Flash v2.5 (lowest latency at ~75ms, 32 languages, 40,000-character limit), and Turbo v2.5 (250–300ms latency, also 32 languages). Beyond TTS, the platform includes voice cloning, dubbing (90+ languages), sound effects generation, an AI music tool, and ElevenAgents for conversational voice AI.\n\nPricing is credit-based across six tiers: Free ($0, 10,000 credits/month, ~10 minutes of audio, no commercial rights, 3 Studio projects), Starter ($6/month or ~$5 annually, 30,000 credits, commercial license, Instant Voice Cloning, 20 Studio projects), Creator ($22/month or ~$18.33 annually, 121,000 credits, Professional Voice Cloning), Pro ($99/month or ~$82.50 annually, 600,000 credits, 44.1kHz PCM API output, 192kbps quality), Scale ($299/month, 1.8M credits, 3 workspace seats), and Business ($990/month, 6M credits, 10 seats, low-latency TTS at 5¢/minute). Annual billing saves roughly two months. Credits do not roll over on monthly plans. The Voice Library contains tens of thousands of official and community-created voices, and the API response time of ~75ms makes it viable for real-time applications like AI agents.\n\nUser feedback is overwhelmingly positive on voice quality, with creators, podcasters, and faceless YouTube channels citing it as the gold standard. About 41% of Fortune 500 companies use ElevenLabs for some part of their audio production. The most common complaints center on credit consumption moving faster than advertised — higher-quality models like v3 burn credits at a faster rate than the base character count suggests, and the Conversational AI / voice-agent product bills separately from the core credit pool. The free tier is genuinely usable for evaluation but cannot be used for any monetized content. For creators who need production-quality voiceover, the Creator plan at $22/month is the most commonly recommended starting point.",
@@ -322,6 +322,7 @@
     "free": false,
     "categories": [
       "audio",
+      "voice",
       "niche"
     ],
     "affiliate": true,
@@ -345,8 +346,8 @@
     "url": "firefly.adobe.com",
     "free": false,
     "categories": [
-      "image",
-      "video"
+      "image-gen",
+      "video-gen"
     ],
     "affiliate": false,
     "overview": "Adobe Firefly is Adobe's generative AI platform, deeply integrated into the Creative Cloud ecosystem including Photoshop, Illustrator, Premiere Pro, and Express. Unlike most AI image generators that train on scraped web data with unclear licensing, Firefly is trained exclusively on licensed Adobe Stock content, public domain material, and openly licensed work — making its outputs commercially safe and indemnified against copyright claims for non-beta features. As of mid-2026, Firefly supports text-to-image, generative fill, generative recolor, text-to-video, image-to-video, audio translation, lip sync, sound effects generation, and vector creation. The platform also integrates partner models from Google, OpenAI, ElevenLabs, and Topaz for expanded capabilities.\n\nPricing follows a credit-based model split between \"standard\" and \"premium\" features. Standard features — text-to-image, generative fill, generative recolor, vector generation, and text effects — are unlimited on all paid plans and do not consume credits. Premium features — video generation, audio translation, lip sync, sound effects, and partner model outputs — deduct credits per use. Plans as of mid-2026: Firefly Free (limited complimentary generations, 2 free videos, 40 seconds of translation), Firefly Standard ($9.99/month, 2,000 premium credits, ~20 five-second videos), Firefly Pro ($19.99/month, 4,000 credits, bundled Photoshop web + Express Premium), and Firefly Premium ($199.99/month, 50,000 credits, for high-volume production). Creative Cloud Pro subscribers already receive 4,000 premium credits monthly with unlimited standard access. Credits do not roll over month to month.\n\nUser feedback is broadly positive among existing Adobe users who value the seamless workflow integration — generating AI content directly inside Photoshop or Premiere without exporting/importing is a genuine time-saver. The commercial safety of outputs is a major differentiator for agencies and brands worried about IP risk. However, reviewers consistently note that Firefly's image quality lags behind Midjourney and FLUX for artistic and photorealistic work, and the credit consumption for video generation is surprisingly fast — a single 5-second clip costs approximately 100 credits, meaning the Standard plan's 2,000 credits yield only ~20 clips. For creators already in the Adobe ecosystem, Firefly is a natural add-on; for standalone image or video generation, dedicated tools often deliver better quality per dollar.",
@@ -392,7 +393,7 @@
     "url": "topazlabs.com",
     "free": false,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "Topaz Labs is a long-standing AI photo enhancement company, historically known for three industry-leading standalone tools: DeNoise AI (noise reduction), Sharpen AI (blur/shake correction), and Gigapixel AI (intelligent upscaling). In 2022, these were merged into a single application called Topaz Photo AI, and by late 2025 the company transitioned entirely to subscription pricing while dropping \"AI\" from the product name. The current Topaz Photo (2026) is a plugin-compatible enhancement tool for Lightroom, Photoshop, Capture One, and Apple Photos, built around three core functions — noise reduction, sharpening, and upscaling — plus additional tools for object removal, face recovery, dust/scratch repair, lighting adjustment, and color balance.\n\nPricing as of mid-2026 is subscription-only, with perpetual licenses discontinued in October 2025. Topaz Photo costs $199/year when paid annually ($17/month) or $468/year when paid month-to-month ($39/month). A higher-tier Topaz Studio bundle at $69/month adds Topaz Video and other applications. The 2026 version introduces NeuroStream VRAM optimization (reducing GPU memory requirements by up to 95%), new AI models including Wonder, Standard MAX, and Starlight Sharp, and a cloud rendering service for computationally expensive operations like Super Focus and dust repair at variable token costs (6–12 cents per token). A 30-day money-back guarantee replaces the previous trial period.\n\nUser feedback presents a mixed picture. Professional photographers and reviewers consistently praise Topaz Photo's upscaling capabilities as genuinely best-in-class — enlarging images 2x–4x while maintaining natural detail is a standout feature, particularly for AI-generated images that start at low resolution. The dust/scratch removal and face recovery tools also earn positive marks. However, the noise reduction and sharpening tools have fallen behind competitors, with multiple independent reviews (including from long-time Topaz advocates) now recommending DxO PureRAW as superior for noise reduction at a lower one-time price ($139 vs. $199–468/year). The aggressive default processing values frequently produce oversharpened, \"plasticky\" results, and preview rebuilds take 5–10 seconds per adjustment. The forced subscription model has generated significant user backlash, with many photographers feeling the annual cost no longer reflects the current performance leadership.",
@@ -415,7 +416,7 @@
     "url": "heygen.com",
     "free": false,
     "categories": [
-      "video",
+      "video-gen",
       "niche"
     ],
     "affiliate": true,
@@ -439,7 +440,7 @@
     "url": "remove.bg",
     "free": true,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "Remove.bg is the original and most widely used AI background removal tool, processing millions of images monthly for e-commerce sellers, photographers, marketers, and content creators. The platform's core value proposition is extreme simplicity: upload any photo and receive a clean cutout with transparent background in under five seconds, with no account required for the preview. The AI handles complex edges — hair, fur, transparent objects, and busy backgrounds — with accuracy that reviewers consistently rate 8.5/10 or higher. As of mid-2026, the platform supports JPG and PNG inputs, outputs PNG with transparency or JPG with colored backgrounds, and offers batch processing for up to 1,000 images at once via the web app or unlimited batching through the API.\n\nPricing follows a credit-based model: Free (low-resolution preview only, watermarked, ~50 images/month), Pay-as-you-go (~$0.20 per HD image with volume discounts), and Subscription plans starting around $9–$12/month for regular users. The platform also offers native plugins for Photoshop, Figma, and Zapier integration for automated e-commerce workflows. The API is particularly popular among developers building automated product photography pipelines for Shopify, Amazon, and Etsy stores.\n\nUser feedback is overwhelmingly positive on speed and consistency — Remove.bg remains the fastest background remover available, with processing times under five seconds even on complex images. E-commerce sellers cite it as essential for producing consistent white-background product photos at scale. The main limitations are the free tier's low-resolution output (625×400) which is unusable for professional work, the lack of manual refinement tools (what the AI gives you is what you get), and struggles with semi-transparent objects like glass, veils, and reflective surfaces that require manual cleanup. For photographers needing flawless hair detail on professional portraits, manual masking in Photoshop still outperforms any AI tool. For 90% of e-commerce and marketing use cases, however, Remove.bg's speed and consistency make it the default choice.",
@@ -462,7 +463,7 @@
     "url": "klingai.com",
     "free": true,
     "categories": [
-      "video",
+      "video-gen",
       "niche"
     ],
     "affiliate": true,
@@ -486,7 +487,7 @@
     "url": "leonardo.ai",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Leonardo AI is an AI image and video generation platform purpose-built for game developers, concept artists, and creative professionals who need fine-grained style control and a thriving community of shared models. Now owned by Canva, Leonardo offers a free plan with 150 daily tokens (approximately 20–30 images per day) and paid plans starting at $12/month. The platform's core differentiator is its massive library of community-created and first-party fine-tuned models — users can train custom models on as few as 10–20 images to replicate specific art styles, characters, or brand aesthetics. The flagship Phoenix model delivers strong prompt adherence and detail, while the Canvas Editor provides an interactive workspace for inpainting, outpainting, and real-time image editing.\n\nPricing as of mid-2026 uses a token-based credit system: Free (150 tokens/day, non-renewing), Apprentice ($12/month or $10/month annually, 8,500 tokens), Artisan ($30/month or $24/month annually, 25,000 tokens), and Maestro ($60/month or $48/month annually, 60,000 tokens). API plans start at $9/month (3,500 credits) scaling to $299/month (200,000 credits). A basic image costs ~2 tokens, but with Alchemy enhancement enabled costs jump to 8–16 tokens, and premium third-party models (Veo 3, Sora 2) consume disproportionately more. The platform also includes unique features like 3D texture generation, custom model training, and a Flow State mode for rapid iterative creation.\n\nUser feedback is strongest among game developers and concept artists who value the fine-tuning ecosystem and style consistency tools that Midjourney lacks. The Canvas Editor and real-time generation features are praised for enabling rapid iteration during concept development. However, the token system is widely criticized as opaque and unpredictable — different settings, resolutions, and models all consume different amounts, making monthly budgeting nearly impossible. Generation speed is also slower than competitors at 15–90 seconds per image. For artists and developers who need custom-trained models and style control, Leonardo is the clear choice; for users wanting simple, fast, high-quality generation without token math, Midjourney or FLUX are often preferred.",
@@ -509,7 +510,7 @@
     "url": "pi.ai",
     "free": true,
     "categories": [
-      "chat"
+      "conversational"
     ],
     "affiliate": false,
     "overview": "Pi (\"Personal Intelligence\") is Inflection AI's conversational assistant, designed specifically around emotional intelligence and empathetic, supportive dialogue rather than raw benchmark performance or productivity features. It avoids cold, structured list-style answers in favor of natural, human-like conversation with realistic voice output. Following Microsoft's 2024 acqui-hire of much of Inflection's leadership and technical staff, the company pivoted its primary focus toward enterprise AI (Inflection for Enterprise, Inflection 3.0 models, and business-workflow tools) while Pi's consumer product remained online but entered what multiple 2026 reviews describe as a \"maintenance phase\" with a slowed pace of new feature development.",
@@ -532,7 +533,7 @@
     "url": "synthesia.io",
     "free": false,
     "categories": [
-      "video",
+      "video-gen",
       "niche"
     ],
     "affiliate": true,
@@ -579,8 +580,8 @@
     "url": "cursor.com",
     "free": true,
     "categories": [
-      "local",
-      "code"
+      "code",
+      "local"
     ],
     "affiliate": false,
     "overview": "Cursor is an AI-native code editor built as a fork of Visual Studio Code, designed specifically around AI-assisted development rather than bolting AI features onto a traditional editor. As of mid-2026, Cursor has become the most popular AI coding editor among professional developers, surpassing GitHub Copilot in developer mindshare for certain workflows. The platform integrates multiple AI models (GPT-4o, Claude 3.5 Sonnet, Claude 3.7, o3-mini, and custom models) directly into the editing experience through three core features: Tab (predictive autocomplete that suggests multi-line edits), Cmd+K (inline code generation and editing via natural language), and Composer (multi-file agentic editing that can plan, write, and refactor across an entire codebase).\n\nPricing as of mid-2026: Hobby (free, 2,000 completions/month, 50 slow premium requests, limited Composer usage), Pro ($20/month, 500 fast premium requests/month, unlimited slow premium requests, unlimited Tab completions, full Composer access), and Business ($40/user/month, everything in Pro plus centralized billing, admin dashboard, team-wide model selection, and enforced privacy mode). The \"premium requests\" system is the key billing mechanism — fast requests use high-performance models with immediate response, while slow requests queue behind other users. Pro users get 500 fast requests monthly; beyond that, requests fall back to the slow queue. The platform also offers a \"Privacy Mode\" that prevents code from being stored or used for model training, though this requires explicit activation.\n\nUser feedback is overwhelmingly positive on productivity gains — developers report 30–50% faster coding for boilerplate, refactoring, and test generation. The Composer feature is particularly praised for its ability to understand cross-file dependencies and make coherent changes across multiple files simultaneously. However, common complaints include the premium request cap burning faster than expected during heavy development sessions, occasional generation of subtly buggy code that passes syntax checks but fails logically, and the fact that Cursor sends code snippets to cloud AI providers unless Privacy Mode is explicitly enabled — a concern for teams working with proprietary code. For developers already using VS Code, the migration is seamless since Cursor is fully compatible with all VS Code extensions and settings.",
@@ -603,7 +604,8 @@
     "url": "gamma.app",
     "free": true,
     "categories": [
-      "chat"
+      "drafting",
+      "storyboard"
     ],
     "affiliate": false,
     "overview": "Gamma is an AI content-creation tool that generates polished presentations, documents, and one-page websites from a text prompt or outline in under a minute, without requiring design skills. It uses a card-based, prompt-to-deck workflow (powered by a mix of OpenAI and Anthropic models depending on task) rather than traditional slide-by-slide editing, and added AI image generation in March 2026 for brand-specific charts, social graphics, and infographics. Pricing runs on a credit system: Free (400 one-time credits, \"Made with Gamma\" branding), Plus (~$8–12/mo), Pro (~$18–25/mo, unlimited generation), Team (~$20/seat/mo), and Ultra (~$90–100/mo, adding Studio Mode, API access, SSO, and advanced image models).",
@@ -626,8 +628,7 @@
     "url": "grammarly.com",
     "free": true,
     "categories": [
-      "chat",
-      "niche"
+      "drafting"
     ],
     "affiliate": false,
     "overview": "Grammarly is a long-standing AI writing assistant that checks grammar, spelling, punctuation, tone, and clarity, and increasingly generates and rewrites text outright via its GrammarlyGO/generative features. It works as a browser extension, desktop app, and mobile keyboard, and integrates with Google Docs, MS Office, and most web forms. Pricing in 2026 is three-tiered: Free ($0, basic grammar/spelling/tone checks with roughly 100 AI prompts/month), Premium/Pro (around $12/month billed annually, or up to $30/month billed monthly — jumps to 2,000 AI prompts, full-sentence rewrites, plagiarism detection, and vocabulary/clarity suggestions), and Business (~$15–25/member/month, adding brand tone controls, team analytics, and SSO). Following Grammarly's 2025 acquisition of Superhuman (email) and Coda (workspace), the parent company rebranded itself \"Superhuman\" in October 2025 and now bundles all three products, plus a new proactive assistant called Superhuman Go, into a broader suite.",
@@ -650,7 +651,7 @@
     "url": "skylum.com/luminar",
     "free": false,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "Luminar Neo is an AI-powered photo editing application from Skylum, positioned as a Lightroom alternative with heavy emphasis on one-click AI enhancements. As of mid-2026, the platform offers a suite of AI-driven tools including Sky AI (automatic sky replacement with realistic lighting matching), Portrait AI (skin smoothing, eye enhancement, face slimming, and teeth whitening), Relight AI (3D depth-aware lighting adjustment), and GenErase (AI object removal with background reconstruction). The software runs as a standalone application on macOS and Windows, with plugins available for Lightroom, Photoshop, and Apple Photos. Unlike subscription-only competitors, Luminar Neo still offers a perpetual license option alongside its subscription plan.\n\nPricing as of mid-2026: Explore subscription ($14.95/month or $119/year, includes all AI tools, continuous updates, and 1TB cloud storage), Pro subscription ($24.95/month or $199/year, adds premium assets, additional AI models, and priority support), and Perpetual license ($199 one-time purchase, includes current version permanently but no future major updates). The 2026 update introduced new AI models for noise reduction and sharpening, though independent reviews suggest these still lag behind dedicated tools like DxO PureRAW and Topaz Photo AI. The platform also added batch processing capabilities for applying AI edits across large photo sets, a feature long requested by event and wedding photographers.\n\nUser feedback presents a mixed picture. Casual photographers and content creators praise the one-click AI tools for dramatically speeding up editing workflows — sky replacement and portrait enhancement that would take 30+ minutes in Photoshop can be done in seconds. The interface is cleaner and more approachable than Lightroom for beginners. However, professional photographers consistently report that Luminar Neo's AI masking is less precise than manual selection, frequently missing fine details like flyaway hairs or complex edges. Performance is also a concern — the application is noticeably slower than Lightroom on large RAW files, and the push toward subscription pricing has alienated users who previously valued Skylum's perpetual license model. For quick social media edits and hobbyist photography, Luminar Neo is excellent; for high-end professional retouching, Photoshop and Lightroom remain the standard.",
@@ -673,7 +674,7 @@
     "url": "manus.ai",
     "free": false,
     "categories": [
-      "chat"
+      "conversational"
     ],
     "affiliate": false,
     "overview": "Manus is a general-purpose autonomous AI agent that operates inside a \"virtual computer\" — it can browse the web in real time, write and execute code, analyze data, build websites, generate slides, and deliver finished results from a single prompt, rather than just answering questions. It runs on the Manus 1.6 model family (Lite, standard, and Max) and added Scheduled Tasks 2.0 plus native connectors (Gmail, Google Calendar, Notion, GitHub, Slack, WhatsApp, Telegram) through 2026. Meta had agreed to acquire Manus for roughly $2 billion in December 2025, but Chinese regulators blocked the deal in April 2026, and Manus remains independent. Pricing is credit-based rather than flat-rate: Free ($0, 300 daily-refresh credits, 1 concurrent task), Pro tiers at $20/month (4,000 monthly credits) and $40/month (8,000 credits), a top \"Extended\" tier at $200/month (40,000 credits), and Team plans from $20–40/seat/month.",
@@ -696,8 +697,8 @@
     "url": "runwayml.com",
     "free": false,
     "categories": [
-      "image",
-      "video"
+      "video-gen",
+      "image-gen"
     ],
     "affiliate": true,
     "overview": "Runway is an AI-powered creative suite for video generation and editing, widely regarded as the tool with the most advanced creative control in the AI video space. As of mid-2026, the platform's flagship Gen-4 model offers text-to-video, image-to-video, video-to-video, motion brush (frame-by-frame motion direction), infinite image expansion, and green screen masking — all within a browser-based interface. Runway has become the go-to tool for filmmakers, advertising agencies, and visual artists who need precise control over camera movement, character motion, and scene composition rather than accepting whatever a prompt produces. The platform also hosts an active creative community and regular AI film festivals that have helped establish AI video as a legitimate artistic medium.\n\nPricing as of mid-2026 is credit-based across four tiers: Basic ($15/month or $12/month annually, 625 credits/month, 3 video projects, 720p max, watermarked exports), Standard ($35/month or $28/month annually, 2,500 credits/month, 1080p, unlimited projects, no watermark), Pro ($95/month or $76/month annually, 7,500 credits/month, 4K export, 500GB asset storage, custom model training), and Unlimited ($95/month or $76/month annually, unlimited credits at relaxed rate, 1080p, no 4K). Credit consumption varies dramatically by feature — a 5-second Gen-4 video costs approximately 20–40 credits, while image generation and motion brush adjustments consume fewer. The \"Unlimited\" tier is misleading — while credits don't run out, generation speed is throttled during peak usage, making it impractical for deadline-driven work.\n\nUser feedback highlights Runway's creative control as genuinely unmatched — the motion brush and keyframe system allow directors to specify exactly how elements should move within a frame, something no competitor offers with the same precision. The Gen-4 model's visual quality is consistently rated among the best available, with strong performance on cinematic lighting, camera movements, and stylized outputs. However, the platform is expensive relative to competitors — at $35–95/month for serious use, it costs significantly more than Kling 3.0 ($6.99–$29.99/month) for comparable generation volume. The 16-second maximum duration on Gen-4 is a hard limitation that forces users to generate in segments and stitch in traditional editing software for longer scenes. Credit consumption is also unpredictable, with users reporting that iterative refinement burns through monthly allowances faster than expected. For professional creatives who need maximum control and can absorb the cost, Runway is the best tool available; for volume-based social media production, more affordable alternatives often deliver better ROI.",
@@ -720,7 +721,7 @@
     "url": "zapier.com",
     "free": true,
     "categories": [
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "Zapier is the largest no-code workflow automation platform, connecting over 7,000–9,000 apps through simple trigger-and-action \"Zaps.\" In 2026 its major addition is Zapier Central/AI agents — persistent AI assistants that can monitor data, reason through logic using models like GPT-5 and Claude, and execute multi-step tasks autonomously across connected apps rather than following rigid pre-set steps. Pricing is task-based across four tiers: Free (100 tasks/month, 2-step Zaps only), Professional (from $29.99/month, 750 tasks, unlimited multi-step Zaps), Team (from ~$103.50/month, 2,000+ tasks, shared workspaces, up to 25 users), and Enterprise (custom, often tens of thousands of dollars/year for mid-market deployments). AI agent usage is billed separately/incrementally on top of the task allowance.",
@@ -766,7 +767,7 @@
     "url": "clipdrop.co",
     "free": true,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "Clipdrop is a browser-based AI image editing toolkit from Stability AI, offering a modular set of REST API endpoints and web tools for background removal, object cleanup (erase), relighting, upscaling, uncropping, and text-to-image generation powered by Stable Diffusion. As of mid-2026, the platform is positioned as a zero-install workflow for designers, e-commerce sellers, and marketers who need quick, repeatable image edits rather than full creative generation. The relighting tool is a genuine differentiator — it adjusts lighting direction, intensity, and color temperature on existing flat portraits to simulate 3D illumination, a capability few competitors offer at this price point.\n\nPricing runs across three tiers: Free ($0, 20 daily uses for background removal/object removal/relighting, 50 daily uses for text removal, downsampled resolution, watermarked exports, no text-to-image or uncrop), Pro ($14.99/month, unlimited generations on included tools, up to 4096×4096 resolution, fast-lane priority, commercial use rights), and Enterprise/API (pay-as-you-go, ~$0.002 per background removal, ~$0.005 per SDXL generation, up to 1,000 requests/second). The platform also offers native Photoshop and Figma plugins, plus Zapier integration for automated pipelines.\n\nUser feedback highlights Clipdrop's speed and edge-segmentation quality as genuine strengths — hair and complex shapes are isolated quickly and accurately. Independent tests show the relighting tool produces natural-looking 3D highlights on flat 2D portraits. However, reviewers consistently note that large object removal leaves blurry artifacts, the free tier's downsampled output is unusable for professional work, and the toolset is narrow — there is no native video editing or motion generation, and text-to-image quality lags behind dedicated generators like Midjourney or FLUX. For e-commerce teams needing bulk background removal, it's a solid choice; for creative campaigns requiring original imagery, it's an editing supplement rather than a primary tool.",
@@ -813,7 +814,7 @@
     "url": "jasper.ai",
     "free": false,
     "categories": [
-      "chat",
+      "drafting",
       "niche"
     ],
     "affiliate": false,
@@ -837,7 +838,7 @@
     "url": "designer.microsoft.com",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Microsoft Designer is a free AI-powered graphic design application integrated into the Microsoft 365 ecosystem, leveraging DALL-E 3 for image generation and offering templates for social media posts, invitations, presentations, and marketing materials. As of mid-2026, the tool is accessible with any Microsoft account at no cost, with additional features unlocked for Microsoft 365 subscribers. Core capabilities include AI image generation from text prompts, auto-layout suggestions, background removal, text-to-design conversion, and brand kit support for consistent color palettes and fonts across an organization. The interface is deliberately simple — positioned as a lightweight alternative to Canva for office workers who need quick visuals without learning complex design software.\n\nPricing is straightforward: Free ($0 with any Microsoft account, 15 AI credits per month for image generation, basic templates, standard resolution), and Microsoft 365 integration (~$7/month as part of M365 Personal/Family, 60 AI credits shared with Copilot, premium templates, higher resolution). There is no standalone paid tier for Designer itself — the AI credit allocation is the primary differentiator between free and M365 users. Each DALL-E 3 image generation consumes one credit, meaning free users can generate roughly 15 images per month before hitting the cap.\n\nUser feedback is generally positive among existing Microsoft 365 users who appreciate the seamless integration with Word, PowerPoint, and Teams — generating a slide visual or social graphic without leaving the Office workflow is a genuine time-saver. Reviewers note the AI image quality is impressive for a free tool, with DALL-E 3's natural language comprehension producing usable results from simple prompts. However, the template library is thin compared to Canva's massive catalog, the 15-credit monthly cap on free accounts severely limits regular use to roughly one image every two days, and the tool lacks the depth for professional design work — no vector editing, limited typography control, and no animation or video features. For casual Office users, it's a convenient add-on; for serious designers, it's a quick sketchpad rather than a production tool.",
@@ -860,7 +861,7 @@
     "url": "notion.so/product/ai",
     "free": false,
     "categories": [
-      "chat"
+      "drafting"
     ],
     "affiliate": false,
     "overview": "Notion AI is the AI layer built into the Notion workspace/wiki/database product, offering in-line writing assistance, a Notion Agent capable of multi-step tasks (e.g., building a project tracker from a meeting summary), AI Meeting Notes, Enterprise Search across connected apps, and — since January 2026 — a model picker between GPT-5.2, Claude Opus 4.5, and Gemini 3 (plus an \"Auto\" mode). As of early 2026, Notion restructured pricing so that full AI features are bundled only into the Business tier and above, ending the old $10/month standalone AI add-on. Current tiers: Free ($0, unlimited blocks for individuals, limited AI trial), Plus (~$10/user/month annual, workspace collaboration, still no full AI), Business (~$20/user/month annual — the effective minimum price for full AI including Agent and Ask Notion), and Enterprise (custom). Autonomous \"Custom Agents,\" launched February 2026, additionally consume purchased Notion Credits ($10 per 1,000) on top of the Business/Enterprise plan.",
@@ -883,8 +884,8 @@
     "url": "openart.ai",
     "free": true,
     "categories": [
-      "image",
-      "video",
+      "image-gen",
+      "video-gen",
       "supercomputer"
     ],
     "affiliate": false,
@@ -908,7 +909,7 @@
     "url": "opus.pro",
     "free": true,
     "categories": [
-      "video"
+      "video-editor"
     ],
     "affiliate": true,
     "overview": "Opus Clip is an AI-powered video repurposing platform that transforms long-form content — podcasts, webinars, YouTube videos — into short-form vertical clips optimized for TikTok, YouTube Shorts, and Instagram Reels. As of mid-2026, the platform uses GPT-powered transcription and engagement analysis to identify hook-worthy moments, then auto-reframes horizontal footage into 9:16 vertical format with animated captions, emoji highlights, and AI-generated B-roll. A standout feature is the Virality Score, which ranks generated clips by predicted engagement potential, helping creators prioritize what to publish.\n\nPricing is credit-based, where 1 credit equals 1 minute of imported source video: Free ($0, 60 credits/month, watermarked exports, clips expire after 3 days, no editor), Starter ($15/month, 150 credits, watermark-free, basic editing but no B-roll or scheduling), Pro ($29/month or $14.50/month billed annually at $174/year, 300 credits, full editor, AI B-roll, social scheduling, 2 team seats, XML export to Premiere Pro/DaVinci Resolve), and Business (custom pricing, API access, unlimited seats). Credits expire after 60 days on monthly plans or 12 months on annual. Auto-posting to X costs an additional 1 credit per post.\n\nUser feedback is mixed but leans positive on clip quality for spoken-word content. Independent testing in 2026 found the AI correctly identifies strong hooks in conversational content about 60–70% of the time, though reviewers note you should expect to discard 20–40% of generated clips before publishing. The most common complaints center on billing — Trustpilot reviews describe projects becoming inaccessible after cancellation (even with paid credits remaining), unexpected post-cancellation charges, and a hidden refund button that only works before processing completes. For podcasters and YouTubers with consistent long-form output, the Pro annual plan at $14.50/month offers genuine value; for occasional users, the free tier's 3-day expiration window makes it little more than a demo.",
@@ -931,7 +932,7 @@
     "url": "viktor.ai",
     "free": false,
     "categories": [
-      "chat"
+      "conversational"
     ],
     "affiliate": false,
     "overview": "Viktor is an AI \"coworker\" that lives natively inside Slack and Microsoft Teams rather than a separate chat window. Instead of only answering questions, it runs in its own cloud compute environment where it can write and execute code, connect to 3,000+ external tools (Salesforce, HubSpot, Linear, Notion, Jira, Stripe, GitHub, Google Drive, and more), and carry out autonomous workflows lasting up to several weeks — tracking deadlines, updating stakeholders, and maintaining context without repeated prompting. It builds persistent workspace memory over time, effectively learning company-specific \"skills\" it can reuse, and proactively monitors metrics/data to suggest or take action rather than waiting to be asked.",
@@ -954,7 +955,7 @@
     "url": "n8n.io",
     "free": true,
     "categories": [
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "n8n is a fair-code-licensed workflow automation platform combining a visual, node-based editor with the option to add custom code where needed, plus built-in LLM/AI-agent nodes for building AI-driven workflows. Its defining feature is execution-based billing: an entire multi-step workflow run counts as a single \"execution\" regardless of how many steps it contains, which tends to make it far cheaper than per-task competitors like Zapier for complex automations. It can be run entirely free via self-hosted Community Edition (open source, MIT-style fair-code license) or through n8n Cloud, priced (as of mid-2026) at roughly $20–24/month (Starter, ~2,500 executions), $50–60/month (Pro, ~10,000 executions), and a self-hosted Business plan around $800/month (SSO, Git version control, advanced permissions); Enterprise is custom-priced by execution volume.",
@@ -1001,7 +1002,7 @@
     "url": "capcut.com",
     "free": true,
     "categories": [
-      "video"
+      "video-editor"
     ],
     "affiliate": true,
     "overview": "CapCut is ByteDance's all-in-one video editing platform, deeply integrated with TikTok's ecosystem and increasingly powered by AI features for short-form content creation. As of mid-2026, the AI layer includes auto-captions with animated text and emoji highlights, AI background removal, smart cutout, auto-reframe for multi-platform export, batch processing for up to 20 clips simultaneously, and a 2026-added Director Mode for short dramas. The platform runs across mobile (iOS/Android), desktop (Windows/Mac with GPU acceleration), and web, with the mobile app offering roughly 90% of desktop functionality. It has become the default editor for TikTok creators, with 68% of video production courses now including CapCut in their curriculum.\n\nPricing follows a freemium model: Free ($0, all core AI features included but watermarked exports, no 4K export, no cloud storage for new web spaces), Pro ($19.99/month or $179.99/year — ~$15/month effective — watermark removal, 4K export, premium templates, 1,200 AI points, team collaboration), and Team (variable pricing, typically $15–$30/seat/month annually, shared assets, centralized billing). AI credit top-ups start at $4.99 for 100 credits. The platform requires no specialized hardware and leverages GPU acceleration where available.\n\nUser feedback presents a stark split: the Apple App Store rating is 4.6/5 from 1.1 million reviews, while Trustpilot sits at 1.3/5 from over 1,000 reviews (86% one-star). App Store users praise the editing speed, template library, and intuitive mobile interface. Trustpilot complaints cluster on billing — forced price hikes at renewal (old $10/month plans cancelled and replaced with $20/month), continued charges after cancellation, account lockouts near renewal, and email-only support with 2–4 week response times. The free tier's recent restriction to 6 exports per week before watermarking has also drawn criticism. For high-volume short-form creators, CapCut Pro delivers real time savings; for casual users, the free tier's new limitations make it increasingly difficult to rely on without paying.",
@@ -1024,7 +1025,8 @@
     "url": "copy.ai",
     "free": true,
     "categories": [
-      "chat"
+      "drafting",
+      "niche"
     ],
     "affiliate": false,
     "overview": "Copy.ai began as an AI copywriting generator but has repositioned itself as a full \"GTM AI Platform\" — combining Chat (ad-hoc prompts), Workflows (multi-step automation), Infobase (company knowledge storage), Brand Voice (tone consistency), and agentic features like a Prospecting Cockpit for account/contact research. It's model-agnostic, drawing on OpenAI, Anthropic, and Google Gemini models, and connects to CRMs directly plus 2,000+ apps via Zapier. Following its October 2025 acquisition by Fullcast, it's being positioned as part of an end-to-end AI-native revenue operations suite. Pricing splits into a content-focused tier — Chat at $29/month (5 seats, unlimited chat) or Pro/Starter around $36–49/month — and much larger GTM-automation tiers (Growth, Expansion, Scale) that start around $1,000/month and range up to $3,000+/month, plus custom Enterprise pricing.",
@@ -1047,7 +1049,7 @@
     "url": "granola.ai",
     "free": false,
     "categories": [
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "Granola is a desktop AI meeting notepad that captures a computer's system audio in the background — without a visible bot joining the call — and turns a user's own rough, typed notes into clean, structured summaries once the meeting ends. Unlike fully automated notetakers, it works as a hybrid: the person keeps taking their own shorthand notes during the call, and Granola's AI enhances and structures them afterward, using the full transcript for context. Available on Mac and Windows desktop, plus a 2026-added iOS app for on-the-go recording and phone-call transcription (no Android or web app). 2026 tiers: Basic/Free ($0, capped at roughly 25 notes of history), Business (~$14/user/month annual, unlimited history plus integrations with Notion, HubSpot, Slack, Zapier), and Enterprise (~$35/user/month, SSO, model-training opt-out, API access).",
@@ -1070,7 +1072,7 @@
     "url": "lindy.ai",
     "free": false,
     "categories": [
-      "chat"
+      "conversational"
     ],
     "affiliate": false,
     "overview": "Lindy is a no-code AI agent-building platform focused on automating recurring knowledge work — inbox/email triage and drafting, calendar and meeting scheduling, meeting-note capture, CRM updates, and customer support ticket resolution — across 100+ integrations (Slack, Salesforce, HubSpot, and more). Agents are configured in plain natural language rather than code, learn a user's tone/style from feedback over time, and (a key differentiator) draft messages that wait for human approval before sending as a safety guardrail. It also offers \"Gaia,\" a low-latency AI voice agent for phone-based customer support. Pricing is entirely usage/credit-metered with no free tier: Plus at $49.99/month (up to 2 inboxes), Pro at $99.99/month (3x Plus usage, browser automation, up to 3 inboxes), and Max at $199.99/month (7x usage, up to 5 inboxes), all month-to-month only (no annual discount); Enterprise is custom-priced with SSO/HIPAA/audit-log compliance.",
@@ -1116,7 +1118,7 @@
     "url": "usemotion.com",
     "free": false,
     "categories": [
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "Motion is an AI-driven productivity platform centered on automatic task scheduling: it continuously analyzes a user's tasks, deadlines, meetings, priorities, and available time, then auto-places tasks directly onto the calendar and dynamically reshuffles them in real time as conditions change (a meeting runs long, a new urgent item appears, a deadline shifts). Beyond scheduling, it has expanded into a broader \"AI Employee SuperApp\" with built-in project management (Kanban boards, Gantt charts), AI Docs, an AI note-taker, and team workload views. Pricing (2026): Pro AI at ~$19/month ($12.73/month billed annually, 7,500 AI credits) for individuals, and Business AI at ~$29/seat/month ($19.43/seat/month annually, 15,000 AI credits, team workload visibility and task assignment); there is no permanent free plan, only a 7-day trial. Separate \"AI Employees\" tiers (Starter $49, Light $99, Standard $229, Plus $599) extend it further into automated-worker territory.",
@@ -1139,7 +1141,7 @@
     "url": "photoroom.com",
     "free": true,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "PhotoRoom is an AI-powered photo editing platform purpose-built for e-commerce sellers, resellers, and small brands who need fast, consistent product photography at scale. As of mid-2026, the platform's core toolkit includes instant background removal, AI-generated backgrounds and scenes, Virtual Model (dressing AI-generated models in apparel), Ghost Mannequin, Product Staging, batch processing, and direct Shopify listing creation. The mobile app is widely regarded as best-in-class for on-the-go sellers, while the web version supports higher-volume workflows. The platform processes millions of images monthly for Poshmark, Depop, eBay, and Shopify sellers.\n\nPricing runs across five tiers: Free ($0, 250 white-background exports/month with PhotoRoom watermark, limited AI features, no commercial use), Pro ($7.99/month or $7.50/month billed annually — $90/year, unlimited manual exports, advanced AI tools, 500 batch exports/month, 5× Free AI credit allowance, high-resolution export, up to 50 seats), Max ($26.99/month or $20.99/month annually, better AI models, 1,500 batch exports, 3× Pro AI credits, Shopify publishing, priority support), Ultra ($99–$990/month depending on sub-tier x1 to x10, 5,000–50,000 batch exports, best AI models, video generator), and Enterprise (custom, API access, SOC 2 Type 2, 200,000+ images/year minimum). API pricing is separate: Basic at $20/month ($0.02/image) for background removal, Plus at $100/month ($0.10/image) for full image editing.\n\nUser feedback is strongest among mobile-first resellers who praise the speed and quality of background removal and the Virtual Model feature for eliminating photoshoot costs. Independent reviews rate PhotoRoom 8.9/10 for e-commerce photography specifically. However, common complaints include confusing dual-meter billing (AI credits and batch export limits are tracked separately, leading to unexpected overages), frequent pricing changes that surprise existing users, and a web interface that feels less polished than the mobile app. The free tier's watermark makes it unusable for any commercial listing, and the jump from Pro ($7.50/mo) to Max ($20.99/mo) is steep for growing sellers who need Shopify integration. For full-time resellers, PhotoRoom is a clear ROI winner; for occasional sellers, the free tier's limitations push toward paid plans quickly.",
@@ -1162,7 +1164,7 @@
     "url": "photopea.com",
     "free": true,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "Photopea is a browser-based image editor that replicates the Photoshop workflow entirely in the browser — no installation, no account, and no subscription required for core functionality. As of mid-2026, it supports full PSD, AI, XD, Sketch, and RAW file formats with layer-based editing, masks, blend modes, smart objects, adjustment layers, vector paths, and non-destructive filters. The interface is deliberately familiar to Photoshop users, making it a genuine drop-in replacement for quick edits, file conversion, and cross-platform design work on shared or public computers. It also runs offline once loaded in the browser cache.\n\nPricing is refreshingly simple: Free ($0, full editor access, ads displayed in the workspace, 0.5 GB PeaDrive storage), and Premium (~$5/month or €5/month, ad-free experience, 5 GB PeaDrive, 3,000 AI credits per month, 2× history steps). There are no feature gates between free and paid — the Premium plan only removes ads and adds convenience features. The AI credits power generative fill and background removal tools added in recent updates. Annual billing is available at a modest discount.\n\nUser feedback is sharply polarized. Enthusiastic users praise it as a \"miracle\" for a free browser tool — the PSD compatibility alone saves thousands in Adobe subscriptions for occasional users. Students and budget-conscious creators consistently cite it as their primary editor. However, SaaSworthy reviews aggregate to a 2.6/5 rating, with the majority of complaints centering on performance: lag and crashes on large files (500MB+ PSDs), slow loading times on complex documents, and intrusive ads in the free version that disrupt workflow. The AI features are also reported as slower and less refined than dedicated tools like Photoshop's Generative Fill or Midjourney. For quick edits and file compatibility, it's unmatched; for heavy professional retouching, the performance ceiling is real.",
@@ -1185,7 +1187,7 @@
     "url": "pika.art",
     "free": true,
     "categories": [
-      "video"
+      "video-gen"
     ],
     "affiliate": false,
     "overview": "Pika Labs is an AI video generation platform specializing in stylized, effect-driven short-form content — melting objects, inflating characters, exploding scenes, and cinematic camera movements — rather than photorealistic footage. As of mid-2026, the platform runs on the Pika 2.5 model and offers text-to-video, image-to-video, and video-to-video generation with a focus on viral social media aesthetics. A standout feature is the Turbo model, which generates clips significantly faster and cheaper per credit than the standard Pika 2.5, though at slightly reduced quality. The platform also supports camera controls (pan, zoom, orbit) and negative prompting for excluding unwanted elements.\n\nPricing is credit-based across five tiers: Free ($0, limited access, 480p only, watermarked, no commercial rights), Basic ($8/month billed annually, 80 credits/month, 480p Pika 2.5 only), Standard ($28/month annually, 700 credits, all resolutions, watermark-free, commercial use), Pro ($76/month annually, 2,300 credits, faster generation), and Fancy (6,000 credits, fastest processing, price not publicly listed). Credit burn varies by model and resolution: a 5-second Pika 2.5 clip costs 12 credits at 480p, 20 at 720p, or 40 at 1080p. Credits do not roll over on Basic/Standard; Pro and Fancy include rollover. Annual billing saves 20% across all paid tiers.\n\nUser feedback highlights Pika's genuine strength in creative, eye-catching effects that drive engagement on TikTok and Instagram Reels — the \"melting\" and \"exploding\" object effects are genuinely unique in the market. However, reviewers consistently note that output quality is unpredictable between generation attempts, often requiring 3–5 tries to get a usable clip, which burns through credits faster than headline rates suggest. The platform is also unsuitable for professional video production: no precise directorial control, limited consistency across multiple shots, and a 5-second duration cap. For social media creators experimenting with viral effects, Pika offers genuine creative value; for brands needing visual consistency or long-form content, Runway and Kling are better fits.",
@@ -1208,7 +1210,7 @@
     "url": "wisprflow.ai",
     "free": true,
     "categories": [
-      "chat"
+      "conversational"
     ],
     "affiliate": false,
     "overview": "Wispr Flow is an AI-powered voice dictation tool that transcribes speech in real time and then uses an LLM to clean it up — adding punctuation, removing filler words (\"um,\" \"uh\"), and formatting the output based on which app it's being typed into — rather than delivering raw, literal speech-to-text. It runs as a background app activated by hotkey on macOS and Windows, plus a third-party keyboard on iPhone (no Android app as of mid-2026), and supports 100+ languages with automatic detection. Paid tiers add \"Command Mode,\" which lets users voice-edit already-written text (e.g., \"make this more formal,\" \"turn this into a list\"). Pricing: Flow Basic (Free, capped at 2,000 words/week — roughly 4 days of light use), Pro (~$15/month, or $12/month billed annually — unlimited dictation, Command Mode, priority support), and Enterprise (custom — SOC 2 Type II, ISO 27001, HIPAA, SSO/SAML).",
@@ -1231,8 +1233,8 @@
     "url": "express.adobe.com",
     "free": true,
     "categories": [
-      "image",
-      "video"
+      "image-editor",
+      "video-editor"
     ],
     "affiliate": false,
     "overview": "Adobe Express is Adobe's lightweight, browser-and-mobile design platform aimed at non-designers who need to produce social media graphics, flyers, presentations, and short videos quickly. As of mid-2026, the platform integrates Adobe Firefly generative AI for text-to-image, generative fill, text effects, and auto-captioning, plus a template library of 350,000+ designs, 4,000+ Adobe Fonts, and 1 million+ royalty-free Adobe Stock assets. It is positioned as the entry point into Adobe's ecosystem — simpler than Photoshop or Illustrator, but with enough AI power to produce polished content without design training. The platform runs across web, iOS, and Android with cloud-synced projects.\n\nPricing follows a four-tier freemium model: Free ($0, 5 GB storage, 25 AI credits/month, watermarked premium templates, 300 MB file upload limit, limited AI features), Premium ($9.99/month or $99.99/year — ~$8.33/month effective — 100 GB storage, 250 AI credits, full template library, Photoshop web/mobile, brand kits, advanced editing), Teams ($9.99/user/month annual only, 12-month minimum, 2-seat minimum, 100 GB/user, 4,000 premium credits + unlimited standard, admin console, co-editing, shared brand libraries), and Enterprise (custom, 1 TB/user, SSO, AEM integration, IP indemnification, compliance frameworks). AI credits do not roll over monthly, and when exhausted, core AI features (Remove Object, Generative Fill, Generative Expand) become completely inaccessible until the next billing cycle.\n\nUser feedback is generally positive among existing Adobe users who value the ecosystem integration — creating a social graphic in Express and dropping it directly into a Premiere timeline is a genuine workflow advantage. The Firefly-powered text-to-image is praised for prompt comprehension and commercial safety (trained on licensed Adobe Stock). However, reviewers consistently note the 25-credit free tier is exhausted in minutes (roughly 25 text-to-image generations), making it unsuitable for any regular production without paying. The Teams plan's 2-seat minimum and 12-month annual commitment create a barrier for solo freelancers, and the template library — while large — lacks the depth and customization of Canva's catalog. For quick social content inside the Adobe ecosystem, Express is convenient; as a standalone design tool, Canva often offers more value per dollar.",
@@ -1255,7 +1257,7 @@
     "url": "cleanup.pictures",
     "free": true,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "CleanUp.pictures is a minimalist, browser-based AI inpainting tool focused on a single task: removing unwanted objects, people, text, logos, watermarks, and defects from photos with a simple brush stroke. Powered by an open-source generative inpainting model, the platform requires no account for basic use — users drag and drop an image, paint over the object to remove, and receive a reconstructed background in seconds. As of mid-2026, it supports images of any resolution for import, though exports are capped at 720p on the free tier. The tool is used by photographers, real estate agents, e-commerce sellers, and creative agencies for quick retouching without opening heavy editing software.\n\nPricing is straightforward: Free ($0, unlimited images, 720p export resolution limit, standard quality), Pro ($5/month or $36/year — $3/month effective — unlimited images, unlimited resolution export, high-quality refiner for sharper reconstruction), and API (usage-based, for integrating inpainting into custom applications). A ClipDrop Pro bundle at ~$11/month adds access to Remove Background, Replace Background, Uncrop, and Generative Fill alongside CleanUp.pictures. The platform deletes all uploaded images after editing and explicitly states it never trains on user data.\n\nUser feedback is overwhelmingly positive on simplicity and speed — the \"paint and done\" workflow removes objects in seconds without the learning curve of Photoshop's clone stamp or healing brush. Real estate agents cite it as essential for removing stray pedestrians from property shots, and e-commerce sellers use it for cleaning product photos. However, the tool has clear limitations: no zoom function for precise editing on intricate details, no batch processing (images must be edited one at a time), and the AI struggles with highly complex textures, handwritten text, or large objects occupying significant portions of the frame. For quick, single-image cleanups, it's excellent; for professional retouching workflows requiring precision or volume, Photoshop or dedicated tools remain necessary.",
@@ -1301,7 +1303,7 @@
     "url": "d-id.com",
     "free": true,
     "categories": [
-      "video",
+      "video-gen",
       "audio"
     ],
     "affiliate": true,
@@ -1325,7 +1327,6 @@
     "url": "elicit.org",
     "free": true,
     "categories": [
-      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -1349,7 +1350,7 @@
     "url": "make.com",
     "free": true,
     "categories": [
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "Make is a visual, no-code workflow automation platform (a direct Zapier competitor) built around a canvas-based scenario editor rather than Zapier's more linear step list, making it well suited to complex branching logic. As of August 2025 it switched from an \"operations\"-based billing model to \"credits,\" a change that added new complexity, particularly around AI-related features, which can consume credits differently than standard module runs. 2026 pricing: Free (1,000 operations/month), Core (~$9–10.59/month, 10,000 operations), Pro (~$16–18.82/month, priority execution and custom variables), Teams (~$29–34/month, team roles/permissions), and custom Enterprise (SSO, SCIM, audit logs). Make also introduced credit rollover (unused operations carry forward one month) on paid plans in 2026.",
@@ -1372,7 +1373,7 @@
     "url": "otter.ai",
     "free": true,
     "categories": [
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "Otter.ai is one of the longest-established AI meeting assistants — a bot that joins scheduled Zoom, Google Meet, or Microsoft Teams calls, records and transcribes audio in real time with speaker identification, and generates AI summaries plus assignable action items (\"Otter meeting gems\") afterward. It's used by over 10 million users for meeting transcription, sales-call analysis, and student lecture notes, and integrates with Gmail, Google Drive, Notion, and Jira. 2026 pricing: Basic/Free ($0, 300 transcription minutes/month, 30-minute-per-conversation cap, only 3 lifetime file imports), Pro (~$16.99/month, or $8.33/month billed annually — 1,200 minutes/month, 10 file imports), Business (~$30/month, or $19.99/month annually — unlimited in-app meetings, live captions, admin controls), and custom Enterprise (SSO, SOC 2, HIPAA add-on, API access).",
@@ -1395,7 +1396,7 @@
     "url": "playgroundai.com",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Playground AI is a browser-based creative platform that combines AI image generation with template-driven design tools, targeting small business owners, marketers, and print-on-demand sellers who need quick visual assets without design expertise. As of mid-2026, the platform supports multiple AI models — including its proprietary Playground v3, GPT-4o, Nano Banana, Seedream, and Stable Diffusion — within a canvas-based editor offering layer editing, background removal, upscaling, outpainting, and real-time team collaboration. With over 13 million registered users, it occupies a middle ground between pure AI generators like Midjourney and traditional design tools like Canva.\n\nPricing runs across three tiers: Free ($0, 10 Playground v3 image generations per 3-hour rolling window, 3 monthly edits with premium models — GPT-4o, Nano Banana, Seedream — 10 downloads per day, personal use only, slower peak-hour generation), Pro ($15/month or $12/month billed annually at $144/year, 75 images per 3 hours, 150 premium model edits/month, unlimited downloads, background removal, upscaling, premium templates, commercial license), and Pro Plus ($45/month or $36/month annually, unlimited image generation, 1,000 model edits/month including 250 Nano Banana Pro edits, 4K output, API access, priority support). A Day Pass at $8 provides 24-hour Pro access for occasional users.\n\nUser feedback is mixed. Positive reviewers praise the template library and all-in-one workflow — generating a design, removing the background, upscaling, and exporting in one tool rather than three separate apps. The crafting and POD communities are particularly active. However, the free tier has been dramatically reduced from earlier offerings (down from 1,000 images/day to 10 per 3 hours), which has damaged trust among long-time users. Image quality on premium models does not consistently match Midjourney or DALL-E 3, and the platform is English-only for prompts, limiting global accessibility. Customer support is documentation-only with no live channels, and the no-refund policy adds purchase risk. For quick social graphics and POD mockups, Playground is convenient; for serious artistic or professional design work, dedicated tools deliver better quality.",
@@ -1418,7 +1419,7 @@
     "url": "openai.com/sora",
     "free": false,
     "categories": [
-      "video"
+      "video-gen"
     ],
     "affiliate": false,
     "overview": "Sora is OpenAI's flagship text-to-video and image-to-video generation model, producing cinematic short clips with realistic motion, lighting, and camera movement. As of mid-2026, Sora is available exclusively through ChatGPT subscriptions — there is no standalone Sora app or API. Access is bundled into ChatGPT Plus ($20/month, limited generations), Pro ($200/month, higher limits), and Team/Enterprise tiers. The model excels at cinematic concept shots, storyboarding, previsualization, and animating still images into short video ideas, with output quality consistently rated among the best in the AI video space for motion coherence and visual fidelity.\n\nThe platform's strengths lie in prompt comprehension and cinematic aesthetics — Sora understands complex camera directions (dolly in, crane up, rack focus) and produces natural-looking motion that avoids the \"uncanny valley\" artifacts common in cheaper tools. However, it is strictly a generation tool with no timeline editing, no multi-shot consistency, and no brand workflow features. Clip duration is limited to short segments (typically under 60 seconds), and generation limits on lower tiers mean heavy users quickly exhaust their allowance. Safety restrictions are also notably strict, blocking content involving real people, likeness-heavy material, and sensitive topics.\n\nUser feedback is enthusiastic about output quality but frustrated by access limitations. Creators already paying for ChatGPT Plus appreciate the bundled access as a low-friction way to experiment with AI video. However, the generation caps on Plus are described as \"barely enough for testing\" — users report hitting limits after 5–10 clips. The lack of a standalone subscription or API means teams cannot integrate Sora into production pipelines, and the $200/month Pro tier is a steep jump for video-only users who don't need the full ChatGPT Pro feature set. For filmmakers and agencies doing concept work, Sora's quality justifies the cost; for social media teams needing volume, Kling and Runway offer better value.",
