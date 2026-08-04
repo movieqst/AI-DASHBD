@@ -392,28 +392,8 @@
   <div class="ad-slot empty">Ad Space</div>
 </div>
 
+<script src="shared.js"></script>
 <script>
-const categoryColors = {
-  conversational: { accent: '#58a6ff', bg: 'rgba(88,166,255,0.1)' },
-  drafting:       { accent: '#79c0ff', bg: 'rgba(121,192,255,0.1)' },
-  'image-gen':    { accent: '#f0883e', bg: 'rgba(240,136,62,0.1)' },
-  'image-editor': { accent: '#ffa657', bg: 'rgba(255,166,87,0.1)' },
-  'video-gen':    { accent: '#39c5cf', bg: 'rgba(57,197,207,0.1)' },
-  'video-editor': { accent: '#56d4dd', bg: 'rgba(86,212,221,0.1)' },
-  storyboard:     { accent: '#e3b341', bg: 'rgba(227,179,65,0.1)' },
-  audio:          { accent: '#a371f7', bg: 'rgba(163,113,247,0.1)' },
-  code:           { accent: '#3fb950', bg: 'rgba(63,185,80,0.1)' },
-  supercomputer:  { accent: '#ff2d78', bg: 'rgba(255,45,120,0.1)' },
-  niche:          { accent: '#d29922', bg: 'rgba(210,153,34,0.1)' },
-  notai:          { accent: '#8b949e', bg: 'rgba(139,148,158,0.1)' },
-  voice:          { accent: '#ff9bce', bg: 'rgba(255,155,206,0.1)' },
-  local:          { accent: '#f85149', bg: 'rgba(248,81,73,0.1)' },
-  architectural:  { accent: '#7ee787', bg: 'rgba(126,231,135,0.1)' },
-  aggregator:     { accent: '#ffcc66', bg: 'rgba(255,204,102,0.1)' }
-};
-
-const slugify = (name) => name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
 let allData = [];
 let currentFilter = 'all';
 let currentSort = 'rating';
@@ -461,18 +441,6 @@ function applyUrlParams() {
   }
 }
 
-function formatTraffic(n) {
-  let value;
-  if (n >= 1000000) {
-    value = (n / 1000000).toFixed(n % 1000000 === 0 ? 0 : 1) + 'M';
-  } else if (n >= 1000) {
-    value = Math.round(n / 1000) + 'K';
-  } else {
-    value = String(n);
-  }
-  return `<span class="card-traffic-label">DAILY TRAFFIC </span><span class="card-traffic-value">${value}</span>`;
-}
-
 function selectNavTab(el, filterValue) {
   currentFilter = filterValue;
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -517,21 +485,21 @@ function showOnly(type) {
 
 function getFilteredData() {
   let data = [...allData];
-  
+
   if (currentFilter !== 'all') {
     data = data.filter(item => item.categories.includes(currentFilter));
   }
-  
+
   if (currentFreeFilter === 'free') {
     data = data.filter(item => item.free === true);
   } else if (currentFreeFilter === 'paid') {
     data = data.filter(item => item.free === false);
   }
-  
+
   if (currentAffiliateFilter) {
     data = data.filter(item => item.affiliate === true);
   }
-  
+
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
     data = data.filter(item => 
@@ -540,7 +508,7 @@ function getFilteredData() {
       item.categories.some(c => c.toLowerCase().includes(q))
     );
   }
-  
+
   data.sort((a, b) => {
     if (currentSort === 'name') return a.name.localeCompare(b.name);
     if (currentSort === 'traffic') return b.traffic - a.traffic;
@@ -554,7 +522,7 @@ function getFilteredData() {
     if (bFree !== aFree) return bFree - aFree;
     return b.rating - a.rating;
   });
-  
+
   const counter = document.getElementById('appCounter');
   if (counter) {
     const total = allData.length;
@@ -567,41 +535,32 @@ function getFilteredData() {
       counter.innerHTML = showingSpan + ' OF ' + total + ' AI APPS';
     }
   }
-  
+
   return data;
 }
 
 function render() {
   const grid = document.getElementById('cardsGrid');
   const data = getFilteredData();
-  
+
   if (data.length === 0) {
     grid.innerHTML = '<div class="no-results">No tools found matching your criteria.</div>';
     return;
   }
-  
+
   grid.innerHTML = data.map(item => {
-    const colors = categoryColors[item.categories[0]] || categoryColors.chat;
-    const categoryDisplayNames = { 
-      'image-gen': 'image gen', 'image-editor': 'image editor', 
-      'video-gen': 'video gen', 'video-editor': 'video editor',
-      conversational: 'conversational', drafting: 'drafting',
-      storyboard: 'storyboard', code: 'coding', niche: 'niche ai', 
-      supercomputer: 'super cmptr', notai: 'not ai', voice: 'voice ai', 
-      local: 'local ai', architectural: 'architectural ai', aggregator: 'ai aggregator' 
-    };
-    const displayCat = c => categoryDisplayNames[c] || c;
-    const categoryLabel = displayCat(item.categories[0]);
+    const colors = categoryColors[item.categories[0]] || categoryColors.conversational;
+    const categoryLabel = categoryLabels[item.categories[0]] || item.categories[0];
     const secondaryTags = item.categories.slice(1).map(cat => {
-      const c = categoryColors[cat] || categoryColors.chat;
-      return `<span class="card-tag" style="background:${c.bg};color:${c.accent};border:1px solid ${c.accent}" onclick="event.stopPropagation(); filterByCategory('${cat}')">${displayCat(cat)}</span>`;
+      const c = categoryColors[cat] || categoryColors.conversational;
+      return `<span class="card-tag" style="background:${c.bg};color:${c.accent};border:1px solid ${c.accent}" onclick="event.stopPropagation(); filterByCategory('${cat}')">${categoryLabels[cat] || cat}</span>`;
     }).join('');
-    
+
     const toolPage = `tool.html?slug=${encodeURIComponent(slugify(item.name))}`;
 
     return `
       <div class="card" style="--accent:${colors.accent};--accent-bg:${colors.bg}" onclick="window.location.href='${toolPage}'">
-        <span class="card-traffic card-traffic-corner">${formatTraffic(item.traffic)}</span>
+        <span class="card-traffic card-traffic-corner">${formatTrafficHTML(item.traffic)}</span>
         <div class="card-header">
           <div class="card-icon">${item.icon}</div>
           <div>

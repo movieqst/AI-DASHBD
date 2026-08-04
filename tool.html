@@ -233,14 +233,12 @@
 <body>
 
 <div class="container" id="app">
-  <!-- UPDATED: dash.html → index.html -->
   <a class="back-link" href="./"> ← MAIN AI DASH </a>
 
   <div id="loading" class="not-found">Loading tool details...</div>
 
   <div id="not-found" class="not-found hidden">
     <p>Couldn't find that tool in the catalog.</p>
-    <!-- UPDATED: dash.html → index.html -->
     <p><a href="./">← Return to the directory</a></p>
   </div>
 
@@ -290,35 +288,8 @@
   </div>
 </div>
 
+<script src="shared.js"></script>
 <script>
-const slugify = (name) => name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
-const categoryColors = {
-  conversational: { accent: '#58a6ff', bg: 'rgba(88,166,255,0.1)' },
-  drafting:       { accent: '#79c0ff', bg: 'rgba(121,192,255,0.1)' },
-  'image-gen':    { accent: '#f0883e', bg: 'rgba(240,136,62,0.1)' },
-  'image-editor': { accent: '#ffa657', bg: 'rgba(255,166,87,0.1)' },
-  'video-gen':    { accent: '#39c5cf', bg: 'rgba(57,197,207,0.1)' },
-  'video-editor': { accent: '#56d4dd', bg: 'rgba(86,212,221,0.1)' },
-  storyboard:     { accent: '#e3b341', bg: 'rgba(227,179,65,0.1)' },
-  audio:          { accent: '#a371f7', bg: 'rgba(163,113,247,0.1)' },
-  code:           { accent: '#3fb950', bg: 'rgba(63,185,80,0.1)' },
-  supercomputer:  { accent: '#ff2d78', bg: 'rgba(255,45,120,0.1)' },
-  niche:          { accent: '#d29922', bg: 'rgba(210,153,34,0.1)' },
-  notai:          { accent: '#8b949e', bg: 'rgba(139,148,158,0.1)' },
-  voice:          { accent: '#ff9bce', bg: 'rgba(255,155,206,0.1)' },
-  local:          { accent: '#f85149', bg: 'rgba(248,81,73,0.1)' },
-  architectural:  { accent: '#7ee787', bg: 'rgba(126,231,135,0.1)' },
-  aggregator:     { accent: '#ffcc66', bg: 'rgba(255,204,102,0.1)' }
-};
-
-function formatTraffic(n) {
-  if (!n && n !== 0) return '—';
-  if (n >= 1000000) return (n / 1000000).toFixed(n % 1000000 === 0 ? 0 : 1) + 'M';
-  if (n >= 1000) return Math.round(n / 1000) + 'K';
-  return String(n);
-}
-
 function normalizeUrl(u) {
   if (!u) return '#';
   return /^https?:\/\//i.test(u) ? u : `https://${u}`;
@@ -354,7 +325,7 @@ async function loadTool() {
     loading.classList.add('hidden');
     detail.classList.remove('hidden');
 
-    const colors = categoryColors[tool.categories?.[0]] || categoryColors.chat;
+    const colors = categoryColors[tool.categories?.[0]] || categoryColors.conversational;
     document.documentElement.style.setProperty('--accent', colors.accent);
     document.documentElement.style.setProperty('--accent-bg', colors.bg);
 
@@ -365,10 +336,8 @@ async function loadTool() {
     document.getElementById('rating').textContent = tool.rating || '—';
     document.getElementById('traffic').textContent = formatTraffic(tool.traffic);
 
-    // Long description
     document.getElementById('longDesc').textContent = tool.overview || tool.desc || 'No detailed description available.';
 
-    // Benefits
     const benefitsList = document.getElementById('benefits');
     benefitsList.innerHTML = '';
     (tool.benefits || ['No benefits listed yet.']).forEach(b => {
@@ -377,7 +346,6 @@ async function loadTool() {
       benefitsList.appendChild(li);
     });
 
-    // Drawbacks
     const drawbacksList = document.getElementById('drawbacks');
     drawbacksList.innerHTML = '';
     (tool.drawbacks || ['No drawbacks listed yet.']).forEach(d => {
@@ -386,38 +354,27 @@ async function loadTool() {
       drawbacksList.appendChild(li);
     });
 
-    // Meta badges
     const metaBadges = document.getElementById('meta-badges');
     metaBadges.innerHTML = '';
-    const categoryNames = { 
-      'image-gen': 'Image Gen', 'image-editor': 'Image Editor',
-      'video-gen': 'Video Gen', 'video-editor': 'Video Editor',
-      conversational: 'Conversational', drafting: 'Drafting',
-      storyboard: 'Storyboard', code: 'Coding', niche: 'Niche AI', 
-      supercomputer: 'Supercomputer', notai: 'Not AI', voice: 'Voice AI', 
-      local: 'Local AI', architectural: 'Architectural AI', aggregator: 'AI Aggregator' 
-    };
-    
-    // UPDATED: dash.html → index.html in the href below
+
     tool.categories.forEach(cat => {
       const a = document.createElement('a');
       a.className = 'meta-badge';
       a.href = `./?category=${encodeURIComponent(cat)}`;
-      a.textContent = categoryNames[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
-      
+      a.textContent = categoryLabels[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
+
       const catColor = categoryColors[cat];
       if (catColor) {
         a.style.color = catColor.accent;
         a.style.borderColor = catColor.accent;
         a.style.backgroundColor = catColor.bg;
       }
-      
+
       metaBadges.appendChild(a);
     });
 
     const freeSpan = document.createElement('a');
     freeSpan.className = 'meta-badge ' + (tool.free ? 'free' : 'paid');
-    // UPDATED: dash.html → index.html in the href below
     freeSpan.href = `./?free=${tool.free ? 'true' : 'false'}`;
     freeSpan.textContent = tool.free ? 'Free Tier' : 'Paid Only';
     metaBadges.appendChild(freeSpan);
@@ -429,7 +386,6 @@ async function loadTool() {
       metaBadges.appendChild(affSpan);
     }
 
-    // CTA
     const url = normalizeUrl(tool.url);
     document.getElementById('ctaLink').href = url;
     document.getElementById('ctaName').textContent = tool.name;
