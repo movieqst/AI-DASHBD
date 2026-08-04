@@ -8,7 +8,7 @@
     "url": "submagic.co",
     "free": true,
     "categories": [
-      "video"
+      "video-editor"
     ],
     "affiliate": false,
     "overview": "Submagic is a browser-based AI video editor purpose-built for short-form content creators, podcasters, and agencies who need to turn long-form recordings into captioned, platform-ready clips for TikTok, Instagram Reels, and YouTube Shorts. As of mid-2026, its core workflow combines AI transcription, animated caption styling, auto-clip extraction (Magic Clips), B-roll insertion, zoom effects, hook title generation, bad-take removal, clean audio processing, and direct publishing to social platforms. The platform claims over 2,000 reviews across Google, Trustpilot, and G2, with an overall editorial rating of 4.4/5.\n\nPricing is structured around video limits, AI credits, and an optional Magic Clips add-on: Free ($0, 3 videos/month, 1 minute 30 seconds max, 200MB file limit, watermarked, starter templates), Starter ($19/month or $12/month annually, 15 videos per member/month, 2 minutes max, 3 AI credits, 1080p/30fps, no watermark), Pro ($39/month or $23/month annually, 40 videos per member/month, 5 minutes max, 6 AI credits, Storyblocks B-roll, hook titles, brand kit, publishing to TikTok/YouTube/Instagram), and Business ($69/month or $41/month annually, 100 videos per member/month, 30 minutes max, 15 AI credits, 4K/60fps, 10 custom templates, 100 API minutes, priority support). The Magic Clips add-on — the main reason many users buy Submagic — costs an additional $19/month ($12/month annually) for unlimited clip generation from long-form content.\n\nUser feedback is strongest among podcasters and interview repurposers who praise the speed of turning a 60-minute episode into 8–10 captioned clips. The caption styling and pacing cleanup are genuinely better than basic subtitle tools. However, reviewers consistently flag that the real cost is higher than headline pricing once the Magic Clips add-on, seat counts, and AI credit math are factored in. Public reviews also mention stuck exports, bugs around credit consumption, and billing friction. The free tier's 3-video cap and watermark make it a brief test only. For high-volume short-form teams, Submagic is a solid workflow accelerator; for occasional creators, the total cost with add-ons can exceed simpler alternatives.",
@@ -54,7 +54,7 @@
     "url": "colossyan.com",
     "free": false,
     "categories": [
-      "video",
+      "video-gen",
       "audio"
     ],
     "affiliate": false,
@@ -78,7 +78,7 @@
     "url": "littlebird.com",
     "free": true,
     "categories": [
-      "chat"
+      "conversational"
     ],
     "affiliate": false,
     "overview": "Littlebird is an \"always-on\" AI personal assistant that runs at the OS level on Mac (with companion iOS/Android apps for chat and recall on the go), continuously reading on-screen content across all applications — documents, meetings, emails, browser tabs — without requiring the user to manually feed it context, and without storing screenshots. Rather than a chatbot prompted from a blank slate, it builds a persistent, real-time understanding of a user's workday so that when asked a question (\"what did I do today?\"), it already has the context. Features include a Daily Journal (now available in 12 languages), Meeting Notes/transcription, \"Routines\" for recurring automated prompts, and privacy controls to exclude specific apps, domains, or entire website categories from monitoring. Pricing: Free tier available, with a Team plan starting around $17/month for organization-wide rollout (individual Plus-tier pricing not clearly published in source data).",
@@ -101,8 +101,8 @@
     "url": "napkin.ai",
     "free": true,
     "categories": [
-      "chat",
-      "image"
+      "storyboard",
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Napkin AI converts plain text into professional visuals — flowcharts, infographics, mind maps, data charts, comparison diagrams, timelines, and org charts — automatically, without requiring any design skill or prompt engineering: a user pastes or imports text (including from PDF, DOC, or PPT files) and the AI analyzes it to suggest and generate an appropriate visual format, which can then be customized (icons, colors, fonts, connectors) and exported as PNG, SVG, PPT, or PDF. It's positioned as a \"speed layer\" for visual communication rather than a full design platform like Canva — best for quickly turning ideas, reports, or presentation content into a polished visual rather than doing from-scratch graphic design. Pricing is credit-based: Free (500 AI credits/week, resets Monday, visuals carry a small watermark), Plus (~$12/month, 10,000 credits/month, 3 saved custom brand styles, watermark removed), Pro (~$18–30/month, 30,000 credits/month, unlimited custom styles, SVG/PDF export), and Enterprise (custom, for large teams).",
@@ -125,8 +125,8 @@
     "url": "picsart.com",
     "free": true,
     "categories": [
-      "image",
-      "video"
+      "image-editor",
+      "video-editor"
     ],
     "affiliate": false,
     "overview": "Picsart is an all-in-one creative platform combining AI-powered photo editing, video editing, design tools, and generative AI features, with over 150 million users worldwide as of mid-2026. The platform offers a massive library of templates, fonts, stickers, and stock assets alongside AI tools for background removal, object replacement, text-to-image generation, smart enhancements, and batch processing. It runs across mobile (iOS/Android) and web, with cloud-synced projects and cross-platform access. The interface is designed for non-designers, positioning it as a lighter alternative to Photoshop for social media content, marketing creatives, and quick product photo edits.\n\nPricing follows a four-tier freemium model: Free ($0, 5 AI credits per week, 2 GB cloud storage, limited templates, watermarked exports, ads), Plus (~$13/month billed annually or ~$17/month billed monthly, 50 AI generations per day, 100 GB storage, full template library, background removal, commercial license, batch processing up to 20 images), Pro (~$20/month annually or ~$25/month monthly, 200 AI generations per day, 500 GB storage, batch processing up to 100 images, 5 brand kits, team workspace for 3 seats, priority support), and Enterprise (custom pricing, SDK access, white-label, flexible credit allocation). AI credits do not roll over, and the free tier's 5 weekly credits are exhausted in a single session of real use.\n\nUser feedback is strongest among mobile-first creators and small business owners who value the breadth of tools in one app. The background removal and template library are consistently praised as genuine time-savers for social media content. However, reviewers note the platform can feel overwhelming for first-time users due to the sheer number of features, and the AI credit system creates friction — 5 weekly credits on the free tier is barely a demo, and even Plus users at 50 generations per day can hit limits during heavy campaign periods. The jump from Plus to Pro is steep for individual creators who need batch processing beyond 20 images, and the platform's AI image quality does not match dedicated generators like Midjourney or DALL-E 3. For quick social graphics and mobile editing, Picsart is excellent; for professional design work or high-volume AI generation, dedicated tools offer better quality per dollar.",
@@ -197,7 +197,7 @@
     "url": "tensor.art",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Tensor.Art is a browser-based AI image generation platform built around a massive community-driven model library, offering access to over 10,000 custom Stable Diffusion models, LoRAs, and specialized checkpoints directly in the browser without requiring local GPU hardware. As of mid-2026, the platform supports text-to-image, image-to-image, inpainting, ControlNet, and model training, with particular strength in anime, manga, and stylized art styles where the community has contributed extensively. The interface provides fine-grained parameter control — steps, CFG scale, sampler selection, and negative prompting — making it appealing to users who want more control than one-click generators offer.\n\nPricing follows a freemium credit model: Free ($0, 100 daily credits resetting at midnight UTC, ~100–150 standard images or 30–50 high-resolution generations per day, watermarked outputs, standard queue), Basic ($5/month, increased daily credits, faster queue), Standard ($10/month, more credits, priority generation), and Pro ($9.90/month billed annually or $19.90/month billed monthly, 300 daily credits plus bonus credits — 1,000 for monthly, 5,000 for quarterly, 25,000 for yearly — commercial license, private generation, higher resolution). One-time credit packs are also available: 3,000 credits for $9.90, 10,000 for $29.90, and 30,000 for $59.90. A $1 daily pass exists for occasional users.\n\nUser feedback is strongest among hobbyists, anime enthusiasts, and indie game developers who value the model variety and zero hardware requirement. The ability to test thousands of community models without a local GPU is a genuine differentiator. However, reviewers consistently note that the free tier's watermark makes outputs unusable for commercial work, and the sheer volume of parameter controls creates a steep learning curve that slows down fast content production. Failed generations do not always refund spent credits automatically, and server congestion during peak hours causes queue delays. Image quality is inconsistent across models — community uploads vary widely in training quality. For hobbyists and stylized art exploration, Tensor.Art is excellent; for professional work requiring consistency, reliability, and commercial safety, dedicated platforms like Midjourney or FLUX offer more predictable output.",
@@ -220,7 +220,7 @@
     "url": "upscale.media",
     "free": true,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "Upscale.media is a browser-based AI image upscaling tool from PixelBin.io that enlarges low-resolution images up to 4× while attempting to preserve or reconstruct detail. As of mid-2026, the platform supports JPG, PNG, WEBP, and HEIC formats, handles images up to 1500×1500 pixels on the free tier, and requires no account or software installation — users simply drag and drop an image and receive an upscaled version in seconds. The underlying AI uses generative upscaling to infer missing pixels rather than simple interpolation, producing noticeably sharper results than bicubic scaling on photographs, product shots, and digital art.\n\nPricing is straightforward: Free ($0, 3 images per day at up to 4× upscale, 1500×1500 input limit, standard quality, watermarked), and Premium ($29/month or $25/month billed annually at $299/year, 100 images per day, up to 4× upscale, 5000×5000 input limit, high-quality output, batch processing, API access, no watermark). There is no pay-as-you-go option — users must subscribe to the monthly or annual plan for anything beyond the 3-image daily free limit.\n\nUser feedback is generally positive for what it is: a dead-simple, zero-friction upscaler for occasional use. E-commerce sellers and social media managers cite it as a quick fix for low-resolution product photos and compressed social images. However, independent testing in 2026 places Upscale.media behind dedicated tools like Topaz Gigapixel AI and Magnific AI on detail fidelity and artifact suppression. The 3-image daily free cap is genuinely restrictive for any real workflow, the 1500×1500 input limit on the free tier rules out many modern camera images, and the lack of granular controls (no noise reduction settings, no sharpening sliders, no RAW support) means users get what the AI gives them with no refinement. For quick one-off upscales, it's convenient; for professional photography or print work, dedicated desktop tools remain the standard.",
@@ -243,7 +243,7 @@
     "url": "app.weavy.ai",
     "free": true,
     "categories": [
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "Weavy AI is a node-based creative workflow platform for AI-powered image and video generation, aimed at professional designers, cinematographers, VFX artists, and marketing teams who need more control than a single prompt box provides. Rather than generating one output per prompt, users build a visual canvas of connected nodes — each performing one step (generation, inpainting, upscaling, relighting, compositing, and more) — chaining multiple third-party AI models (Flux, Ideogram, Runway, Google, Bytedance, Luma, Stability AI, OpenAI, and others) into reusable, shareable \"design engine\" pipelines. It was acquired by Figma for a reported $200 million in October 2025 and is being integrated into the Figma ecosystem under the name \"Figma Weave,\" with the standalone weavy.ai product continuing to operate during the migration. Runs entirely in-browser with no local install or GPU management required; SOC 2 Type II certified with a stated policy against training on user content.",
@@ -266,7 +266,7 @@
     "url": "writesonic.com",
     "free": true,
     "categories": [
-      "chat"
+      "drafting"
     ],
     "affiliate": false,
     "overview": "Writesonic began as an AI writing tool (blog articles, ad copy, product descriptions, and 80+ other content templates using models like GPT-4o and Claude) but has repositioned itself in 2026 as an \"AI Search Visibility Platform,\" combining traditional SEO tooling with Generative Engine Optimization (GEO) — tracking how a brand appears (or fails to appear) in AI-generated answers across ChatGPT, Gemini, and Google AI Overviews, then using AI agents to suggest or make fixes. 2026 pricing runs from a permanent Free plan (10,000 words/month, access to GPT-4o mini and Claude Haiku with usage limits) through paid tiers — Lite/Starter (~$39–49/month annual), Standard (~$79/month annual, the most popular tier — 1,000 credits, full model access, SEO tools), Professional (~$249/month, where GEO/AI-visibility tracking unlocks), and Growth/Enterprise (up to $399/month or custom).",
@@ -289,7 +289,7 @@
     "url": "artbreeder.com",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Artbreeder is a browser-based AI creative platform built around \"genetic\" image manipulation — users blend, mutate, and crossbreed images using slider-based \"genes\" rather than traditional text prompts. As of mid-2026, the platform offers multiple creation modes: Splicer (mix and edit genes of existing images), Director (steer generation with descriptive sliders), Composer (layer multiple images and styles), Collager (combine images with text prompts), and Outpainter (extend image borders). The platform is particularly popular among character designers, concept artists, and worldbuilders who use it to explore visual variations and breed unique faces, landscapes, and creatures through an intuitive breeding interface.\n\nPricing runs across four tiers: Free ($0, limited credits, 640px maximum resolution, watermarked downloads, non-commercial use only, slower generation queue), Starter ($7.49/month billed annually at $89.88/year, 1,200 credits, ~12,000 SDXL images, 2048px resolution, commercial license), Advanced ($15.99/month billed annually, 3,300 credits, ~33,000 SDXL images, 2048px, priority queue), and Champion ($39.99/month billed annually, 10,000 credits, ~100,000 SDXL images, 2048px, fastest queue, early access to new features). Credits are consumed per generation, with SDXL images costing roughly 0.1 credits each. The free tier's 640px limit makes outputs unsuitable for print or professional use.\n\nUser feedback is strongest among hobbyist artists and game developers who value the unique genetic breeding workflow for rapid visual exploration. The Splicer tool is consistently praised for producing surprising, unexpected variations that spark creative direction. However, reviewers note the platform has a steep learning curve for users accustomed to text-prompt generators like Midjourney — the gene-slider interface requires experimentation to master. Output quality is also inconsistent: the 640px free limit is a hard ceiling, and even paid tiers max out at 2048px, well below the 4K+ outputs available from FLUX or Midjourney. The Outpainter tool is widely described as disappointing, producing blurry, incoherent extensions. For exploratory concept art and character variation, Artbreeder is genuinely unique; for polished final assets, dedicated generators deliver higher resolution and consistency.",
@@ -312,7 +312,7 @@
     "url": "basedlabs.ai",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "BasedLabs is a browser-based AI creative platform offering access to 50+ generative models for image generation, video creation, face swapping, voice transformation, and image upscaling under a single credit-based subscription. As of mid-2026, the platform aggregates models including FLUX, Veo 3.1, Kling 2.6 Pro, Luma Ray 2, Seedance 1.5, Nano Banana Pro, and Imagen 4, positioning itself as a consolidated alternative to maintaining separate subscriptions for each tool. Core features include AI video generation from images and text, face swap, image upscaling, image extension, AI music generation, and a community feed for sharing creations.\n\nPricing is credit-based with both subscriptions and one-time packs: Free ($0, 100 credits monthly, basic models only, 1024px resolution, community support), Pro ($15/month, 2,500 credits, all models, up to 4K resolution, priority processing, commercial use, email support), Team ($30/month, 10,000 credits, all models, up to 8K, shared workspace, brand kit, priority support), and Enterprise (custom, unlimited credits, custom models, SSO, SLA). One-time credit packs range from $10 (300 credits) to $499 (16,500 credits). Credit costs vary by model: FLUX Pro Ultra costs 8 credits per image, Veo 3.1 video costs 42 credits per second, and HD upscaling costs 4 credits per megapixel. Unused credits roll over for subscribed users.\n\nUser feedback is generally positive among casual creators and social media managers who value the model variety and zero hardware requirement. The face swap and video generation tools are particularly popular for meme content and short-form social videos. However, reviewers consistently note that the platform's breadth comes at the cost of depth — no single model or feature rivals the best-in-class dedicated tool in its category. The free tier's 100 monthly credits are exhausted in roughly 10–20 generations, making it a brief demo. Credit costs for premium models like Veo 3.1 (42 credits/second) mean a 10-second clip consumes 420 credits — nearly half the Pro plan's monthly allowance in one generation. Server congestion during peak hours also causes queue delays. For creators who want to experiment across many models without multiple subscriptions, BasedLabs offers convenience; for production work requiring the best output in any single category, dedicated tools deliver superior results.",
@@ -335,7 +335,7 @@
     "url": "bing.com/create",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Bing Image Creator is Microsoft's free AI image generation tool, powered by OpenAI's DALL-E 3 model and accessible through Bing Chat, Microsoft Copilot, and the standalone Bing Image Creator website. As of mid-2026, it remains one of the few genuinely free ways to access DALL-E 3-level image quality without a paid subscription. Users receive 15 \"Boosts\" per week — fast-generation tokens that produce images in under 10 seconds. Once boosts are exhausted, generation falls back to a slower queue with 2–5 minute wait times per image. Output is fixed at 1024×1024 resolution with a square aspect ratio only; no landscape, portrait, or custom dimensions are available.\n\nPricing is simple: Free ($0 with any Microsoft account, 15 weekly boosts, 1024×1024 output, DALL-E 3 model only). There is no paid tier for Bing Image Creator specifically — users wanting more generations, higher resolution, or additional features must subscribe to Microsoft Copilot Pro ($20/month) or ChatGPT Plus ($20/month), which offer expanded DALL-E 3 access through different interfaces. Commercial usage rights are restricted by default; the terms of service designate output as non-commercial unless used within a qualifying Microsoft 365 or Copilot subscription.\n\nUser feedback confirms the obvious value proposition: free access to a frontier image model is genuinely useful for casual exploration, personal projects, and quick visual ideas. DALL-E 3's prompt comprehension is strong, producing coherent scenes from complex descriptions. However, the limitations pile up quickly for any serious use: the 15-boost weekly cap means roughly two images per day before queue delays, square-only output is unsuitable for most social media and print formats, resolution is capped at 1024×1024 with no upscaling, and content filtering is aggressively strict — users report harmless prompts being blocked with frustrating frequency. There is also no image-to-image editing, inpainting, or outpainting. For personal exploration and testing prompts, Bing Image Creator is excellent; for commercial work, multi-format output, or high-volume production, dedicated platforms are essential.",
@@ -358,8 +358,8 @@
     "url": "canva.com",
     "free": true,
     "categories": [
-      "image",
-      "video"
+      "image-editor",
+      "video-editor"
     ],
     "affiliate": false,
     "overview": "Canva AI is the integrated AI layer within Canva's design platform, branded as Magic Studio and spanning over 25 AI tools for image generation, video creation, copywriting, presentation building, and design automation. As of mid-2026, the platform added Canva AI 2.0 — a conversational interface that generates fully editable design objects (not flat images) from text or voice prompts, plus the Affinity professional design suite (acquired 2024, made free for most users in 2026) for advanced creative control. The platform serves 200+ million users and is positioned as the default design tool for non-designers, marketers, educators, and small businesses who need speed and volume over cutting-edge creative fidelity.\n\nPricing is tiered: Free ($0, ~50 AI credits/month shared across Magic Write and image generation, ~5 Dream Lab images, 10 Magic Design generations, 1.6M templates, 5 GB storage, no Brand Kit), Pro ($15/month or ~$120/year — $10/month effective, 500 AI credits/month, full Magic Studio access, 3.6M premium templates, Background Remover, Magic Eraser, Magic Expand, 1 TB storage, 5 Brand Kits), Business ($20/user/month or $200/user/year, everything in Pro plus collaboration, admin controls, 4,000 Standard AI uses, 400 Premium, 40 Ultra), and Enterprise (custom, unlimited AI credits, SSO, governance). AI credits are shared across all tools and reset monthly with no rollover. Ultra AI tier (Canva AI 2.0, text-to-video) burns credits fastest.\n\nUser feedback confirms Canva's core strength: workflow convenience. Marketing teams praise the ability to generate an image, edit it, resize it for five platforms, and schedule posts without leaving the app. Brand Kit adherence is genuinely impressive — AI-generated designs consistently respect uploaded color palettes and fonts. However, the credit system is the dominant complaint. Pro's 500 monthly credits sound generous but burn quickly: each failed generation counts, iterating on a Dream Lab prompt through 5 variations consumes 5 credits, and a single Canva AI 2.0 presentation request can drain 50+ credits. Users report burning a significant portion of their monthly allowance in a single afternoon of experimentation. Image quality also lags behind Midjourney and DALL-E 3 for artistic work, and the Business plan's $200/user/year pricing is a meaningful jump from Pro for small teams. For everyday marketing and social content, Canva AI is fast and practical; for premium creative work, dedicated tools deliver superior output.",
@@ -406,7 +406,7 @@
     "url": "labs.openai.com",
     "free": false,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "DALL-E is OpenAI's text-to-image generation model, currently on its third iteration (DALL-E 3), renowned for understanding complex natural language prompts with greater accuracy than most competitors. As of mid-2026, DALL-E 3 is accessible through multiple channels: ChatGPT Plus ($20/month, limited generations included), ChatGPT Pro ($200/month, higher limits), the Bing Image Creator website (free, 15 weekly \"Boosts\" for fast generation), and the OpenAI API (pay-as-you-go, roughly $0.04–$0.12 per image depending on quality and resolution). The model supports multiple aspect ratios, HD image generation at higher cost, and built-in safety filters that block potentially harmful content.\n\nThe platform's core strength is prompt comprehension — DALL-E 3 parses detailed, multi-clause descriptions more accurately than Midjourney or Stable Diffusion, making it the default choice for users who want precise control over scene composition, object relationships, and text inclusion in images. However, there is no standalone DALL-E app or website; all consumer access is bundled into ChatGPT subscriptions or Microsoft's ecosystem. The API is the only direct developer integration path, and pricing scales with resolution and quality tier.\n\nUser feedback confirms DALL-E 3's leadership in prompt accuracy and text rendering within images — marketing teams report 70% faster design turnaround for ad creatives and social visuals when the prompt is detailed and specific. However, artistic output is consistently rated below Midjourney for stylized, painterly, or fantasy aesthetics. The API pricing can become expensive at scale ($0.12 per HD image means $120 for 1,000 images), and the lack of a standalone subscription means users must pay for ChatGPT Plus or Pro even if they only want image generation. Safety filters are also reported as overly aggressive, blocking benign prompts involving historical figures or medical imagery. For concept art, marketing visuals, and text-heavy images, DALL-E 3 is excellent; for pure artistic exploration, Midjourney remains the favorite.",
@@ -429,7 +429,7 @@
     "url": "descript.com",
     "free": true,
     "categories": [
-      "video",
+      "video-editor",
       "audio",
       "niche"
     ],
@@ -454,7 +454,7 @@
     "url": "exa.ai",
     "free": false,
     "categories": [
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "Exa is a developer-focused web search API purpose-built for AI applications and agents, rather than a consumer-facing chatbot. It uses a proprietary, from-scratch-trained neural search index (covering 500+ billion URLs) that understands query meaning semantically rather than relying on keyword matching or reselling Google/Bing results, and offers multiple specialized endpoints: standard Search, low-latency \"Exa Instant\" (sub-150ms, launched Feb. 2026) for real-time agent workflows, Deep Search and Deep-Reasoning for multi-step research-grade queries, a Contents endpoint for clean page-text extraction, an Answer endpoint for grounded/cited responses, and Monitors for ongoing tracked queries. It's used by companies including Notion, Vercel, Cursor, and Flatfile. Pricing is pure pay-as-you-go with no seats or monthly minimum: $20 in free credits at signup plus $10/month ongoing free credits, then Search at $7 per 1,000 requests, Deep Search $12–15 per 1,000, Answer $5 per 1,000, Contents $1 per 1,000 pages, and Monitors $15 per 1,000; Enterprise offers custom rate limits and dedicated indexing.",
@@ -477,7 +477,7 @@
     "url": "flux.ai",
     "free": false,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Flux is the flagship image generation model family from Black Forest Labs, widely regarded as the de facto standard for open-weight AI image generation in 2026. The ecosystem spans multiple variants optimized for different use cases: FLUX.2 [max] (frontier quality, up to 2048×2048, multi-reference editing with 10 source images), FLUX.2 [pro] (production scale, ~5s generation), FLUX.2 [flex] (fine-grained control), FLUX.2 [klein] (real-time, <1s, Apache 2.0 open weights), FLUX1.1 [pro] Ultra (4MP, Raw photography mode), and FLUX.1 [dev]/[schnell] (open weights for self-hosting and fine-tuning). As of mid-2026, the platform holds a 9.44/10 consensus score across 2,200+ verified reviews, with particular strength in text rendering accuracy, anatomical correctness, and prompt adherence.\n\nPricing is hybrid: the open-weight FLUX.1 [schnell] and FLUX.2 [klein] models are free to self-host under Apache 2.0, while API access through Black Forest Labs runs from $0.01/image (klein) to $0.10/image (max). The web platform offers a free tier with 25 daily generations at 1080p, Pro at $19/month (4K, commercial rights, 10,000 images), and Studio at $99/month (API access, team collaboration, dedicated GPU allocation with sub-2-second generations). Enterprise offers custom pricing with SLA-backed 99.9% uptime. Self-hosting requires substantial hardware — 24GB+ VRAM for comfortable local operation of larger variants.\n\nUser feedback consistently praises Flux for its strong hand rendering, text accuracy (comparable to Ideogram, better than Stable Diffusion 3.5), and economic flexibility — the ability to self-host for free or pay per-image via API without subscription lock-in. The multi-reference consistency (up to 10 reference images) is particularly valued by agencies maintaining brand character consistency across campaigns. However, the photographic bias of the base model means painterly or highly stylized outputs require LoRA fine-tuning, and self-hosting demands significant technical expertise — ComfyUI workflows and 24GB+ GPU requirements place it out of reach for casual users. The highest-quality [max] and [pro] variants are API-only, so production-grade work still incurs ongoing costs. For technical users and developers, Flux represents the best balance of quality, cost, and freedom; for casual users wanting instant beautiful results, closed platforms like Midjourney remain easier.",
@@ -552,8 +552,8 @@
     "url": "krea.ai",
     "free": true,
     "categories": [
-      "image",
-      "video"
+      "image-gen",
+      "video-gen"
     ],
     "affiliate": false,
     "overview": "Krea is an AI image generation platform that released its first foundation model, Krea 2, in 2026. Unlike typical text-to-image generators, Krea 2 offers advanced creative control through style transfer (extracting style from up to 10 reference images), moodboards (anchoring to a curated aesthetic), and tunable creativity as an actual parameter. The model comes in two variants: Medium (smaller, faster, optimized for illustration, anime, and painterly styles) and Large (over 2x the size, stronger on photorealism and raw textures). Krea 2 supports multiple aspect ratios including 16:9 and 9:16. The platform offers an API starting at $0.030 per image for text-to-image Medium, scaling to $0.070 for Large with moodboards. A free tier is available through the web app with daily credits, and the platform also supports real-time generation and video capabilities.",
@@ -578,7 +578,8 @@
     "url": "prisma-ai.com/lensa",
     "free": true,
     "categories": [
-      "image"
+      "image-gen",
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "Lensa is a mobile-first AI photo editing app from Prisma AI, available on iOS and Android. As of mid-2026, the app runs version 8.8.3 and offers AI-powered photo retouching, Magic Avatars (AI-generated stylized avatars from user selfies), background removal, and one-tap enhancement tools. Lensa gained significant popularity in late 2022 with its Magic Avatars feature and has maintained a strong user base. The app operates on a freemium subscription model with in-app purchases: Unlimited Access Weekly ($2.99), Monthly ($4.99), Annual ($29.99-$49.99 depending on tier), and one-time Magic Avatar packs ranging from $3.99 to $11.99. The app supports 9 languages and is available in the US, Russia, and Brazil, with approximately 50,000 monthly downloads and $300,000 in monthly revenue. Content rating is 4+.",
@@ -603,8 +604,8 @@
     "url": "media.io",
     "free": true,
     "categories": [
-      "video",
-      "image",
+      "image-editor",
+      "video-editor",
       "audio"
     ],
     "affiliate": false,
@@ -630,7 +631,7 @@
     "url": "midjourney.com",
     "free": false,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Midjourney is the leading closed-source AI image generation platform, operating through Discord and a redesigned web interface at alpha.midjourney.com. As of mid-2026, the platform launched V8 Alpha on March 17, 2026—a complete rewrite delivering 5x faster generation, native 2K HD images via the --hd parameter, dramatically improved text rendering (readable street signs, product labels, typography), and superior prompt understanding. V8 introduces new creative parameters including --chaos, --weird, --exp, and --raw for experimental control. Premium features cost 4x standard generation: --hd, --q 4 (enhanced coherence), style references, and moodboards. Pricing is subscription-based with GPU-hour allocations: Basic ($10/month, ~3.3 fast hours, no Relax Mode), Standard ($30/month, 15 fast hours + unlimited Relax), Pro ($60/month, 30 hours + Stealth Mode), Mega ($120/month, 60 hours + Stealth). Annual billing offers 20% savings. Relax Mode provides unlimited but slower generations after fast hours are depleted (Standard and above). Extra GPU hours cost ~$4/hour. There is no public API—Midjourney remains a closed ecosystem.",
@@ -655,7 +656,7 @@
     "url": "nightcafe.studio",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "NightCafe is a community-focused AI art platform with multiple AI models including Stable Diffusion and DALL-E, accessible through a web interface. The platform is built around social features: sharing creations, running art challenges, exploring different styles, and community engagement. It offers a free tier with daily credits for casual use, with paid plans starting at $5.99/month (AI Beginner), $9.99/month (AI Hobbyist), $19.99/month (AI Enthusiast), and $49.99/month (AI Artist). NightCafe includes features like AI/Machine Learning, content generation, design templates, image editing, mobile access, natural language processing, and personalization. The platform does not offer a production API, batch processing, or clear commercial licensing terms, limiting its usefulness for professional or high-volume use.",
@@ -681,7 +682,7 @@
     "url": "notebooklm.google.com",
     "free": true,
     "categories": [
-      "chat"
+      "conversational"
     ],
     "affiliate": false,
     "overview": "NotebookLM is Google's source-grounded AI research assistant: users upload their own documents, and it answers questions, generates study materials, and produces \"Audio Overviews\" (AI-generated two-host podcast-style discussions of the material) and \"Video Overviews,\" using only the uploaded sources as its knowledge base — reducing hallucination risk compared to open-ended chat. On July 16, 2026, Google renamed the product \"Gemini Notebook\" as part of a broader consolidation of its AI products under the Gemini brand, and added the ability to run code directly within notebooks for deeper data analysis. It's not sold as a standalone subscription; access is bundled into Google's AI plans: Standard/Free ($0 — 100 notebooks, 50 sources/notebook, 50 daily chats, 3 Audio/Video Overviews per day), Plus (via Google AI Plus, ~$4.99/month), Pro (via Google AI Pro, ~$19.99/month — 500 notebooks, 300 sources/notebook, 500 daily chats, 20 Deep Research reports/day), and Ultra (via Google AI Ultra, $99.99–$199.99/month). It's also included in Google Workspace Business Standard and above, and syncs bidirectionally with the main Gemini app.",
@@ -704,7 +705,7 @@
     "url": "perplexity.ai",
     "free": true,
     "categories": [
-      "chat"
+      "conversational"
     ],
     "affiliate": false,
     "overview": "Perplexity is an AI-powered \"answer engine\" that returns cited, source-grounded responses to queries rather than a traditional list of search-result links, positioning itself as a research-first alternative to both Google Search and general chatbots. Its most significant 2026 expansion is Comet, an AI-native Chromium browser with an assistant sidebar that can summarize pages, work across open tabs, and take agentic actions (form fills, bookings, email drafting) — originally launched in July 2025 as a $200/month Max-exclusive product, but made completely free worldwide (iOS, Android, Windows, Mac) on March 18, 2026. Pricing: Free (core search plus basic Comet features), Pro (~$20/month — full AI search, Deep Research, Comet Plus premium publisher content included), Max (~$200/month or $2,000/year — unlimited Labs, \"Perplexity Computer\" agentic feature with 10,000 monthly credits), Education (~$10/month), and Enterprise (from ~$40/seat).",
@@ -727,7 +728,7 @@
     "url": "pixlr.com",
     "free": true,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "Pixlr is an all-in-one AI-powered creative studio that has evolved from its origins as a browser-based photo editor into a comprehensive platform for image and video creation. The platform serves as a multi-model hub, routing prompts across AI models from Google, Black Forest Labs, ByteDance, and Stability AI, which means users can choose the best engine for their specific needs. This model-agnostic approach is a double-edged sword: while it offers flexibility, prompt fidelity can vary significantly depending on which underlying engine is selected. The suite includes flagship tools like Nano Banana for prompt-based image editing, AI Video Generator for text-to-video creation, AI Generative Fill, AI Remove Object, AI Remove Background, and AI Image to Video for animating static photos.\n\nThe platform is designed for creators at all levels, from casual hobbyists producing social media content to professional designers building branding projects. It offers a full creative workflow including aesthetic collages, layouts, carousel makers for Instagram, layered compositions, dynamic video effects, and precision cropping tools. Pixlr is available across web, mobile, and desktop platforms, with a free tier that provides access to core features and premium subscriptions (starting at $1.99/month) that unlock higher credit limits, full model access, and advanced export options. With over 18 million creators worldwide and 2 million+ combinations of free effects, overlays, and filters, Pixlr positions itself as an accessible, cost-effective alternative to traditional design software.",
@@ -750,7 +751,7 @@
     "url": "recraft.ai",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Recraft is a uniquely positioned AI image generator that distinguishes itself by producing genuinely editable vector graphics (SVG files) from text prompts, making it the only tool in its class for professional design workflows. While most AI image generators output pixel-based raster images, Recraft's architecture returns production-ready SVGs with smooth paths and organized layers, eliminating the need for tracing or cleanup—ideal for logos, icons, illustrations, and brand assets. The platform's model family has evolved through several generations, with Recraft V2 (released March 2024) being the first model trained from scratch by the company, featuring 20 billion parameters and breakthrough human anatomical accuracy. V2 introduced vector image generation and brand consistency inputs, and remains popular for its curated styles like Plastic 3D, Linocut, Grain, and Vector Art. The newer Recraft V4 series includes specialized variants: V4 for fast concepting, V4 Pro for super-resolution realism, V4 Vector for clean scalable graphics, and V4 Pro Vector for production-grade illustrations.\n\nRecraft operates as a comprehensive workspace rather than a single-output generator, allowing users to generate, edit, and organize assets with advanced style control. The platform supports brand consistency through custom style training and includes features like background removal, vectorization, inpainting, and upscaling. All V4 models are available on every plan including the Free tier, with paid plans unlocking commercial rights and API access. The platform is particularly valued by designers, branding professionals, and marketing teams who need consistent, high-quality, and commercially usable vector and raster visuals. It also integrates with third-party models like Nano Banana 2 and GPT Image 2 within the same workspace.",
@@ -773,7 +774,7 @@
     "url": "writer.com",
     "free": true,
     "categories": [
-      "chat",
+      "drafting",
       "niche"
     ],
     "affiliate": false,
@@ -797,7 +798,7 @@
     "url": "bluewillow.ai",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "BlueWillow is an AI-powered image generation platform that operates exclusively within the Discord ecosystem, offering a free alternative to tools like Midjourney. Users interact with the BlueWillow bot by typing a slash command followed by their text prompt in designated channels, and the bot returns four generated images that can be downloaded or further refined. The platform is designed to be accessible to users of all experience levels, with no complex setup or technical knowledge required beyond joining a Discord server. It can generate logos, characters, digital artworks, and photos based on text descriptions.\n\nThe tool is particularly suited for hobbyists and creators who want a simple, community-driven entry point to AI art without paying subscription fees. Users can create their own private Discord servers and invite the BlueWillow bot to organize their creative projects in a structured environment. After a free trial period, the tool can be subscribed to for approximately $5 per month. A notable limitation is that the platform does not display a progress indicator during image generation, which may be disorienting for users accustomed to tools like Midjourney that show real-time creation status. The generated images can be saved in high quality, and the platform works with prompts in multiple languages including English and German.",
@@ -820,7 +821,7 @@
     "url": "facetuneapp.com",
     "free": true,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "Facetune is a specialized AI-powered photo and video editing app focused entirely on portrait and selfie enhancement, serving social media creators, influencers, and everyday users who want polished, natural-looking selfies. The platform's flagship feature is its AI Assistant, which allows users to edit photos through natural language commands—simply type or say what you want (e.g., 'whiten my teeth,' 'remove my eye bags,' 'smooth my skin') and the AI applies the changes automatically. This conversational interface eliminates the need to navigate complex editing menus, making professional-quality retouching accessible to users with no prior experience.\n\nBeyond its AI Assistant, Facetune offers a comprehensive suite of portrait editing tools: virtual makeup application with beauty looks presets, hairstyle and hair color swapping, photo retouch (blemish removal, teeth whitening, under-eye concealment), background removal and replacement, object removal, and image enhancement. The app also includes video retouching capabilities, allowing consistent enhancements across video content. Facetune is available on iOS and Android with a touch-friendly mobile interface optimized for on-the-go editing, and free tier provides basic functionality with advanced features locked behind subscription. The platform is positioned as a style playground where users can experiment with different looks and maintain a vibrant, varied social media presence.",
@@ -843,7 +844,7 @@
     "url": "fotor.com",
     "free": true,
     "categories": [
-      "image"
+      "image-editor"
     ],
     "affiliate": false,
     "overview": "Fotor is an all-in-one AI photo editing toolbox that positions itself as the editor where 'editing used to be a task, now it's just a talk'. The platform's flagship feature is the AI Agent, which allows users to upload a photo and simply say or type what they want—the AI understands natural language commands and applies multiple edits simultaneously, eliminating the need for complex manual adjustments. This makes professional-quality photo editing accessible to creators, photo enthusiasts, and casual users alike. The platform serves as a comprehensive toolkit with a broad range of AI-powered features: AI Photo Enhancer for sharpening blurry, grainy, or low-resolution images; Magic Eraser for removing unwanted elements from photos and videos; Background Remover for one-click subject extraction; AI Retouch for skin smoothing and blemish removal; AI Headshot Generator for professional-quality avatars; Text-to-Image and Text-to-Video generation; and creative effects like 3D Cartoon and AI art transformations.\n\nFotor also includes traditional photo editing tools for brightness, contrast, saturation, curves, hue, and grain adjustment, as well as unique AI features like AI Hairstyle, AI Expand for extending photo subjects and backgrounds, and photo restoration for old family photos. The platform is available across mobile and web, with a free tier offering basic functionality and Fotor Pro subscriptions available on weekly, monthly, or yearly plans. Fotor is positioned as a versatile, one-stop solution for users who need quick, AI-driven photo enhancements without the learning curve of traditional editing software.",
@@ -866,7 +867,7 @@
     "url": "quarkle.ai",
     "free": false,
     "categories": [
-      "chat"
+      "drafting"
     ],
     "affiliate": false,
     "overview": "Quarkle is an AI-powered editorial and writing-partner platform built specifically for self-published, indie novel authors (targeting KDP, Barnes & Noble Press, and NaNoWriMo writers) rather than general business or marketing writing. Its centerpiece is an \"Autonomous Review\" system that deploys 16 specialized AI agents to analyze a manuscript across dimensions like pacing, thematic coherence, character consistency, and factual accuracy, plus \"Custom Review Agents\" that can be configured for specific feedback needs (e.g., grammar-only or story-flow-only). It builds a persistent knowledge base of a book's characters, world, plot, and rules for continuity across long documents, supports multiple underlying AI models (GPT-5, Claude, Grok 4 selectable in Pro), and offers a chat feature for open-ended brainstorming. Pricing: a free tier with unlimited basic access and a 14-day full-featured trial requiring no card, and Pro (starting around $4.99–$12/month, scaling with usage) unlocking unlimited books, all 16 specialist editors plus a senior editorial pass, model selection, shared book memory (for co-writing teams), and export to .docx/.pdf/.epub/.md.",
@@ -889,7 +890,7 @@
     "url": "reve.ai",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Reve AI is an emerging next-generation AI creative tool that unifies image generation and advanced editing into a single, cohesive model. The platform's latest model, Reve 2.1, folds what were previously separate create, edit, and remix workflows into one unified endpoint—meaning the same model can generate images from scratch, edit existing images via natural language instructions, or remix multiple reference images into a single composition. This architectural approach sets Reve apart from tools that require switching between separate models or interfaces for different tasks. Users can pass up to 8 reference images and describe how to combine them, with the ability to reference specific images using <frame>N</frame> syntax to identify which image element to edit or move. The model supports a wide range of aspect ratios from tall (1:4) to wide (4:1), plus an auto option that picks the optimal shape for a given request.\n\nReve is positioned as a tool for users who need granular control over AI-generated images beyond what a simple text prompt provides. The platform excels at precise edits—removing unwanted objects, changing backgrounds, swapping seasons, restyling elements, or making any adjustment that can be described in natural language. It is available through Replicate's platform for API integration, with a focus on delivering professional results that match or exceed top editors for realism and detail. The model's strengths include stunning aesthetics, precise text rendering, and flawless prompt following, making it a strong option for designers and artists who require both creative generation and precise image manipulation in a single workflow.",
@@ -912,7 +913,7 @@
     "url": "deepdreamgenerator.com",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Deep Dream Generator (DDG) is the original pioneer of accessible AI art creation, launching in 2015—years before Midjourney or DALL-E existed. The platform was the first to bring Google's revolutionary DeepDream neural network technology to the public through a simple web interface, allowing anyone to create AI-generated art without coding or technical skills. Today, DDG has evolved into a comprehensive platform offering 30+ AI models for image generation, advanced editing tools, and cutting-edge AI video generation capabilities. The platform's core technology is based on convolutional neural networks (CNN) using the Inceptionism model, which enhances and extracts image features through multiple iterations of processing to create surreal, dream-like visuals. Users can input text prompts or upload base images and apply various artistic styles including Deep Style, Thin Style, and Deep Dream, with adjustable parameters like dream depth and effect strength for fine-tuning control.\n\nDDG provides multi-platform support through web browsers and mobile browsers, with both free and paid versions available. According to its service terms, the platform does not claim copyright over user-generated content. The platform includes community features where users can browse and share artworks created by other members, fostering a collaborative creative environment. Key features include art style transfer for transforming ordinary photos into artistic works, image detail enhancement through neural network pattern recognition, parameter customization for personalized results, multi-platform real-time preview, and generation of abstract, surreal visual effects. Deep Dream Generator is best suited for artists, creators, and hobbyists interested in exploring unique, dream-like, and highly stylized AI art aesthetics that differ from modern photorealistic generators.",
@@ -935,9 +936,9 @@
     "url": "deepai.org",
     "free": true,
     "categories": [
-      "image",
-      "video",
-      "chat"
+      "image-gen",
+      "video-gen",
+      "conversational"
     ],
     "affiliate": false,
     "overview": "DeepAI is a budget-focused, all-in-one AI content platform that has expanded well beyond its original text-to-image generator into a broader multi-tool suite: an AI chatbot (with a higher-effort \"Genius Mode\" and real-time web browsing similar to Perplexity), video generation (including a \"Hollywood Mode\" for longer clips), music generation, voice chat, a photo editor, and legacy NLP utilities (summarization, sentiment analysis). It also offers straightforward developer APIs for every tool, priced from about $0.01 per HD image, making it attractive for small businesses or developers building lightweight features cheaply. Pricing: Free (limited daily generations, watermarked images), and Pro at roughly $4.99–$9.99/month (~500 HD images, 60 Genius Mode images, 1,750 chat messages, 25 seconds of video plus 1 Hollywood Mode video, 100 AI songs per month, no watermarks, ad-free, private generations) — overage beyond included credits billed at roughly $5 per additional block.",
@@ -960,7 +961,7 @@
     "url": "phygital.ai",
     "free": false,
     "categories": [
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "Phygital+ is an AI creative production workspace that unifies 30+ third-party AI models (Seedance, Nano Banana, Kling, GPT Image, Stable Diffusion, and others) into a single node-based, infinite-canvas platform, letting design and marketing teams build repeatable, reusable pipelines for image generation, video generation, animation, style transfer, upscaling, background removal, and multi-step post-processing rather than relying on isolated single-prompt tools. It targets design teams, creative agencies, marketing teams, e-commerce brands, architecture/interior professionals, and film/animation studios, with real-time collaborative editing and industry-specific templates. Over 300,000 users are reported on the platform. Pricing: Free (500 weekly credits, ~9 image generations/~1 video/~25 text), Advanced (~$14.99/month, 3 projects, 500 generations/month), Plus (~$58.99/month, 7 projects, unlimited generations), with additional tiers offering priority updates and expanded team features.",
@@ -983,7 +984,7 @@
     "url": "wombo.art",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Dream by Wombo is a mobile-first AI art generator with over 200 million users worldwide, making it one of the most popular entry-level AI art platforms available. The platform operates on a simple premise: users type any text prompt, choose from 50+ art styles (including realistic, fantasy, anime, oil painting, watercolor, and synthwave), and the AI generates an artwork in seconds. It is designed for users with no artistic skill, transforming text into images for social media content, profile pictures, poems, movie posters, album covers, and personalized gifts. The app is available on iOS, iPadOS, and macOS, and supports image-to-image generation by uploading a photo as a visual base for the prompt. Beyond basic generation, Dream allows users to edit images with simple text instructions, changing colors, adding details, or adjusting lighting—a feature that adds a layer of refinement to the creative process. The platform is developed by Wombo Studios, a Canadian AI company with over 1.4 billion app installations across its product lineup.",
@@ -1008,7 +1009,7 @@
     "url": "starryai.com",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "StarryAI is a mobile AI art generation app supporting iOS and Android platforms, designed for users who want to create stunning visuals from text prompts or images. The platform offers a free tier with 5 generations per day, all of which are completely watermark-free and owned by the creator—a notable differentiator from many free-tier competitors. Users can choose from a variety of artistic styles and models, adjust aspect ratios, and set initial images as starting points. StarryAI's core features include batch generation (creating multiple works at once), image evolution (iterative refinement of outputs), image upscaling, and smart fill for completing missing parts of images. The platform also supports image variation generation and AI portrait creation, with a community feed where users can view and be inspired by others' creations. For creators interested in the NFT space, StarryAI provides integrated NFT publishing capabilities, allowing users to tokenize their AI-generated artwork.",
@@ -1033,7 +1034,7 @@
     "url": "craiyon.com",
     "free": true,
     "categories": [
-      "image"
+      "image-gen"
     ],
     "affiliate": false,
     "overview": "Craiyon is a web-based text-to-image generator born as a playful, accessible alternative to research-grade models. Originally called DALL-E mini, it branched into its own product line with fast, free image generation directly in the browser. The platform requires no heavy setup, no installation, and no account to get started—users simply type a prompt, click 'Draw,' and within 20-60 seconds receive a grid of nine image variants. The interface is deliberately minimal, encouraging creativity over parameter fiddling, and the ad-supported model keeps the tool free for all users. Craiyon's aesthetic tends toward whimsical, illustrative, and stylized outputs; photorealism and faces can be unpredictable, positioning it as a creativity sandbox and rapid thumbnail sketch tool rather than a high-end paid generator. The platform has expanded into a mobile app that bundles image generation with AI chat, translation, photo filters, poster design, and smart crop tools—transforming from a single-purpose generator into an all-in-one creative toolkit.",
@@ -1085,8 +1086,8 @@
     "free": true,
     "categories": [
       "audio",
-      "niche",
-      "voice"
+      "voice",
+      "niche"
     ],
     "affiliate": true,
     "overview": "DupDub is an AI voice and dubbing platform that started as a YouTube-focused Chrome extension for transcript generation and has expanded into a broader audio and video localization tool. The core Chrome extension automatically converts YouTube audio to text with high accuracy, translates video subtitles into 40+ languages, generates AI-powered video summaries, and provides text-to-speech voiceovers—all integrated seamlessly within YouTube. This makes it a valuable tool for content creators, educators, and global audiences looking to repurpose video content into written formats or localize it for international viewers. The platform prides itself on being free, processing data locally to ensure privacy and security with no external data storage. Beyond the browser extension, DupDub Lab offers a more advanced 'Talking Photos' feature that animates static images with lip-sync, multi-role dialogue, and AI avatar generation, turning photos into animated storytellers. This lab product supports multiple characters in conversation, voice integration (uploaded, recorded, or extracted from audio/video files), and effortless sharing across platforms, making it useful for content creators, artists, and marketers.",
@@ -1112,6 +1113,7 @@
     "free": false,
     "categories": [
       "audio",
+      "voice",
       "niche"
     ],
     "affiliate": false,
@@ -1138,6 +1140,7 @@
     "free": false,
     "categories": [
       "audio",
+      "voice",
       "niche"
     ],
     "affiliate": false,
@@ -1161,8 +1164,9 @@
     "url": "drillbit.com",
     "free": false,
     "categories": [
-      "niche",
-      "audio"
+      "audio",
+      "voice",
+      "niche"
     ],
     "affiliate": false,
     "overview": "Drillbit is an AI-powered back-office platform purpose-built for residential contractors—plumbers, electricians, house cleaners, landscapers, roofers, and other home service businesses. The platform automates the entire job lifecycle from lead generation to payment collection using AI receptionists and an LLM-based quoting tool on top of a proprietary CRM. Drillbit handles phone calls with homeowners and businesses at every stage: answering inquiries, coordinating scheduling, providing estimates, managing staffing, and processing payments.\n\nThe company was founded in 2023 by Alex Seutin (Stanford CS/AI) and Liam, who previously worked together developing robots for industrial construction projects. Seutin brings hands-on experience from renovating homes and airstreams, which gave him intimate familiarity with the pain points in the construction industry. Drillbit's key insight was that existing CRMs suffered from massive churn because business owners felt like they were 'babysitting' the tool—doing 'homework' rather than getting value. Drillbit solves this by handling coordination in a familiar way: talking to 'employees' on the phone like real people, and having those AI employees engage with homeowners over the phone.\n\nThe platform is designed to eliminate the estimated $675B/year in administrative overhead that contributes to home maintenance costs across the U.S. Drillbit is still in its growth phase as of mid-2026, actively seeking to onboard contractors across the home service industry. The company is Y Combinator-backed (Summer 2024 batch) and based in Austin, Texas.",
@@ -1187,8 +1191,7 @@
     "url": "trunktools.com",
     "free": false,
     "categories": [
-      "niche",
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "Trunk Tools is an AI platform purpose-built for the construction industry, turning fragmented project documents (drawings, submittals, RFIs, schedules) into searchable knowledge and automated workflows for general contractors and specialty trade teams. Its core products include TrunkText (rapid Q&A over project documents with cited sources, deliverable via SMS or Microsoft Teams for field-team accessibility), TrunkSubmittal (automated conflict detection during submittal review), and a Schedule Agent (ties schedule activities to their supporting documents to reduce time spent hunting for information on-site). It integrates with major construction and document platforms including Autodesk Forma, Box, CMiC, Egnyte, InEight, and Microsoft tools, and is positioned as a \"construction brain\" replacing fragmented, manual document review and reduces costly rework and delays. Pricing is not publicly disclosed; prospective customers must request a custom quote.",
@@ -1211,8 +1214,7 @@
     "url": "supio.com",
     "free": false,
     "categories": [
-      "niche",
-      "chat"
+      "niche"
     ],
     "affiliate": false,
     "overview": "Supio is an agentic AI platform built exclusively for plaintiff-side personal injury and mass tort law firms, addressing the core bottleneck in that practice area: manually piecing together accurate case timelines and extracting critical details from fragmented, voluminous medical and legal records. Its \"Supio Agent\" operates at both the case level and firm level, and features include Instant Ledger (automatic case-value calculation), Tabular Analysis, Knowledge Bases, an Exhibit Builder, automated medical chronologies, and source-cited demand-letter drafting — with a strategic partnership connecting it to Thomson Reuters' Westlaw Advantage and CoCounsel Legal for verifiable legal research. The company reports having processed over 27,000 cases contributing to more than $1 billion in settlements, including a cited $24M jury verdict where an attorney used Supio to analyze trial transcripts. Pricing is entirely undisclosed — there is no public price list; every engagement begins with a demo and a custom quote scoped to caseload and selected products.",
@@ -1235,7 +1237,6 @@
     "url": "gc.ai",
     "free": false,
     "categories": [
-      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -1259,8 +1260,8 @@
     "url": "sixfold.ai",
     "free": false,
     "categories": [
-      "niche",
-      "supercomputer"
+      "supercomputer",
+      "niche"
     ],
     "affiliate": false,
     "overview": "Sixfold is an AI platform purpose-built for commercial property & casualty (P&C) and life & health insurance underwriting. Unlike generic document ingestion tools, Sixfold's AI Underwriter is an agentic colleague that receives a submission and produces real underwriting work product: it understands the risk, knows the broker, holds the portfolio in memory, and tells the underwriter what to do next. The platform processes submission data directly from an inbox, enriches it, identifies gaps, evaluates appetite and portfolio fit, and produces recommendations with rationale and drafted broker follow-ups.\n\nAt the center of the AI Underwriter is what Sixfold calls the Underwriting Brain—an AI system that brings functional knowledge across lines, reasoning patterns from experienced underwriters, and a ground-truth library of what good underwriting looks like. It doesn't need months of ramp time; it already knows how to underwrite on day one. The system has processed more than 1.5 million submissions across more than 50 lines of business for carriers including Zurich, Skyward Specialty, Generali GC&C, Guardian, AXIS, and New York Life across North America, Europe, South America, and Australia.\n\nSixfold's customers report 50% to 97% faster processing, hit ratios up 15%, and 30% more GWP per underwriter. One carrier went from pilot to 500+ underwriters, reaching go/no-go decisions in 5 minutes and saving more than 2 hours per submission. Another cut days-to-quote from 16 to 7 days. The platform is SOC 2, HIPAA, and GDPR compliant with a responsible AI framework addressing bias testing, explainability, and regulatory requirements including the EU AI Act and Colorado AI Act. A survey of 543 underwriting executives found that 71% already use AI daily and 99% feel more optimistic about the industry's future.",
@@ -1310,7 +1311,6 @@
     "url": "range.com",
     "free": false,
     "categories": [
-      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -1386,8 +1386,8 @@
     "url": "getcollate.io",
     "free": false,
     "categories": [
-      "niche",
-      "supercomputer"
+      "supercomputer",
+      "niche"
     ],
     "affiliate": false,
     "overview": "Collate is the AI-for-data platform built by the creators of OpenMetadata, the open semantic context layer for AI. The platform addresses a fundamental problem in enterprise data: LLMs identify the right data for a given prompt only about 10% of the time, making AI a non-starter for serious data applications. Collate 2.0 (announced June 2026) fixes this by giving AI agents semantic context—not just context (what data exists) but semantics (what it means) and memory (making knowledge persistent and shareable).\n\nWith Collate 2.0, data professionals can tag, classify, document, curate, search, and analyze data by simply describing what they want conversationally. The platform's semantic context graph boosts data agent accuracy by as much as 7x in benchmarks. The platform uses more than 130 native connectors to map every enterprise data source to a single metadata graph. Collate provides a no-code AI Studio for building custom agents, an AI SDK for programmatic agent development, and five built-in automation templates for common jobs like regulatory compliance tagging, domain assignment, and data quality testing.\n\nCollate also includes a Data Marketplace: an internal storefront for domains and data products with self-serve discovery, governed data product check-out, and end-to-end Data Access Request Workflows. The platform is backed by Venrock, Unusual Ventures, and Karman Ventures, and is used by Global 2000 companies and innovative startups. Collate 2.0 is scheduled for general availability in July 2026.",
@@ -1438,8 +1438,8 @@
     "url": "axon.com",
     "free": false,
     "categories": [
-      "niche",
-      "supercomputer"
+      "supercomputer",
+      "niche"
     ],
     "affiliate": false,
     "overview": "Axon (Nasdaq: AXON) is the global leader in public safety technology, evolving far beyond its origins as a TASER manufacturer into a comprehensive technology platform for law enforcement, enterprise security, and national defense . The company's mission is to build a connected picture of safety that helps protect people and places with greater speed, clarity, and accountability. Its ecosystem includes TASER energy devices, body-worn cameras, in-car cameras, drones, counter-drone systems (Dedrone), digital evidence management, real-time operations, immersive training, and AI-driven capabilities .\n\nAxon has become a leading AI provider in public safety, reporting $750 million in sales from its AI product line last year with bookings growing almost 40% . The company's AI suite includes Draft One, which listens to body camera recordings and automatically generates first drafts of police reports, saving officers 20-30% of their time . Other AI tools include Axon Vision for recognizing critical activity in live video feeds, Axon Assistant for secure AI-powered access to case data and BOLO creation, and Axon Gravity for connecting department systems to provide data visualization and real-time insights .\n\nIn 2025-2026, Axon completed four major acquisitions: Fusus (CCTV integration), Dedrone (counter-drone), Carbyne (911 communication), and Prepared (emergency call analysis), positioning the company as 'the true operating system of public safety' . The company's Evidence.com platform now manages approximately 40 times as much data as the Netflix library . Beyond law enforcement, Axon has expanded into enterprise security for retailers, logistics providers, hospitals, and data centers . With more than 3,000 attendees at its recent Axon Week conference, the company continues to drive AI adoption across public safety agencies of all sizes .",
@@ -1464,7 +1464,6 @@
     "url": "magicschool.ai",
     "free": true,
     "categories": [
-      "chat",
       "niche"
     ],
     "affiliate": false,
