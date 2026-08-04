@@ -1,20 +1,13 @@
-{
-  "categories": [
-    "conversational",
-    "drafting",
-    "image-gen",
-    "image-editor",
-    "video-gen",
-    "video-editor",
-    "storyboard",
-    "audio",
-    "code",
-    "supercomputer",
-    "niche",
-    "voice",
-    "local",
-    "architectural",
-    "aggregator",
-    "notai"
-  ]
-}
+"categories": [
+  "chat",
+  "code",
+  "image",
+  "video",
+  "audio",
+  "supercomputer",
+  "niche",
+  "VOICE AI",
+  "LOCAL AI",
+  "ARCHITECTURAL AI",
+  "AI AGGREGATOR"
+]

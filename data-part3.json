@@ -8,6 +8,7 @@
     "url": "schoolai.com",
     "free": true,
     "categories": [
+      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -293,8 +294,7 @@
     "url": "invideo.io",
     "free": true,
     "categories": [
-      "video-gen",
-      "storyboard"
+      "video"
     ],
     "affiliate": false,
     "order": 135,
@@ -317,8 +317,8 @@
     "url": "vidu.com",
     "free": true,
     "categories": [
-      "video-gen",
-      "image-gen"
+      "video",
+      "image"
     ],
     "affiliate": false,
     "order": 136,
@@ -365,7 +365,7 @@
     "url": "chat.mistral.ai",
     "free": true,
     "categories": [
-      "conversational",
+      "chat",
       "code"
     ],
     "affiliate": false,
@@ -390,8 +390,8 @@
     "url": "lumalabs.ai",
     "free": true,
     "categories": [
-      "video-gen",
-      "image-gen"
+      "video",
+      "image"
     ],
     "affiliate": false,
     "order": 140,
@@ -414,8 +414,8 @@
     "url": "hailuoai.video",
     "free": true,
     "categories": [
-      "video-gen",
-      "image-gen"
+      "video",
+      "image"
     ],
     "affiliate": false,
     "order": 141,
@@ -438,8 +438,8 @@
     "url": "meshy.ai",
     "free": true,
     "categories": [
-      "architectural",
-      "image-gen"
+      "image",
+      "niche"
     ],
     "affiliate": false,
     "order": 142,
@@ -462,8 +462,8 @@
     "url": "tripo3d.ai",
     "free": true,
     "categories": [
-      "architectural",
-      "image-gen"
+      "image",
+      "niche"
     ],
     "affiliate": false,
     "order": 143,
@@ -487,7 +487,7 @@
     "free": true,
     "categories": [
       "code",
-      "conversational"
+      "chat"
     ],
     "affiliate": false,
     "order": 144,
@@ -512,7 +512,7 @@
     "free": true,
     "categories": [
       "code",
-      "conversational"
+      "chat"
     ],
     "affiliate": false,
     "order": 145,
@@ -535,8 +535,8 @@
     "url": "crewai.com",
     "free": true,
     "categories": [
-      "code",
-      "conversational"
+      "chat",
+      "code"
     ],
     "affiliate": false,
     "order": 146,
@@ -559,8 +559,8 @@
     "url": "openwebui.com",
     "free": true,
     "categories": [
-      "conversational",
-      "local"
+      "local",
+      "chat"
     ],
     "affiliate": false,
     "order": 147,
@@ -629,7 +629,7 @@
     "url": "tavily.com",
     "free": true,
     "categories": [
-      "conversational",
+      "chat",
       "code"
     ],
     "affiliate": false,
@@ -653,7 +653,7 @@
     "url": "jina.ai",
     "free": true,
     "categories": [
-      "conversational",
+      "chat",
       "code"
     ],
     "affiliate": false,
@@ -677,6 +677,7 @@
     "url": "consensus.app",
     "free": true,
     "categories": [
+      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -700,6 +701,7 @@
     "url": "scispace.com",
     "free": true,
     "categories": [
+      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -723,6 +725,7 @@
     "url": "glean.com",
     "free": false,
     "categories": [
+      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -746,6 +749,7 @@
     "url": "harvey.ai",
     "free": false,
     "categories": [
+      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -769,6 +773,7 @@
     "url": "clay.com",
     "free": true,
     "categories": [
+      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -792,8 +797,8 @@
     "url": "browser-use.com",
     "free": true,
     "categories": [
-      "code",
-      "conversational"
+      "chat",
+      "code"
     ],
     "affiliate": false,
     "order": 157,
@@ -841,7 +846,7 @@
     "free": true,
     "categories": [
       "code",
-      "conversational"
+      "chat"
     ],
     "affiliate": false,
     "order": 159,
@@ -864,9 +869,9 @@
     "url": "hedra.com",
     "free": true,
     "categories": [
-      "video-gen",
+      "video",
       "audio",
-      "image-gen"
+      "image"
     ],
     "affiliate": false,
     "order": 160,
@@ -889,8 +894,8 @@
     "url": "fal.ai",
     "free": false,
     "categories": [
-      "video-gen",
-      "image-gen",
+      "image",
+      "video",
       "code"
     ],
     "affiliate": false,
@@ -914,7 +919,7 @@
     "url": "comfy.org",
     "free": true,
     "categories": [
-      "image-gen",
+      "image",
       "code"
     ],
     "affiliate": false,
@@ -938,7 +943,7 @@
     "url": "github.com/lllyasviel/Fooocus",
     "free": true,
     "categories": [
-      "image-gen"
+      "image"
     ],
     "affiliate": false,
     "order": 163,
@@ -962,8 +967,8 @@
     "url": "jan.ai",
     "free": true,
     "categories": [
-      "conversational",
-      "local"
+      "chat",
+      "supercomputer"
     ],
     "affiliate": false,
     "order": 164,
@@ -986,8 +991,8 @@
     "url": "anythingllm.com",
     "free": true,
     "categories": [
-      "conversational",
-      "local"
+      "chat",
+      "supercomputer"
     ],
     "affiliate": false,
     "order": 165,
@@ -1011,8 +1016,8 @@
     "url": "openrouter.ai",
     "free": true,
     "categories": [
-      "supercomputer",
-      "code"
+      "code",
+      "supercomputer"
     ],
     "affiliate": false,
     "order": 166,
@@ -1036,8 +1041,8 @@
     "url": "litellm.ai",
     "free": true,
     "categories": [
-      "supercomputer",
-      "code"
+      "code",
+      "supercomputer"
     ],
     "affiliate": false,
     "order": 167,
@@ -1061,7 +1066,7 @@
     "url": "bfl.ai",
     "free": false,
     "categories": [
-      "image-gen"
+      "image"
     ],
     "affiliate": false,
     "overview": "Black Forest Labs (BFL) is the German frontier AI research lab founded in 2024 by Robin Rombach, Andreas Blattmann, and Patrick Esser — the researchers who originally created Stable Diffusion. Based in Freiburg, the company builds the FLUX family of models, which has become the de facto standard for open-weight and API-based image generation. Rather than a consumer app, bfl.ai is the company's official hub: a playground and API platform for generating and editing images directly with the latest FLUX models, alongside developer documentation at docs.bfl.ai. As of mid-2026 the company is valued at roughly $3.25 billion, backed by Andreessen Horowitz and other investors, with Martin Scorsese serving as an advisor.\n\nPricing on bfl.ai runs on a simple credit system where 1 credit equals $0.01, applied identically across the Playground and API. FLUX.2 pricing scales by output megapixel — roughly $0.03/MP for standard text-to-image generation and about $0.045/MP for editing — while older FLUX.1 tiers range from about $0.01 per image (schnell) up to $0.06 (pro ultra). There's no traditional monthly subscription; users top up credits and spend them as they generate, and the lightweight schnell/klein variants remain free to self-host under Apache 2.0 for anyone with the hardware to run them locally.\n\nIn 2026 BFL has pushed well beyond static images, framing its mission as building general \"visual intelligence.\" The company recently unveiled Flux 3, a model trained jointly on images, video, and audio that can also predict physical outcomes — the foundation for its new robotics push alongside partner Mimic Robotics and manufacturing trials with Audi. This positions BFL as much more than an image generator today: it's a research lab moving from generative media into physical AI and robotics, with FLUX still at the core of its commercial offering.",
@@ -1084,7 +1089,7 @@
     "url": "giphy.com",
     "free": true,
     "categories": [
-      "image-gen",
+      "image",
       "notai"
     ],
     "affiliate": false,
@@ -1132,6 +1137,7 @@
     "url": "elicit.com",
     "free": true,
     "categories": [
+      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -1156,8 +1162,8 @@
     "url": "antigravity.google",
     "free": true,
     "categories": [
-      "code",
-      "local"
+      "local",
+      "code"
     ],
     "affiliate": false,
     "overview": "Google Antigravity is an agentic software development platform built as a heavily modified fork of VS Code, running locally on macOS, Windows, and Linux. It offers two ways to work: a traditional Editor View with AI-powered tab completions and inline commands, and an agent-first mode where autonomous agents can plan, execute, and verify multi-step coding tasks with minimal supervision. The platform supports multiple underlying models, including Google's own Gemini 3 family alongside Anthropic's Claude and OpenAI's GPT-OSS, and introduces an 'Artifacts' system so agents produce human-verifiable deliverables rather than opaque code diffs.",
@@ -1181,7 +1187,7 @@
     "url": "mammouth.ai",
     "free": false,
     "categories": [
-      "conversational",
+      "chat",
       "niche"
     ],
     "affiliate": false,
@@ -1205,9 +1211,8 @@
     "url": "open-design.ai",
     "free": true,
     "categories": [
-      "storyboard",
-      "image-gen",
-      "local"
+      "local",
+      "image"
     ],
     "affiliate": false,
     "overview": "Open Design is an open-source, local-first AI design platform positioned as a transparent alternative to closed tools like Claude Design. Rather than shipping its own AI agent, it delegates execution to coding-agent CLIs a developer already has installed — Claude Code, Codex, Cursor, Gemini CLI, OpenCode, Qwen, or GitHub Copilot CLI — and turns them into design engines that can generate web, desktop, and mobile prototypes, presentations (exportable as PPTX), and brand visuals from prompts. It ships with dozens of preset brand-grade design systems and built-in \"skills,\" runs locally with SQLite-based project persistence, and is released under the Apache-2.0 license for full self-hosting and inspection.",
@@ -1230,8 +1235,8 @@
     "url": "app.devin.ai",
     "free": false,
     "categories": [
-      "code",
-      "local"
+      "local",
+      "code"
     ],
     "affiliate": false,
     "overview": "Devin, from Cognition, is an agentic AI software engineer built for higher-autonomy development work than a standard in-IDE chat assistant. Given a task, it can plan a multi-step approach, write and edit code across a codebase, run and iterate on tests, and carry work through to a finished result with less step-by-step supervision than typical coding copilots. It's positioned for scoped engineering tasks — bug fixes, feature implementation, migrations — that a team wants handled end-to-end rather than suggested inline.",
@@ -1254,9 +1259,9 @@
     "url": "mnml.ai",
     "free": true,
     "categories": [
-      "storyboard",
-      "image-gen",
-      "architectural"
+      "architectural",
+      "image",
+      "video"
     ],
     "affiliate": false,
     "overview": "mnml.ai is an AI rendering platform built specifically for architects, interior designers, and design studios. It converts hand-drawn sketches, SketchUp/Revit/Blender/3ds Max models, and clay viewport captures into finished renders in seconds, powered by its own ArchDiffusion model line. Beyond core sketch-to-render, the platform bundles more than a dozen modules: exterior and interior redesign, landscape and masterplan visualization, text-to-render concept generation, style transfer, inpainting-based edits, a render enhancer/upscaler for output from traditional engines like V-Ray or Lumion, and short 10-second animation generation from a still render. It's positioned as a fast concept and client-presentation layer that sits alongside, rather than replaces, traditional rendering software.",
@@ -1279,9 +1284,8 @@
     "url": "archivinci.com",
     "free": true,
     "categories": [
-      "storyboard",
-      "image-gen",
-      "architectural"
+      "architectural",
+      "image"
     ],
     "affiliate": false,
     "overview": "ArchiVinci is an AI-powered architectural visualization platform that turns sketches, photos, floor plans, elevations, and 3D model screenshots into photorealistic renders directly in the browser. It covers the full visualization workflow in one place: interior, exterior, exact-render, landscape, and masterplan modules, plus HDRI panoramas, a render enhancer/upscaler trained specifically on architectural imagery, an ArchiGPT design assistant for natural-language edits, and a dedicated tool for modifying facades, windows, and materials on existing exteriors. Its stated differentiator versus general-purpose image generators is geometry preservation — keeping proportions, openings, and structure faithful to the source input rather than inventing new massing, which matters when renders are shown to clients or planning authorities.",
@@ -1304,9 +1308,9 @@
     "url": "promeai.pro",
     "free": true,
     "categories": [
-      "video-editor",
-      "image-gen",
-      "architectural"
+      "image",
+      "architectural",
+      "video"
     ],
     "affiliate": false,
     "overview": "PromeAI, built by Team LibAI, is a broad AI creative platform that happens to be widely used in architecture and interior design workflows alongside product design, fashion, and general concept art. Its core sketch-rendering engine turns hand-drawn or CAD sketches into photorealistic renders in roughly ten seconds, with over a thousand style presets spanning architectural, interior, and artistic looks. Beyond rendering, it bundles text-to-image generation, image editing (inpainting, outpainting, background replacement), image variation for design alternatives, and image-to-video conversion, all in one browser-based workspace on a coin-based credit system.",
@@ -1329,9 +1333,8 @@
     "url": "rerenderai.com",
     "free": true,
     "categories": [
-      "storyboard",
-      "image-gen",
-      "architectural"
+      "architectural",
+      "image"
     ],
     "affiliate": false,
     "overview": "ReRender AI is a cloud-based rendering platform aimed at architects, interior designers, and real estate developers who need fast, realistic visuals without a traditional rendering pipeline. Users upload sketches, screenshots, or 3D model viewports (from tools like Revit, SketchUp, or Rhino), and the platform generates finished interior or exterior renders, typically in under 30 seconds. Output can be adjusted using preset styles or custom prompts covering lighting, materials, mood, time of day, and season, and it's marketed as a faster alternative to setting up renders in engines like Enscape or Lumion.",
@@ -1354,8 +1357,8 @@
     "url": "krea.ai",
     "free": true,
     "categories": [
-      "video-editor",
-      "image-gen",
+      "image",
+      "video",
       "architectural"
     ],
     "affiliate": false,
@@ -1379,8 +1382,8 @@
     "url": "myarchitectai.com",
     "free": true,
     "categories": [
-      "video-gen",
-      "architectural"
+      "architectural",
+      "video"
     ],
     "affiliate": false,
     "overview": "MyArchitectAI is an AI rendering tool aimed squarely at architecture and interior visualization. Users upload an interior or architectural render (JPG/PNG/WebP, no 3D model required), and its enhancer engine sharpens detail and realism while preserving the original geometry and textures, with a creativity slider to control how much the AI is allowed to change. It also offers an animation module that turns a single still render into a walkthrough-style video using 30+ preset camera movements (orbit, dolly, pan, flythrough) or a custom described motion, delivered as an MP4 in under two minutes.",
@@ -1403,7 +1406,7 @@
     "url": "piclumen.com",
     "free": true,
     "categories": [
-      "image-gen",
+      "image",
       "architectural"
     ],
     "affiliate": false,
@@ -1428,7 +1431,7 @@
     "free": true,
     "categories": [
       "architectural",
-      "image-gen"
+      "image"
     ],
     "affiliate": false,
     "overview": "3D AI Studio is an AI-powered 3D content platform used by over a million designers, developers, and creators. In architecture and interior workflows specifically, it's positioned as the go-to tool for generating the furniture, decor, fixtures, and architectural props a scene needs — turning a text description, catalog photo, or sketch into an editable, textured 3D model rather than a flat render. It also handles building massing and facade elements, and for full building concepts it offers a two-step workflow that turns a hand-drawn sketch into a photorealistic image first, then converts that image into an interactive 3D model. Generated assets export to formats like GLB, OBJ, FBX, and USDZ for use in Blender, SketchUp, game engines, or AR/VR.",
@@ -1451,8 +1454,8 @@
     "url": "pixelcut.ai",
     "free": true,
     "categories": [
-      "image-editor",
-      "video-editor"
+      "image",
+      "video"
     ],
     "affiliate": false,
     "overview": "Pixelcut is an AI photo and video editing platform built primarily for e-commerce sellers, marketers, and social content creators, used by tens of millions of people through its web app and mobile apps. Core tools include instant background removal, a magic eraser for removing unwanted objects, an image upscaler, and an AI product photoshoot generator that places a product photo into dozens of AI-generated backgrounds and styles (with matching shadows and lighting) instead of a studio shoot. It also offers batch editing for processing many product images at once, basic video tools including a background remover for video and an animate feature that adds motion to still product shots, and an AI copywriting assistant for product descriptions.",
@@ -1475,8 +1478,8 @@
     "url": "magnific.com",
     "free": true,
     "categories": [
-      "image-editor",
-      "video-editor"
+      "image",
+      "video"
     ],
     "affiliate": false,
     "overview": "Magnific began as a standalone AI image upscaler known for adding convincing extra detail and texture rather than just sharpening pixels. After Freepik acquired it in 2024, the two brands merged and fully rebranded as Magnific in 2026, folding the upscaler into a much larger creative suite: AI image and video generation across 40+ underlying models (including Flux, Kling, and Google Veo), a video upscaler (up to 4K), mockup generation, collaborative 'Spaces,' and Freepik's original library of 250M+ stock photos, vectors, and templates. The upscaler itself offers a Creative mode (the original Magnific engine, for AI-enhanced added detail) and a Precision mode for more faithful enlargement, scaling up to 16x/10K depending on the tool.",
