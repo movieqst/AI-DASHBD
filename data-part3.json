@@ -1489,5 +1489,57 @@
       "The platform has grown large and multi-purpose since the Freepik merger, which can make it feel less focused than the original single-purpose Magnific upscaler"
     ],
     "order": 185
+  },
+  {
+    "name": "Storyboarder.ai",
+    "icon": "📽️",
+    "desc": "AI-powered storyboard generator that turns scripts into visual sequences, animatics, and pitch decks in minutes.",
+    "rating": 9.0,
+    "traffic": 250000,
+    "url": "storyboarder.ai",
+    "free": true,
+    "categories": [
+      "storyboard",
+      "video-gen",
+      "image-gen"
+    ],
+    "affiliate": false,
+    "overview": "Storyboarder.ai is a comprehensive AI-powered pre-production platform built for filmmakers, agencies, and creative professionals. Trusted by over 250,000 creators worldwide, it streamlines the entire pre-visualization process by transforming scripts or simple ideas into complete storyboards, shot lists, and animatics. The platform is designed to be intuitive, allowing users to focus on storytelling rather than the technical complexities of traditional storyboarding.\n\nThe core workflow begins with uploading a script in virtually any format (PDF, FDX, Fountain, Word, or plain text), or simply describing a concept. The AI then generates a scene breakdown, a detailed shot list, and corresponding storyboard images. A key differentiator is its robust character and location consistency, ensuring visual elements remain coherent across every frame—a common challenge with many AI image generators. Users can refine their storyboards using a suite of powerful editing tools, including a unique 3D Camera-Angle Tool to adjust framing, an inpainting feature for local edits, and a sketch-to-image function to elevate rough drawings into polished panels. The platform also supports custom art styles by allowing users to upload reference images.\n\nBeyond static images, Storyboarder.ai offers a powerful Image-to-Video and Animatic feature. Users can generate dynamic, cinematic clips from their storyboard frames, complete with AI-driven camera movement and audio. Two video models are available: a standard version and \"Video 2.0,\" which provides smoother motion, sharper prompt adherence, and the ability to create multi-cut sequences up to 15 seconds long. The final output can be exported as a professional PDF, an MP4 animatic, or a polished pitch deck with one click. The platform operates on a project-based subscription model with unlimited image generation on all paid plans, eliminating the frustration of credit systems.\n\nPricing is structured across a free plan and three paid tiers. The Free Plan allows users to explore the tool with 2 projects and up to 9 shots/images per project. While it offers full access to features for exploration, additional shots are locked until an upgrade. The paid plans are: Starter (for individuals with lighter needs — 5 projects/month, scripts up to 10 pages), Pro Unlimited (offers unlimited projects and scripts up to 30 pages), and Production Unlimited (the top tier with unlimited everything, including script length). All paid plans include unlimited image generation and watermark-free commercial-use exports. Annual billing provides a discount, and enterprise plans are available upon request.",
+    "benefits": [
+      "End-to-end pre-production pipeline: Transforms scripts directly into shot lists, storyboards, and animatics, significantly reducing manual labor and time.",
+      "True character and location consistency: Maintains visual coherence across frames—a feature many competing AI storyboard tools cannot reliably perform.",
+      "Unlimited image generation on all paid plans: No credit system or per-image fees, allowing for unlimited iteration and experimentation."
+    ],
+    "drawbacks": [
+      "Free tier limitations: The free plan is restricted to 2 projects and only 9 images per project, which is very limited for serious pre-production work.",
+      "Video generation is not unlimited: While image generation is unlimited, the powerful animatic features (Image-to-Video) come with a limited number of free generations on paid plans, with add-ons required for heavy video production.",
+      "Pricing page is not transparently listed: The official help center notes that current pricing details are on a separate page, which can make it difficult to quickly compare plans without navigating away."
+    ],
+    "order": 186
+  },
+  {
+    "name": "Removal.ai",
+    "icon": "🖼️",
+    "desc": "AI-powered background remover offering bulk processing, a free online photo editor, and professional manual editing services.",
+    "rating": 8.5,
+    "traffic": 500000,
+    "url": "removal.ai",
+    "free": true,
+    "categories": [
+      "image-editor"
+    ],
+    "affiliate": false,
+    "overview": "Removal.ai is a specialized AI tool designed for quickly and automatically removing backgrounds from images. Its primary service is a fully automated background remover that processes images in seconds, making it a valuable asset for e-commerce sellers, photographers, designers, and content creators who need clean cutouts for product photos, portraits, or other visual content. The core value proposition is its simplicity and speed, enabling users to achieve professional results without manual effort.\n\nThe platform offers several key features beyond its basic background remover. It includes a bulk background remover that can process up to 100 images at once, with credits deducted at a fixed rate of 0.5 credit per image. Crucially, Removal.ai also provides a powerful free online photo editor that activates after the background is removed. This editor allows users to replace the background with a solid color or a new image, add text with full typography controls, apply shadow effects, and make manual adjustments with an eraser tool. For users with complex images that the AI cannot handle perfectly, Removal.ai offers an alternative: professional manual editing services, where a team of experts can handle difficult tasks, with results typically delivered within 24 hours.\n\nPricing for Removal.ai is structured as a freemium model. The Free Plan offers 1 free credit for one high-resolution image removal. This allows users to test the service at no cost. Beyond the free credit, the platform offers paid plans to accommodate higher usage. While specific per-tier pricing details are not immediately clear from the surface of the website, sources indicate there is a paid monthly plan, and businesses requiring more capacity can contact sales for custom plans, including Unlimited API Access. Bulk processing is a key feature for paid users, allowing for efficient workflows and costing 0.5 credits per image. Self-serve checkout is available, indicating a straightforward upgrade path from the free tier.",
+    "benefits": [
+      "Fast and effective automated background removal: Provides a free, instant, and fully automated solution for quickly cutting out image backgrounds.",
+      "Comprehensive free photo editor: Offers a robust suite of editing tools after background removal, including background replacement, text addition, and shadow effects.",
+      "Bulk processing capability: Can handle up to 100 images at once, streamlining workflows for professional users."
+    ],
+    "drawbacks": [
+      "Free tier is very limited: Only offers 1 free credit, which is only enough to test the service on a single image.",
+      "Pricing transparency is poor: The structure for paid plans is difficult to find and clearly enumerate from the public website, with many details requiring a sales conversation.",
+      "AI may fail on complex images: The tool struggles with images where it cannot clearly identify the foreground, requiring users to fall back on the paid professional editing service."
+    ],
+    "order": 187
   }
 ]
