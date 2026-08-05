@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/industry-d2fd2168-52fe-46e0-884d-4a7d5e106dde/styles.css">
+  <script src="_ds/industry-d2fd2168-52fe-46e0-884d-4a7d5e106dde/_ds_bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { margin: 0; }
+    a { color: var(--color-accent); text-decoration: none; }
+    a:hover { color: var(--color-accent-700); }
+    input[type="file"] { display: none; }
+  </style>
+</helmet>
+<div style="min-height:100vh;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);">
+  <nav class="nav" style="border-bottom:1px solid var(--color-divider);flex-wrap:wrap;row-gap:var(--space-2);">
+    <span class="nav-brand" style="display:flex;align-items:center;gap:8px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m4 15 1.5-9h13L20 15Z"/><path d="M4 15h16v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z"/><path d="m5.5 6 2 3M10 6l2 3M14.5 6l2 3"/></svg>
+      SLATE
+    </span>
+    <div style="display:flex;align-items:center;gap:var(--space-2);margin-right:auto;flex-wrap:wrap;">
+      <sc-for list="{{ boardTabs }}" as="tab" hint-placeholder-count="1">
+        <div style="{{ tab.wrapStyle }}">
+          <button type="button" onClick="{{ tab.onSelect }}" style="{{ tab.buttonStyle }}">{{ tab.label }}</button>
+          <sc-if value="{{ tab.canDelete }}" hint-placeholder-val="{{ false }}">
+            <button type="button" aria-label="Delete storyboard" onClick="{{ tab.onDelete }}" style="{{ tab.deleteStyle }}" style-hover="{{ tab.deleteHoverStyle }}">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+          </sc-if>
+        </div>
+      </sc-for>
+      <button type="button" class="btn btn-ghost btn-icon" aria-label="New storyboard" onClick="{{ addBoard }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+      </button>
+    </div>
+    <button type="button" class="btn btn-primary blueprint" onClick="{{ openPublish }}">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M20 21H4"/></svg>
+      Publish
+    </button>
+  </nav>
+
+  <div style="padding:var(--space-6);">
+    <div ref="{{ pageWrapRef }}" style="width:100%;max-width:816px;margin:0 auto;aspect-ratio:17/11;position:relative;overflow:hidden;">
+    <div ref="{{ boardRef }}" style="position:absolute;top:0;left:0;width:2040px;height:1320px;transform:scale({{ pageScale }});transform-origin:top left;box-sizing:border-box;overflow:hidden;background:var(--color-neutral-900);color:var(--color-bg);padding:56px;display:flex;flex-direction:column;">
+      <div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:var(--space-3);margin-bottom:32px;">
+        <input class="input" value="{{ activeBoard.title }}" onChange="{{ onTitleChange }}" placeholder="UNTITLED PRODUCTION" style="background:transparent;border:none;border-bottom:1px solid var(--color-accent-700);border-radius:0;text-align:center;font-family:var(--font-heading);font-weight:600;font-size:38px;letter-spacing:0.06em;color:var(--color-bg);width:min(720px,90%);padding:var(--space-2) 0;" />
+        <span class="tag tag-outline" style="letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap;width:auto;flex:none;">{{ activeBoard.dateLabel }}</span>
+      </div>
+
+      <div style="flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:24px;">
+        <sc-for list="{{ frames }}" as="frame" hint-placeholder-count="8">
+          <div class="card blueprint" draggable="true" onDragStart="{{ frame.onDragStart }}" onDragOver="{{ frame.onCardDragOver }}" onDrop="{{ frame.onCardDrop }}" onDragEnd="{{ frame.onDragEnd }}" onMouseEnter="{{ frame.onMouseEnter }}" style="{{ frame.cardStyle }}">
+            <i class="corner tl" style="color:var(--color-accent-400);"></i><i class="corner tr" style="color:var(--color-accent-400);"></i><i class="corner bl" style="color:var(--color-accent-400);"></i><i class="corner br" style="color:var(--color-accent-400);"></i>
+            <div style="display:flex;justify-content:flex-end;">
+              <span style="display:flex;align-items:center;cursor:grab;color:var(--color-accent-400);opacity:0.6;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="18" r="1"/></svg>
+              </span>
+            </div>
+            <div style="position:relative;">
+              <div onClick="{{ frame.onImageAreaClick }}" onDrop="{{ frame.onImageDrop }}" onDragOver="{{ frame.onImageDragOver }}" style="{{ frame.imageAreaStyle }}">
+                <sc-if value="{{ frame.hasImage }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ frame.image }}" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                </sc-if>
+                <sc-if value="{{ frame.noImage }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--color-accent-400);pointer-events:none;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="0"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                    <span style="font-size:12px;text-align:center;max-width:22ch;">Click, drop, or paste a photo</span>
+                  </div>
+                </sc-if>
+              </div>
+              <sc-if value="{{ frame.showSceneTag }}" hint-placeholder-val="{{ true }}">
+                <div style="position:absolute;top:8px;left:8px;min-width:26px;height:26px;padding:0 6px;display:flex;align-items:center;justify-content:center;background:var(--color-accent);color:var(--color-neutral-900);font-family:var(--font-heading);font-weight:600;font-size:14px;border:1px solid var(--color-neutral-900);pointer-events:none;">{{ frame.sceneNumber }}</div>
+              </sc-if>
+            </div>
+            <div class="field">
+              <input class="input" placeholder="SCENE LABEL" value="{{ frame.label }}" onChange="{{ frame.onLabelChange }}" style="background:transparent;border:none;border-bottom:1px solid var(--color-accent-700);border-radius:0;color:var(--color-bg);font-family:var(--font-heading);font-weight:600;font-size:16px;letter-spacing:0.04em;text-transform:uppercase;padding:6px 0;" />
+            </div>
+            <div class="field" style="flex:1;min-height:0;display:flex;flex-direction:column;">
+              <textarea class="input" placeholder="Shot description — action, camera, sound, dialogue…" value="{{ frame.notes }}" onChange="{{ frame.onNotesChange }}" style="background:transparent;border:1px solid var(--color-accent-700);color:var(--color-bg);flex:1;min-height:0;resize:none;overflow:auto;"></textarea>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <input type="file" accept="image/*" ref="{{ fileInputRef }}" onChange="{{ onFileInputChange }}" />
+
+  <sc-if value="{{ publishOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="dialog-backdrop" onClick="{{ onBackdropClick }}">
+      <div class="dialog blueprint" role="dialog" aria-modal="true" aria-labelledby="pub-title">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="dialog-title" id="pub-title">Publish storyboard</div>
+        <div class="dialog-body">Choose what to export and which file format.</div>
+        <div class="field">
+          <label>Scope</label>
+          <div style="display:grid;gap:6px;">
+            <label class="radio"><input type="radio" name="scope" checked="{{ scopeBoardChecked }}" onChange="{{ onScopeBoard }}" /><span class="dot"></span>This storyboard — {{ activeBoard.titleOrUntitled }}</label>
+            <label class="radio"><input type="radio" name="scope" checked="{{ scopeProjectChecked }}" onChange="{{ onScopeProject }}" /><span class="dot"></span>Entire project — {{ boardCount }} storyboards</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Format</label>
+          <div class="seg" role="radiogroup">
+            <label class="seg-opt"><input type="radio" name="format" checked="{{ formatPdfChecked }}" onChange="{{ onFormatPdf }}" />PDF</label>
+            <label class="seg-opt"><input type="radio" name="format" checked="{{ formatPngChecked }}" onChange="{{ onFormatPng }}" />PNG</label>
+            <label class="seg-opt"><input type="radio" name="format" checked="{{ formatJpgChecked }}" onChange="{{ onFormatJpg }}" />JPG</label>
+          </div>
+        </div>
+        <sc-if value="{{ projectNonPdfWarning }}" hint-placeholder-val="{{ false }}">
+          <p class="note" style="font-size:12px;opacity:0.7;margin:0;">PNG and JPG export one file per storyboard — {{ boardCount }} files will download.</p>
+        </sc-if>
+        <div class="dialog-actions">
+          <button type="button" class="btn btn-secondary blueprint" onClick="{{ closePublish }}"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>Cancel</button>
+          <button type="button" class="btn btn-primary blueprint" disabled="{{ exporting }}" onClick="{{ doExport }}"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>{{ exportLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;showSceneNumbers&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;,&quot;label&quot;:&quot;Show scene numbers&quot;}}">
+const STORAGE_KEY = 'slate-storyboard-project-v1';
+
+function uid() {
+  return 'id_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+function todayISO() {
+  return new Date().toISOString();
+}
+function formatDateDisplay(iso) {
+  const d = new Date(iso);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+  return day + ' ' + month + ' ' + d.getFullYear();
+}
+function slugify(str) {
+  const s = (str || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  return s || 'untitled';
+}
+
+class Component extends DCLogic {
+  boardRef = React.createRef();
+  pageWrapRef = React.createRef();
+  fileInputRef = React.createRef();
+
+  state = {
+    boards: [],
+    activeBoardId: null,
+    activeFrameId: null,
+    fileTargetFrameId: null,
+    draggingFrameId: null,
+    dragOverFrameId: null,
+    publishOpen: false,
+    publishScope: 'board',
+    publishFormat: 'pdf',
+    exporting: false,
+    pageScale: 1,
+  };
+
+  componentDidMount() {
+    let boards = null;
+    let activeBoardId = null;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && Array.isArray(parsed.boards) && parsed.boards.length) {
+          boards = parsed.boards;
+          activeBoardId = parsed.activeBoardId || boards[0].id;
+        }
+      }
+    } catch (e) {}
+    if (!boards) {
+      const board = this.makeBoard();
+      boards = [board];
+      activeBoardId = board.id;
+    }
+    this.setState({ boards, activeBoardId });
+    this._pasteHandler = this.handlePaste.bind(this);
+    window.addEventListener('paste', this._pasteHandler);
+    this.updatePageScale();
+    this._resizeObserver = new ResizeObserver(() => this.updatePageScale());
+    if (this.pageWrapRef.current) this._resizeObserver.observe(this.pageWrapRef.current);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('paste', this._pasteHandler);
+    if (this._resizeObserver) this._resizeObserver.disconnect();
+  }
+
+  updatePageScale() {
+    if (!this.pageWrapRef.current) return;
+    const w = this.pageWrapRef.current.clientWidth;
+    if (w > 0) this.setState({ pageScale: w / 2040 });
+  }
+
+  makeFrame() {
+    return { id: uid(), image: null, label: '', notes: '' };
+  }
+
+  makeBoard() {
+    const frames = [this.makeFrame(), this.makeFrame(), this.makeFrame(), this.makeFrame(), this.makeFrame(), this.makeFrame(), this.makeFrame(), this.makeFrame()];
+    return { id: uid(), title: '', date: todayISO(), frames };
+  }
+
+  persist() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ boards: this.state.boards, activeBoardId: this.state.activeBoardId }));
+    } catch (e) {}
+  }
+
+  getActiveBoard() {
+    return this.state.boards.find(b => b.id === this.state.activeBoardId) || this.state.boards[0];
+  }
+
+  updateActiveBoard(fn) {
+    this.setState(prev => ({
+      boards: prev.boards.map(b => (b.id === prev.activeBoardId ? fn(b) : b)),
+    }), () => this.persist());
+  }
+
+  updateFrame(frameId, patch) {
+    this.updateActiveBoard(board => ({
+      ...board,
+      frames: board.frames.map(f => (f.id === frameId ? { ...f, ...patch } : f)),
+    }));
+  }
+
+  addBoard = () => {
+    const board = this.makeBoard();
+    this.setState(prev => ({ boards: [...prev.boards, board], activeBoardId: board.id }), () => this.persist());
+  };
+
+  selectBoard(id) {
+    this.setState({ activeBoardId: id });
+  }
+
+  deleteBoard(id) {
+    if (this.state.boards.length <= 1) return;
+    if (!window.confirm('Delete this storyboard? This cannot be undone.')) return;
+    this.setState(prev => {
+      const boards = prev.boards.filter(b => b.id !== id);
+      const activeBoardId = prev.activeBoardId === id ? boards[0].id : prev.activeBoardId;
+      return { boards, activeBoardId };
+    }, () => this.persist());
+  }
+
+  onTitleChange = e => {
+    const value = e.target.value;
+    this.updateActiveBoard(board => ({ ...board, title: value }));
+  };
+
+  setActiveFrame(frameId) {
+    if (this.state.activeFrameId !== frameId) this.setState({ activeFrameId: frameId });
+  }
+
+  triggerFileInput(frameId) {
+    this.setState({ fileTargetFrameId: frameId }, () => {
+      if (this.fileInputRef.current) this.fileInputRef.current.click();
+    });
+  }
+
+  readFileToFrame(file, frameId) {
+    if (!file || !frameId || file.type.indexOf('image') !== 0) return;
+    const reader = new FileReader();
+    reader.onload = () => this.updateFrame(frameId, { image: reader.result });
+    reader.readAsDataURL(file);
+  }
+
+  onFileInputChange = e => {
+    const file = e.target.files && e.target.files[0];
+    if (file) this.readFileToFrame(file, this.state.fileTargetFrameId);
+    e.target.value = '';
+  };
+
+  handlePaste(e) {
+    if (!this.state.activeFrameId) return;
+    const items = e.clipboardData && e.clipboardData.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.indexOf('image') === 0) {
+        const file = item.getAsFile();
+        this.readFileToFrame(file, this.state.activeFrameId);
+        e.preventDefault();
+        break;
+      }
+    }
+  }
+
+  onImageDrop(e, frameId) {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file) this.readFileToFrame(file, frameId);
+  }
+
+  onFrameDragStart(e, frameId) {
+    if (!e.target.closest || e.target.closest('.card') !== e.currentTarget) {}
+    this.setState({ draggingFrameId: frameId });
+    e.dataTransfer.effectAllowed = 'move';
+  }
+  onFrameDragEnd = () => {
+    this.setState({ draggingFrameId: null, dragOverFrameId: null });
+  };
+  onCardDragOver(e, frameId) {
+    e.preventDefault();
+    if (this.state.dragOverFrameId !== frameId) this.setState({ dragOverFrameId: frameId });
+  }
+  onCardDrop(e, frameId) {
+    e.preventDefault();
+    if (e.dataTransfer.files && e.dataTransfer.files.length) return;
+    const fromId = this.state.draggingFrameId;
+    if (!fromId || fromId === frameId) {
+      this.setState({ draggingFrameId: null, dragOverFrameId: null });
+      return;
+    }
+    this.updateActiveBoard(board => {
+      const frames = [...board.frames];
+      const fromIdx = frames.findIndex(f => f.id === fromId);
+      const toIdx = frames.findIndex(f => f.id === frameId);
+      if (fromIdx === -1 || toIdx === -1) return board;
+      const [moved] = frames.splice(fromIdx, 1);
+      frames.splice(toIdx, 0, moved);
+      return { ...board, frames };
+    });
+    this.setState({ draggingFrameId: null, dragOverFrameId: null });
+  }
+
+  openPublish = () => this.setState({ publishOpen: true });
+  closePublish = () => this.setState({ publishOpen: false });
+  onBackdropClick = e => {
+    if (e.target === e.currentTarget) this.closePublish();
+  };
+  onScopeBoard = () => this.setState({ publishScope: 'board' });
+  onScopeProject = () => this.setState({ publishScope: 'project' });
+  onFormatPdf = () => this.setState({ publishFormat: 'pdf' });
+  onFormatPng = () => this.setState({ publishFormat: 'png' });
+  onFormatJpg = () => this.setState({ publishFormat: 'jpg' });
+
+  switchAndWait(boardId) {
+    return new Promise(resolve => {
+      this.setState({ activeBoardId: boardId }, () => {
+        requestAnimationFrame(() => setTimeout(resolve, 180));
+      });
+    });
+  }
+
+  async captureBoard() {
+    return window.html2canvas(this.boardRef.current, { backgroundColor: '#f2f2f3', scale: 2, useCORS: true });
+  }
+
+  downloadCanvas(canvas, filename, format) {
+    const mime = format === 'jpg' ? 'image/jpeg' : 'image/png';
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }, mime, 0.92);
+  }
+
+  async exportActiveBoard(format) {
+    const canvas = await this.captureBoard();
+    const board = this.getActiveBoard();
+    const base = slugify(board.title) + '-storyboard';
+    if (format === 'pdf') {
+      const { jsPDF } = window.jspdf;
+      const imgData = canvas.toDataURL('image/jpeg', 0.92);
+      const pdf = new jsPDF({ orientation: 'l', unit: 'in', format: [17, 11] });
+      pdf.addImage(imgData, 'JPEG', 0, 0, 17, 11);
+      pdf.save(base + '.pdf');
+    } else {
+      this.downloadCanvas(canvas, base + '.' + format, format);
+    }
+  }
+
+  async exportProjectPdf() {
+    const { jsPDF } = window.jspdf;
+    const originalActive = this.state.activeBoardId;
+    let pdf = null;
+    for (const board of this.state.boards) {
+      await this.switchAndWait(board.id);
+      const canvas = await this.captureBoard();
+      const imgData = canvas.toDataURL('image/jpeg', 0.92);
+      if (!pdf) {
+        pdf = new jsPDF({ orientation: 'l', unit: 'in', format: [17, 11] });
+        pdf.addImage(imgData, 'JPEG', 0, 0, 17, 11);
+      } else {
+        pdf.addPage([17, 11], 'l');
+        pdf.addImage(imgData, 'JPEG', 0, 0, 17, 11);
+      }
+    }
+    await this.switchAndWait(originalActive);
+    if (pdf) pdf.save('storyboard-project.pdf');
+  }
+
+  async exportProjectImages(format) {
+    const originalActive = this.state.activeBoardId;
+    for (const board of this.state.boards) {
+      await this.switchAndWait(board.id);
+      const canvas = await this.captureBoard();
+      this.downloadCanvas(canvas, slugify(board.title) + '-storyboard.' + format, format);
+      await new Promise(r => setTimeout(r, 300));
+    }
+    await this.switchAndWait(originalActive);
+  }
+
+  doExport = async () => {
+    this.setState({ exporting: true });
+    try {
+      const { publishScope, publishFormat } = this.state;
+      if (publishScope === 'project') {
+        if (publishFormat === 'pdf') await this.exportProjectPdf();
+        else await this.exportProjectImages(publishFormat);
+      } else {
+        await this.exportActiveBoard(publishFormat);
+      }
+    } catch (err) {
+      console.error('Export failed', err);
+    } finally {
+      this.setState({ exporting: false, publishOpen: false });
+    }
+  };
+
+  renderVals() {
+    const boards = this.state.boards;
+    const activeBoardRaw = this.getActiveBoard() || { id: null, title: '', date: todayISO(), frames: [] };
+    const showSceneNumbers = this.props.showSceneNumbers ?? true;
+
+    const boardTabs = boards.map(b => {
+      const active = b.id === this.state.activeBoardId;
+      return {
+        label: (b.title || 'Untitled').slice(0, 24) || 'Untitled',
+        wrapStyle: { display: 'flex', alignItems: 'center', gap: '2px' },
+        buttonStyle: {
+          font: 'inherit', fontFamily: 'var(--font-heading)', fontSize: '13px', letterSpacing: '0.02em',
+          padding: '6px 12px', cursor: 'pointer', borderRadius: '0',
+          background: active ? 'var(--color-accent)' : 'transparent',
+          color: active ? 'var(--color-bg)' : 'var(--color-text)',
+          border: active ? '1px solid var(--color-accent)' : '1px solid var(--color-divider)',
+        },
+        onSelect: () => this.selectBoard(b.id),
+        canDelete: boards.length > 1,
+        onDelete: () => this.deleteBoard(b.id),
+        deleteStyle: { border: 'none', background: 'transparent', cursor: 'pointer', opacity: 0.4, padding: '4px', color: 'var(--color-text)' },
+        deleteHoverStyle: { opacity: 1, color: 'var(--color-accent-700)' },
+      };
+    });
+
+    const frames = activeBoardRaw.frames.map((f, i) => ({
+      ...f,
+      sceneNumber: i + 1,
+      showSceneTag: showSceneNumbers,
+      hasImage: !!f.image,
+      noImage: !f.image,
+      cardStyle: {
+        opacity: this.state.draggingFrameId === f.id ? 0.4 : 1,
+        outline: this.state.dragOverFrameId === f.id && this.state.draggingFrameId !== f.id ? '2px dashed var(--color-accent)' : 'none',
+        outlineOffset: '-2px',
+        overflow: 'hidden',
+        minHeight: 0,
+      },
+      imageAreaStyle: {
+        aspectRatio: '16/9', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: f.image ? 'transparent' : 'var(--color-surface)',
+        border: f.image ? 'none' : '1px dashed var(--color-divider)',
+        cursor: 'pointer', overflow: 'hidden',
+      },
+      onLabelChange: e => this.updateFrame(f.id, { label: e.target.value }),
+      onNotesChange: e => this.updateFrame(f.id, { notes: e.target.value }),
+      onImageAreaClick: () => this.triggerFileInput(f.id),
+      onImageDrop: e => this.onImageDrop(e, f.id),
+      onImageDragOver: e => e.preventDefault(),
+      onDragStart: e => this.onFrameDragStart(e, f.id),
+      onDragEnd: this.onFrameDragEnd,
+      onCardDragOver: e => this.onCardDragOver(e, f.id),
+      onCardDrop: e => this.onCardDrop(e, f.id),
+      onMouseEnter: () => this.setActiveFrame(f.id),
+    }));
+
+    const activeBoard = {
+      title: activeBoardRaw.title,
+      titleOrUntitled: activeBoardRaw.title || 'Untitled',
+      dateDisplay: formatDateDisplay(activeBoardRaw.date),
+      dateLabel: 'Published ' + formatDateDisplay(activeBoardRaw.date),
+    };
+
+    return {
+      boardRef: this.boardRef,
+      pageWrapRef: this.pageWrapRef,
+      pageScale: this.state.pageScale,
+      fileInputRef: this.fileInputRef,
+      boardTabs,
+      addBoard: this.addBoard,
+      activeBoard,
+      onTitleChange: this.onTitleChange,
+      frames,
+      onFileInputChange: this.onFileInputChange,
+      openPublish: this.openPublish,
+      closePublish: this.closePublish,
+      onBackdropClick: this.onBackdropClick,
+      publishOpen: this.state.publishOpen,
+      boardCount: boards.length,
+      scopeBoardChecked: this.state.publishScope === 'board',
+      scopeProjectChecked: this.state.publishScope === 'project',
+      onScopeBoard: this.onScopeBoard,
+      onScopeProject: this.onScopeProject,
+      formatPdfChecked: this.state.publishFormat === 'pdf',
+      formatPngChecked: this.state.publishFormat === 'png',
+      formatJpgChecked: this.state.publishFormat === 'jpg',
+      onFormatPdf: this.onFormatPdf,
+      onFormatPng: this.onFormatPng,
+      onFormatJpg: this.onFormatJpg,
+      projectNonPdfWarning: this.state.publishScope === 'project' && this.state.publishFormat !== 'pdf',
+      exporting: this.state.exporting,
+      exportLabel: this.state.exporting ? 'Exporting…' : 'Export',
+      doExport: this.doExport,
+    };
+  }
+}
+</script>
+</body>
+</html>

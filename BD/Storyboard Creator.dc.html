@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<template id="__bundler_thumbnail" data-bg-color="#2b2b2d">
+  <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+    <rect x="12" y="10" width="96" height="60" fill="none" stroke="#5980a6" stroke-width="1.5"/>
+    <rect x="20" y="18" width="34" height="20" fill="none" stroke="#5980a6" stroke-width="1.5"/>
+    <rect x="62" y="18" width="34" height="20" fill="none" stroke="#5980a6" stroke-width="1.5"/>
+    <line x1="20" y1="46" x2="54" y2="46" stroke="#5980a6" stroke-width="1.5"/>
+    <line x1="62" y1="46" x2="96" y2="46" stroke="#5980a6" stroke-width="1.5"/>
+    <line x1="20" y1="52" x2="54" y2="52" stroke="#5980a6" stroke-width="1"/>
+    <line x1="62" y1="52" x2="96" y2="52" stroke="#5980a6" stroke-width="1"/>
+  </svg>
+</template>
+<helmet>
+  <link rel="stylesheet" href="_ds/industry-d2fd2168-52fe-46e0-884d-4a7d5e106dde/styles.css">
+  <script src="_ds/industry-d2fd2168-52fe-46e0-884d-4a7d5e106dde/_ds_bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { margin: 0; }
+    a { color: var(--color-accent); text-decoration: none; }
+    a:hover { color: var(--color-accent-700); }
+    input[type="file"] { display: none; }
+  </style>
+</helmet>
+<div ref="{{ rootRef }}" style="min-height:100vh;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);">
+  <button type="button" onClick="{{ toggleFullscreen }}" title="{{ fullscreenTitle }}" style="{{ fullscreenBtnStyle }}">
+    <sc-if value="{{ isFullscreen }}" hint-placeholder-val="{{ false }}">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6"/><path d="M20 10h-6V4"/><path d="M14 10 21 3"/><path d="M3 21l7-7"/></svg>
+    </sc-if>
+    <sc-if value="{{ isNotFullscreen }}" hint-placeholder-val="{{ true }}">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+    </sc-if>
+  </button>
+  <div style="padding:var(--space-6);">
+   <div ref="{{ mainRowRef }}" style="{{ mainRowStyle }}">
+    <div style="{{ leftColStyle }}">
+      <sc-if value="{{ leftCollapsed }}" hint-placeholder-val="{{ false }}">
+        <button type="button" onClick="{{ expandLeft }}" title="Expand Document Map" style="{{ collapsedStripStyle }}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          <span style="{{ verticalLabelStyle }}">DOCUMENT MAP</span>
+        </button>
+      </sc-if>
+      <sc-if value="{{ leftExpanded }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:8px 10px;font-family:var(--font-heading);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-bg);border-bottom:1px solid var(--color-accent-700);flex:none;">Document Map</div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;flex-direction:column;gap:6px;padding-bottom:10px;border-bottom:1px solid var(--color-accent-700);">
+          <details>
+            <summary style="cursor:pointer;font-family:var(--font-heading);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-bg);">Script</summary>
+            <textarea class="input" rows="4" placeholder="Script notes…" value="{{ projectMeta.script }}" onChange="{{ onScriptChange }}" style="width:100%;margin-top:4px;background:transparent;border:1px solid var(--color-accent-700);color:var(--color-bg);resize:vertical;"></textarea>
+          </details>
+          <details>
+            <summary style="cursor:pointer;font-family:var(--font-heading);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-bg);">Characters</summary>
+            <textarea class="input" rows="4" placeholder="Cast, roles, descriptions…" value="{{ projectMeta.characters }}" onChange="{{ onCharactersChange }}" style="width:100%;margin-top:4px;background:transparent;border:1px solid var(--color-accent-700);color:var(--color-bg);resize:vertical;"></textarea>
+          </details>
+          <details>
+            <summary style="cursor:pointer;font-family:var(--font-heading);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-bg);">Locations</summary>
+            <textarea class="input" rows="4" placeholder="Sets, addresses, permits…" value="{{ projectMeta.locations }}" onChange="{{ onLocationsChange }}" style="width:100%;margin-top:4px;background:transparent;border:1px solid var(--color-accent-700);color:var(--color-bg);resize:vertical;"></textarea>
+          </details>
+          <details>
+            <summary style="cursor:pointer;font-family:var(--font-heading);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-bg);">Vehicles</summary>
+            <textarea class="input" rows="4" placeholder="Vehicles needed per scene…" value="{{ projectMeta.vehicles }}" onChange="{{ onVehiclesChange }}" style="width:100%;margin-top:4px;background:transparent;border:1px solid var(--color-accent-700);color:var(--color-bg);resize:vertical;"></textarea>
+          </details>
+          <details>
+            <summary style="cursor:pointer;font-family:var(--font-heading);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-bg);">Props</summary>
+            <textarea class="input" rows="4" placeholder="Props needed per scene…" value="{{ projectMeta.props }}" onChange="{{ onPropsChange }}" style="width:100%;margin-top:4px;background:transparent;border:1px solid var(--color-accent-700);color:var(--color-bg);resize:vertical;"></textarea>
+          </details>
+        </div>
+        <sc-for list="{{ documentMap }}" as="page" hint-placeholder-count="1">
+          <div style="padding-bottom:8px;border-bottom:1px solid var(--color-divider);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+              <button type="button" onClick="{{ page.onSelect }}" style="{{ page.titleStyle }}">{{ page.pageLabel }}</button>
+              <button type="button" onClick="{{ page.onSaveDraft }}" title="Save current state of this page as a draft" style="font-size:10px;font-family:var(--font-heading);text-transform:uppercase;letter-spacing:0.03em;color:#000;background:#39ff14;opacity:0.7;border:none;padding:2px 6px;cursor:pointer;flex:none;">+Draft</button>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:5px;">
+              <sc-for list="{{ page.frameDots }}" as="dot" hint-placeholder-count="8">
+                <div style="width:100%;aspect-ratio:1;background:{{ dot.color }};"></div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ page.hasRevisions }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:2px;margin-top:6px;padding-left:6px;border-left:2px solid var(--color-accent-700);">
+                <sc-for list="{{ page.revisions }}" as="rev" hint-placeholder-count="0">
+                  <button type="button" onClick="{{ rev.onRestore }}" title="Restore this draft" style="text-align:left;font-size:10px;color:var(--color-bg);opacity:0.65;background:transparent;border:none;padding:2px 0;cursor:pointer;">↺ {{ rev.label }}</button>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+      <sc-if value="{{ showLeftHandle }}" hint-placeholder-val="{{ false }}">
+        <div onMouseDown="{{ onLeftHandleDragStart }}" title="Drag to resize — pull right to widen Document Map (collapses Notepad/Library)" style="{{ leftHandleStyle }}">
+          <div style="{{ gripStyle }}"></div>
+        </div>
+      </sc-if>
+    </div>
+    <div ref="{{ pageWrapRef }}" style="width:100%;aspect-ratio:17/11;position:relative;overflow:hidden;">
+    <div ref="{{ boardRef }}" style="position:absolute;top:0;left:0;width:2040px;height:1320px;transform:scale({{ pageScale }});transform-origin:top left;box-sizing:border-box;overflow:hidden;background:var(--color-neutral-900);color:var(--color-bg);padding:16px 56px 56px;display:flex;flex-direction:column;">
+
+      <div style="flex:none;display:flex;align-items:center;justify-content:space-between;margin-bottom:0;">
+        <div style="display:flex;align-items:center;gap:10px;padding-left:5px;">
+          <img src="uploads/CLAPPER.png" alt="Clapperboard" style="height:36px;width:auto;object-fit:contain;" />
+          <span style="font-family:var(--font-heading);font-weight:600;font-size:34px;letter-spacing:0.06em;color:var(--color-bg);white-space:nowrap;">TITLE:</span>
+          <input class="input" value="{{ activeBoard.title }}" onChange="{{ onTitleChange }}" placeholder="UNTITLED PRODUCTION" style="background:transparent;border:none;border-bottom:1px solid var(--color-accent-700);border-radius:0;text-align:left;font-family:var(--font-heading);font-weight:600;font-size:34px;letter-spacing:0.06em;color:var(--color-bg);width:420px;padding:4px 0;" />
+        </div>
+        <div style="display:flex;align-items:center;gap:20px;">
+          <span style="font-family:var(--font-heading);font-weight:600;font-size:34px;letter-spacing:0.06em;color:var(--color-bg);white-space:nowrap;">{{ activeBoard.sceneLabel }}</span>
+          <span style="font-family:var(--font-heading);font-weight:600;font-size:34px;letter-spacing:0.06em;color:var(--color-bg);white-space:nowrap;">{{ activeBoard.sbLabel }}</span>
+          <button type="button" data-html2canvas-ignore="true" onClick="{{ clearFrameText }}" title="Clear all scene labels and descriptions on this storyboard (does not appear in exports)" style="font-family:var(--font-heading);font-size:28px;letter-spacing:0.04em;text-transform:uppercase;color:#000;background:#39ff14;border:none;padding:10px 19px;cursor:pointer;">Clear Text</button>
+          <button type="button" data-html2canvas-ignore="true" onClick="{{ undoFrameText }}" title="Undo the last Clear Text / Apply Text action on this storyboard's frames (up to 20 steps)" style="font-family:var(--font-heading);font-size:28px;letter-spacing:0.04em;text-transform:uppercase;color:#000;background:#39ff14;border:none;padding:10px 19px;cursor:pointer;">Undo</button>
+          <span class="tag tag-outline" style="font-size:24px;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;width:auto;flex:none;padding:4px 10px;">{{ activeBoard.dateLabel }}</span>
+          <span style="font-family:var(--font-heading);font-weight:600;font-size:34px;letter-spacing:0.06em;color:var(--color-bg);white-space:nowrap;">{{ activeBoard.pageLabel }}</span>
+        </div>
+      </div>
+
+      <div style="flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:2px;background:#000;">
+        <sc-for list="{{ frames }}" as="frame" hint-placeholder-count="8">
+          <div class="card" draggable="true" onDragStart="{{ frame.onDragStart }}" onDragOver="{{ frame.onCardDragOver }}" onDrop="{{ frame.onCardDrop }}" onDragEnd="{{ frame.onDragEnd }}" onMouseEnter="{{ frame.onMouseEnter }}" style="{{ frame.cardStyle }}">
+            <div style="position:relative;">
+              <div onClick="{{ frame.onImageAreaClick }}" onDrop="{{ frame.onImageDrop }}" onDragOver="{{ frame.onImageDragOver }}" style="{{ frame.imageAreaStyle }}">
+                <sc-if value="{{ frame.hasImage }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ frame.imageUrl }}" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                </sc-if>
+                <sc-if value="{{ frame.noImage }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--color-accent-400);pointer-events:none;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="0"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                    <span style="font-size:12px;text-align:center;max-width:22ch;">Click, drop, or paste a photo</span>
+                  </div>
+                </sc-if>
+              </div>
+              <sc-if value="{{ frame.showSceneTag }}" hint-placeholder-val="{{ true }}">
+                <div style="position:absolute;top:8px;left:8px;min-width:52px;height:52px;padding:0 10px;display:flex;align-items:center;justify-content:center;background:#000;color:#39ff14;font-family:var(--font-heading);font-weight:600;font-size:28px;border:1px solid var(--color-neutral-900);pointer-events:none;opacity:0.33;">{{ frame.sceneNumber }}</div>
+              </sc-if>
+
+              <sc-if value="{{ frame.hasImage }}" hint-placeholder-val="{{ false }}">
+                <button type="button" aria-label="Delete photo" onClick="{{ frame.onDeleteImage }}" style="position:absolute;top:8px;right:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#39ff14;color:#000;border:2px solid #000;cursor:pointer;padding:0;opacity:0.33;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+              </sc-if>
+            </div>
+            <div class="field">
+              <input class="input" placeholder="SCENE LABEL" value="{{ frame.label }}" onChange="{{ frame.onLabelChange }}" style="background:transparent;border:none;border-bottom:1px solid var(--color-accent-700);border-radius:0;color:var(--color-bg);font-family:var(--font-heading);font-weight:600;font-size:16px;letter-spacing:0.04em;text-transform:uppercase;padding:6px 0;" />
+            </div>
+            <div class="field" style="flex:1;min-height:0;display:flex;flex-direction:column;">
+              <textarea class="input" placeholder="Shot description — action, camera, sound, dialogue…" value="{{ frame.notes }}" onChange="{{ frame.onNotesChange }}" style="background:transparent;border:1px solid var(--color-accent-700);color:var(--color-bg);flex:1;min-height:0;resize:none;overflow:auto;"></textarea>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </div>
+    <div ref="{{ splitContainerRef }}" style="{{ rightColStyle }}">
+      <sc-if value="{{ rightCollapsed }}" hint-placeholder-val="{{ false }}">
+        <button type="button" onClick="{{ expandRight }}" title="Expand Notepad / Media Library" style="{{ collapsedStripStyle }}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          <span style="{{ verticalLabelStyle }}">NOTEPAD / LIBRARY</span>
+        </button>
+      </sc-if>
+      <sc-if value="{{ rightExpanded }}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{ showRightHandle }}" hint-placeholder-val="{{ false }}">
+        <div onMouseDown="{{ onRightHandleDragStart }}" title="Drag to resize — pull left to widen Notepad/Library (collapses Document Map)" style="{{ rightHandleStyle }}">
+          <div style="{{ gripStyle }}"></div>
+        </div>
+      </sc-if>
+      <div style="{{ notepadPaneStyle }}">
+        <div style="padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid var(--color-accent-700);flex:none;">
+          <span style="font-family:var(--font-heading);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-bg);">Notepad</span>
+          <button type="button" onClick="{{ applyNotepadToFrames }}" title="Fill scene labels &amp; descriptions from the notepad text (TITLE / blank line / DESCRIPTION, repeated)" style="font-family:var(--font-heading);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;color:#000;background:#39ff14;border:none;padding:4px 8px;cursor:pointer;">Apply Text</button>
+        </div>
+        <div style="flex:none;padding:6px 10px;display:flex;justify-content:flex-end;">
+          <button type="button" onClick="{{ undoNotepadText }}" title="Undo the last notepad text edit (up to 100 steps)" style="font-family:var(--font-heading);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;color:#000;background:#39ff14;border:none;padding:4px 8px;cursor:pointer;">Undo</button>
+        </div>
+        <textarea class="input" placeholder="Paste text here in the pattern: TITLE / blank line / DESCRIPTION / blank line — repeated once per frame — then press Apply to Frames." value="{{ activeBoard.notepad }}" onChange="{{ onNotepadChange }}" style="flex:1;background:transparent;border:none;color:var(--color-bg);resize:none;border-radius:0;padding:10px;"></textarea>
+      </div>
+      <div onMouseDown="{{ onSplitDragStart }}" title="Drag to resize" style="flex:none;height:10px;cursor:row-resize;background:var(--color-neutral-900);border-top:1px solid var(--color-accent-700);border-bottom:1px solid var(--color-accent-700);display:flex;align-items:center;justify-content:center;">
+        <div style="width:32px;height:3px;background:var(--color-accent-400);opacity:0.6;"></div>
+      </div>
+      <div style="{{ libraryPaneStyle }}">
+        <div style="padding:8px 10px;font-family:var(--font-heading);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-bg);opacity:0.8;border-bottom:1px solid var(--color-accent-700);flex:none;">Media Library</div>
+        <div style="flex:1;min-height:0;overflow-y:auto;padding:8px 10px;">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+            <sc-for list="{{ imageLibrary }}" as="item" hint-placeholder-count="0">
+              <div style="position:relative;aspect-ratio:1;">
+                <img src="{{ item.url }}" draggable="true" onDragStart="{{ item.onDragStart }}" onClick="{{ item.onClick }}" style="width:100%;height:100%;object-fit:cover;cursor:grab;border:1px solid var(--color-divider);display:block;" />
+                <button type="button" aria-label="Remove from library" onClick="{{ item.onDelete }}" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;border:1px solid var(--color-bg);cursor:pointer;padding:0;font-size:11px;line-height:1;">×</button>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ libraryEmpty }}" hint-placeholder-val="{{ true }}">
+            <div style="font-size:11px;opacity:0.5;">No photos yet — add one to a frame to start your library.</div>
+          </sc-if>
+        </div>
+      </div>
+      </sc-if>
+    </div>
+   </div>
+   <div style="max-width:1225px;margin:16px auto 0;display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:12px;">
+     <div></div>
+     <div style="justify-self:center;display:flex;flex-direction:column;align-items:center;gap:6px;">
+       <div style="font-family:var(--font-heading);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text);opacity:0.6;">Storyboards</div>
+       <div style="display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;justify-content:center;">
+         <sc-for list="{{ boardTabs }}" as="tab" hint-placeholder-count="1">
+           <div style="{{ tab.wrapStyle }}">
+             <button type="button" onClick="{{ tab.onSelect }}" style="{{ tab.buttonStyle }}">{{ tab.label }}</button>
+             <sc-if value="{{ tab.canDelete }}" hint-placeholder-val="{{ false }}">
+               <button type="button" aria-label="Delete storyboard" onClick="{{ tab.onDelete }}" style="{{ tab.deleteStyle }}" style-hover="{{ tab.deleteHoverStyle }}">
+                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+               </button>
+             </sc-if>
+           </div>
+         </sc-for>
+         <button type="button" class="btn btn-ghost btn-icon" aria-label="New storyboard" onClick="{{ addBoard }}">
+           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+         </button>
+       </div>
+     </div>
+     <div style="justify-self:end;display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+       <div style="font-family:var(--font-heading);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text);opacity:0.6;">Export</div>
+       <div style="display:flex;align-items:center;gap:var(--space-2);">
+         <input class="input" value="{{ activeBoard.filenameValue }}" onChange="{{ onFilenameChange }}" placeholder="FILENAME" style="width:200px;" title="Export filename" />
+         <select class="input" value="{{ publishFormat }}" onChange="{{ onFormatSelectChange }}" style="width:80px;cursor:pointer;">
+           <option value="pdf">PDF</option>
+           <option value="png">PNG</option>
+           <option value="jpg">JPG</option>
+         </select>
+         <button type="button" class="btn btn-primary blueprint" onClick="{{ openPublish }}">
+           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M20 21H4"/></svg>
+           Publish
+         </button>
+       </div>
+     </div>
+   </div>
+  </div>
+
+  <input type="file" accept="image/*" ref="{{ fileInputRef }}" onChange="{{ onFileInputChange }}" />
+
+  <sc-if value="{{ publishOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="dialog-backdrop" onClick="{{ onBackdropClick }}">
+      <div class="dialog blueprint" role="dialog" aria-modal="true" aria-labelledby="pub-title">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="dialog-title" id="pub-title">Publish storyboard</div>
+        <div class="dialog-body">Choose what to export and which file format.</div>
+        <div class="field">
+          <label>Scope</label>
+          <div style="display:grid;gap:6px;">
+            <label class="radio"><input type="radio" name="scope" checked="{{ scopeBoardChecked }}" onChange="{{ onScopeBoard }}" /><span class="dot"></span>This storyboard — {{ activeBoard.titleOrUntitled }}</label>
+            <label class="radio"><input type="radio" name="scope" checked="{{ scopeProjectChecked }}" onChange="{{ onScopeProject }}" /><span class="dot"></span>Entire project — {{ boardCount }} storyboards</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Format</label>
+          <div class="seg" role="radiogroup">
+            <label class="seg-opt"><input type="radio" name="format" checked="{{ formatPdfChecked }}" onChange="{{ onFormatPdf }}" />PDF</label>
+            <label class="seg-opt"><input type="radio" name="format" checked="{{ formatPngChecked }}" onChange="{{ onFormatPng }}" />PNG</label>
+            <label class="seg-opt"><input type="radio" name="format" checked="{{ formatJpgChecked }}" onChange="{{ onFormatJpg }}" />JPG</label>
+          </div>
+        </div>
+        <sc-if value="{{ projectNonPdfWarning }}" hint-placeholder-val="{{ false }}">
+          <p class="note" style="font-size:12px;opacity:0.7;margin:0;">PNG and JPG export one file per storyboard — {{ boardCount }} files will download.</p>
+        </sc-if>
+        <div class="dialog-actions">
+          <button type="button" class="btn btn-secondary blueprint" onClick="{{ closePublish }}"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>Cancel</button>
+          <button type="button" class="btn btn-primary blueprint" disabled="{{ exporting }}" onClick="{{ doExport }}"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>{{ exportLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;showSceneNumbers&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;,&quot;label&quot;:&quot;Show scene numbers&quot;}}">
+const STORAGE_KEY = 'slate-storyboard-project-v1';
+
+function uid() {
+  return 'id_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+function todayISO() {
+  return new Date().toISOString();
+}
+function formatDateDisplay(iso) {
+  const d = new Date(iso);
+  const year = d.getFullYear();
+  const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+  const day = String(d.getDate()).padStart(2, '0');
+  const hours = String(d.getHours()).padStart(2, '0');
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+  return year + month + day + '-' + hours + minutes + 'h';
+}
+function slugify(str) {
+  const s = (str || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  return s || 'untitled';
+}
+function filenameSlug(title) {
+  const s = (title || '').trim().toUpperCase().replace(/\s+/g, '_').replace(/[^A-Z0-9_]+/g, '').replace(/(^_+|_+$)/g, '');
+  return s || 'UNTITLED';
+}
+function filenameDate(iso) {
+  const d = new Date(iso);
+  return d.getFullYear() + d.toLocaleString('en-US', { month: 'short' }).toUpperCase() + String(d.getDate()).padStart(2, '0');
+}
+function sanitizeFilename(name) {
+  const s = (name || '').trim().replace(/\s+/g, '_').replace(/[^A-Za-z0-9\-_]+/g, '').replace(/(^[-_]+|[-_]+$)/g, '');
+  return s || 'untitled';
+}
+
+const IDB_NAME = 'slate-image-library';
+function idbOpen() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(IDB_NAME, 1);
+    req.onupgradeneeded = () => { req.result.createObjectStore('images'); };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+async function idbPutImage(id, blob) {
+  const db = await idbOpen();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('images', 'readwrite');
+    tx.objectStore('images').put(blob, id);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+async function idbGetAllImages() {
+  const db = await idbOpen();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('images', 'readonly');
+    const items = [];
+    const req = tx.objectStore('images').openCursor();
+    req.onsuccess = e => {
+      const cursor = e.target.result;
+      if (cursor) { items.push({ id: cursor.key, blob: cursor.value }); cursor.continue(); } else resolve(items);
+    };
+    req.onerror = () => reject(req.error);
+  });
+}
+async function idbDeleteImage(id) {
+  const db = await idbOpen();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('images', 'readwrite');
+    tx.objectStore('images').delete(id);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+function formatShort(ts) {
+  return new Date(ts).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+}
+function dataURLToBlob(dataUrl) {
+  const [meta, b64] = dataUrl.split(',');
+  const mime = meta.match(/:(.*?);/)[1];
+  const bin = atob(b64);
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  return new Blob([arr], { type: mime });
+}
+
+class Component extends DCLogic {
+  boardRef = React.createRef();
+  pageWrapRef = React.createRef();
+  fileInputRef = React.createRef();
+  splitContainerRef = React.createRef();
+  rootRef = React.createRef();
+  mainRowRef = React.createRef();
+
+  state = {
+    boards: [],
+    activeBoardId: null,
+    activeFrameId: null,
+    fileTargetFrameId: null,
+    draggingFrameId: null,
+    dragOverFrameId: null,
+    publishOpen: false,
+    publishScope: 'board',
+    publishFormat: 'pdf',
+    exporting: false,
+    pageScale: 1,
+    imageLibrary: [],
+    frameHistory: [],
+    notepadHistory: [],
+    notepadSplit: 0.5,
+    projectMeta: { script: '', characters: '', locations: '', vehicles: '', props: '' },
+    isFullscreen: false,
+    leftWidth: 280,
+    rightWidth: 280,
+    collapsedSide: null,
+  };
+
+  componentDidMount() {
+    let boards = null;
+    let activeBoardId = null;
+    let projectMeta = null;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && Array.isArray(parsed.boards) && parsed.boards.length) {
+          boards = parsed.boards;
+          activeBoardId = parsed.activeBoardId || boards[0].id;
+        }
+        if (parsed && parsed.projectMeta) projectMeta = parsed.projectMeta;
+      }
+    } catch (e) {}
+    if (!boards) {
+      const board = this.makeBoard();
+      boards = [board];
+      activeBoardId = board.id;
+    }
+    this.setState({ boards, activeBoardId, projectMeta: projectMeta || this.state.projectMeta });
+    this.initImageLibrary(boards);
+    this._pasteHandler = this.handlePaste.bind(this);
+    window.addEventListener('paste', this._pasteHandler);
+    this.updatePageScale();
+    this._resizeObserver = new ResizeObserver(() => this.updatePageScale());
+    if (this.pageWrapRef.current) this._resizeObserver.observe(this.pageWrapRef.current);
+    this._fsHandler = () => this.setState({ isFullscreen: !!document.fullscreenElement });
+    document.addEventListener('fullscreenchange', this._fsHandler);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('paste', this._pasteHandler);
+    if (this._resizeObserver) this._resizeObserver.disconnect();
+    document.removeEventListener('fullscreenchange', this._fsHandler);
+  }
+
+  toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      if (this.rootRef.current && this.rootRef.current.requestFullscreen) this.rootRef.current.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
+  expandLeft = () => this.setState({ collapsedSide: null, leftWidth: 280, rightWidth: 280 });
+  expandRight = () => this.setState({ collapsedSide: null, leftWidth: 280, rightWidth: 280 });
+
+  onLeftHandleDragStart = e => {
+    e.preventDefault();
+    const container = this.mainRowRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const onMove = ev => {
+      let x = ev.clientX - rect.left;
+      x = Math.max(160, Math.min(rect.width - 300, x));
+      const collapseAt = rect.width * 0.56;
+      const reopenAt = rect.width * 0.46;
+      this.setState(prev => {
+        let collapsedSide = prev.collapsedSide;
+        if (x > collapseAt) collapsedSide = 'right';
+        else if (collapsedSide === 'right' && x < reopenAt) collapsedSide = null;
+        return { leftWidth: x, collapsedSide };
+      });
+    };
+    const onUp = () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  };
+
+  onRightHandleDragStart = e => {
+    e.preventDefault();
+    const container = this.mainRowRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const onMove = ev => {
+      let x = rect.right - ev.clientX;
+      x = Math.max(160, Math.min(rect.width - 300, x));
+      const collapseAt = rect.width * 0.56;
+      const reopenAt = rect.width * 0.46;
+      this.setState(prev => {
+        let collapsedSide = prev.collapsedSide;
+        if (x > collapseAt) collapsedSide = 'left';
+        else if (collapsedSide === 'left' && x < reopenAt) collapsedSide = null;
+        return { rightWidth: x, collapsedSide };
+      });
+    };
+    const onUp = () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  };
+
+  onSplitDragStart = e => {
+    e.preventDefault();
+    const container = this.splitContainerRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const onMove = ev => {
+      let frac = (ev.clientY - rect.top) / rect.height;
+      frac = Math.min(0.85, Math.max(0.15, frac));
+      this.setState({ notepadSplit: frac });
+    };
+    const onUp = () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  };
+
+  updatePageScale() {
+    if (!this.pageWrapRef.current) return;
+    const w = this.pageWrapRef.current.clientWidth;
+    if (w > 0) {
+      const scale = w / 2040;
+      if (Math.abs(scale - this.state.pageScale) > 0.0005) this.setState({ pageScale: scale });
+    }
+  }
+
+  componentDidUpdate() {
+    this.updatePageScale();
+  }
+
+  async initImageLibrary(boards) {
+    try {
+      const items = await idbGetAllImages();
+      const imageLibrary = items.map(it => ({ id: it.id, url: URL.createObjectURL(it.blob) }));
+      this.setState({ imageLibrary });
+      await this.migrateLegacyImages(boards);
+    } catch (e) { console.error('Image library init failed', e); }
+  }
+
+  async migrateLegacyImages(boards) {
+    let changed = false;
+    const libraryAdds = [];
+    const newBoards = await Promise.all(boards.map(async board => {
+      const newFrames = await Promise.all(board.frames.map(async f => {
+        if (f.image && typeof f.image === 'string' && f.image.indexOf('data:') === 0) {
+          changed = true;
+          const blob = dataURLToBlob(f.image);
+          const id = uid();
+          await idbPutImage(id, blob);
+          libraryAdds.push({ id, url: URL.createObjectURL(blob) });
+          return { ...f, image: id };
+        }
+        return f;
+      }));
+      return { ...board, frames: newFrames };
+    }));
+    if (changed) {
+      this.setState(prev => ({ boards: newBoards, imageLibrary: [...prev.imageLibrary, ...libraryAdds] }), () => this.persist());
+    }
+  }
+
+  makeFrame() {
+    return { id: uid(), image: null, label: '', notes: '' };
+  }
+
+  makeBoard() {
+    const frames = [this.makeFrame(), this.makeFrame(), this.makeFrame(), this.makeFrame(), this.makeFrame(), this.makeFrame(), this.makeFrame(), this.makeFrame()];
+    return { id: uid(), title: '', date: todayISO(), frames, notepad: '' };
+  }
+
+  persist() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ boards: this.state.boards, activeBoardId: this.state.activeBoardId, projectMeta: this.state.projectMeta }));
+    } catch (e) {}
+  }
+
+  updateProjectMeta(field, value) {
+    this.setState(prev => ({ projectMeta: { ...prev.projectMeta, [field]: value } }), () => this.persist());
+  }
+
+  getActiveBoard() {
+    return this.state.boards.find(b => b.id === this.state.activeBoardId) || this.state.boards[0];
+  }
+
+  updateActiveBoard(fn) {
+    this.setState(prev => ({
+      boards: prev.boards.map(b => (b.id === prev.activeBoardId ? fn(b) : b)),
+    }), () => this.persist());
+  }
+
+  updateFrame(frameId, patch) {
+    this.updateActiveBoard(board => ({
+      ...board,
+      frames: board.frames.map(f => (f.id === frameId ? { ...f, ...patch } : f)),
+    }));
+  }
+
+  addBoard = () => {
+    const board = this.makeBoard();
+    this.setState(prev => ({ boards: [...prev.boards, board], activeBoardId: board.id }), () => this.persist());
+  };
+
+  selectBoard(id) {
+    this.setState({ activeBoardId: id });
+  }
+
+  deleteBoard(id) {
+    if (this.state.boards.length <= 1) return;
+    if (!window.confirm('Delete this storyboard? This cannot be undone.')) return;
+    this.setState(prev => {
+      const boards = prev.boards.filter(b => b.id !== id);
+      const activeBoardId = prev.activeBoardId === id ? boards[0].id : prev.activeBoardId;
+      return { boards, activeBoardId };
+    }, () => this.persist());
+  }
+
+  onTitleChange = e => {
+    const value = e.target.value;
+    this.updateActiveBoard(board => ({ ...board, title: value }));
+  };
+
+  autoFilename(board) {
+    return filenameSlug(board.title) + '-' + filenameDate(board.date);
+  }
+
+  getBoardFilename(board) {
+    return board.filename || this.autoFilename(board);
+  }
+
+  onFilenameChange = e => {
+    const value = e.target.value;
+    this.updateActiveBoard(board => ({ ...board, filename: value }));
+  };
+
+  onFormatSelectChange = e => this.setState({ publishFormat: e.target.value });
+
+  onNotepadChange = e => {
+    const value = e.target.value;
+    this.pushNotepadHistory(this.getActiveBoard());
+    this.updateActiveBoard(board => ({ ...board, notepad: value }));
+  };
+
+  snapshotOf(board) {
+    return { id: uid(), savedAt: Date.now(), title: board.title, notepad: board.notepad, frames: board.frames.map(f => ({ ...f })) };
+  }
+
+  saveDraft(boardId) {
+    this.setState(prev => ({
+      boards: prev.boards.map(b => {
+        if (b.id !== boardId) return b;
+        const revisions = [this.snapshotOf(b), ...(b.revisions || [])].slice(0, 20);
+        return { ...b, revisions };
+      }),
+    }), () => this.persist());
+  }
+
+  restoreDraft(boardId, revisionId) {
+    if (!window.confirm('Restore this draft? The current version of this page will be saved as a new draft first.')) return;
+    this.setState(prev => ({
+      boards: prev.boards.map(b => {
+        if (b.id !== boardId) return b;
+        const rev = (b.revisions || []).find(r => r.id === revisionId);
+        if (!rev) return b;
+        const revisions = [this.snapshotOf(b), ...(b.revisions || [])].filter(r => r.id !== revisionId).slice(0, 20);
+        return { ...b, title: rev.title, notepad: rev.notepad, frames: rev.frames.map(f => ({ ...f })), revisions };
+      }),
+    }), () => this.persist());
+  }
+
+  pushFrameHistory(board) {
+    this.setState(prev => {
+      const entry = { boardId: board.id, frames: board.frames.map(f => ({ ...f })) };
+      return { frameHistory: [...prev.frameHistory, entry].slice(-20) };
+    });
+  }
+
+  undoFrameText = () => {
+    this.setState(prev => {
+      if (!prev.frameHistory.length) return null;
+      const stack = [...prev.frameHistory];
+      const entry = stack.pop();
+      const boards = prev.boards.map(b => (b.id === entry.boardId ? { ...b, frames: entry.frames } : b));
+      return { frameHistory: stack, boards };
+    }, () => this.persist());
+  };
+
+  pushNotepadHistory(board) {
+    this.setState(prev => {
+      const entry = { boardId: board.id, notepad: board.notepad };
+      return { notepadHistory: [...prev.notepadHistory, entry].slice(-100) };
+    });
+  }
+
+  undoNotepadText = () => {
+    this.setState(prev => {
+      if (!prev.notepadHistory.length) return null;
+      const stack = [...prev.notepadHistory];
+      const entry = stack.pop();
+      const boards = prev.boards.map(b => (b.id === entry.boardId ? { ...b, notepad: entry.notepad } : b));
+      return { notepadHistory: stack, boards };
+    }, () => this.persist());
+  };
+
+  clearFrameText = () => {
+    if (!window.confirm('Clear all scene labels and descriptions on this storyboard?')) return;
+    const board = this.getActiveBoard();
+    this.pushFrameHistory(board);
+    this.updateActiveBoard(b => ({
+      ...b,
+      frames: b.frames.map(f => ({ ...f, label: '', notes: '' })),
+    }));
+  };
+
+  applyNotepadToFrames = () => {
+    const board = this.getActiveBoard();
+    const text = (board.notepad || '').trim();
+    if (!text) return;
+    const blocks = text.split(/\n\s*\n+/).map(s => s.trim()).filter(s => s.length > 0);
+    this.pushFrameHistory(board);
+    this.updateActiveBoard(b => ({
+      ...b,
+      frames: b.frames.map((f, i) => {
+        const label = blocks[i * 2];
+        const notes = blocks[i * 2 + 1];
+        return { ...f, label: label !== undefined ? label : f.label, notes: notes !== undefined ? notes : f.notes };
+      }),
+    }));
+  };
+
+  setActiveFrame(frameId) {
+    if (this.state.activeFrameId !== frameId) this.setState({ activeFrameId: frameId });
+  }
+
+  triggerFileInput(frameId) {
+    this.setState({ fileTargetFrameId: frameId }, () => {
+      if (this.fileInputRef.current) this.fileInputRef.current.click();
+    });
+  }
+
+  async readFileToFrame(file, frameId) {
+    if (!file || !frameId || file.type.indexOf('image') !== 0) return;
+    const id = uid();
+    try {
+      await idbPutImage(id, file);
+      const url = URL.createObjectURL(file);
+      this.setState(prev => ({ imageLibrary: [{ id, url }, ...prev.imageLibrary] }));
+      this.updateFrame(frameId, { image: id });
+    } catch (e) { console.error('Failed to store image', e); }
+  }
+
+  assignLibraryImage(id, frameId) {
+    if (!frameId || !id) return;
+    this.updateFrame(frameId, { image: id });
+  }
+
+  onLibraryThumbClick(id) {
+    if (this.state.activeFrameId) this.assignLibraryImage(id, this.state.activeFrameId);
+  }
+
+  deleteLibraryImage(id) {
+    if (!window.confirm('Remove this photo from the library? Frames using it will show a blank slot.')) return;
+    idbDeleteImage(id).catch(() => {});
+    this.setState(prev => ({ imageLibrary: prev.imageLibrary.filter(it => it.id !== id) }));
+  }
+
+  onFileInputChange = e => {
+    const file = e.target.files && e.target.files[0];
+    if (file) this.readFileToFrame(file, this.state.fileTargetFrameId);
+    e.target.value = '';
+  };
+
+  handlePaste(e) {
+    if (!this.state.activeFrameId) return;
+    const items = e.clipboardData && e.clipboardData.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.indexOf('image') === 0) {
+        const file = item.getAsFile();
+        this.readFileToFrame(file, this.state.activeFrameId);
+        e.preventDefault();
+        break;
+      }
+    }
+  }
+
+  onImageDrop(e, frameId) {
+    const libData = e.dataTransfer.getData && e.dataTransfer.getData('text/plain');
+    if (libData && libData.indexOf('lib:') === 0) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.assignLibraryImage(libData.slice(4), frameId);
+      return;
+    }
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.readFileToFrame(file, frameId);
+    }
+    // no file, no library drag: let the drop bubble up to the card's onDrop for frame reordering
+  }
+
+  onFrameDragStart(e, frameId) {
+    this.setState({ draggingFrameId: frameId });
+    e.dataTransfer.effectAllowed = 'move';
+  }
+
+  deleteImage(frameId) {
+    this.updateFrame(frameId, { image: null });
+  }
+  onFrameDragEnd = () => {
+    this.setState({ draggingFrameId: null, dragOverFrameId: null });
+  };
+  onCardDragOver(e, frameId) {
+    e.preventDefault();
+    if (this.state.dragOverFrameId !== frameId) this.setState({ dragOverFrameId: frameId });
+  }
+  onCardDrop(e, frameId) {
+    if (e.dataTransfer.files && e.dataTransfer.files.length) return;
+    const libData = e.dataTransfer.getData && e.dataTransfer.getData('text/plain');
+    if (libData && libData.indexOf('lib:') === 0) {
+      e.preventDefault();
+      this.assignLibraryImage(libData.slice(4), frameId);
+      this.setState({ draggingFrameId: null, dragOverFrameId: null });
+      return;
+    }
+    e.preventDefault();
+    const fromId = this.state.draggingFrameId;
+    if (!fromId || fromId === frameId) {
+      this.setState({ draggingFrameId: null, dragOverFrameId: null });
+      return;
+    }
+    this.updateActiveBoard(board => {
+      const frames = [...board.frames];
+      const fromIdx = frames.findIndex(f => f.id === fromId);
+      const toIdx = frames.findIndex(f => f.id === frameId);
+      if (fromIdx === -1 || toIdx === -1) return board;
+      const [moved] = frames.splice(fromIdx, 1);
+      frames.splice(toIdx, 0, moved);
+      return { ...board, frames };
+    });
+    this.setState({ draggingFrameId: null, dragOverFrameId: null });
+  }
+
+  openPublish = () => this.setState({ publishOpen: true });
+  closePublish = () => this.setState({ publishOpen: false });
+  onBackdropClick = e => {
+    if (e.target === e.currentTarget) this.closePublish();
+  };
+  onScopeBoard = () => this.setState({ publishScope: 'board' });
+  onScopeProject = () => this.setState({ publishScope: 'project' });
+  onFormatPdf = () => this.setState({ publishFormat: 'pdf' });
+  onFormatPng = () => this.setState({ publishFormat: 'png' });
+  onFormatJpg = () => this.setState({ publishFormat: 'jpg' });
+
+  switchAndWait(boardId) {
+    return new Promise(resolve => {
+      this.setState({ activeBoardId: boardId }, () => {
+        requestAnimationFrame(() => setTimeout(resolve, 180));
+      });
+    });
+  }
+
+  async captureBoard() {
+    return window.html2canvas(this.boardRef.current, {
+      backgroundColor: '#000000',
+      scale: 5,
+      useCORS: true,
+      ignoreElements: el => el.hasAttribute && el.hasAttribute('data-html2canvas-ignore'),
+    });
+  }
+
+  downloadCanvas(canvas, filename, format) {
+    const mime = format === 'jpg' ? 'image/jpeg' : 'image/png';
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }, mime, 0.92);
+  }
+
+  async exportActiveBoard(format) {
+    const canvas = await this.captureBoard();
+    const board = this.getActiveBoard();
+    const base = sanitizeFilename(this.getBoardFilename(board));
+    if (format === 'pdf') {
+      const { jsPDF } = window.jspdf;
+      const imgData = canvas.toDataURL('image/jpeg', 0.92);
+      const pdf = new jsPDF({ orientation: 'l', unit: 'in', format: [17, 11] });
+      pdf.addImage(imgData, 'JPEG', 0, 0, 17, 11);
+      pdf.save(base + '.pdf');
+    } else {
+      this.downloadCanvas(canvas, base + '.' + format, format);
+    }
+  }
+
+  async exportProjectPdf() {
+    const { jsPDF } = window.jspdf;
+    const originalActive = this.state.activeBoardId;
+    let pdf = null;
+    for (const board of this.state.boards) {
+      await this.switchAndWait(board.id);
+      const canvas = await this.captureBoard();
+      const imgData = canvas.toDataURL('image/jpeg', 0.92);
+      if (!pdf) {
+        pdf = new jsPDF({ orientation: 'l', unit: 'in', format: [17, 11] });
+        pdf.addImage(imgData, 'JPEG', 0, 0, 17, 11);
+      } else {
+        pdf.addPage([17, 11], 'l');
+        pdf.addImage(imgData, 'JPEG', 0, 0, 17, 11);
+      }
+    }
+    await this.switchAndWait(originalActive);
+    if (pdf) pdf.save('storyboard-project.pdf');
+  }
+
+  async exportProjectImages(format) {
+    const originalActive = this.state.activeBoardId;
+    for (const board of this.state.boards) {
+      await this.switchAndWait(board.id);
+      const canvas = await this.captureBoard();
+      this.downloadCanvas(canvas, sanitizeFilename(this.getBoardFilename(board)) + '.' + format, format);
+      await new Promise(r => setTimeout(r, 300));
+    }
+    await this.switchAndWait(originalActive);
+  }
+
+  doExport = async () => {
+    this.setState({ exporting: true });
+    try {
+      const { publishScope, publishFormat } = this.state;
+      if (publishScope === 'project') {
+        if (publishFormat === 'pdf') await this.exportProjectPdf();
+        else await this.exportProjectImages(publishFormat);
+      } else {
+        await this.exportActiveBoard(publishFormat);
+      }
+      if (publishScope === 'project') this.state.boards.forEach(b => this.saveDraft(b.id));
+      else this.saveDraft(this.getActiveBoard().id);
+    } catch (err) {
+      console.error('Export failed', err);
+    } finally {
+      this.setState({ exporting: false, publishOpen: false });
+    }
+  };
+
+  renderVals() {
+    const boards = this.state.boards;
+    const activeBoardRaw = this.getActiveBoard() || { id: null, title: '', date: todayISO(), frames: [] };
+    const showSceneNumbers = this.props.showSceneNumbers ?? true;
+
+    const isFullscreen = this.state.isFullscreen;
+    const COLLAPSED_W = 32;
+    const leftCollapsed = isFullscreen && this.state.collapsedSide === 'left';
+    const rightCollapsed = isFullscreen && this.state.collapsedSide === 'right';
+    const leftColWidthPx = leftCollapsed ? COLLAPSED_W : this.state.leftWidth;
+    const rightColWidthPx = rightCollapsed ? COLLAPSED_W : this.state.rightWidth;
+
+    const mainRowStyle = isFullscreen
+      ? { display: 'grid', gridTemplateColumns: leftColWidthPx + 'px 1fr ' + rightColWidthPx + 'px', gap: '16px', width: '100%', maxWidth: 'none', margin: '0', alignItems: 'stretch' }
+      : { display: 'grid', gridTemplateColumns: '1fr 4fr 1fr', gap: '16px', maxWidth: '1500px', margin: '0 auto', alignItems: 'stretch' };
+
+    const leftColStyle = { display: 'flex', flexDirection: 'column', background: 'var(--color-neutral-900)', border: '1px solid var(--color-divider)', position: 'relative', overflow: 'hidden', minWidth: 0 };
+    const rightColStyle = { display: 'flex', flexDirection: 'column', background: 'var(--color-neutral-900)', border: '1px solid var(--color-divider)', position: 'relative', overflow: 'hidden', minWidth: 0 };
+    const collapsedStripStyle = { width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '14px', padding: '16px 0', background: 'transparent', border: 'none', color: 'var(--color-bg)', cursor: 'pointer' };
+    const verticalLabelStyle = { writingMode: 'vertical-rl', textOrientation: 'mixed', fontFamily: 'var(--font-heading)', fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.75 };
+    const gripStyle = { width: '3px', height: '32px', background: 'var(--color-accent-400)', opacity: 0.6 };
+    const leftHandleStyle = { position: 'absolute', top: 0, right: 0, bottom: 0, width: '10px', cursor: 'col-resize', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', zIndex: 2 };
+    const rightHandleStyle = { position: 'absolute', top: 0, left: 0, bottom: 0, width: '10px', cursor: 'col-resize', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', zIndex: 2 };
+    const fullscreenBtnStyle = { position: 'fixed', top: '12px', right: '12px', zIndex: 100, width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--color-neutral-900)', color: 'var(--color-bg)', border: '1px solid var(--color-accent-700)', cursor: 'pointer' };
+
+    const boardTabs = boards.map(b => {
+      const active = b.id === this.state.activeBoardId;
+      return {
+        label: (b.title || 'Untitled').slice(0, 24) || 'Untitled',
+        wrapStyle: { display: 'flex', alignItems: 'center', gap: '2px' },
+        buttonStyle: {
+          font: 'inherit', fontFamily: 'var(--font-heading)', fontSize: '13px', letterSpacing: '0.02em',
+          padding: '6px 12px', cursor: 'pointer', borderRadius: '0',
+          background: active ? 'var(--color-accent)' : 'transparent',
+          color: active ? 'var(--color-bg)' : 'var(--color-text)',
+          border: active ? '1px solid var(--color-accent)' : '1px solid var(--color-divider)',
+        },
+        onSelect: () => this.selectBoard(b.id),
+        canDelete: boards.length > 1,
+        onDelete: () => this.deleteBoard(b.id),
+        deleteStyle: { border: 'none', background: 'transparent', cursor: 'pointer', opacity: 0.4, padding: '4px', color: 'var(--color-text)' },
+        deleteHoverStyle: { opacity: 1, color: 'var(--color-accent-700)' },
+      };
+    });
+
+    const urlMap = {};
+    this.state.imageLibrary.forEach(it => { urlMap[it.id] = it.url; });
+
+    const frames = activeBoardRaw.frames.map((f, i) => ({
+      ...f,
+      sceneNumber: i + 1,
+      showSceneTag: showSceneNumbers,
+      imageUrl: f.image ? urlMap[f.image] : null,
+      hasImage: !!(f.image && urlMap[f.image]),
+      noImage: !(f.image && urlMap[f.image]),
+      cardStyle: {
+        opacity: this.state.draggingFrameId === f.id ? 0.4 : 1,
+        outline: this.state.dragOverFrameId === f.id && this.state.draggingFrameId !== f.id ? '2px dashed var(--color-accent)' : 'none',
+        outlineOffset: '-2px',
+        overflow: 'hidden',
+        minHeight: 0,
+        border: 'none',
+        borderRadius: 0,
+        background: 'var(--color-neutral-900)',
+      },
+      imageAreaStyle: {
+        aspectRatio: '16/9', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: urlMap[f.image] ? 'transparent' : 'var(--color-surface)',
+        border: urlMap[f.image] ? 'none' : '1px dashed var(--color-divider)',
+        cursor: 'pointer', overflow: 'hidden',
+      },
+      onLabelChange: e => this.updateFrame(f.id, { label: e.target.value }),
+      onNotesChange: e => this.updateFrame(f.id, { notes: e.target.value }),
+      onImageAreaClick: () => this.triggerFileInput(f.id),
+      onDeleteImage: e => { e.stopPropagation(); this.deleteImage(f.id); },
+      onImageDrop: e => this.onImageDrop(e, f.id),
+      onImageDragOver: e => e.preventDefault(),
+      onDragStart: e => this.onFrameDragStart(e, f.id),
+      onDragEnd: this.onFrameDragEnd,
+      onCardDragOver: e => this.onCardDragOver(e, f.id),
+      onCardDrop: e => this.onCardDrop(e, f.id),
+      onMouseEnter: () => this.setActiveFrame(f.id),
+    }));
+
+    const activeBoard = {
+      title: activeBoardRaw.title,
+      titleOrUntitled: activeBoardRaw.title || 'Untitled',
+      dateDisplay: formatDateDisplay(activeBoardRaw.date),
+      dateLabel: 'Published ' + formatDateDisplay(activeBoardRaw.date),
+      pageLabel: 'DRAFT: ' + (boards.findIndex(b => b.id === activeBoardRaw.id) + 1) + ' of ' + boards.length,
+      sceneLabel: (() => {
+        const idx = boards.findIndex(b => b.id === activeBoardRaw.id);
+        return 'SCENE: ' + (idx + 1) + ' of ' + boards.length;
+      })(),
+      sbLabel: (() => {
+        const idx = boards.findIndex(b => b.id === activeBoardRaw.id);
+        return 'SB: ' + (idx * 8 + 1) + '-' + (idx + 1);
+      })(),
+      filenameValue: this.getBoardFilename(activeBoardRaw),
+      notepad: activeBoardRaw.notepad || '',
+    };
+
+    const documentMap = boards.map((b, idx) => {
+      const isActive = b.id === activeBoardRaw.id;
+      return {
+        id: b.id,
+        pageLabel: 'PAGE ' + (idx + 1) + ': ' + (b.title ? b.title.toUpperCase() : 'UNTITLED'),
+        onSelect: () => this.selectBoard(b.id),
+        onSaveDraft: () => this.saveDraft(b.id),
+        titleStyle: {
+          textAlign: 'left', flex: 1, fontFamily: 'var(--font-heading)', fontSize: '11px', letterSpacing: '0.03em',
+          textTransform: 'uppercase', color: isActive ? '#39ff14' : 'var(--color-bg)',
+          background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 0',
+        },
+        frameDots: b.frames.map(f => ({
+          key: f.id,
+          color: f.image && f.label && f.notes ? '#39ff14' : (f.image || f.label || f.notes) ? '#c9a227' : 'var(--color-neutral-700)',
+        })),
+        hasRevisions: !!(b.revisions && b.revisions.length),
+        revisions: (b.revisions || []).map(r => ({
+          id: r.id,
+          label: formatShort(r.savedAt),
+          onRestore: () => this.restoreDraft(b.id, r.id),
+        })),
+      };
+    });
+
+    const imageLibrary = this.state.imageLibrary.map(it => ({
+      id: it.id,
+      url: it.url,
+      onDragStart: e => { e.dataTransfer.setData('text/plain', 'lib:' + it.id); e.dataTransfer.effectAllowed = 'copy'; },
+      onClick: () => this.onLibraryThumbClick(it.id),
+      onDelete: () => this.deleteLibraryImage(it.id),
+    }));
+
+    return {
+      rootRef: this.rootRef,
+      mainRowRef: this.mainRowRef,
+      mainRowStyle,
+      isFullscreen,
+      isNotFullscreen: !isFullscreen,
+      fullscreenTitle: isFullscreen ? 'Exit full screen' : 'Enter full screen',
+      fullscreenBtnStyle,
+      toggleFullscreen: this.toggleFullscreen,
+      leftColStyle,
+      rightColStyle,
+      leftCollapsed,
+      rightCollapsed,
+      leftExpanded: !leftCollapsed,
+      rightExpanded: !rightCollapsed,
+      showLeftHandle: isFullscreen && !leftCollapsed,
+      showRightHandle: isFullscreen && !rightCollapsed,
+      collapsedStripStyle,
+      verticalLabelStyle,
+      gripStyle,
+      leftHandleStyle,
+      rightHandleStyle,
+      expandLeft: this.expandLeft,
+      expandRight: this.expandRight,
+      onLeftHandleDragStart: this.onLeftHandleDragStart,
+      onRightHandleDragStart: this.onRightHandleDragStart,
+      projectMeta: this.state.projectMeta,
+      onScriptChange: e => this.updateProjectMeta('script', e.target.value),
+      onCharactersChange: e => this.updateProjectMeta('characters', e.target.value),
+      onLocationsChange: e => this.updateProjectMeta('locations', e.target.value),
+      onVehiclesChange: e => this.updateProjectMeta('vehicles', e.target.value),
+      onPropsChange: e => this.updateProjectMeta('props', e.target.value),
+      documentMap,
+      imageLibrary,
+      libraryEmpty: this.state.imageLibrary.length === 0,
+      boardRef: this.boardRef,
+      pageWrapRef: this.pageWrapRef,
+      pageScale: this.state.pageScale,
+      fileInputRef: this.fileInputRef,
+      boardTabs,
+      addBoard: this.addBoard,
+      activeBoard,
+      onTitleChange: this.onTitleChange,
+      onFilenameChange: this.onFilenameChange,
+      onNotepadChange: this.onNotepadChange,
+      onFormatSelectChange: this.onFormatSelectChange,
+      applyNotepadToFrames: this.applyNotepadToFrames,
+      clearFrameText: this.clearFrameText,
+      undoFrameText: this.undoFrameText,
+      undoNotepadText: this.undoNotepadText,
+      splitContainerRef: this.splitContainerRef,
+      onSplitDragStart: this.onSplitDragStart,
+      notepadPaneStyle: { flex: this.state.notepadSplit + ' 1 0%', minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' },
+      libraryPaneStyle: { flex: (1 - this.state.notepadSplit) + ' 1 0%', minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' },
+      publishFormat: this.state.publishFormat,
+      frames,
+      onFileInputChange: this.onFileInputChange,
+      openPublish: this.openPublish,
+      closePublish: this.closePublish,
+      onBackdropClick: this.onBackdropClick,
+      publishOpen: this.state.publishOpen,
+      boardCount: boards.length,
+      scopeBoardChecked: this.state.publishScope === 'board',
+      scopeProjectChecked: this.state.publishScope === 'project',
+      onScopeBoard: this.onScopeBoard,
+      onScopeProject: this.onScopeProject,
+      formatPdfChecked: this.state.publishFormat === 'pdf',
+      formatPngChecked: this.state.publishFormat === 'png',
+      formatJpgChecked: this.state.publishFormat === 'jpg',
+      onFormatPdf: this.onFormatPdf,
+      onFormatPng: this.onFormatPng,
+      onFormatJpg: this.onFormatJpg,
+      projectNonPdfWarning: this.state.publishScope === 'project' && this.state.publishFormat !== 'pdf',
+      exporting: this.state.exporting,
+      exportLabel: this.state.exporting ? 'Exporting…' : 'Export',
+      doExport: this.doExport,
+    };
+  }
+}
+</script>
+</body>
+</html>
