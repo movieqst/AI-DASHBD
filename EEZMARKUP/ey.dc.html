@@ -2,11 +2,10 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
 </head>
 <body>
-<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#000"/><circle cx="100" cy="100" r="60" fill="#5980a6"/><text x="100" y="112" font-size="48" fill="#000" text-anchor="middle" font-family="sans-serif">M</text></svg></template>
 <x-dc>
 <helmet>
   <link rel="stylesheet" href="_ds/industry-d2fd2168-52fe-46e0-884d-4a7d5e106dde/styles.css">
@@ -31,6 +30,9 @@
           <button onClick="{{ nextPage }}" style="width:28px;height:28px;background:transparent;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;cursor:pointer;">›</button>
         </div>
       </sc-if>
+      <sc-if value="{{ scaleLabelVisible }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:12px;letter-spacing:0.04em;color:var(--color-accent-300,#a9c1d6);white-space:nowrap;">Scale {{ scaleLabel }}</div>
+      </sc-if>
       <button onClick="{{ topActionHandler }}" style="{{ topActionStyle }}">{{ topActionLabel }}</button>
     </div>
 
@@ -45,27 +47,7 @@
           <button onClick="{{ c.select }}" style="{{ c.style }}" title="{{ c.name }}"></button>
         </sc-for>
       </div>
-      <canvas ref="{{ canvasRef }}" onPointerDown="{{ onPointerDown }}" onPointerMove="{{ onPointerMove }}" onPointerUp="{{ onPointerUp }}" onPointerLeave="{{ onPointerUp }}" onDoubleClick="{{ onCanvasDoubleClick }}" onContextMenu="{{ onCanvasContextMenu }}" style="{{ canvasStyle }}"></canvas>
-      <sc-if value="{{ lengthHintVisible }}" hint-placeholder-val="{{ false }}">
-        <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;font-family:var(--font-body,'Barlow',sans-serif);font-size:12px;letter-spacing:0.03em;text-transform:uppercase;color:#00e04a;background:rgba(0,0,0,0.7);padding:8px 14px;white-space:nowrap;">
-          <span>Click to Place — Ctrl/Shift Lock Angle — L or R for Exact Length — Right-Click or Double-Click to Finish</span>
-          <div style="display:flex;align-items:center;gap:5px;">
-            <span>LENGTH:</span>
-            <input ref="{{ lengthFeetRef }}" value="{{ lengthFeetDraft }}" onChange="{{ onLengthFeetChange }}" onKeyDown="{{ onLengthBoxKeyDown }}" onFocus="{{ onLengthFeetFocus }}" placeholder="FT" style="width:32px;text-align:right;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:3px 5px;font-size:12px;font-family:var(--font-body,'Barlow',sans-serif);"></input>
-            <span>'-</span>
-            <input value="{{ lengthInchesDraft }}" onChange="{{ onLengthInchesChange }}" onKeyDown="{{ onLengthBoxKeyDown }}" placeholder="IN" style="width:32px;text-align:right;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:3px 5px;font-size:12px;font-family:var(--font-body,'Barlow',sans-serif);"></input>
-            <span>"</span>
-            <sc-if value="{{ lengthFrozen }}" hint-placeholder-val="{{ false }}">
-              <button onClick="{{ confirmLengthEntry }}" style="border:1px solid #00e04a;background:#00e04a;color:#04121d;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;cursor:pointer;font-family:var(--font-body,'Barlow',sans-serif);">Complete</button>
-              <button onClick="{{ cancelLengthEntry }}" title="Resume freehand" style="border:1px solid rgba(255,255,255,0.4);background:transparent;color:rgba(255,255,255,0.7);padding:4px 8px;font-size:13px;cursor:pointer;">↺</button>
-            </sc-if>
-          </div>
-        </div>
-      </sc-if>
-      <sc-if value="{{ dimensionHintVisible }}" hint-placeholder-val="{{ false }}">
-        <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:#00e04a;background:rgba(0,0,0,0.6);padding:6px 14px;white-space:nowrap;">Click Two Points to Place a Dimension — Esc to Cancel</div>
-      </sc-if>
-
+      <canvas ref="{{ canvasRef }}" onPointerDown="{{ onPointerDown }}" onPointerMove="{{ onPointerMove }}" onPointerUp="{{ onPointerUp }}" onPointerLeave="{{ onPointerUp }}" onDoubleClick="{{ onCanvasDoubleClick }}" style="{{ canvasStyle }}"></canvas>
       <sc-if value="{{ editingTextVisible }}" hint-placeholder-val="{{ false }}">
         <input ref="{{ editTextInputRef }}" value="{{ editingTextDraft }}" onChange="{{ onEditTextChange }}" onKeyDown="{{ onEditTextKeyDown }}" onBlur="{{ commitEditText }}" style="{{ editTextStyle }}"></input>
       </sc-if>
@@ -83,14 +65,6 @@
         <button onClick="{{ redo }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Remark</button>
         <button onClick="{{ toggleSelectMode }}" style="{{ selectBtnStyle }}">Select</button>
         <button onClick="{{ toggleTextMode }}" style="{{ textBtnStyle }}">Text</button>
-        <button onClick="{{ setPageScale }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:#00e04a;color:#00e04a;" title="Set a 1:1 scale for this page (assumes 8.5x11in)">Scale</button>
-        <sc-if value="{{ hasScale }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ toggleLengthMode }}" style="{{ lengthBtnStyle }}">Length</button>
-          <button onClick="{{ toggleDimensionMode }}" style="{{ dimensionBtnStyle }}">Dimension</button>
-        </sc-if>
-        <sc-for list="{{ scaleChips }}" as="sc" hint-placeholder-count="0">
-          <button onClick="{{ sc.select }}" style="{{ sc.style }}">{{ sc.label }}</button>
-        </sc-for>
         <sc-if value="{{ showDeleteBtn }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ deleteSelected }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #ff1a2e;color:#ff1a2e;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Delete</button>
         </sc-if>
@@ -186,8 +160,7 @@ class Component extends DCLogic {
     zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, justCropped: false, zoomPendingRect: null, rectMode: 'crop',
     isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
     editingTextId: null, editingTextDraft: '',
-    lengthMode: false, lengthFrozen: false, lengthFeetDraft: '', lengthInchesDraft: '',
-    dimensionMode: false, rotateMode: false, loadProgress: ''
+    rotateMode: false, loadProgress: ''
   };
 
   componentDidMount() {
@@ -215,22 +188,6 @@ class Component extends DCLogic {
       if (this.state.zoomMode) { this.exitZoomSelect(); return; }
       if (this.state.zoomPendingRect) { this.setState({ zoomPendingRect: null }, () => this.redraw()); return; }
       if (this.state.zoomRect) { this.exitZoom(); return; }
-      if (this.state.lengthFrozen) { this.cancelLengthEntry(); return; }
-      if (this.state.lengthMode) { this._activeLength = null; this._lengthHoverPt = null; this.setState({ lengthMode: false }, () => this.redraw()); return; }
-      if (this.state.dimensionMode) { this._dimStart = null; this._dimHoverPt = null; this.setState({ dimensionMode: false }, () => this.redraw()); return; }
-    }
-    if (this.state.lengthMode && !this.state.lengthFrozen && (e.key.toLowerCase() === 'r' || e.key.toLowerCase() === 'l') && this._activeLength && this._activeLength.points.length) {
-      const active = document.activeElement, tag = active && active.tagName;
-      if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
-        const page = this.pages[this.state.currentPage];
-        if (page && page.scale) {
-          e.preventDefault();
-          this.setState({ lengthFrozen: true, lengthFeetDraft: '', lengthInchesDraft: '0' }, () => {
-            if (this.lengthFeetRef.current) { this.lengthFeetRef.current.focus(); this.lengthFeetRef.current.select(); }
-          });
-        }
-      }
-      return;
     }
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
       e.preventDefault();
@@ -297,6 +254,7 @@ class Component extends DCLogic {
     else { this.redraw(); this.forceUpdate(); }
   };
 
+  getPageScaleRatio(page) { return (page && page.scale) ? page.scale.ratio : 1; }
   stripExt(name) { const i = name.lastIndexOf('.'); return i > 0 ? name.slice(0, i) : name; }
   extOf(name) { const i = name.lastIndexOf('.'); return i > 0 ? name.slice(i + 1).toLowerCase() : ''; }
   sanitizeBase(str) { return ((str || 'file').replace(/[^a-zA-Z0-9]/g, '')) || 'file'; }
@@ -328,7 +286,7 @@ class Component extends DCLogic {
       const canvas = document.createElement('canvas');
       canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
       canvas.getContext('2d').drawImage(img, 0, 0);
-      this.pages = [{ canvas, strokes: [], scale: null, scaleOptions: [] }];
+      this.pages = [{ canvas, strokes: [], scale: null }];
       this.undoStack = []; this.redoStack = []; this._cropStack = [];
       URL.revokeObjectURL(url);
       this.setState({ loaded: true, isPdf: false, fileBase: this.stripExt(file.name), fileExt: this.extOf(file.name) || 'png', currentPage: 0, processing: false, zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => this.redraw());
@@ -364,7 +322,7 @@ class Component extends DCLogic {
     ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#b00020'; ctx.font = '20px sans-serif'; ctx.textAlign = 'center';
     ctx.fillText('Page preview failed to render (complex vector content)', canvas.width / 2, canvas.height / 2 - 12);
-    ctx.fillText('Scale detection and markup still work on this page', canvas.width / 2, canvas.height / 2 + 16);
+    ctx.fillText('Markup still works on this page', canvas.width / 2, canvas.height / 2 + 16);
     return canvas;
   }
   blankPlaceholderCanvas(vp0, scale) {
@@ -373,6 +331,46 @@ class Component extends DCLogic {
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
     return canvas;
+  }
+  parseFraction(str) {
+    if (str.indexOf('/') !== -1) { const [n, d] = str.split('/').map(Number); return d ? n / d : NaN; }
+    return parseFloat(str);
+  }
+  detectScalesFromText(text) {
+    const found = [];
+    const seen = new Set();
+    const imperialRe = /(\d+\/\d+|\d+)\s*"\s*=\s*(\d+)\s*['\u2019]\s*-?\s*(\d+)?["\u201d]?/gi;
+    let m;
+    while ((m = imperialRe.exec(text))) {
+      const drawn = this.parseFraction(m[1]);
+      const feet = parseInt(m[2], 10);
+      const inches = m[3] ? parseInt(m[3], 10) : 0;
+      if (!drawn || isNaN(feet)) continue;
+      const totalRealInches = feet * 12 + inches;
+      const raw = m[0].trim();
+      if (seen.has(raw)) continue;
+      seen.add(raw);
+      found.push({ raw, ratio: totalRealInches / drawn, unit: 'imperial' });
+    }
+    const metricRe = /\b1\s*:\s*(\d{1,4})\b/g;
+    while ((m = metricRe.exec(text))) {
+      const raw = m[0].trim();
+      if (seen.has(raw)) continue;
+      seen.add(raw);
+      found.push({ raw, ratio: parseInt(m[1], 10), unit: 'metric' });
+    }
+    return found;
+  }
+  async detectPageScale(pdfPage) {
+    try {
+      const content = await pdfPage.getTextContent();
+      if (!content.items.length) return null;
+      const text = content.items.map(it => it.str).join(' ');
+      const scales = this.detectScalesFromText(text);
+      return scales.length ? scales[0] : null;
+    } catch (e) {
+      return null;
+    }
   }
   async loadPdfFile(file) {
     this.setState({ processing: true, loadProgress: '' });
@@ -390,8 +388,8 @@ class Component extends DCLogic {
         const vp0 = page.getViewport({ scale: 1 });
         const targetScale = Math.min(1.8, 1500 / Math.max(vp0.width, vp0.height));
         const canvas = this.blankPlaceholderCanvas(vp0, targetScale);
-        const scaleOptions = await this.detectPageScales(page, 72 * targetScale);
-        pages.push({ canvas, strokes: [], scale: scaleOptions[0] || null, scaleOptions, _pdfPage: page, _vp0: vp0, _targetScale: targetScale, _rendered: false });
+        const scale = await this.detectPageScale(page);
+        pages.push({ canvas, strokes: [], _pdfPage: page, _vp0: vp0, _rendered: false, scale });
         if (i === 1) {
           this.setState({ loaded: true, isPdf: true, fileBase: this.stripExt(file.name), fileExt: 'pdf', currentPage: 0, processing: false, loadProgress: '', zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => this.redraw());
         }
@@ -497,28 +495,16 @@ class Component extends DCLogic {
   }
   clearToolModes() {
     this._activeSpline = null; this._freehandPts = null;
-    this._activeLength = null; this._lengthHoverPt = null;
-    this._dimStart = null; this._dimHoverPt = null;
   }
   toggleSelectMode = () => {
     if (this.state.selectMode) { this.setState({ selectMode: false, selectedIds: [] }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ selectMode: true, selectedIds: [], textMode: false, lengthMode: false, dimensionMode: false });
+    this.setState({ selectMode: true, selectedIds: [], textMode: false });
   };
   toggleTextMode = () => {
     if (this.state.textMode) { this._textClickFirst = null; this._textHover = null; this.setState({ textMode: false }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ textMode: true, selectMode: false, selectedIds: [], lengthMode: false, dimensionMode: false });
-  };
-  toggleLengthMode = () => {
-    if (this.state.lengthMode) { this.clearToolModes(); this.setState({ lengthMode: false, lengthFrozen: false }, () => this.redraw()); return; }
-    this.clearToolModes();
-    this.setState({ lengthMode: true, selectMode: false, selectedIds: [], textMode: false, dimensionMode: false });
-  };
-  toggleDimensionMode = () => {
-    if (this.state.dimensionMode) { this.clearToolModes(); this.setState({ dimensionMode: false }, () => this.redraw()); return; }
-    this.clearToolModes();
-    this.setState({ dimensionMode: true, selectMode: false, selectedIds: [], textMode: false, lengthMode: false });
+    this.setState({ textMode: true, selectMode: false, selectedIds: [] });
   };
   deleteSelected = () => {
     const page = this.pages[this.state.currentPage];
@@ -606,8 +592,6 @@ class Component extends DCLogic {
   onPointerDown = (e) => {
     e.preventDefault();
     if (this.state.textMode) return this.textPointerDown(e);
-    if (this.state.lengthMode) return this.lengthPointerDown(e);
-    if (this.state.dimensionMode) return this.dimensionPointerDown(e);
     if (this.state.selectMode) {
       const p = this.getPoint(e);
       const page = this.pages[this.state.currentPage];
@@ -656,8 +640,6 @@ class Component extends DCLogic {
   onPointerMove = (e) => {
     if (!this.canvasRef.current) return;
     if (this.state.textMode) return this.textPointerMove(e);
-    if (this.state.lengthMode) return this.lengthPointerMove(e);
-    if (this.state.dimensionMode) return this.dimensionPointerMove(e);
     if (this.state.selectMode && this._tipDragId != null) {
       const p = this.getPoint(e);
       const page = this.pages[this.state.currentPage];
@@ -690,195 +672,6 @@ class Component extends DCLogic {
       this._hoverPt = hp; this.redraw(true);
     }
   };
-  setPageScale = () => {
-    const page = this.pages[this.state.currentPage];
-    if (!page) return;
-    const landscape = page.canvas.width > page.canvas.height;
-    const wIn = landscape ? 11 : 8.5;
-    page.scale = { pxPerUnit: page.canvas.width / wIn, unit: 'in' };
-    this.clearToolModes();
-    this.forceUpdate();
-    this.redraw();
-  };
-  parseFraction(str) {
-    if (str.indexOf('/') !== -1) {
-      const parts = str.split('/');
-      return parseFloat(parts[0]) / parseFloat(parts[1]);
-    }
-    return parseFloat(str);
-  }
-  async detectPageScales(pdfPage, pxPerDrawnInch) {
-    try {
-      const content = await pdfPage.getTextContent();
-      const text = content.items.map(it => it.str).join(' ');
-      const found = []; const seen = new Set();
-      const fracRe = /(\d*\.?\d+(?:\s*\/\s*\d+)?)\s*["\u201d\u2033]\s*=\s*(\d+)\s*['\u2019\u2032]\s*[-\u2013\u2014]?\s*(\d+)?["\u201d\u2033]?/gi;
-      let m;
-      while ((m = fracRe.exec(text))) {
-        const val = this.parseFraction(m[1].replace(/\s+/g, ''));
-        const feet = parseInt(m[2], 10) || 0;
-        const inches = m[3] ? parseInt(m[3], 10) : 0;
-        const totalInches = feet * 12 + inches;
-        if (!val || !totalInches) continue;
-        const raw = `${m[1]}" = ${feet}'-${inches}"`;
-        if (seen.has(raw)) continue; seen.add(raw);
-        const ratio = totalInches / val;
-        found.push({ raw, pxPerUnit: (pxPerDrawnInch / ratio) * 12, unit: 'ft' });
-      }
-      const ratioRe = /\b1\s*:\s*(\d{1,4})\b/g;
-      while ((m = ratioRe.exec(text))) {
-        const n = parseInt(m[1], 10);
-        if (!n) continue;
-        const raw = `1:${n}`;
-        if (seen.has(raw)) continue; seen.add(raw);
-        found.push({ raw, pxPerUnit: (pxPerDrawnInch / n) * 39.3701, unit: 'm' });
-      }
-      return found;
-    } catch (e) { return []; }
-  }
-
-  lengthPointerDown(e) {
-    const p = this.getPoint(e);
-    if (!this._activeLength) this._activeLength = { points: [] };
-    const pts = this._activeLength.points;
-    const placedPt = pts.length ? this.applySplineSnap(pts[pts.length - 1], p, e) : p;
-    pts.push(placedPt);
-    const now = Date.now();
-    const isDbl = this._lastClickTime && (now - this._lastClickTime < 450) && this._lastClickPos && Math.hypot(p.x - this._lastClickPos.x, p.y - this._lastClickPos.y) < 14;
-    if (isDbl) { this.finalizeLengthChain(); return; }
-    this._lastClickTime = now; this._lastClickPos = p;
-    this.redraw(true);
-  }
-  lengthPointerMove(e) {
-    if (this._activeLength && this._activeLength.points.length) {
-      const pts = this._activeLength.points;
-      let p = this.getPoint(e);
-      p = this.applySplineSnap(pts[pts.length - 1], p, e);
-      this._lengthHoverPt = p; this.redraw(true);
-    }
-  }
-  lengthPointerUp(e) {}
-  finalizeLengthChain() {
-    if (!this._activeLength || this._activeLength.points.length < 2) { this._activeLength = null; this._lengthHoverPt = null; this._lastClickTime = null; this.redraw(); return; }
-    const page = this.pages[this.state.currentPage];
-    if (page) {
-      const prevStrokes = this.cloneStrokes(page.strokes);
-      page.strokes.push({ type: 'length', color: this.state.color, width: this.state.strokeWidth, points: this._activeLength.points, scaleSnap: page.scale ? { ...page.scale } : null, id: ++this._strokeIdSeq });
-      this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
-    }
-    this._activeLength = null; this._lengthHoverPt = null; this._lastClickTime = null; this._lastClickPos = null;
-    this.setState({ lengthFrozen: false }, () => { this.redraw(); this.forceUpdate(); });
-  }
-  lengthFeetRef = React.createRef();
-  onLengthFeetFocus = () => this.setState({ lengthInchesDraft: this.state.lengthInchesDraft || '0' });
-  onLengthFeetChange = (e) => this.setState({ lengthFeetDraft: e.target.value });
-  onLengthInchesChange = (e) => this.setState({ lengthInchesDraft: e.target.value });
-  onLengthBoxKeyDown = (e) => {
-    if (e.key === 'Enter') { e.preventDefault(); this.confirmLengthEntry(); }
-    else if (e.key === 'Escape') { e.preventDefault(); this.cancelLengthEntry(); }
-  };
-  confirmLengthEntry = () => {
-    const feet = parseFloat(this.state.lengthFeetDraft) || 0;
-    const inches = parseFloat(this.state.lengthInchesDraft) || 0;
-    const totalFeet = feet + inches / 12;
-    const page = this.pages[this.state.currentPage];
-    if (totalFeet > 0 && page && page.scale && this._activeLength && this._activeLength.points.length) {
-      const pts = this._activeLength.points;
-      const from = pts[pts.length - 1];
-      const aim = this._lengthHoverPt || from;
-      const angle = Math.atan2(aim.y - from.y, aim.x - from.x);
-      let pixelDist;
-      if (page.scale.unit === 'm') pixelDist = totalFeet * 0.3048 * page.scale.pxPerUnit;
-      else if (page.scale.unit === 'cm') pixelDist = totalFeet * 30.48 * page.scale.pxPerUnit;
-      else if (page.scale.unit === 'in') pixelDist = totalFeet * 12 * page.scale.pxPerUnit;
-      else pixelDist = totalFeet * page.scale.pxPerUnit;
-      pts.push({ x: from.x + pixelDist * Math.cos(angle), y: from.y + pixelDist * Math.sin(angle) });
-      this._lengthHoverPt = null;
-    }
-    this.setState({ lengthFrozen: false, lengthFeetDraft: '', lengthInchesDraft: '' }, () => this.redraw(true));
-  };
-  cancelLengthEntry = () => this.setState({ lengthFrozen: false, lengthFeetDraft: '', lengthInchesDraft: '' });
-  onCanvasContextMenu = (e) => {
-    if (this.state.lengthMode && this._activeLength && this._activeLength.points.length) { e.preventDefault(); this.finalizeLengthChain(); return; }
-    if (this.state.lengthMode || this.state.dimensionMode) e.preventDefault();
-  };
-
-  dimensionPointerDown(e) {
-    const p = this.getPoint(e);
-    if (!this._dimStart) { this._dimStart = p; this.redraw(); return; }
-    const endPt = this.applySplineSnap(this._dimStart, p, e);
-    const page = this.pages[this.state.currentPage];
-    if (page && Math.hypot(endPt.x - this._dimStart.x, endPt.y - this._dimStart.y) > 2) {
-      const prevStrokes = this.cloneStrokes(page.strokes);
-      page.strokes.push({ type: 'dimension', color: this.state.color, width: this.state.strokeWidth, points: [this._dimStart, endPt], scaleSnap: page.scale ? { ...page.scale } : null, id: ++this._strokeIdSeq });
-      this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
-    }
-    this._dimStart = null; this._dimHoverPt = null;
-    this.redraw(); this.forceUpdate();
-  }
-  dimensionPointerMove(e) {
-    if (this._dimStart) { let p = this.getPoint(e); p = this.applySplineSnap(this._dimStart, p, e); this._dimHoverPt = p; this.redraw(); }
-  }
-  dimensionPointerUp(e) {}
-  formatLength(pixelDist, scaleSnap) {
-    if (!scaleSnap) return '';
-    const val = pixelDist / scaleSnap.pxPerUnit;
-    if (scaleSnap.unit === 'ft') {
-      let totalIn = Math.round(val * 12);
-      let ft = Math.floor(totalIn / 12), inch = totalIn - ft * 12;
-      if (inch === 12) { ft += 1; inch = 0; }
-      return `${ft}'-${inch}"`;
-    }
-    if (scaleSnap.unit === 'in') return `${val.toFixed(1)}"`;
-    if (scaleSnap.unit === 'cm') return `${val.toFixed(1)} cm`;
-    return `${val.toFixed(2)} m`;
-  }
-  drawLabelPill(ctx, cx, cy, text, color) {
-    ctx.save();
-    ctx.font = "600 15px 'Barlow', sans-serif";
-    ctx.textBaseline = 'middle'; ctx.textAlign = 'center';
-    const w = ctx.measureText(text).width, pad = 6, h = 15;
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(cx - w / 2 - pad, cy - h / 2 - pad, w + pad * 2, h + pad * 2);
-    ctx.strokeStyle = color; ctx.lineWidth = 1.5;
-    ctx.strokeRect(cx - w / 2 - pad, cy - h / 2 - pad, w + pad * 2, h + pad * 2);
-    ctx.fillStyle = '#000000';
-    ctx.fillText(text, cx, cy);
-    ctx.restore();
-  }
-  drawLengthLabels(ctx, stroke) {
-    if (!stroke.scaleSnap) return;
-    const pts = stroke.points;
-    let total = 0;
-    for (let i = 0; i < pts.length - 1; i++) {
-      const a = pts[i], b = pts[i + 1];
-      const dist = Math.hypot(b.x - a.x, b.y - a.y);
-      total += dist;
-      const midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
-      const angle = Math.atan2(b.y - a.y, b.x - a.x);
-      const offX = -Math.sin(angle) * 16, offY = Math.cos(angle) * 16;
-      this.drawLabelPill(ctx, midX + offX, midY + offY, this.formatLength(dist, stroke.scaleSnap), stroke.color);
-    }
-    if (pts.length > 2) {
-      const last = pts[pts.length - 1];
-      this.drawLabelPill(ctx, last.x, last.y - 22, `Total: ${this.formatLength(total, stroke.scaleSnap)}`, stroke.color);
-    }
-  }
-  drawDimensionExtras(ctx, stroke) {
-    const [a, b] = stroke.points;
-    const angle = Math.atan2(b.y - a.y, b.x - a.x);
-    const tickLen = 10;
-    const tx = Math.cos(angle + Math.PI / 2) * tickLen, ty = Math.sin(angle + Math.PI / 2) * tickLen;
-    ctx.save(); ctx.strokeStyle = stroke.color; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(a.x - tx, a.y - ty); ctx.lineTo(a.x + tx, a.y + ty); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(b.x - tx, b.y - ty); ctx.lineTo(b.x + tx, b.y + ty); ctx.stroke();
-    ctx.restore();
-    if (stroke.scaleSnap) {
-      const midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
-      const dist = Math.hypot(b.x - a.x, b.y - a.y);
-      this.drawLabelPill(ctx, midX, midY, this.formatLength(dist, stroke.scaleSnap), stroke.color);
-    }
-  }
   applySplineSnap(from, to, e) {
     if (!(e.ctrlKey || e.shiftKey)) return to;
     const incDeg = (e.ctrlKey && e.shiftKey) ? 30 : 90;
@@ -891,8 +684,6 @@ class Component extends DCLogic {
   }
   onPointerUp = (e) => {
     if (this.state.textMode) return this.textPointerUp(e);
-    if (this.state.lengthMode) return this.lengthPointerUp(e);
-    if (this.state.dimensionMode) return this.dimensionPointerUp(e);
     if (this._tipDragId != null) {
       if (this._tipDragMoved && this._tipDragPrevStrokes) this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes: this._tipDragPrevStrokes });
       this._tipDragId = null; this._tipDragPrevStrokes = null; this._tipDragMoved = false;
@@ -951,7 +742,6 @@ class Component extends DCLogic {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(page.canvas, 0, 0);
     page.strokes.forEach(s => this.drawStroke(ctx, s));
-    page.strokes.forEach(s => { if (s.type === 'length') this.drawLengthLabels(ctx, s); else if (s.type === 'dimension') this.drawDimensionExtras(ctx, s); });
     if (includeInProgress) {
       if (this._freehandPts && this._freehandPts.length > 1) this.drawStroke(ctx, { type: 'freehand', color: this.state.color, width: this.state.strokeWidth, points: this._freehandPts });
       if (this._activeSpline && this._activeSpline.points.length) {
@@ -972,20 +762,6 @@ class Component extends DCLogic {
       ctx.beginPath(); ctx.arc(this._textClickFirst.x, this._textClickFirst.y, 5, 0, Math.PI * 2); ctx.fill();
       ctx.restore();
     }
-    if (this.state.lengthMode && this._activeLength && this._activeLength.points.length) {
-      const pts = this._lengthHoverPt ? [...this._activeLength.points, this._lengthHoverPt] : this._activeLength.points;
-      if (pts.length > 1) this.drawStroke(ctx, { type: 'length', color: this.state.color, width: this.state.strokeWidth, points: pts }, true);
-      const page = this.pages[this.state.currentPage];
-      if (page && page.scale) this.drawLengthLabels(ctx, { points: pts, scaleSnap: page.scale, color: this.state.color });
-      ctx.fillStyle = this.state.color;
-      this._activeLength.points.forEach(pt => { ctx.beginPath(); ctx.arc(pt.x, pt.y, Math.max(3, this.state.strokeWidth * 0.8), 0, Math.PI * 2); ctx.fill(); });
-    }
-    if (this.state.dimensionMode && this._dimStart) {
-      const cur = this._dimHoverPt || this._dimStart;
-      const page = this.pages[this.state.currentPage];
-      this.drawDimensionExtras(ctx, { points: [this._dimStart, cur], color: this.state.color, scaleSnap: page ? page.scale : null });
-    }
-
     if (this.state.zoomMode) this.drawZoomOverlay(ctx);
     if (this.state.zoomPendingRect) this.drawAdjustableRect(ctx, this.state.zoomPendingRect, '#1e90ff');
     if (this.state.cropAdjustRect) this.drawAdjustableRect(ctx, this.state.cropAdjustRect, (this.state.isDesktop && this.state.rectMode === 'zoom') ? '#1e90ff' : '#ff1a2e');
@@ -1197,7 +973,7 @@ class Component extends DCLogic {
     if (this.state.zoomPendingRect) { this.executeZoom(); return; }
     if (this.state.zoomMode) { this.exitZoomSelect(); return; }
     this.clearToolModes();
-    this.setState({ zoomMode: true, textMode: false, selectMode: false, selectedIds: [], lengthMode: false, dimensionMode: false });
+    this.setState({ zoomMode: true, textMode: false, selectMode: false, selectedIds: [] });
   };
   exitZoomSelect = () => {
     this._zoomClickFirst = null; this._zoomHover = null; this._zoomDown = false; this._zoomDragged = false;
@@ -1386,7 +1162,7 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : '#9b30ff'};cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : '#ff7a00'};cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
@@ -1394,6 +1170,8 @@ class Component extends DCLogic {
       colors: this.buildColorItems(), widths: this.buildWidthItems(),
       fileLabel: this.state.loaded ? `${this.state.fileBase}.${this.state.fileExt}` : '',
       pageLabel: `Page ${this.state.currentPage + 1} / ${this.pages.length}`,
+      scaleLabelVisible: !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale),
+      scaleLabel: (this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale) ? this.pages[this.state.currentPage].scale.raw : '',
       prevPage: this.prevPage, nextPage: this.nextPage,
       clearPage: this.clearPage, openSaveDialog: this.openSaveDialog,
       showSaveDialog: this.state.showSaveDialog,
@@ -1422,32 +1200,9 @@ class Component extends DCLogic {
       topActionStyle: zoomed
         ? `padding:8px 20px;background:#ff1a2e;border:1px solid #ff1a2e;color:#ffffff;font-family:var(--font-body,'Barlow',sans-serif);font-weight:700;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`
         : `padding:8px 16px;background:var(--color-accent-500,#5980a6);border:1px solid var(--color-accent-500,#5980a6);color:#04121d;font-family:var(--font-body,'Barlow',sans-serif);font-weight:600;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
-      setPageScale: this.setPageScale,
-      hasScale: !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale),
-      scaleChips: (() => {
-        const page = this.pages[this.state.currentPage];
-        const opts = (page && page.scaleOptions) || [];
-        if (opts.length < 2) return [];
-        return opts.map(opt => ({
-          label: opt.raw,
-          select: () => { page.scale = opt; this.forceUpdate(); this.redraw(); },
-          style: `padding:5px 10px;background:${page.scale === opt ? '#00e04a' : 'transparent'};border:1px solid ${page.scale === opt ? '#00e04a' : 'rgba(255,255,255,0.25)'};color:${page.scale === opt ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:12px;letter-spacing:0.03em;cursor:pointer;white-space:nowrap;`
-        }));
-      })(),
-      toggleLengthMode: this.toggleLengthMode,
-      lengthBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.lengthMode ? '#00e04a' : 'transparent'};border:1px solid ${this.state.lengthMode ? '#00e04a' : 'rgba(255,255,255,0.25)'};color:${this.state.lengthMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
-      toggleDimensionMode: this.toggleDimensionMode,
-      dimensionBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.dimensionMode ? '#00e04a' : 'transparent'};border:1px solid ${this.state.dimensionMode ? '#00e04a' : 'rgba(255,255,255,0.25)'};color:${this.state.dimensionMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
-      onCanvasContextMenu: this.onCanvasContextMenu,
-      lengthFrozen: this.state.lengthFrozen, lengthFeetRef: this.lengthFeetRef,
-      lengthFeetDraft: this.state.lengthFeetDraft, lengthInchesDraft: this.state.lengthInchesDraft,
-      onLengthFeetChange: this.onLengthFeetChange, onLengthInchesChange: this.onLengthInchesChange,
-      onLengthFeetFocus: this.onLengthFeetFocus, onLengthBoxKeyDown: this.onLengthBoxKeyDown,
-      confirmLengthEntry: this.confirmLengthEntry, cancelLengthEntry: this.cancelLengthEntry,
-      lengthHintVisible: this.state.lengthMode, dimensionHintVisible: this.state.dimensionMode,
       pageRenderingVisible: !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage]._pdfPage && !this.pages[this.state.currentPage]._rendered),
       rotateMode: this.state.rotateMode, toggleRotateMode: this.toggleRotateMode, rotateCW: this.rotateCW, rotateCCW: this.rotateCCW,
-      rotateBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.rotateMode ? '#e2ff00' : 'transparent'};border:1px solid ${this.state.rotateMode ? '#e2ff00' : 'rgba(255,255,255,0.25)'};color:${this.state.rotateMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
+      rotateBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.rotateMode ? '#e2ff00' : 'transparent'};border:1px solid ${this.state.rotateMode ? '#e2ff00' : 'rgba(255,255,255,0.25)'};color:${this.state.rotateMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`
     };
   }
 }
