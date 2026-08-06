@@ -57,6 +57,7 @@
     <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;padding:10px 16px;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.14);background:#000;">
       <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ false }}">
         <button onClick="{{ undo }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Unmark</button>
+        <button onClick="{{ redo }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Redo</button>
         <button onClick="{{ toggleSelectMode }}" style="{{ selectBtnStyle }}">Select</button>
         <button onClick="{{ toggleTextMode }}" style="{{ textBtnStyle }}">Text</button>
         <sc-if value="{{ showDeleteBtn }}" hint-placeholder-val="{{ false }}">
@@ -70,7 +71,7 @@
   </sc-if>
 
   <sc-if value="{{ notLoaded }}" hint-placeholder-val="{{ true }}">
-    <div onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" style="{{ dropZoneStyle }}">
+    <div onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onClick="{{ onBrowseClick }}" style="{{ dropZoneStyle }}">
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=6&data=http%3A%2F%2Faidashbd.com%2FEEZMARKUP%2F" alt="QR code to open EEZMARKUP" style="width:140px;height:140px;background:#fff;margin-bottom:18px;"/>
       <div style="font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;color:rgba(255,255,255,0.5);text-transform:uppercase;">JPG · PNG · GIF · WEBP · PDF</div>
       <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;">
@@ -146,7 +147,7 @@ class Component extends DCLogic {
     showSaveDialog: false,
     saveFormat: 'jpg',
     saveScope: 'active',
-    zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, justCropped: false, zoomPendingRect: null,
+    zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, justCropped: false, zoomPendingRect: null, rectMode: 'crop',
     isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
     editingTextId: null, editingTextDraft: ''
   };
@@ -637,7 +638,7 @@ class Component extends DCLogic {
     }
     if (this.state.zoomMode) this.drawZoomOverlay(ctx);
     if (this.state.zoomPendingRect) this.drawAdjustableRect(ctx, this.state.zoomPendingRect, '#1e90ff');
-    if (this.state.cropAdjustRect) this.drawAdjustableRect(ctx, this.state.cropAdjustRect, '#ff1a2e');
+    if (this.state.cropAdjustRect) this.drawAdjustableRect(ctx, this.state.cropAdjustRect, (this.state.isDesktop && this.state.rectMode === 'zoom') ? '#1e90ff' : '#ff1a2e');
   }
   drawSelectionHighlight(ctx, stroke) {
     const scale = this.getDisplayScale();
@@ -801,7 +802,14 @@ class Component extends DCLogic {
     if (!rect) return;
     const margin = 0.015;
     const adjust = { x: rect.x + rect.w * margin, y: rect.y + rect.h * margin, w: rect.w * (1 - 2 * margin), h: rect.h * (1 - 2 * margin) };
-    this.setState({ zoomPendingRect: null, zoomRect: rect, cropAdjustRect: adjust }, () => { this.applyZoomStyle(rect); this.redraw(); });
+    this.setState({ zoomPendingRect: null, zoomRect: rect, cropAdjustRect: adjust, rectMode: 'crop' }, () => { this.applyZoomStyle(rect); this.redraw(); });
+  };
+  executeNestedZoom = () => {
+    const rect = this.state.cropAdjustRect;
+    if (!rect) return;
+    const margin = 0.015;
+    const adjust = { x: rect.x + rect.w * margin, y: rect.y + rect.h * margin, w: rect.w * (1 - 2 * margin), h: rect.h * (1 - 2 * margin) };
+    this.setState({ zoomRect: rect, cropAdjustRect: adjust, rectMode: 'crop' }, () => { this.applyZoomStyle(rect); this.redraw(); });
   };
   applyZoomStyle(rect) {
     const container = this.canvasAreaRef.current;
@@ -828,7 +836,13 @@ class Component extends DCLogic {
     this.drawAdjustableRect(ctx, rect, '#1e90ff');
   }
   toggleZoomMode = () => {
-    if (this.state.zoomRect) { this.exitZoom(); return; }
+    if (this.state.zoomRect) {
+      if (this.state.isDesktop) {
+        if (this.state.rectMode === 'zoom') { this.executeNestedZoom(); } else { this.setState({ rectMode: 'zoom' }, () => this.redraw()); }
+        return;
+      }
+      this.exitZoom(); return;
+    }
     if (this.state.zoomPendingRect) { this.executeZoom(); return; }
     if (this.state.zoomMode) { this.exitZoomSelect(); return; }
     this._activeSpline = null; this._freehandPts = null;
@@ -839,7 +853,12 @@ class Component extends DCLogic {
     this.setState({ zoomMode: false, zoomPendingRect: null }, () => this.redraw());
   };
   exitZoom = () => {
-    this.setState({ zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, zoomPendingRect: null }, () => this.redraw());
+    this.setState({ zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, zoomPendingRect: null, rectMode: 'crop' }, () => this.redraw());
+  };
+  handleTopAction = () => {
+    if (!this.state.zoomRect) { this.openSaveDialog(); return; }
+    if (this.state.isDesktop && this.state.rectMode === 'zoom') { this.setState({ rectMode: 'crop' }, () => this.redraw()); return; }
+    this.performCrop();
   };
   performCrop = () => {
     const rect = this.state.cropAdjustRect || this.state.zoomRect; const page = this.pages[this.state.currentPage];
@@ -994,7 +1013,7 @@ class Component extends DCLogic {
       formats: this.buildFormatItems(), scopes: this.buildScopeItems(),
       filenamePreview: this.filenamePreview(),
       closeSaveDialog: this.closeSaveDialog, performSave: this.performSave, performCrop: this.performCrop,
-      isDesktop: this.state.isDesktop, isMobile: !this.state.isDesktop, undo: this.undo,
+      isDesktop: this.state.isDesktop, isMobile: !this.state.isDesktop, undo: this.undo, redo: this.redo,
       selectMode: this.state.selectMode, toggleSelectMode: this.toggleSelectMode, deleteSelected: this.deleteSelected,
       textMode: this.state.textMode, toggleTextMode: this.toggleTextMode, onCanvasDoubleClick: this.onCanvasDoubleClick,
       textBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.textMode ? '#b026ff' : 'transparent'};border:1px solid ${this.state.textMode ? '#b026ff' : 'rgba(255,255,255,0.25)'};color:${this.state.textMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
@@ -1002,7 +1021,7 @@ class Component extends DCLogic {
       selectBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.selectMode ? '#1e90ff' : 'transparent'};border:1px solid ${this.state.selectMode ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${this.state.selectMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       showCornerMarks: this.props.showCornerMarks ?? true,
       toggleZoomMode: this.toggleZoomMode,
-      zoomBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${(this.state.zoomMode || this.state.zoomPendingRect) ? '#1e90ff' : 'transparent'};border:1px solid ${(this.state.zoomMode || this.state.zoomPendingRect) ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${(this.state.zoomMode || this.state.zoomPendingRect) ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
+      zoomBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'transparent'};border:1px solid ${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       zoomHintVisible: this.state.zoomMode,
       editingTextVisible: this.state.editingTextId != null,
       editTextInputRef: this.editTextInputRef,
@@ -1012,7 +1031,7 @@ class Component extends DCLogic {
       canvasStyle: (zoomed && this.state.zoomCanvasStyle) ? this.state.zoomCanvasStyle : 'max-width:100%;max-height:100%;width:auto;height:auto;touch-action:none;cursor:crosshair;border:1px solid rgba(255,255,255,0.12);',
       canvasAreaStyle: `flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background:#000;border:2px dashed ${this.state.dragActive ? 'var(--color-accent-400,#7398b8)' : 'transparent'};`,
       topActionLabel: zoomed ? 'Crop' : 'Save Markup',
-      topActionHandler: zoomed ? this.performCrop : this.openSaveDialog,
+      topActionHandler: this.handleTopAction,
       topActionStyle: zoomed
         ? `padding:8px 20px;background:#ff1a2e;border:1px solid #ff1a2e;color:#ffffff;font-family:var(--font-body,'Barlow',sans-serif);font-weight:700;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`
         : `padding:8px 16px;background:var(--color-accent-500,#5980a6);border:1px solid var(--color-accent-500,#5980a6);color:#04121d;font-family:var(--font-body,'Barlow',sans-serif);font-weight:600;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`
