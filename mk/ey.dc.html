@@ -1337,7 +1337,7 @@ class Component extends DCLogic {
       colors: this.buildColorItems(), widths: this.buildWidthItems(),
       fileLabel: this.state.loaded ? `${this.state.fileBase}.${this.state.fileExt}` : '',
       pageLabel: `Page ${this.state.currentPage + 1} / ${this.pages.length}`,
-      scaleLabelVisible: !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale),
+      scaleLabelVisible: this.state.isPdf && !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale && !this.pages[this.state.currentPage].scale.assumed),
       scaleLabel: (this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale) ? this.pages[this.state.currentPage].scale.raw : '',
       prevPage: this.prevPage, nextPage: this.nextPage,
       clearPage: this.clearPage, openSaveDialog: this.openSaveDialog,
