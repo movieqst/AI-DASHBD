@@ -65,6 +65,22 @@
       <sc-if value="{{ dimensionHintVisible }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:#00e04a;background:rgba(0,0,0,0.6);padding:6px 14px;white-space:nowrap;">Click Two Points to Place a Dimension — Esc to Cancel</div>
       </sc-if>
+      <sc-if value="{{ calibrateHintVisible }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;font-family:var(--font-body,'Barlow',sans-serif);font-size:12px;letter-spacing:0.03em;text-transform:uppercase;color:var(--color-accent-300,#a9c1d6);background:rgba(0,0,0,0.7);padding:8px 14px;white-space:nowrap;">
+          <span>Click Two Points Along a Known Dimension — Esc to Cancel</span>
+          <sc-if value="{{ calibrateFrozen }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:5px;">
+              <span>ACTUAL LENGTH:</span>
+              <input ref="{{ calibrateFeetRef }}" value="{{ calibrateFeetDraft }}" onChange="{{ onCalibrateFeetChange }}" onKeyDown="{{ onCalibrateBoxKeyDown }}" placeholder="FT" style="width:32px;text-align:right;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:3px 5px;font-size:12px;font-family:var(--font-body,'Barlow',sans-serif);"></input>
+              <span>'-</span>
+              <input value="{{ calibrateInchesDraft }}" onChange="{{ onCalibrateInchesChange }}" onKeyDown="{{ onCalibrateBoxKeyDown }}" placeholder="IN" style="width:32px;text-align:right;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:3px 5px;font-size:12px;font-family:var(--font-body,'Barlow',sans-serif);"></input>
+              <span>"</span>
+              <button onClick="{{ confirmCalibrate }}" style="border:1px solid var(--color-accent-300,#a9c1d6);background:var(--color-accent-300,#a9c1d6);color:#04121d;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;cursor:pointer;font-family:var(--font-body,'Barlow',sans-serif);">Set Scale</button>
+              <button onClick="{{ cancelCalibrate }}" style="border:1px solid rgba(255,255,255,0.4);background:transparent;color:rgba(255,255,255,0.7);padding:4px 8px;font-size:13px;cursor:pointer;">↺</button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
       <sc-if value="{{ editingTextVisible }}" hint-placeholder-val="{{ false }}">
         <input ref="{{ editTextInputRef }}" value="{{ editingTextDraft }}" onChange="{{ onEditTextChange }}" onKeyDown="{{ onEditTextKeyDown }}" onBlur="{{ commitEditText }}" style="{{ editTextStyle }}"></input>
       </sc-if>
@@ -80,6 +96,7 @@
         <button onClick="{{ toggleSelectMode }}" style="{{ selectBtnStyle }}">Select</button>
         <button onClick="{{ toggleTextMode }}" style="{{ textBtnStyle }}">Text</button>
         <button onClick="{{ setPageScale }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:#00e04a;color:#00e04a;" title="Set a 1:1 scale for this page (assumes 8.5x11in)">Scale</button>
+        <button onClick="{{ toggleCalibrateMode }}" style="{{ calibrateBtnStyle }}" title="Draw a line over a known dimension to set the scale manually">Calibrate</button>
         <sc-if value="{{ hasScale }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ toggleLengthMode }}" style="{{ lengthBtnStyle }}">Length</button>
           <button onClick="{{ toggleDimensionMode }}" style="{{ dimensionBtnStyle }}">Dimension</button>
@@ -89,6 +106,11 @@
         </sc-for>
         <sc-if value="{{ showDeleteBtn }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ deleteSelected }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #ff1a2e;color:#ff1a2e;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Delete</button>
+        </sc-if>
+        <button onClick="{{ toggleRotateMode }}" style="{{ rotateBtnStyle }}">Rotate</button>
+        <sc-if value="{{ rotateMode }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ rotateCCW }}" title="Rotate counter-clockwise" style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #e2ff00;color:#e2ff00;font-size:18px;cursor:pointer;">↺</button>
+          <button onClick="{{ rotateCW }}" title="Rotate clockwise" style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #e2ff00;color:#e2ff00;font-size:18px;cursor:pointer;">↻</button>
         </sc-if>
       </sc-if>
       <button onClick="{{ clearBtnHandler }}" style="{{ clearBtnStyle }}">{{ clearBtnLabel }}</button>
@@ -178,7 +200,8 @@ class Component extends DCLogic {
     isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
     editingTextId: null, editingTextDraft: '',
     lengthMode: false, lengthFrozen: false, lengthFeetDraft: '', lengthInchesDraft: '',
-    dimensionMode: false
+    dimensionMode: false, rotateMode: false, loadProgress: '',
+    calibrateMode: false, calibrateFrozen: false, calibrateFeetDraft: '', calibrateInchesDraft: ''
   };
 
   componentDidMount() {
@@ -209,6 +232,8 @@ class Component extends DCLogic {
       if (this.state.lengthFrozen) { this.cancelLengthEntry(); return; }
       if (this.state.lengthMode) { this._activeLength = null; this._lengthHoverPt = null; this.setState({ lengthMode: false }, () => this.redraw()); return; }
       if (this.state.dimensionMode) { this._dimStart = null; this._dimHoverPt = null; this.setState({ dimensionMode: false }, () => this.redraw()); return; }
+      if (this.state.calibrateFrozen) { this.cancelCalibrate(); return; }
+      if (this.state.calibrateMode) { this._calibPts = []; this._calibHoverPt = null; this.setState({ calibrateMode: false }, () => this.redraw()); return; }
     }
     if (this.state.lengthMode && !this.state.lengthFrozen && (e.key.toLowerCase() === 'r' || e.key.toLowerCase() === 'l') && this._activeLength && this._activeLength.points.length) {
       const active = document.activeElement, tag = active && active.tagName;
@@ -328,30 +353,71 @@ class Component extends DCLogic {
     img.src = url;
   }
 
+  async renderPageCanvas(page, vp0, targetPx, timeoutMs) {
+    const scale = Math.min(2.5, targetPx / Math.max(vp0.width, vp0.height));
+    const viewport = page.getViewport({ scale });
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(viewport.width)); canvas.height = Math.max(1, Math.round(viewport.height));
+    const renderTask = page.render({ canvasContext: canvas.getContext('2d'), viewport });
+    let timer;
+    try {
+      await Promise.race([
+        renderTask.promise,
+        new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('render-timeout')), timeoutMs); })
+      ]);
+      clearTimeout(timer);
+      return { canvas, scale };
+    } catch (e) {
+      clearTimeout(timer);
+      try { renderTask.cancel(); } catch (_) {}
+      throw e;
+    }
+  }
+  blankFallbackCanvas(vp0) {
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(vp0.width)); canvas.height = Math.max(1, Math.round(vp0.height));
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#b00020'; ctx.font = '20px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Page preview failed to render (complex vector content)', canvas.width / 2, canvas.height / 2 - 12);
+    ctx.fillText('Scale detection and markup still work on this page', canvas.width / 2, canvas.height / 2 + 16);
+    return canvas;
+  }
   async loadPdfFile(file) {
-    this.setState({ processing: true });
+    this.setState({ processing: true, loadProgress: '' });
     try {
       if (!window.pdfjsLib) throw new Error('PDF engine not loaded yet');
       window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
       const buf = await file.arrayBuffer();
       const pdf = await window.pdfjsLib.getDocument({ data: buf }).promise;
       const pages = [];
-      for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const vp0 = page.getViewport({ scale: 1 });
-        const scale = Math.min(2.5, 2200 / Math.max(vp0.width, vp0.height));
-        const viewport = page.getViewport({ scale });
-        const canvas = document.createElement('canvas');
-        canvas.width = viewport.width; canvas.height = viewport.height;
-        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-        const scaleOptions = await this.detectPageScales(page, 72 * scale);
-        pages.push({ canvas, strokes: [], scale: scaleOptions[0] || null, scaleOptions });
-      }
       this.pages = pages;
       this.undoStack = []; this.redoStack = []; this._cropStack = [];
-      this.setState({ loaded: true, isPdf: true, fileBase: this.stripExt(file.name), fileExt: 'pdf', currentPage: 0, processing: false, zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => this.redraw());
+      for (let i = 1; i <= pdf.numPages; i++) {
+        this.setState({ loadProgress: `Loading page ${i} of ${pdf.numPages}…` });
+        const page = await pdf.getPage(i);
+        const vp0 = page.getViewport({ scale: 1 });
+        let canvas, scale;
+        try {
+          ({ canvas, scale } = await this.renderPageCanvas(page, vp0, 2200, 14000));
+        } catch (e1) {
+          try {
+            ({ canvas, scale } = await this.renderPageCanvas(page, vp0, 1000, 8000));
+          } catch (e2) {
+            canvas = this.blankFallbackCanvas(vp0); scale = 1;
+          }
+        }
+        const scaleOptions = await this.detectPageScales(page, 72 * scale);
+        pages.push({ canvas, strokes: [], scale: scaleOptions[0] || null, scaleOptions });
+        if (i === 1) {
+          this.setState({ loaded: true, isPdf: true, fileBase: this.stripExt(file.name), fileExt: 'pdf', currentPage: 0, processing: pdf.numPages > 1, zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => this.redraw());
+        } else {
+          this.forceUpdate();
+        }
+      }
+      this.setState({ processing: false, loadProgress: '' });
     } catch (err) {
-      this.setState({ processing: false });
+      this.setState({ processing: false, loadProgress: '' });
       alert('Could not load PDF: ' + (err && err.message ? err.message : 'unknown error'));
     }
   }
@@ -425,7 +491,59 @@ class Component extends DCLogic {
     this._activeSpline = null; this._freehandPts = null;
     this._activeLength = null; this._lengthHoverPt = null;
     this._dimStart = null; this._dimHoverPt = null;
+    this._calibPts = null; this._calibHoverPt = null;
   }
+  toggleCalibrateMode = () => {
+    if (this.state.calibrateMode) { this._calibPts = null; this._calibHoverPt = null; this.setState({ calibrateMode: false, calibrateFrozen: false }, () => this.redraw()); return; }
+    this.clearToolModes();
+    this._calibPts = [];
+    this.setState({ calibrateMode: true, selectMode: false, selectedIds: [], textMode: false, lengthMode: false, dimensionMode: false });
+  };
+  calibrateFeetRef = React.createRef();
+  calibratePointerDown(e) {
+    const p = this.getPoint(e);
+    if (!this._calibPts) this._calibPts = [];
+    if (this._calibPts.length === 0) { this._calibPts = [p]; this.redraw(); return; }
+    if (this._calibPts.length === 1) {
+      const endPt = this.applySplineSnap(this._calibPts[0], p, e);
+      this._calibPts.push(endPt);
+      this.setState({ calibrateFrozen: true, calibrateFeetDraft: '', calibrateInchesDraft: '0' }, () => {
+        if (this.calibrateFeetRef.current) { this.calibrateFeetRef.current.focus(); this.calibrateFeetRef.current.select(); }
+      });
+      this.redraw();
+    }
+  }
+  calibratePointerMove(e) {
+    if (this._calibPts && this._calibPts.length === 1 && !this.state.calibrateFrozen) {
+      let p = this.getPoint(e);
+      p = this.applySplineSnap(this._calibPts[0], p, e);
+      this._calibHoverPt = p; this.redraw();
+    }
+  }
+  calibratePointerUp(e) {}
+  onCalibrateFeetChange = (e) => this.setState({ calibrateFeetDraft: e.target.value });
+  onCalibrateInchesChange = (e) => this.setState({ calibrateInchesDraft: e.target.value });
+  onCalibrateBoxKeyDown = (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); this.confirmCalibrate(); }
+    else if (e.key === 'Escape') { e.preventDefault(); this.cancelCalibrate(); }
+  };
+  confirmCalibrate = () => {
+    const feet = parseFloat(this.state.calibrateFeetDraft) || 0;
+    const inches = parseFloat(this.state.calibrateInchesDraft) || 0;
+    const totalFeet = feet + inches / 12;
+    const page = this.pages[this.state.currentPage];
+    if (totalFeet > 0 && page && this._calibPts && this._calibPts.length === 2) {
+      const [a, b] = this._calibPts;
+      const pixelDist = Math.hypot(b.x - a.x, b.y - a.y);
+      if (pixelDist > 0) page.scale = { pxPerUnit: pixelDist / totalFeet, unit: 'ft' };
+    }
+    this._calibPts = null; this._calibHoverPt = null;
+    this.setState({ calibrateMode: false, calibrateFrozen: false, calibrateFeetDraft: '', calibrateInchesDraft: '' }, () => { this.forceUpdate(); this.redraw(); });
+  };
+  cancelCalibrate = () => {
+    this._calibPts = null; this._calibHoverPt = null;
+    this.setState({ calibrateFrozen: false, calibrateFeetDraft: '', calibrateInchesDraft: '' }, () => this.redraw());
+  };
   toggleSelectMode = () => {
     if (this.state.selectMode) { this.setState({ selectMode: false, selectedIds: [] }, () => this.redraw()); return; }
     this.clearToolModes();
@@ -534,6 +652,7 @@ class Component extends DCLogic {
     if (this.state.textMode) return this.textPointerDown(e);
     if (this.state.lengthMode) return this.lengthPointerDown(e);
     if (this.state.dimensionMode) return this.dimensionPointerDown(e);
+    if (this.state.calibrateMode) return this.calibratePointerDown(e);
     if (this.state.selectMode) {
       const p = this.getPoint(e);
       const page = this.pages[this.state.currentPage];
@@ -584,6 +703,7 @@ class Component extends DCLogic {
     if (this.state.textMode) return this.textPointerMove(e);
     if (this.state.lengthMode) return this.lengthPointerMove(e);
     if (this.state.dimensionMode) return this.dimensionPointerMove(e);
+    if (this.state.calibrateMode) return this.calibratePointerMove(e);
     if (this.state.selectMode && this._tipDragId != null) {
       const p = this.getPoint(e);
       const page = this.pages[this.state.currentPage];
@@ -819,6 +939,7 @@ class Component extends DCLogic {
     if (this.state.textMode) return this.textPointerUp(e);
     if (this.state.lengthMode) return this.lengthPointerUp(e);
     if (this.state.dimensionMode) return this.dimensionPointerUp(e);
+    if (this.state.calibrateMode) return this.calibratePointerUp(e);
     if (this._tipDragId != null) {
       if (this._tipDragMoved && this._tipDragPrevStrokes) this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes: this._tipDragPrevStrokes });
       this._tipDragId = null; this._tipDragPrevStrokes = null; this._tipDragMoved = false;
@@ -910,6 +1031,10 @@ class Component extends DCLogic {
       const cur = this._dimHoverPt || this._dimStart;
       const page = this.pages[this.state.currentPage];
       this.drawDimensionExtras(ctx, { points: [this._dimStart, cur], color: this.state.color, scaleSnap: page ? page.scale : null });
+    }
+    if (this._calibPts && this._calibPts.length) {
+      const cur = this._calibHoverPt || this._calibPts[this._calibPts.length - 1];
+      this.drawDimensionExtras(ctx, { points: [this._calibPts[0], this._calibPts.length > 1 ? this._calibPts[1] : cur], color: '#a9c1d6', scaleSnap: null });
     }
     if (this.state.zoomMode) this.drawZoomOverlay(ctx);
     if (this.state.zoomPendingRect) this.drawAdjustableRect(ctx, this.state.zoomPendingRect, '#1e90ff');
@@ -1004,7 +1129,7 @@ class Component extends DCLogic {
       const attach = this.getTextAttachPoint(stroke, w);
       this.drawArrow(ctx, attach, stroke.arrowFrom);
       const scale = this.getDisplayScale();
-      ctx.beginPath(); ctx.arc(stroke.arrowFrom.x, stroke.arrowFrom.y, 5.5 / scale, 0, Math.PI * 2);
+      ctx.beginPath(); ctx.arc(stroke.arrowFrom.x, stroke.arrowFrom.y, 1.25 / scale, 0, Math.PI * 2);
       ctx.fillStyle = stroke.color; ctx.fill();
       ctx.lineWidth = Math.max(1, 1.5 / scale); ctx.strokeStyle = '#ffffff'; ctx.stroke();
     }
@@ -1160,6 +1285,42 @@ class Component extends DCLogic {
     this.setState({ justCropped: this._cropStack.length > 0 }, () => this.redraw());
   };
 
+  toggleRotateMode = () => this.setState({ rotateMode: !this.state.rotateMode });
+  rotatePoint(p, w, h, dir) { return dir === 'cw' ? { x: h - p.y, y: p.x } : { x: p.y, y: w - p.x }; }
+  rotateStrokes(strokes, w, h, dir) {
+    return strokes.map(s => {
+      const ns = { ...s };
+      if (s.points) ns.points = s.points.map(p => this.rotatePoint(p, w, h, dir));
+      if (s.type === 'text') {
+        const pt = this.rotatePoint({ x: s.x, y: s.y }, w, h, dir);
+        ns.x = pt.x; ns.y = pt.y;
+        if (s.arrowFrom) ns.arrowFrom = this.rotatePoint(s.arrowFrom, w, h, dir);
+      }
+      return ns;
+    });
+  }
+  rotateImage(dir) {
+    const page = this.pages[this.state.currentPage];
+    if (!page) return;
+    const w = page.canvas.width, h = page.canvas.height;
+    const nc = document.createElement('canvas');
+    nc.width = h; nc.height = w;
+    const ctx = nc.getContext('2d');
+    ctx.save();
+    ctx.translate(nc.width / 2, nc.height / 2);
+    ctx.rotate((dir === 'cw' ? 90 : -90) * Math.PI / 180);
+    ctx.drawImage(page.canvas, -w / 2, -h / 2);
+    ctx.restore();
+    const prevCanvas = this.cloneCanvas(page.canvas);
+    const prevStrokes = this.cloneStrokes(page.strokes);
+    page.canvas = nc;
+    page.strokes = this.rotateStrokes(page.strokes, w, h, dir);
+    this.pushUndo(this.state.currentPage, { kind: 'crop', prevCanvas, prevStrokes });
+    this.clearToolModes();
+    this.setState({ zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, zoomPendingRect: null, justCropped: false }, () => this.redraw());
+  }
+  rotateCW = () => this.rotateImage('cw');
+  rotateCCW = () => this.rotateImage('ccw');
   prevPage = () => { if (this.state.currentPage > 0) { this._activeSpline = null; this._freehandPts = null; this._cropStack = []; this.setState({ currentPage: this.state.currentPage - 1, zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, zoomPendingRect: null, justCropped: false }, () => this.redraw()); } };
   nextPage = () => { if (this.state.currentPage < this.pages.length - 1) { this._activeSpline = null; this._freehandPts = null; this._cropStack = []; this.setState({ currentPage: this.state.currentPage + 1, zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, zoomPendingRect: null, justCropped: false }, () => this.redraw()); } };
   clearPage = () => {
@@ -1274,7 +1435,7 @@ class Component extends DCLogic {
       loaded: this.state.loaded,
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
-      processingLabel: this.state.processing ? 'Loading…' : '',
+      processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
       dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : 'transparent'};cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
@@ -1333,7 +1494,16 @@ class Component extends DCLogic {
       onLengthFeetChange: this.onLengthFeetChange, onLengthInchesChange: this.onLengthInchesChange,
       onLengthFeetFocus: this.onLengthFeetFocus, onLengthBoxKeyDown: this.onLengthBoxKeyDown,
       confirmLengthEntry: this.confirmLengthEntry, cancelLengthEntry: this.cancelLengthEntry,
-      lengthHintVisible: this.state.lengthMode, dimensionHintVisible: this.state.dimensionMode
+      lengthHintVisible: this.state.lengthMode, dimensionHintVisible: this.state.dimensionMode,
+      rotateMode: this.state.rotateMode, toggleRotateMode: this.toggleRotateMode, rotateCW: this.rotateCW, rotateCCW: this.rotateCCW,
+      rotateBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.rotateMode ? '#e2ff00' : 'transparent'};border:1px solid ${this.state.rotateMode ? '#e2ff00' : 'rgba(255,255,255,0.25)'};color:${this.state.rotateMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
+      toggleCalibrateMode: this.toggleCalibrateMode,
+      calibrateBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.calibrateMode ? 'var(--color-accent-300,#a9c1d6)' : 'transparent'};border:1px solid ${this.state.calibrateMode ? 'var(--color-accent-300,#a9c1d6)' : 'rgba(255,255,255,0.25)'};color:${this.state.calibrateMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
+      calibrateHintVisible: this.state.calibrateMode,
+      calibrateFrozen: this.state.calibrateFrozen, calibrateFeetRef: this.calibrateFeetRef,
+      calibrateFeetDraft: this.state.calibrateFeetDraft, calibrateInchesDraft: this.state.calibrateInchesDraft,
+      onCalibrateFeetChange: this.onCalibrateFeetChange, onCalibrateInchesChange: this.onCalibrateInchesChange,
+      onCalibrateBoxKeyDown: this.onCalibrateBoxKeyDown, confirmCalibrate: this.confirmCalibrate, cancelCalibrate: this.cancelCalibrate
     };
   }
 }
