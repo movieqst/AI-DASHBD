@@ -46,6 +46,9 @@
         </sc-for>
       </div>
       <canvas ref="{{ canvasRef }}" onPointerDown="{{ onPointerDown }}" onPointerMove="{{ onPointerMove }}" onPointerUp="{{ onPointerUp }}" onPointerLeave="{{ onPointerUp }}" onDoubleClick="{{ onCanvasDoubleClick }}" style="{{ canvasStyle }}"></canvas>
+      <sc-if value="{{ editingTextVisible }}" hint-placeholder-val="{{ false }}">
+        <input ref="{{ editTextInputRef }}" value="{{ editingTextDraft }}" onChange="{{ onEditTextChange }}" onKeyDown="{{ onEditTextKeyDown }}" onBlur="{{ commitEditText }}" style="{{ editTextStyle }}"></input>
+      </sc-if>
       <sc-if value="{{ zoomHintVisible }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-accent-300,#a9c1d6);background:rgba(0,0,0,0.6);padding:6px 14px;white-space:nowrap;">Drag a Rectangle, or Click Two Points to Zoom — Esc to Cancel</div>
       </sc-if>
@@ -62,18 +65,18 @@
       </sc-if>
       <button onClick="{{ clearBtnHandler }}" style="{{ clearBtnStyle }}">{{ clearBtnLabel }}</button>
       <button onClick="{{ toggleZoomMode }}" style="{{ zoomBtnStyle }}">Zoom</button>
-      <button onClick="{{ onBrowseClick }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open Img</button>
+      <button onClick="{{ onBrowseClick }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open  Img</button>
     </div>
   </sc-if>
 
   <sc-if value="{{ notLoaded }}" hint-placeholder-val="{{ true }}">
     <div onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" style="{{ dropZoneStyle }}">
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=6&data=http%3A%2F%2Faidashbd.com%2FEEZMARKUP%2F" alt="QR code to open EEZMARKUP" style="width:140px;height:140px;background:#fff;margin-bottom:18px;"/>
-      <div style="font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;color:rgba(255,255,255,0.5);text-transform:uppercase;">JPG · PNG · GIF · WEBP · PDF</div>
+      <div style="font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;color:rgba(255,255,255,0.5);text-transform:uppercase;">JPG · PNG · GIF · WEBP · PDF</div>
       <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;">
-        <button onClick="{{ onBrowseClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open Img</button>
+        <button onClick="{{ onBrowseClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open  Img</button>
         <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ true }}">
-          <button onClick="{{ onCameraClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Take Photo</button>
+          <button onClick="{{ onCameraClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Take  Photo</button>
         </sc-if>
       </div>
       <div style="margin-top:20px;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-accent-300,#a9c1d6);">{{ processingLabel }}</div>
@@ -131,6 +134,7 @@ class Component extends DCLogic {
   _strokeIdSeq = 0;
   canvasRef = React.createRef();
   canvasAreaRef = React.createRef();
+  editTextInputRef = React.createRef();
   fileInputRef = React.createRef();
   cameraInputRef = React.createRef();
 
@@ -143,7 +147,8 @@ class Component extends DCLogic {
     saveFormat: 'jpg',
     saveScope: 'active',
     zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, justCropped: false, zoomPendingRect: null,
-    isDesktop: false, selectMode: false, selectedIds: [], textMode: false
+    isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
+    editingTextId: null, editingTextDraft: ''
   };
 
   componentDidMount() {
@@ -280,6 +285,8 @@ class Component extends DCLogic {
   async loadPdfFile(file) {
     this.setState({ processing: true });
     try {
+      if (!window.pdfjsLib) throw new Error('PDF engine not loaded yet');
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
       const buf = await file.arrayBuffer();
       const pdf = await window.pdfjsLib.getDocument({ data: buf }).promise;
       const pages = [];
@@ -298,7 +305,7 @@ class Component extends DCLogic {
       this.setState({ loaded: true, isPdf: true, fileBase: this.stripExt(file.name), fileExt: 'pdf', currentPage: 0, processing: false, zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => this.redraw());
     } catch (err) {
       this.setState({ processing: false });
-      alert('Could not load PDF.');
+      alert('Could not load PDF: ' + (err && err.message ? err.message : 'unknown error'));
     }
   }
 
@@ -341,6 +348,11 @@ class Component extends DCLogic {
     }
     return null;
   }
+  getTextAttachPoint(stroke, w) {
+    const centerX = stroke.x + w / 2;
+    if (stroke.arrowFrom.x > centerX) return { x: stroke.x + w, y: stroke.y };
+    return { x: stroke.x, y: stroke.y };
+  }
   hitTestStrokeAt(p, page) {
     const tol = Math.max(6, 10 / this.getDisplayScale());
     const ctx = this.canvasRef.current && this.canvasRef.current.getContext('2d');
@@ -351,7 +363,7 @@ class Component extends DCLogic {
         const w = Math.max(90, ctx ? ctx.measureText(s.text || '').width : 90);
         const h = s.fontSize || 40;
         if (p.x >= s.x - 10 && p.x <= s.x + w + 10 && p.y >= s.y - h / 2 - 10 && p.y <= s.y + h / 2 + 10) return s.id;
-        if (s.arrowFrom && this.pointToSegDist(p, { x: s.x, y: s.y }, s.arrowFrom) <= tol) return s.id;
+        if (s.arrowFrom && this.pointToSegDist(p, this.getTextAttachPoint(s, w), s.arrowFrom) <= tol) return s.id;
         continue;
       }
       const half = s.width / 2 + tol;
@@ -421,14 +433,34 @@ class Component extends DCLogic {
     if (!page) return;
     const hitId = this.hitTestTextBoxAt(p, page);
     if (hitId == null) return;
-    const s = page.strokes.find(st => st.id === hitId);
-    const value = window.prompt('Edit text:', s.text || '');
-    if (value == null) return;
-    const prevStrokes = this.cloneStrokes(page.strokes);
-    s.text = value;
-    this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
-    this.redraw(); this.forceUpdate();
+    this.startEditText(hitId);
   };
+  startEditText(id) {
+    const page = this.pages[this.state.currentPage];
+    const s = page.strokes.find(st => st.id === id);
+    if (!s) return;
+    this.setState({ editingTextId: id, editingTextDraft: s.text || '' }, () => {
+      this.redraw();
+      if (this.editTextInputRef.current) { this.editTextInputRef.current.focus(); this.editTextInputRef.current.select(); }
+    });
+  }
+  onEditTextChange = (e) => { this.setState({ editingTextDraft: e.target.value }, () => this.redraw()); };
+  onEditTextKeyDown = (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); this.commitEditText(); }
+    else if (e.key === 'Escape') { e.preventDefault(); this.cancelEditText(); }
+  };
+  commitEditText = () => {
+    const id = this.state.editingTextId; if (id == null) return;
+    const page = this.pages[this.state.currentPage];
+    const s = page && page.strokes.find(st => st.id === id);
+    if (s && (s.text || '') !== this.state.editingTextDraft) {
+      const prevStrokes = this.cloneStrokes(page.strokes);
+      s.text = this.state.editingTextDraft;
+      this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
+    }
+    this.setState({ editingTextId: null, editingTextDraft: '' }, () => this.redraw());
+  };
+  cancelEditText = () => { this.setState({ editingTextId: null, editingTextDraft: '' }, () => this.redraw()); };
 
   onPointerDown = (e) => {
     e.preventDefault();
@@ -676,18 +708,21 @@ class Component extends DCLogic {
     const pad = 10;
     ctx.strokeStyle = stroke.color; ctx.fillStyle = stroke.color; ctx.lineWidth = 3; ctx.setLineDash([]);
     if (stroke.arrowFrom) {
-      this.drawArrow(ctx, { x: stroke.x, y: stroke.y }, stroke.arrowFrom);
+      const attach = this.getTextAttachPoint(stroke, w);
+      this.drawArrow(ctx, attach, stroke.arrowFrom);
       const scale = this.getDisplayScale();
       ctx.beginPath(); ctx.arc(stroke.arrowFrom.x, stroke.arrowFrom.y, 5.5 / scale, 0, Math.PI * 2);
       ctx.fillStyle = stroke.color; ctx.fill();
       ctx.lineWidth = Math.max(1, 1.5 / scale); ctx.strokeStyle = '#ffffff'; ctx.stroke();
     }
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(stroke.x - pad, stroke.y - h / 2 - pad, w + pad * 2, h + pad * 2);
-    ctx.strokeStyle = stroke.color; ctx.lineWidth = 2;
-    ctx.strokeRect(stroke.x - pad, stroke.y - h / 2 - pad, w + pad * 2, h + pad * 2);
-    ctx.fillStyle = '#000000';
-    if (stroke.text) ctx.fillText(stroke.text, stroke.x, stroke.y);
+    if (stroke.id !== this.state.editingTextId) {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(stroke.x - pad, stroke.y - h / 2 - pad, w + pad * 2, h + pad * 2);
+      ctx.strokeStyle = stroke.color; ctx.lineWidth = 2;
+      ctx.strokeRect(stroke.x - pad, stroke.y - h / 2 - pad, w + pad * 2, h + pad * 2);
+      ctx.fillStyle = '#000000';
+      if (stroke.text) ctx.fillText(stroke.text, stroke.x, stroke.y);
+    }
     ctx.restore();
   }
   drawStroke(ctx, stroke, dashed) {
@@ -900,6 +935,22 @@ class Component extends DCLogic {
     }));
   }
 
+  computeTextEditStyle() {
+    const id = this.state.editingTextId; if (id == null) return '';
+    const page = this.pages[this.state.currentPage]; if (!page) return '';
+    const s = page.strokes.find(st => st.id === id); if (!s) return '';
+    const canvas = this.canvasRef.current; if (!canvas || !this.canvasAreaRef.current) return '';
+    const ctx = canvas.getContext('2d');
+    ctx.font = `600 ${s.fontSize || 40}px 'Barlow', sans-serif`;
+    const w = Math.max(90, ctx.measureText(this.state.editingTextDraft || '').width);
+    const h = s.fontSize || 40, pad = 10;
+    const scale = this.getDisplayScale();
+    const canvasRect = canvas.getBoundingClientRect();
+    const containerRect = this.canvasAreaRef.current.getBoundingClientRect();
+    const left = (canvasRect.left - containerRect.left) + (s.x - pad) * scale;
+    const top = (canvasRect.top - containerRect.top) + (s.y - h / 2 - pad) * scale;
+    return `position:absolute;left:${left}px;top:${top}px;width:${(w + pad * 2) * scale}px;height:${(h + pad * 2) * scale}px;font:600 ${(s.fontSize || 40) * scale}px 'Barlow',sans-serif;color:#000;background:#ffffff;border:2px solid ${s.color};padding:0 2px;box-sizing:border-box;outline:none;z-index:20;`;
+  }
   renderVals() {
     const zoomed = !!this.state.zoomRect;
     const showUndo = this.state.justCropped;
@@ -935,6 +986,11 @@ class Component extends DCLogic {
       toggleZoomMode: this.toggleZoomMode,
       zoomBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${(this.state.zoomMode || this.state.zoomPendingRect) ? '#1e90ff' : 'transparent'};border:1px solid ${(this.state.zoomMode || this.state.zoomPendingRect) ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${(this.state.zoomMode || this.state.zoomPendingRect) ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       zoomHintVisible: this.state.zoomMode,
+      editingTextVisible: this.state.editingTextId != null,
+      editTextInputRef: this.editTextInputRef,
+      editingTextDraft: this.state.editingTextDraft || '',
+      onEditTextChange: this.onEditTextChange, onEditTextKeyDown: this.onEditTextKeyDown, commitEditText: this.commitEditText,
+      editTextStyle: this.computeTextEditStyle(),
       canvasStyle: (zoomed && this.state.zoomCanvasStyle) ? this.state.zoomCanvasStyle : 'max-width:100%;max-height:100%;width:auto;height:auto;touch-action:none;cursor:crosshair;border:1px solid rgba(255,255,255,0.12);',
       canvasAreaStyle: `flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background:#000;border:2px dashed ${this.state.dragActive ? 'var(--color-accent-400,#7398b8)' : 'transparent'};`,
       topActionLabel: zoomed ? 'Crop' : 'Save Markup',
