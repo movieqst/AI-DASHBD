@@ -1059,8 +1059,8 @@ class Component extends DCLogic {
     }
     if (this.state.zoomPendingRect) { this.executeZoom(); return; }
     if (this.state.zoomMode) { this.exitZoomSelect(); return; }
-    this._activeSpline = null; this._freehandPts = null;
-    this.setState({ zoomMode: true });
+    this.clearToolModes();
+    this.setState({ zoomMode: true, textMode: false, selectMode: false, selectedIds: [], lengthMode: false, dimensionMode: false });
   };
   exitZoomSelect = () => {
     this._zoomClickFirst = null; this._zoomHover = null; this._zoomDown = false; this._zoomDragged = false;
