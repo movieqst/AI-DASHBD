@@ -638,10 +638,10 @@ class Component extends DCLogic {
       const content = await pdfPage.getTextContent();
       const text = content.items.map(it => it.str).join(' ');
       const found = []; const seen = new Set();
-      const fracRe = /(\d+\/\d+|\d+)\s*"\s*=\s*(\d+)\s*['\u2019]\s*-?\s*(\d+)?["\u201d]?/gi;
+      const fracRe = /(\d*\.?\d+(?:\s*\/\s*\d+)?)\s*["\u201d\u2033]\s*=\s*(\d+)\s*['\u2019\u2032]\s*[-\u2013\u2014]?\s*(\d+)?["\u201d\u2033]?/gi;
       let m;
       while ((m = fracRe.exec(text))) {
-        const val = this.parseFraction(m[1]);
+        const val = this.parseFraction(m[1].replace(/\s+/g, ''));
         const feet = parseInt(m[2], 10) || 0;
         const inches = m[3] ? parseInt(m[3], 10) : 0;
         const totalInches = feet * 12 + inches;
