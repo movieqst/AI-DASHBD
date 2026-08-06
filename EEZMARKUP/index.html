@@ -49,9 +49,6 @@
       <sc-if value="{{ showLengthInput }}" hint-placeholder-val="{{ false }}">
         <input ref="{{ lengthInputRefCb }}" value="{{ lengthInputDraft }}" onChange="{{ onLengthInputChange }}" onKeyDown="{{ onLengthInputKeyDown }}" placeholder="length" style="{{ lengthInputStyle }}"></input>
       </sc-if>
-      <sc-if value="{{ scaleHintVisible }}" hint-placeholder-val="{{ false }}">
-        <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:#00e04a;background:rgba(0,0,0,0.6);padding:6px 14px;white-space:nowrap;">Click Two Points on a Known Length — Esc to Cancel</div>
-      </sc-if>
       <sc-if value="{{ lengthHintVisible }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:#00e04a;background:rgba(0,0,0,0.6);padding:6px 14px;white-space:nowrap;">Click to Place Points — Hold Ctrl/Shift to Lock Angle — Press R for Exact Length — Right-Click or Double-Click to Finish</div>
       </sc-if>
@@ -72,8 +69,7 @@
         <button onClick="{{ redo }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Remark</button>
         <button onClick="{{ toggleSelectMode }}" style="{{ selectBtnStyle }}">Select</button>
         <button onClick="{{ toggleTextMode }}" style="{{ textBtnStyle }}">Text</button>
-        <button onClick="{{ toggleScaleMode }}" style="{{ scaleBtnStyle }}">Scale</button>
-        <button onClick="{{ setPageScale }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:12px;letter-spacing:0.03em;text-transform:uppercase;cursor:pointer;white-space:nowrap;line-height:1.15;" style-hover="border-color:#00e04a;color:#00e04a;" title="Assume this page prints at 8.5x11in and set scale from that">Page Scale</button>
+        <button onClick="{{ setPageScale }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:#00e04a;color:#00e04a;" title="Set a 1:1 scale for this page (assumes 8.5x11in)">Scale</button>
         <sc-if value="{{ hasScale }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ toggleLengthMode }}" style="{{ lengthBtnStyle }}">Length</button>
           <button onClick="{{ toggleDimensionMode }}" style="{{ dimensionBtnStyle }}">Dimension</button>
@@ -104,26 +100,6 @@
 
   <input type="file" ref="{{ fileInputRef }}" accept="image/*,.pdf,application/pdf" style="display:none" onChange="{{ onFileInputChange }}"/>
   <input type="file" ref="{{ cameraInputRef }}" accept="image/*" capture="environment" style="display:none" onChange="{{ onFileInputChange }}"/>
-
-  <sc-if value="{{ showScaleDialog }}" hint-placeholder-val="{{ false }}">
-    <div style="position:fixed;inset:0;background:rgba(0,0,0,0.72);display:flex;align-items:center;justify-content:center;z-index:50;">
-      <div style="background:#0c0c0d;border:1px solid #00e04a;padding:32px;width:340px;position:relative;">
-        <div style="font-family:var(--font-heading,'Barlow Condensed',sans-serif);font-size:22px;letter-spacing:0.05em;text-transform:uppercase;color:#00e04a;margin-bottom:20px;">Set Scale</div>
-        <div style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:8px;">Real-World Length</div>
-        <input value="{{ scaleValueDraft }}" onChange="{{ onScaleValueChange }}" placeholder="e.g. 20" style="width:100%;box-sizing:border-box;padding:10px;background:#000;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:15px;margin-bottom:16px;"></input>
-        <div style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:8px;">Unit</div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;">
-          <sc-for list="{{ scaleUnits }}" as="u" hint-placeholder-count="4">
-            <button onClick="{{ u.select }}" style="{{ u.style }}">{{ u.label }}</button>
-          </sc-for>
-        </div>
-        <div style="display:flex;justify-content:flex-end;gap:10px;">
-          <button onClick="{{ cancelScaleDialog }}" style="padding:10px 18px;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;">Cancel</button>
-          <button onClick="{{ confirmScale }}" style="padding:10px 18px;background:#00e04a;border:1px solid #00e04a;color:#04121d;font-weight:600;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;">Set</button>
-        </div>
-      </div>
-    </div>
-  </sc-if>
 
   <sc-if value="{{ showSaveDialog }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;background:rgba(0,0,0,0.72);display:flex;align-items:center;justify-content:center;z-index:50;">
@@ -188,7 +164,6 @@ class Component extends DCLogic {
     zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, justCropped: false, zoomPendingRect: null, rectMode: 'crop',
     isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
     editingTextId: null, editingTextDraft: '',
-    scaleMode: false, showScaleDialog: false, scaleDialogPixelDist: 0, scaleValueDraft: '', scaleUnit: 'ft',
     lengthMode: false, showLengthInput: false, lengthInputDraft: '',
     dimensionMode: false
   };
@@ -218,8 +193,6 @@ class Component extends DCLogic {
       if (this.state.zoomMode) { this.exitZoomSelect(); return; }
       if (this.state.zoomPendingRect) { this.setState({ zoomPendingRect: null }, () => this.redraw()); return; }
       if (this.state.zoomRect) { this.exitZoom(); return; }
-      if (this.state.showScaleDialog) { this.cancelScaleDialog(); return; }
-      if (this.state.scaleMode) { this._scalePt1 = null; this._scaleHoverPt = null; this.setState({ scaleMode: false }, () => this.redraw()); return; }
       if (this.state.showLengthInput) { this.setState({ showLengthInput: false, lengthInputDraft: '' }); return; }
       if (this.state.lengthMode) { this._activeLength = null; this._lengthHoverPt = null; this.setState({ lengthMode: false }, () => this.redraw()); return; }
       if (this.state.dimensionMode) { this._dimStart = null; this._dimHoverPt = null; this.setState({ dimensionMode: false }, () => this.redraw()); return; }
@@ -432,33 +405,27 @@ class Component extends DCLogic {
   clearToolModes() {
     this._activeSpline = null; this._freehandPts = null;
     this._activeLength = null; this._lengthHoverPt = null;
-    this._scalePt1 = null; this._scaleHoverPt = null;
     this._dimStart = null; this._dimHoverPt = null;
   }
   toggleSelectMode = () => {
     if (this.state.selectMode) { this.setState({ selectMode: false, selectedIds: [] }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ selectMode: true, selectedIds: [], textMode: false, scaleMode: false, lengthMode: false, dimensionMode: false });
+    this.setState({ selectMode: true, selectedIds: [], textMode: false, lengthMode: false, dimensionMode: false });
   };
   toggleTextMode = () => {
     if (this.state.textMode) { this._textClickFirst = null; this._textHover = null; this.setState({ textMode: false }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ textMode: true, selectMode: false, selectedIds: [], scaleMode: false, lengthMode: false, dimensionMode: false });
-  };
-  toggleScaleMode = () => {
-    if (this.state.scaleMode) { this.clearToolModes(); this.setState({ scaleMode: false }, () => this.redraw()); return; }
-    this.clearToolModes();
-    this.setState({ scaleMode: true, selectMode: false, selectedIds: [], textMode: false, lengthMode: false, dimensionMode: false });
+    this.setState({ textMode: true, selectMode: false, selectedIds: [], lengthMode: false, dimensionMode: false });
   };
   toggleLengthMode = () => {
     if (this.state.lengthMode) { this.clearToolModes(); this.setState({ lengthMode: false, showLengthInput: false }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ lengthMode: true, selectMode: false, selectedIds: [], textMode: false, scaleMode: false, dimensionMode: false });
+    this.setState({ lengthMode: true, selectMode: false, selectedIds: [], textMode: false, dimensionMode: false });
   };
   toggleDimensionMode = () => {
     if (this.state.dimensionMode) { this.clearToolModes(); this.setState({ dimensionMode: false }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ dimensionMode: true, selectMode: false, selectedIds: [], textMode: false, scaleMode: false, lengthMode: false });
+    this.setState({ dimensionMode: true, selectMode: false, selectedIds: [], textMode: false, lengthMode: false });
   };
   deleteSelected = () => {
     const page = this.pages[this.state.currentPage];
@@ -481,7 +448,12 @@ class Component extends DCLogic {
     if (!this._textDown) return;
     this._textDown = false;
     const p = this.getPoint(e);
-    if (!this._textClickFirst) { this._textClickFirst = p; this.redraw(); return; }
+    if (!this._textClickFirst) {
+      const page = this.pages[this.state.currentPage];
+      const hitId = page ? this.hitTestTextBoxAt(p, page) : null;
+      if (hitId != null) { this.startEditText(hitId); return; }
+      this._textClickFirst = p; this.redraw(); return;
+    }
     const arrowFrom = this._textClickFirst;
     this._textClickFirst = null; this._textHover = null;
     const page = this.pages[this.state.currentPage];
@@ -541,7 +513,6 @@ class Component extends DCLogic {
   onPointerDown = (e) => {
     e.preventDefault();
     if (this.state.textMode) return this.textPointerDown(e);
-    if (this.state.scaleMode) return this.scalePointerDown(e);
     if (this.state.lengthMode) return this.lengthPointerDown(e);
     if (this.state.dimensionMode) return this.dimensionPointerDown(e);
     if (this.state.selectMode) {
@@ -592,7 +563,6 @@ class Component extends DCLogic {
   onPointerMove = (e) => {
     if (!this.canvasRef.current) return;
     if (this.state.textMode) return this.textPointerMove(e);
-    if (this.state.scaleMode) return this.scalePointerMove(e);
     if (this.state.lengthMode) return this.lengthPointerMove(e);
     if (this.state.dimensionMode) return this.dimensionPointerMove(e);
     if (this.state.selectMode && this._tipDragId != null) {
@@ -627,17 +597,6 @@ class Component extends DCLogic {
       this._hoverPt = hp; this.redraw(true);
     }
   };
-  scalePointerDown(e) {
-    const p = this.getPoint(e);
-    if (!this._scalePt1) { this._scalePt1 = p; this.redraw(); return; }
-    const dist = Math.hypot(p.x - this._scalePt1.x, p.y - this._scalePt1.y);
-    if (dist < 2) return;
-    this.setState({ showScaleDialog: true, scaleDialogPixelDist: dist, scaleValueDraft: '' });
-  }
-  scalePointerMove(e) {
-    if (this._scalePt1) { let p = this.getPoint(e); if (this.state.isDesktop) p = this.applySplineSnap(this._scalePt1, p, e); this._scaleHoverPt = p; this.redraw(); }
-  }
-  scalePointerUp(e) {}
   setPageScale = () => {
     const page = this.pages[this.state.currentPage];
     if (!page) return;
@@ -645,22 +604,9 @@ class Component extends DCLogic {
     const wIn = landscape ? 11 : 8.5;
     page.scale = { pxPerUnit: page.canvas.width / wIn, unit: 'in' };
     this.clearToolModes();
-    this.setState({ scaleMode: false }, () => { this.redraw(); this.forceUpdate(); });
+    this.forceUpdate();
+    this.redraw();
   };
-  confirmScale = () => {
-    const val = parseFloat(this.state.scaleValueDraft);
-    if (!val || val <= 0) { alert('Enter a real-world length greater than 0.'); return; }
-    const page = this.pages[this.state.currentPage];
-    if (page) page.scale = { pxPerUnit: this.state.scaleDialogPixelDist / val, unit: this.state.scaleUnit };
-    this._scalePt1 = null; this._scaleHoverPt = null;
-    this.setState({ showScaleDialog: false, scaleMode: false, scaleValueDraft: '' }, () => { this.redraw(); this.forceUpdate(); });
-  };
-  cancelScaleDialog = () => {
-    this._scalePt1 = null; this._scaleHoverPt = null;
-    this.setState({ showScaleDialog: false, scaleValueDraft: '' }, () => this.redraw());
-  };
-  onScaleValueChange = (e) => this.setState({ scaleValueDraft: e.target.value });
-  setScaleUnit = (u) => this.setState({ scaleUnit: u });
 
   lengthPointerDown(e) {
     const p = this.getPoint(e);
@@ -718,7 +664,7 @@ class Component extends DCLogic {
   onLengthInputChange = (e) => this.setState({ lengthInputDraft: e.target.value });
   onCanvasContextMenu = (e) => {
     if (this.state.lengthMode && this._activeLength && this._activeLength.points.length) { e.preventDefault(); this.finalizeLengthChain(); return; }
-    if (this.state.lengthMode || this.state.dimensionMode || this.state.scaleMode) e.preventDefault();
+    if (this.state.lengthMode || this.state.dimensionMode) e.preventDefault();
   };
 
   dimensionPointerDown(e) {
@@ -809,7 +755,6 @@ class Component extends DCLogic {
   }
   onPointerUp = (e) => {
     if (this.state.textMode) return this.textPointerUp(e);
-    if (this.state.scaleMode) return this.scalePointerUp(e);
     if (this.state.lengthMode) return this.lengthPointerUp(e);
     if (this.state.dimensionMode) return this.dimensionPointerUp(e);
     if (this._tipDragId != null) {
@@ -889,12 +834,6 @@ class Component extends DCLogic {
       ctx.beginPath(); ctx.moveTo(this._textClickFirst.x, this._textClickFirst.y); ctx.lineTo(cur.x, cur.y); ctx.stroke();
       ctx.setLineDash([]); ctx.fillStyle = this.state.color;
       ctx.beginPath(); ctx.arc(this._textClickFirst.x, this._textClickFirst.y, 5, 0, Math.PI * 2); ctx.fill();
-      ctx.restore();
-    }
-    if (this.state.scaleMode && this._scalePt1) {
-      const cur = this._scaleHoverPt || this._scalePt1;
-      ctx.save(); ctx.strokeStyle = '#00e04a'; ctx.lineWidth = 2; ctx.setLineDash([6, 6]);
-      ctx.beginPath(); ctx.moveTo(this._scalePt1.x, this._scalePt1.y); ctx.lineTo(cur.x, cur.y); ctx.stroke();
       ctx.restore();
     }
     if (this.state.lengthMode && this._activeLength && this._activeLength.points.length) {
@@ -1058,8 +997,9 @@ class Component extends DCLogic {
       this.finalizeZoomRect(this._zoomStart, p);
       this._zoomDragged = false;
     } else if (!this._zoomClickFirst) {
-      this._zoomClickFirst = p; this.redraw();
+      this._zoomClickFirst = p; this._zoomClickFirstTime = Date.now(); this.redraw();
     } else {
+      if (Date.now() - (this._zoomClickFirstTime || 0) < 500) return;
       this.finalizeZoomRect(this._zoomClickFirst, p);
       this._zoomClickFirst = null; this._zoomHover = null;
     }
@@ -1076,14 +1016,14 @@ class Component extends DCLogic {
     if (!rect) return;
     const margin = 0.015;
     const adjust = { x: rect.x + rect.w * margin, y: rect.y + rect.h * margin, w: rect.w * (1 - 2 * margin), h: rect.h * (1 - 2 * margin) };
-    this.setState({ zoomPendingRect: null, zoomRect: rect, cropAdjustRect: adjust, rectMode: 'crop' }, () => { this.applyZoomStyle(rect); this.redraw(); });
+    this.setState({ zoomPendingRect: null, zoomRect: rect, cropAdjustRect: adjust, rectMode: 'zoom' }, () => { this.applyZoomStyle(rect); this.redraw(); });
   };
   executeNestedZoom = () => {
     const rect = this.state.cropAdjustRect;
     if (!rect) return;
     const margin = 0.015;
     const adjust = { x: rect.x + rect.w * margin, y: rect.y + rect.h * margin, w: rect.w * (1 - 2 * margin), h: rect.h * (1 - 2 * margin) };
-    this.setState({ zoomRect: rect, cropAdjustRect: adjust, rectMode: 'crop' }, () => { this.applyZoomStyle(rect); this.redraw(); });
+    this.setState({ zoomRect: rect, cropAdjustRect: adjust, rectMode: 'zoom' }, () => { this.applyZoomStyle(rect); this.redraw(); });
   };
   applyZoomStyle(rect) {
     const container = this.canvasAreaRef.current;
@@ -1320,29 +1260,18 @@ class Component extends DCLogic {
       topActionStyle: zoomed
         ? `padding:8px 20px;background:#ff1a2e;border:1px solid #ff1a2e;color:#ffffff;font-family:var(--font-body,'Barlow',sans-serif);font-weight:700;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`
         : `padding:8px 16px;background:var(--color-accent-500,#5980a6);border:1px solid var(--color-accent-500,#5980a6);color:#04121d;font-family:var(--font-body,'Barlow',sans-serif);font-weight:600;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
-      toggleScaleMode: this.toggleScaleMode, setPageScale: this.setPageScale,
-      scaleBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${(this.state.scaleMode || this.state.showScaleDialog) ? '#00e04a' : 'transparent'};border:1px solid ${(this.state.scaleMode || this.state.showScaleDialog) ? '#00e04a' : 'rgba(255,255,255,0.25)'};color:${(this.state.scaleMode || this.state.showScaleDialog) ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
+      setPageScale: this.setPageScale,
       hasScale: !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale),
       toggleLengthMode: this.toggleLengthMode,
       lengthBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.lengthMode ? '#00e04a' : 'transparent'};border:1px solid ${this.state.lengthMode ? '#00e04a' : 'rgba(255,255,255,0.25)'};color:${this.state.lengthMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       toggleDimensionMode: this.toggleDimensionMode,
       dimensionBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.dimensionMode ? '#00e04a' : 'transparent'};border:1px solid ${this.state.dimensionMode ? '#00e04a' : 'rgba(255,255,255,0.25)'};color:${this.state.dimensionMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
-      showScaleDialog: this.state.showScaleDialog,
-      scaleValueDraft: this.state.scaleValueDraft, onScaleValueChange: this.onScaleValueChange,
-      confirmScale: this.confirmScale, cancelScaleDialog: this.cancelScaleDialog,
-      scaleUnits: this.buildScaleUnitItems(),
       onCanvasContextMenu: this.onCanvasContextMenu,
       showLengthInput: this.state.showLengthInput, lengthInputDraft: this.state.lengthInputDraft,
       onLengthInputChange: this.onLengthInputChange, onLengthInputKeyDown: this.onLengthInputKeyDown,
       lengthInputRefCb: this.lengthInputRefCb, lengthInputStyle: this.computeLengthInputStyle(),
-      lengthHintVisible: this.state.lengthMode, scaleHintVisible: this.state.scaleMode, dimensionHintVisible: this.state.dimensionMode
+      lengthHintVisible: this.state.lengthMode, dimensionHintVisible: this.state.dimensionMode
     };
-  }
-  buildScaleUnitItems() {
-    return [['ft', "Feet & Inches"], ['in', 'Inches'], ['m', 'Meters'], ['cm', 'Centimeters']].map(([v, label]) => ({
-      value: v, label, select: () => this.setScaleUnit(v),
-      style: `padding:6px 10px;background:${this.state.scaleUnit === v ? '#00e04a' : 'transparent'};border:1px solid ${this.state.scaleUnit === v ? '#00e04a' : 'rgba(255,255,255,0.25)'};color:${this.state.scaleUnit === v ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:12px;letter-spacing:0.03em;text-transform:uppercase;cursor:pointer;`
-    }));
   }
 }
 
