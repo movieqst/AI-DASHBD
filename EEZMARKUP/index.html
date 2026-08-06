@@ -895,8 +895,9 @@ class Component extends DCLogic {
       const merged = this.flattenPage(page);
       const dataUrl = merged.toDataURL('image/jpeg', 0.92);
       const w = merged.width, h = merged.height;
-      if (i === 0) doc = new jsPDFCtor({ unit: 'px', format: [w, h] });
-      else doc.addPage([w, h]);
+      const orientation = w >= h ? 'l' : 'p';
+      if (i === 0) doc = new jsPDFCtor({ unit: 'px', format: [w, h], orientation });
+      else doc.addPage([w, h], orientation);
       doc.addImage(dataUrl, 'JPEG', 0, 0, w, h);
     });
     doc.save(this.buildFilename('pdf'));
@@ -962,7 +963,7 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? 'Loading…' : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;border:2px dashed ${this.state.dragActive ? 'var(--color-accent-400,#7398b8)' : 'rgba(255,255,255,0.25)'};cursor:pointer;transition:border-color 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : 'transparent'};cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
