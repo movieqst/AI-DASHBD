@@ -176,7 +176,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#d9b877&quot;,&quot;#c49a5a&quot;,&quot;#e8cf9d&quot;,&quot;#a3803f&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#ff2d78&quot;,&quot;#00e5ff&quot;,&quot;#1a0b2e&quot;,&quot;#f5f5f5&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -594,7 +594,7 @@ class Component extends DCLogic {
   clearToolModes() {
     this._activeSpline = null; this._freehandPts = null;
     this._measureDown = false; this._measureStart = null; this._measureCurrent = null;
-    this._activeLine = null; this._lineHoverPt = null; this._lineLastClickTime = null;
+    this._activeLine = null; this._lineHoverPt = null; this._lineLastClickTime = null; this._lineSnapPoint = null;
   }
   toggleLineMode = () => {
     if (this.state.lineMode) {
@@ -655,12 +655,28 @@ class Component extends DCLogic {
     if (this.lengthFtInputRef.current) this.lengthFtInputRef.current.blur();
     this.setState({ lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw());
   };
+  findLineSnapPoint(p) {
+    if (!this._activeLine || this._activeLine.points.length < 1) return null;
+    const scale = this.getDisplayScale();
+    const tol = Math.max(10, 14 / scale);
+    const pts = this._activeLine.points;
+    let best = null, bestDist = tol;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const d = Math.hypot(p.x - pts[i].x, p.y - pts[i].y);
+      if (d <= bestDist) { bestDist = d; best = pts[i]; }
+    }
+    return best;
+  }
   linePointerMove(e) {
     if (this.state.lengthFrozen) return;
     if (!this._activeLine || !this._activeLine.points.length) return;
     const p = this.getPoint(e);
     const pts = this._activeLine.points;
-    this._lineHoverPt = this.applySplineSnap(pts[pts.length - 1], p, e);
+    let hp = this.applySplineSnap(pts[pts.length - 1], p, e);
+    const snap = this.findLineSnapPoint(p);
+    this._lineSnapPoint = snap;
+    if (snap) hp = snap;
+    this._lineHoverPt = hp;
     this.redraw(true);
     this.forceUpdate();
   }
@@ -680,10 +696,12 @@ class Component extends DCLogic {
     if (isDbl) { this.finalizeLine(); return; }
     if (!this._activeLine) this._activeLine = { points: [] };
     const pts0 = this._activeLine.points;
-    const placedPt = pts0.length ? this.applySplineSnap(pts0[pts0.length - 1], p, e) : p;
+    let placedPt = pts0.length ? this.applySplineSnap(pts0[pts0.length - 1], p, e) : p;
+    const snap = this.findLineSnapPoint(p);
+    if (snap) placedPt = snap;
     this._activeLine.points.push(placedPt);
     this._lineLastClickTime = now; this._lineLastClickPos = p;
-    this._lineHoverPt = null;
+    this._lineHoverPt = null; this._lineSnapPoint = null;
     this.redraw(true);
   }
   finalizeLine() {
@@ -1090,6 +1108,14 @@ class Component extends DCLogic {
         if (pts.length > 1) this.drawStroke(ctx, { type: 'line', color: '#1e90ff', width: 1, points: pts });
         ctx.fillStyle = '#1e90ff';
         this._activeLine.points.forEach(pt => { ctx.beginPath(); ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2); ctx.fill(); });
+        if (this._lineSnapPoint) {
+          const scale = this.getDisplayScale();
+          ctx.save();
+          ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 16;
+          ctx.strokeStyle = '#1e90ff'; ctx.lineWidth = Math.max(1.5, 2 / scale);
+          ctx.beginPath(); ctx.arc(this._lineSnapPoint.x, this._lineSnapPoint.y, 9 / scale, 0, Math.PI * 2); ctx.stroke();
+          ctx.restore();
+        }
       }
       if (this._activeSpline && this._activeSpline.points.length) {
         const pts = this._hoverPt ? [...this._activeSpline.points, this._hoverPt] : this._activeSpline.points;
