@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#8a8f99&quot;,&quot;#c8102e&quot;,&quot;#1f4e9c&quot;,&quot;#d4af37&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#f5e6c8&quot;,&quot;#8b1a1a&quot;,&quot;#1a3a8b&quot;,&quot;#2e2e2e&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blocks&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -914,7 +914,8 @@ class Component extends DCLogic {
     if (e.type !== 'pointerdown') return;
     const p = this.getPoint(e);
     const now = Date.now();
-    const isDbl = this._lineLastClickTime && (now - this._lineLastClickTime < 450) && this._lineLastClickPos && Math.hypot(p.x - this._lineLastClickPos.x, p.y - this._lineLastClickPos.y) < 14;
+    const dblTol = Math.max(10, 16 / this.getDisplayScale());
+    const isDbl = this._lineLastClickTime && (now - this._lineLastClickTime < 600) && this._lineLastClickPos && Math.hypot(p.x - this._lineLastClickPos.x, p.y - this._lineLastClickPos.y) < dblTol;
     if (isDbl) { this.finalizeLine(); return; }
     if (!this._activeLine) this._activeLine = { points: [] };
     const pts0 = this._activeLine.points;
