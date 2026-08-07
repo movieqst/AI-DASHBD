@@ -796,12 +796,12 @@ class Component extends DCLogic {
     const tol = Math.max(6, 14 / this.getDisplayScale());
     if (this.state.zoomRect && this.state.cropAdjustRect) {
       const edge = this.hitTestCropEdge(p0, this.state.cropAdjustRect, tol);
-      if (edge) { this._adjustTarget = 'cropAdjustRect'; this._adjustBounds = this.state.zoomRect; this._adjustEdge = edge; this._adjustStartRect = { ...this.state.cropAdjustRect }; return; }
+      if (edge) { this._adjustTarget = 'cropAdjustRect'; this._adjustBounds = this.state.zoomRect; this._adjustEdge = edge; this._adjustStartRect = { ...this.state.cropAdjustRect }; if (e.target.setPointerCapture) e.target.setPointerCapture(e.pointerId); return; }
     } else if (this.state.zoomPendingRect) {
       const edge = this.hitTestCropEdge(p0, this.state.zoomPendingRect, tol);
       if (edge) {
         const page = this.pages[this.state.currentPage];
-        this._adjustTarget = 'zoomPendingRect'; this._adjustBounds = { x: 0, y: 0, w: page.canvas.width, h: page.canvas.height }; this._adjustEdge = edge; this._adjustStartRect = { ...this.state.zoomPendingRect }; return;
+        this._adjustTarget = 'zoomPendingRect'; this._adjustBounds = { x: 0, y: 0, w: page.canvas.width, h: page.canvas.height }; this._adjustEdge = edge; this._adjustStartRect = { ...this.state.zoomPendingRect }; if (e.target.setPointerCapture) e.target.setPointerCapture(e.pointerId); return;
       }
     }
     const p = this.getPoint(e);
@@ -1122,7 +1122,7 @@ class Component extends DCLogic {
     } else if (!this._zoomClickFirst) {
       this._zoomClickFirst = p; this._zoomClickFirstTime = Date.now(); this.redraw();
     } else {
-      if (Date.now() - (this._zoomClickFirstTime || 0) < 1400) return;
+      if (Date.now() - (this._zoomClickFirstTime || 0) < 3000) return;
       this.finalizeZoomRect(this._zoomClickFirst, p);
       this._zoomClickFirst = null; this._zoomHover = null;
     }
@@ -1406,7 +1406,7 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#0d7a75 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#3a2415 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#1fc4bb 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#5e3d20 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#0a5a56 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#2b1a0e 40%,transparent 41%),#4a3016"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#e0c200 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#c2007a 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#fff066 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#ff5cb3 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#f2d600 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#d6006b 40%,transparent 41%),#f0a300"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
