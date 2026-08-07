@@ -176,7 +176,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#ff2d78&quot;,&quot;#00e5ff&quot;,&quot;#1a0b2e&quot;,&quot;#f5f5f5&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#e0b13f&quot;,&quot;#4a7ba6&quot;,&quot;#6b8f3f&quot;,&quot;#7a5a34&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -797,7 +797,7 @@ class Component extends DCLogic {
   toggleMeasureMode = () => {
     if (this.state.measureMode) { this.clearToolModes(); this.setState({ measureMode: false }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ measureMode: true, selectMode: false, textMode: false, zoomMode: false, penMode: false, selectedIds: [] });
+    this.setState({ measureMode: true, lineMode: false, selectMode: false, textMode: false, zoomMode: false, penMode: false, selectedIds: [] });
   };
   measurePointerDown(e) {
     this._measureDown = true; this._measureStart = this.getPoint(e); this._measureCurrent = this._measureStart;
@@ -825,12 +825,12 @@ class Component extends DCLogic {
   toggleSelectMode = () => {
     if (this.state.selectMode) { this.setState({ selectMode: false, selectedIds: [] }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ selectMode: true, selectedIds: [], textMode: false, penMode: false });
+    this.setState({ selectMode: true, selectedIds: [], lineMode: false, textMode: false, zoomMode: false, measureMode: false, penMode: false });
   };
   toggleTextMode = () => {
     if (this.state.textMode) { this._textClickFirst = null; this._textHover = null; this.setState({ textMode: false }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ textMode: true, selectMode: false, selectedIds: [], penMode: false });
+    this.setState({ textMode: true, lineMode: false, selectMode: false, zoomMode: false, measureMode: false, selectedIds: [], penMode: false });
   };
   deleteSelected = () => {
     const page = this.pages[this.state.currentPage];
@@ -1429,7 +1429,7 @@ class Component extends DCLogic {
       return;
     }
     this.clearToolModes();
-    this.setState({ zoomMode: true, textMode: false, selectMode: false, selectedIds: [], penMode: false });
+    this.setState({ zoomMode: true, lineMode: false, textMode: false, selectMode: false, measureMode: false, selectedIds: [], penMode: false });
   };
   exitZoomSelect = () => {
     this._zoomClickFirst = null; this._zoomHover = null; this._zoomDown = false; this._zoomDragged = false;
