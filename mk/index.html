@@ -106,14 +106,14 @@
     <div onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onClick="{{ onBrowseClick }}" style="{{ dropZoneStyle }}">
       <div ref="{{ dzBgRef }}" style="position:absolute;inset:0;z-index:0;image-rendering:pixelated;"></div>
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=6&data=http%3A%2F%2Faidashbd.com%2FEEZMARKUP%2F" alt="QR code to open EEZMARKUP" style="width:140px;height:140px;background:#fff;margin-bottom:18px;position:relative;z-index:1;"/>
-      <div style="font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;color:#333333;-webkit-text-stroke:1px #ffffff;text-shadow:0 0 2px #ffffff,0 0 2px #ffffff;text-transform:uppercase;position:relative;z-index:1;">JPG · PNG · GIF · WEBP · PDF</div>
+      <div style="font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;color:#3a3a3a;text-transform:uppercase;position:relative;z-index:1;">JPG · PNG · GIF · WEBP · PDF</div>
       <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:1;">
-        <button onClick="{{ onBrowseClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #ffee00;color:#ffee00;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:#ff9500;color:#ff9500;">Open  Img</button>
+        <button onClick="{{ onBrowseClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #3a3a3a;color:#3a3a3a;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:#3a3a3a;color:#3a3a3a;">Open  Img</button>
         <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ true }}">
-          <button onClick="{{ onCameraClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Take  Photo</button>
+          <button onClick="{{ onCameraClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #3a3a3a;color:#3a3a3a;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:#3a3a3a;color:#3a3a3a;">Take  Photo</button>
         </sc-if>
       </div>
-      <div style="margin-top:20px;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-accent-300,#a9c1d6);position:relative;z-index:1;">{{ processingLabel }}</div>
+      <div style="margin-top:20px;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:#3a3a3a;position:relative;z-index:1;">{{ processingLabel }}</div>
     </div>
   </sc-if>
 
@@ -176,7 +176,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#ff6b81&quot;,&quot;#fff0f3&quot;,&quot;#ffb3c1&quot;,&quot;#c94f6d&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#2e3b1f&quot;,&quot;#0e0e0c&quot;,&quot;#5c4a2e&quot;,&quot;#7a6a3f&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -654,6 +654,7 @@ class Component extends DCLogic {
     return (pxDist / pxPerInch) * scale.ratio;
   }
   linePointerUp(e) {
+    if (e.type !== 'pointerup') return;
     const p = this.getPoint(e);
     const now = Date.now();
     const isDbl = this._lineLastClickTime && (now - this._lineLastClickTime < 450) && this._lineLastClickPos && Math.hypot(p.x - this._lineLastClickPos.x, p.y - this._lineLastClickPos.y) < 14;
@@ -950,6 +951,10 @@ class Component extends DCLogic {
       }
       return;
     }
+    if (this.state.selectMode && this.state.selectedIds.length) {
+      this._textHoverPoint = this.getPoint(e);
+      this.redraw();
+    }
     if (this._adjustEdge) { this.updateAdjustRect(this.getPoint(e)); this.redraw(); return; }
     if ((this.state.zoomPendingRect || this.state.cropAdjustRect) && !this.state.zoomMode) {
       this._rectHoverPoint = this.getPoint(e);
@@ -1095,10 +1100,23 @@ class Component extends DCLogic {
       const ctx2 = this.canvasRef.current.getContext('2d');
       ctx2.font = `600 ${stroke.fontSize || 40}px 'Barlow', sans-serif`;
       const w = Math.max(90, ctx2.measureText(stroke.text || '').width); const h = stroke.fontSize || 40;
+      const hoverP = this._textHoverPoint;
+      const boxHover = !!(hoverP && hoverP.x >= stroke.x - 10 && hoverP.x <= stroke.x + w + 10 && hoverP.y >= stroke.y - h / 2 - 10 && hoverP.y <= stroke.y + h / 2 + 10);
       ctx.save();
+      if (boxHover) { ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 18; }
       ctx.strokeStyle = '#1e90ff'; ctx.lineWidth = Math.max(1.5, 2.5 / scale); ctx.setLineDash([6 / scale, 6 / scale]);
       ctx.strokeRect(stroke.x - 10, stroke.y - h / 2 - 10, w + 20, h + 20);
       ctx.restore();
+      if (stroke.arrowFrom) {
+        const dotTol = Math.max(10, 16 / scale);
+        const dotHover = !!(hoverP && !boxHover && Math.hypot(hoverP.x - stroke.arrowFrom.x, hoverP.y - stroke.arrowFrom.y) <= dotTol);
+        ctx.save();
+        if (dotHover) { ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 16; }
+        ctx.beginPath(); ctx.arc(stroke.arrowFrom.x, stroke.arrowFrom.y, 2 / scale, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff'; ctx.fill();
+        ctx.lineWidth = Math.max(0.5, 1 / scale); ctx.strokeStyle = '#1e90ff'; ctx.stroke();
+        ctx.restore();
+      }
       return;
     }
     const pts = stroke.points; if (!pts || pts.length < 2) return;
