@@ -82,9 +82,9 @@
         <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:flex-start;">
           <sc-if value="{{ lengthScaleBarVisible }}" hint-placeholder-val="{{ false }}">
             <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Length:</div>
-            <input ref="{{ lengthFtInputRef }}" value="{{ lengthFt }}" onChange="{{ onLengthFtChange }}" onKeyDown="{{ onLengthKeyDown }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
+            <input ref="{{ lengthFtInputRef }}" value="{{ lengthFt }}" onChange="{{ onLengthFtChange }}" onKeyDown="{{ onLengthKeyDown }}" readOnly="{{ lengthReadOnly }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
             <div style="font-size:12px;color:rgba(255,255,255,0.5);">ft</div>
-            <input value="{{ lengthIn }}" onChange="{{ onLengthInChange }}" onKeyDown="{{ onLengthKeyDown }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
+            <input value="{{ lengthIn }}" onChange="{{ onLengthInChange }}" onKeyDown="{{ onLengthKeyDown }}" readOnly="{{ lengthReadOnly }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
             <div style="font-size:12px;color:rgba(255,255,255,0.5);">in</div>
           </sc-if>
         </div>
@@ -604,6 +604,15 @@ class Component extends DCLogic {
     const pts = this._activeLine.points;
     this._lineHoverPt = this.applySplineSnap(pts[pts.length - 1], p, e);
     this.redraw(true);
+    this.forceUpdate();
+  }
+  computeLiveLineInches(page) {
+    if (!this._activeLine || !this._activeLine.points.length || !this._lineHoverPt) return null;
+    const anchor = this._activeLine.points[this._activeLine.points.length - 1];
+    const pxDist = Math.hypot(this._lineHoverPt.x - anchor.x, this._lineHoverPt.y - anchor.y);
+    const scale = (page && page.scale) || { ratio: 1 };
+    const pxPerInch = (page && page.pxPerInch) || 96;
+    return (pxDist / pxPerInch) * scale.ratio;
   }
   linePointerUp(e) {
     const p = this.getPoint(e);
@@ -663,6 +672,19 @@ class Component extends DCLogic {
     if (!page || this.state.selectedIds.length !== 1) return null;
     const s = page.strokes.find(st => st.id === this.state.selectedIds[0]);
     return (s && s.type === 'measure') ? s : null;
+  }
+  computeDisplayLengthFields() {
+    if (this.state.lengthFrozen) return { ft: this.state.lineLengthFt, inch: this.state.lineLengthIn };
+    if (this.state.lineMode && this._activeLine && this._activeLine.points.length && this._lineHoverPt) {
+      const page = this.pages[this.state.currentPage];
+      const realInches = this.computeLiveLineInches(page);
+      if (realInches != null) {
+        const feet = Math.floor(realInches / 12);
+        const inch = Math.round((realInches - feet * 12) * 100) / 100;
+        return { ft: String(feet), inch: String(inch) };
+      }
+    }
+    return this.getLengthFields();
   }
   getLengthFields() {
     const s = this.getSelectedMeasureStroke();
@@ -911,7 +933,8 @@ class Component extends DCLogic {
     if (dist < 0.0001) return to;
     const inc = incDeg * Math.PI / 180;
     const angle = Math.round(Math.atan2(dy, dx) / inc) * inc;
-    return { x: from.x + dist * Math.cos(angle), y: from.y + dist * Math.sin(angle) };
+    const proj = dx * Math.cos(angle) + dy * Math.sin(angle);
+    return { x: from.x + proj * Math.cos(angle), y: from.y + proj * Math.sin(angle) };
   }
   onPointerUp = (e) => {
     if (this.state.lineMode) return this.linePointerUp(e);
@@ -1492,7 +1515,7 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#7a0f9e 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#c4001f 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#a92ecc 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#e6002e 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#5c0a78 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#8f0019 40%,transparent 41%),#6e0e8c"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : '#0a0a0a'};cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
@@ -1539,14 +1562,15 @@ class Component extends DCLogic {
       rotateBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.rotateMode ? '#e2ff00' : 'transparent'};border:1px solid ${this.state.rotateMode ? '#e2ff00' : 'rgba(255,255,255,0.25)'};color:${this.state.rotateMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       measureMode: this.state.measureMode, toggleMeasureMode: this.toggleMeasureMode,
       measureBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.measureMode ? '#00e04a' : 'transparent'};border:1px solid ${this.state.measureMode ? '#00e04a' : 'rgba(255,255,255,0.25)'};color:${this.state.measureMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
-      lengthFt: this.state.lengthFrozen ? this.state.lineLengthFt : this.getLengthFields().ft,
-      lengthIn: this.state.lengthFrozen ? this.state.lineLengthIn : this.getLengthFields().inch,
+      lengthFt: this.computeDisplayLengthFields().ft,
+      lengthIn: this.computeDisplayLengthFields().inch,
+      lengthReadOnly: this.state.lineMode && !!this._activeLine && this._activeLine.points.length > 0 && !this.state.lengthFrozen,
       onLengthFtChange: this.state.lengthFrozen ? this.onLineLengthFtChange : (e) => this.onLengthFieldChange('ft', e.target.value),
       onLengthInChange: this.state.lengthFrozen ? this.onLineLengthInChange : (e) => this.onLengthFieldChange('in', e.target.value),
       onAddScaleClick: this.onAddScaleClick,
       onCanvasContextMenu: this.onCanvasContextMenu,
       lineHintVisible: this.state.lineMode,
-      lengthScaleBarVisible: this.state.isDesktop && (this.state.lengthFrozen || !!(this.state.isPdf && this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale && !this.pages[this.state.currentPage].scale.assumed)),
+      lengthScaleBarVisible: this.state.isDesktop && (this.state.lengthFrozen || (this.state.lineMode && !!this._activeLine && this._activeLine.points.length > 0) || !!(this.state.isPdf && this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale && !this.pages[this.state.currentPage].scale.assumed)),
       onLengthKeyDown: this.state.lengthFrozen ? this.onLineLengthKeyDown : undefined,
       lengthFtInputRef: this.lengthFtInputRef
     };
