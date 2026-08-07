@@ -79,11 +79,33 @@
     <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.14);background:#000;padding:10px 16px;">
       <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;">
+          <button onClick="{{ clearBtnHandler }}" style="{{ clearBtnStyle }}">{{ clearBtnLabel }}</button>
           <button onClick="{{ undo }}" style="width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);"><span>Unmark</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <button onClick="{{ redo }}" style="width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);"><span>Remark</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
-          <button onClick="{{ toggleSelectMode }}" style="{{ selectBtnStyle }}"><span>Select</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <button onClick="{{ togglePenMode }}" style="{{ penBtnStyle }}"><span>Pen</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
-          <button onClick="{{ toggleTextMode }}" style="{{ textBtnStyle }}"><span>Text</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
+          <div style="position:relative;">
+            <button onClick="{{ openAnnoNotepad }}" title="Annotation Notes" style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:22px;height:14px;padding:0;background:#1a1c1f;border:1px solid rgba(255,255,255,0.35);border-bottom:none;border-radius:3px 3px 0 0;color:#f2f2f3;font-size:8px;line-height:1;cursor:pointer;z-index:2;">▤</button>
+            <button onClick="{{ toggleTextMode }}" style="{{ textBtnStyle }}"><span>Text</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
+          </div>
+          <sc-if value="{{ showAnnoNotepad }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ annoNotepadStyle }}">
+              <div onPointerDown="{{ onNotepadDragStart }}" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:#1a1c1f;border-bottom:1px solid rgba(255,255,255,0.15);cursor:move;">
+                <span style="font-family:var(--font-body,'Barlow',sans-serif);font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:#f2f2f3;">Annotation Notes</span>
+                <button onClick="{{ closeAnnoNotepad }}" style="background:transparent;border:none;color:#f2f2f3;font-size:16px;line-height:1;cursor:pointer;padding:2px 4px;">×</button>
+              </div>
+              <div style="overflow-y:auto;flex:1;padding:10px;display:flex;flex-direction:column;gap:10px;">
+                <sc-for list="{{ annoEntries }}" as="entry" hint-placeholder-count="2">
+                  <div style="display:flex;flex-direction:column;gap:4px;">
+                    <div style="font-size:11px;color:rgba(255,255,255,0.5);font-family:var(--font-body,'Barlow',sans-serif);">#{{ entry.number }} — Page {{ entry.pageLabel }}</div>
+                    <textarea value="{{ entry.text }}" onChange="{{ entry.onChange }}" rows="2" style="width:100%;box-sizing:border-box;background:#0c0c0d;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;padding:6px;resize:vertical;"></textarea>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ annoEmpty }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:13px;color:rgba(255,255,255,0.4);font-family:var(--font-body,'Barlow',sans-serif);">No numbered callouts yet.</div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
           <sc-if value="{{ showRenumberBtn }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ renumberCallouts }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Renumber</button>
           </sc-if>
@@ -103,7 +125,7 @@
           </sc-if>
         </div>
         <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;">
-          <button onClick="{{ clearBtnHandler }}" style="{{ clearBtnStyle }}">{{ clearBtnLabel }}</button>
+          <button onClick="{{ toggleSelectMode }}" style="{{ selectBtnStyle }}"><span>Select</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <button onClick="{{ toggleZoomMode }}" style="{{ zoomBtnStyle }}">Zoom</button>
           <sc-if value="{{ zoomLockVisible }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ toggleZoomLock }}" style="{{ zoomLockBtnStyle }}">Lock</button>
@@ -145,8 +167,8 @@
         <div style="font-family:var(--font-heading,'Barlow Condensed',sans-serif);font-size:22px;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-accent-300,#a9c1d6);margin-bottom:20px;">Custom Thickness</div>
         <div style="{{ thicknessPreviewStyle }}"></div>
         <div style="display:flex;align-items:center;gap:12px;margin-top:24px;">
-          <input type="range" min="1" max="150" value="{{ strokeWidth }}" onChange="{{ onThicknessChange }}" style="flex:1;"></input>
-          <input type="number" min="1" max="150" value="{{ strokeWidth }}" onChange="{{ onThicknessChange }}" style="width:64px;height:32px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:14px;text-align:center;"></input>
+          <input type="range" min="1" max="550" value="{{ strokeWidth }}" onChange="{{ onThicknessChange }}" style="flex:1;"></input>
+          <input type="number" min="1" max="550" value="{{ strokeWidth }}" onChange="{{ onThicknessChange }}" style="width:64px;height:32px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:14px;text-align:center;"></input>
         </div>
         <div style="display:flex;justify-content:flex-end;margin-top:24px;">
           <button onClick="{{ closeThicknessPopup }}" style="padding:10px 18px;background:var(--color-accent-500,#5980a6);border:1px solid var(--color-accent-500,#5980a6);color:#04121d;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:0.04em;cursor:pointer;">Done</button>
@@ -191,10 +213,20 @@
             </label>
           </sc-if>
           <sc-if value="{{ showStripTextToggle }}" hint-placeholder-val="{{ false }}">
-            <label style="display:flex;align-items:center;gap:8px;padding:6px 2px 20px 26px;font-size:13px;color:rgba(255,255,255,0.75);font-family:var(--font-body,'Barlow',sans-serif);cursor:pointer;">
+            <label style="display:flex;align-items:center;gap:8px;padding:6px 2px 4px 26px;font-size:13px;color:rgba(255,255,255,0.75);font-family:var(--font-body,'Barlow',sans-serif);cursor:pointer;">
               <input type="checkbox" checked="{{ stripAnnotationText }}" onChange="{{ toggleStripAnnotationText }}" style="accent-color:var(--color-accent-500,#5980a6);cursor:pointer;"></input>
               <span>Remove callout text from photos (keep dot &amp; number only)</span>
             </label>
+            <label style="display:flex;align-items:center;gap:8px;padding:4px 2px 4px 26px;font-size:13px;color:rgba(255,255,255,0.75);font-family:var(--font-body,'Barlow',sans-serif);cursor:pointer;">
+              <input type="checkbox" checked="{{ combineWithLegend }}" onChange="{{ toggleCombineWithLegend }}" style="accent-color:var(--color-accent-500,#5980a6);cursor:pointer;"></input>
+              <span>Combine each page with the Annotation List on one sheet</span>
+            </label>
+            <sc-if value="{{ combineWithLegend }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:10px;padding:4px 2px 16px 26px;">
+                <button onClick="{{ cycleCombineRotation }}" style="padding:6px 12px;background:transparent;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:12px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;">⟳ Rotate photo</button>
+                <span style="font-size:12px;color:rgba(255,255,255,0.5);font-family:var(--font-body,'Barlow',sans-serif);">{{ combineRotation }}°</span>
+              </div>
+            </sc-if>
           </sc-if>
         </sc-if>
 
@@ -217,7 +249,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#1c2b3a&quot;,&quot;#3d5a73&quot;,&quot;#7a8fa3&quot;,&quot;#c9d3da&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#2b3a1f&quot;,&quot;#4a5d2e&quot;,&quot;#3a2e1f&quot;,&quot;#6b6248&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -242,9 +274,11 @@ class Component extends DCLogic {
     showSaveDialog: false,
     saveFormat: 'jpg',
     saveScope: 'active', selectedSavePages: [], includeAnnotationList: false, stripAnnotationText: false,
+    combineWithLegend: false, combineRotation: 0,
     zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, justCropped: false, zoomPendingRect: null, rectMode: 'crop',
     isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
     editingTextId: null, editingTextDraft: '', tipMenu: null,
+    annoNotepadOpen: false, annoNotepadPos: { x: 140, y: 140 },
     rotateMode: false, loadProgress: '', measureMode: false, lineMode: false,
     lengthFrozen: false, lineLengthFt: '', lineLengthIn: '', penMode: true, zoomLock: false
   };
@@ -1621,34 +1655,31 @@ class Component extends DCLogic {
       const ctx2 = this.canvasRef.current.getContext('2d');
       ctx2.font = `600 ${stroke.fontSize || 40}px 'Barlow', sans-serif`;
       const w = Math.max(90, ctx2.measureText(stroke.text || '').width); const h = stroke.fontSize || 40;
-      const hoverP = this._textHoverPoint;
-      const boxHover = !!(hoverP && hoverP.x >= stroke.x - 10 && hoverP.x <= stroke.x + w + 10 && hoverP.y >= stroke.y - h / 2 - 10 && hoverP.y <= stroke.y + h / 2 + 10);
       ctx.save();
-      ctx.shadowColor = 'rgba(200,0,0,0.1)'; ctx.shadowBlur = 4; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 2;
-      ctx.strokeStyle = '#c80000'; ctx.lineWidth = Math.max(1.5, 2.5 / scale); ctx.setLineDash([6 / scale, 6 / scale]);
+      ctx.shadowColor = 'rgba(255,59,48,0.9)'; ctx.shadowBlur = 16 / scale; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+      ctx.strokeStyle = 'rgba(255,59,48,0.35)'; ctx.lineWidth = Math.max(1, 2 / scale); ctx.setLineDash([]);
       ctx.strokeRect(stroke.x - 10, stroke.y - h / 2 - 10, w + 20, h + 20);
       ctx.restore();
       if (stroke.arrowFrom) {
-        const dotTol = Math.max(10, 16 / scale);
-        const dotHover = !!(hoverP && !boxHover && Math.hypot(hoverP.x - stroke.arrowFrom.x, hoverP.y - stroke.arrowFrom.y) <= dotTol);
         ctx.save();
-        ctx.shadowColor = 'rgba(200,0,0,0.1)'; ctx.shadowBlur = 4; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 2;
+        ctx.shadowColor = 'rgba(255,59,48,0.9)'; ctx.shadowBlur = 12 / scale; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
         ctx.beginPath(); ctx.arc(stroke.arrowFrom.x, stroke.arrowFrom.y, 2 / scale, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff'; ctx.fill();
-        ctx.lineWidth = Math.max(0.5, 1 / scale); ctx.strokeStyle = '#c80000'; ctx.stroke();
+        ctx.fillStyle = 'rgba(255,59,48,0.35)'; ctx.fill();
         ctx.restore();
       }
+      this.drawTextStroke(ctx, stroke);
       return;
     }
     const pts = stroke.points; if (!pts || pts.length < 2) return;
     ctx.save();
-    ctx.shadowColor = 'rgba(200,0,0,0.1)'; ctx.shadowBlur = 4; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 2;
-    ctx.strokeStyle = '#c80000'; ctx.lineWidth = stroke.width + 8 / scale; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    ctx.setLineDash([6 / scale, 6 / scale]);
+    ctx.shadowColor = 'rgba(255,59,48,0.9)'; ctx.shadowBlur = 18 / scale; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+    ctx.strokeStyle = 'rgba(255,59,48,0.3)'; ctx.lineWidth = stroke.width + 18 / scale; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.setLineDash([]);
     ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
     for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
     ctx.stroke();
     ctx.restore();
+    this.drawStroke(ctx, stroke);
   }
 
   hitTestCropEdge(p, r, tol) {
@@ -2088,6 +2119,44 @@ class Component extends DCLogic {
   closeSaveDialog = () => this.setState({ showSaveDialog: false });
 
   hasAnyCallouts() { return (this.pages || []).some(pg => pg.strokes.some(s => s.type === 'text' && s.number)); }
+  rotateCanvas(canvas, deg) {
+    if (!deg) return canvas;
+    const swap = deg === 90 || deg === 270;
+    const out = document.createElement('canvas');
+    out.width = swap ? canvas.height : canvas.width;
+    out.height = swap ? canvas.width : canvas.height;
+    const ctx = out.getContext('2d');
+    ctx.translate(out.width / 2, out.height / 2);
+    ctx.rotate(deg * Math.PI / 180);
+    ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
+    return out;
+  }
+  buildCombinedCanvas(photoCanvas, legendCanvas, rotationDeg) {
+    const rp = this.rotateCanvas(photoCanvas, rotationDeg);
+    const scaleToHeight = (c, h) => { const s = h / c.height; return { w: c.width * s, h }; };
+    const scaleToWidth = (c, w) => { const s = w / c.width; return { w, h: c.height * s }; };
+    const sideBySide = scaleToHeight(legendCanvas, rp.height);
+    const sideW = rp.width + sideBySide.w, sideH = rp.height;
+    const stacked = scaleToWidth(legendCanvas, rp.width);
+    const stackW = rp.width, stackH = rp.height + stacked.h;
+    const aspectExtremity = (w, h) => Math.max(w, h) / Math.min(w, h);
+    const useSideBySide = aspectExtremity(sideW, sideH) <= aspectExtremity(stackW, stackH);
+    const out = document.createElement('canvas');
+    const ctx0 = () => out.getContext('2d');
+    if (useSideBySide) {
+      out.width = sideW; out.height = sideH;
+      const ctx = ctx0(); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, out.width, out.height);
+      ctx.drawImage(rp, 0, 0);
+      ctx.drawImage(legendCanvas, rp.width, 0, sideBySide.w, sideBySide.h);
+    } else {
+      out.width = stackW; out.height = stackH;
+      const ctx = ctx0(); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, out.width, out.height);
+      ctx.drawImage(rp, 0, 0);
+      ctx.drawImage(legendCanvas, 0, rp.height, stacked.w, stacked.h);
+    }
+    return out;
+  }
+  cycleCombineRotation = () => this.setState({ combineRotation: (this.state.combineRotation + 90) % 360 });
   buildLegendCanvas(refPage) {
     const W = (refPage && refPage.canvas && refPage.canvas.width) || 1700, H = (refPage && refPage.canvas && refPage.canvas.height) || 2200;
     const canvas = document.createElement('canvas');
@@ -2147,8 +2216,22 @@ class Component extends DCLogic {
     const jsPDFCtor = window.jspdf && window.jspdf.jsPDF;
     if (!jsPDFCtor) { alert('PDF export not available.'); return; }
     let doc = null;
-    if (this.state.includeAnnotationList && this.hasAnyCallouts()) chosen = [...chosen, { _legend: true, canvas: this.buildLegendCanvas(chosen[0]) }];
+    const wantsLegend = this.state.includeAnnotationList && this.hasAnyCallouts();
+    if (wantsLegend && this.state.combineWithLegend) {
+      const legendCanvas = this.buildLegendCanvas(chosen[0]);
+      chosen = chosen.map(page => ({ _combined: true, canvas: this.buildCombinedCanvas(this.flattenPage(page, this.state.stripAnnotationText), legendCanvas, this.state.combineRotation) }));
+    } else if (wantsLegend) {
+      chosen = [...chosen, { _legend: true, canvas: this.buildLegendCanvas(chosen[0]) }];
+    }
     chosen.forEach((page, i) => {
+      if (page._combined) {
+        const dataUrlC = page.canvas.toDataURL('image/jpeg', 0.95);
+        const wc = page.canvas.width, hc = page.canvas.height;
+        if (i === 0) doc = new jsPDFCtor({ unit: 'px', format: [wc, hc], orientation: wc >= hc ? 'l' : 'p' });
+        else doc.addPage([wc, hc], wc >= hc ? 'l' : 'p');
+        doc.addImage(dataUrlC, 'JPEG', 0, 0, wc, hc);
+        return;
+      }
       if (page._legend) {
         const dataUrl0 = page.canvas.toDataURL('image/jpeg', 0.95);
         const w0 = page.canvas.width, h0 = page.canvas.height;
@@ -2192,6 +2275,37 @@ class Component extends DCLogic {
     (this.pages || []).forEach(pg => pg.strokes.forEach(s => { if (s.type === 'text' && s.number > max) max = s.number; }));
     return max + 1;
   }
+  openAnnoNotepad = () => this.setState({ annoNotepadOpen: true });
+  closeAnnoNotepad = () => this.setState({ annoNotepadOpen: false });
+  onNotepadDragStart = (e) => {
+    e.preventDefault();
+    const startX = e.clientX, startY = e.clientY;
+    const origin = { ...this.state.annoNotepadPos };
+    const onMove = (ev) => {
+      this.setState({ annoNotepadPos: { x: origin.x + (ev.clientX - startX), y: origin.y + (ev.clientY - startY) } });
+    };
+    const onUp = () => { window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); };
+    window.addEventListener('pointermove', onMove); window.addEventListener('pointerup', onUp);
+  };
+  buildAnnoEntries() {
+    const entries = [];
+    (this.pages || []).forEach((pg, pi) => pg.strokes.forEach(s => {
+      if (s.type === 'text' && s.number) {
+        entries.push({
+          number: s.number, pageLabel: String(pi + 1), text: s.text || '',
+          onChange: (e) => {
+            const prevStrokes = this.cloneStrokes(pg.strokes);
+            s.text = e.target.value;
+            this.pushUndo(pi, { kind: 'strokes', prevStrokes });
+            this.forceUpdate();
+            if (pi === this.state.currentPage) this.redraw();
+          }
+        });
+      }
+    }));
+    entries.sort((a, b) => a.number - b.number);
+    return entries;
+  }
   renumberCallouts = () => {
     if (!this.pages) return;
     const all = [];
@@ -2202,7 +2316,7 @@ class Component extends DCLogic {
     this.scheduleAutosave();
   };
   buildWidthItems() {
-    const items = [3, 16, 400, 54, 84, 124].map(v => {
+    const items = [3, 16, 24, 54, 84, 124].map(v => {
       const selected = this.state.strokeWidth === v;
       const diameter = Math.min(34, Math.round(6 + Math.sqrt(v) * 3));
       return {
@@ -2223,7 +2337,7 @@ class Component extends DCLogic {
   openThicknessPopup = () => this.setState({ showThicknessPopup: true });
   closeThicknessPopup = () => this.setState({ showThicknessPopup: false });
   onThicknessChange = (e) => {
-    const v = Math.max(1, Math.min(150, parseInt(e.target.value, 10) || 1));
+    const v = Math.max(1, Math.min(550, parseInt(e.target.value, 10) || 1));
     this.setState({ strokeWidth: v });
   };
   buildFormatItems() {
@@ -2304,6 +2418,9 @@ class Component extends DCLogic {
       showStripTextToggle: this.state.includeAnnotationList,
       stripAnnotationText: this.state.stripAnnotationText,
       toggleStripAnnotationText: () => this.setState({ stripAnnotationText: !this.state.stripAnnotationText }),
+      combineWithLegend: this.state.combineWithLegend,
+      toggleCombineWithLegend: () => this.setState({ combineWithLegend: !this.state.combineWithLegend }),
+      combineRotation: this.state.combineRotation, cycleCombineRotation: this.cycleCombineRotation,
       filenamePreview: this.filenamePreview(),
       closeSaveDialog: this.closeSaveDialog, performSave: this.performSave, performCrop: this.performCrop,
       isDesktop: this.state.isDesktop, isMobile: !this.state.isDesktop, undo: this.undo, redo: this.redo,
@@ -2312,6 +2429,12 @@ class Component extends DCLogic {
       textBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.textMode ? this.state.textColor : 'transparent'};border:1px solid ${this.state.textMode ? this.state.textColor : 'rgba(255,255,255,0.25)'};color:${this.state.textMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       showDeleteBtn: this.state.selectMode && this.state.selectedIds.length > 0,
       renumberCallouts: this.renumberCallouts,
+      openAnnoNotepad: this.openAnnoNotepad, closeAnnoNotepad: this.closeAnnoNotepad,
+      onNotepadDragStart: this.onNotepadDragStart,
+      showAnnoNotepad: this.state.annoNotepadOpen,
+      annoEntries: this.buildAnnoEntries(),
+      annoEmpty: this.buildAnnoEntries().length === 0,
+      annoNotepadStyle: `position:fixed;left:${this.state.annoNotepadPos.x}px;top:${this.state.annoNotepadPos.y}px;width:280px;max-height:360px;display:flex;flex-direction:column;background:#0c0c0d;border:1px solid var(--color-accent-700,#3d5872);box-shadow:0 8px 24px rgba(0,0,0,0.5);z-index:40;`,
       showRenumberBtn: this.state.loaded && (this.pages || []).some(pg => pg.strokes.some(s => s.type === 'text')),
       selectBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.selectMode ? '#7a7a7a' : 'transparent'};border:1px solid ${this.state.selectMode ? '#7a7a7a' : 'rgba(255,255,255,0.25)'};color:${this.state.selectMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       showCornerMarks: this.props.showCornerMarks ?? true,
@@ -2322,7 +2445,7 @@ class Component extends DCLogic {
       zoomLockBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:#000000;border:1px solid #ffffff;color:#ffffff;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;${this.state.zoomLock ? 'box-shadow:inset 0 0 10px 3px #ff9500;' : ''}`,
       showThicknessPopup: this.state.showThicknessPopup, closeThicknessPopup: this.closeThicknessPopup,
       onThicknessChange: this.onThicknessChange, strokeWidth: this.state.strokeWidth,
-      thicknessPreviewStyle: `width:100%;height:${Math.min(150, this.state.strokeWidth)}px;background:${this.state.color};border-radius:${Math.min(150, this.state.strokeWidth) / 2}px;`,
+      thicknessPreviewStyle: `width:100%;height:${Math.min(200, this.state.strokeWidth)}px;background:${this.state.color};border-radius:${Math.min(200, this.state.strokeWidth) / 2}px;`,
       toggleZoomMode: this.toggleZoomMode,
       zoomBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'transparent'};border:1px solid ${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '18px' : '13px'};letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;${((this.state.zoomPendingRect || this.state.cropAdjustRect) && this.state.rectMode === 'zoom') ? 'box-shadow:0 0 14px 4px #ffffff;' : ''}`,
       zoomHintVisible: this.state.zoomMode,
