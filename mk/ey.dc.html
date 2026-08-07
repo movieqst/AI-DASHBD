@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#0d1a0d&quot;,&quot;#c8102e&quot;,&quot;#0f7a3e&quot;,&quot;#f0e6c8&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#0a1a3a&quot;,&quot;#c8102e&quot;,&quot;#ffffff&quot;,&quot;#1f4e9c&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -251,12 +251,13 @@ class Component extends DCLogic {
     const streakCount = Math.round(90 + intensity * 340);
     const minLen = 10 + intensity * 20, maxLen = 40 + intensity * 220;
     const alphaBoost = 0.25 + intensity * 0.35;
+    const baseTilt = Math.random() * 16 - 8;
     for (let i = 0; i < streakCount; i++) {
       const x = Math.random() * N;
       const len = minLen + Math.random() * maxLen;
       const y0 = Math.random() * N - len * 0.5;
       const width = 1 + Math.random() * (1.5 + intensity * 1.5);
-      const tilt = (5 + (Math.random() * 2 - 1)) * Math.PI / 180;
+      const tilt = (baseTilt + (Math.random() * 2 - 1)) * Math.PI / 180;
       ctx.globalAlpha = alphaBoost + Math.random() * (0.65 - intensity * 0.15);
       ctx.fillStyle = streakColors[Math.floor(Math.random() * streakColors.length)];
       ctx.save();
@@ -264,6 +265,24 @@ class Component extends DCLogic {
       ctx.rotate(tilt);
       ctx.fillRect(0, 0, width, len);
       ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+    const starCount = 45;
+    for (let i = 0; i < starCount; i++) {
+      const sx = Math.random() * N, sy = Math.random() * N;
+      const r = 0.8 + Math.random() * 1.8;
+      ctx.globalAlpha = 0.5 + Math.random() * 0.5;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(sx, sy, r, 0, Math.PI * 2);
+      ctx.fill();
+      if (Math.random() < 0.3) {
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 0.6;
+        ctx.beginPath(); ctx.moveTo(sx - r * 2.5, sy); ctx.lineTo(sx + r * 2.5, sy);
+        ctx.moveTo(sx, sy - r * 2.5); ctx.lineTo(sx, sy + r * 2.5);
+        ctx.stroke();
+      }
     }
     ctx.globalAlpha = 1;
     return canvas;
@@ -389,7 +408,7 @@ class Component extends DCLogic {
         e.preventDefault();
         if (this.state.lengthFrozen) { this.commitFrozenLineLength(); return; }
         if (this.state.lineMode && this._activeLine && this._activeLine.points.length >= 1) { this.freezeLineLength(); return; }
-        if (e.key.toLowerCase() === 'l') { this.toggleLineMode(); return; }
+        if (e.key.toLowerCase() === 'l' && !this.state.lineMode) { this.toggleLineMode(); return; }
         return;
       }
     }
@@ -400,7 +419,8 @@ class Component extends DCLogic {
       if (this.state.lengthFrozen) { if (this.lengthFtInputRef.current) this.lengthFtInputRef.current.blur(); this.setState({ lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw()); return; }
       if (this.state.lineMode) {
         if (this._activeLine && this._activeLine.points.length >= 2) this.finalizeLine();
-        else { this._activeLine = null; this._lineHoverPt = null; this.redraw(); }
+        else { this._activeLine = null; this._lineHoverPt = null; }
+        this.setState({ lineMode: false, lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw());
         return;
       }
       if (this.state.textMode) { this._textDown = false; this._textClickFirst = null; this._textHover = null; this.redraw(); return; }
@@ -1178,7 +1198,9 @@ class Component extends DCLogic {
     const dx = to.x - from.x, dy = to.y - from.y;
     let proj = dx * dirX + dy * dirY;
     this._lineMagnetPoint = null;
-    const candidates = this._activeLine ? this._activeLine.points : (this._activeSpline ? this._activeSpline.points : []);
+    const candidates = this._activeLine ? this._activeLine.points.slice() : (this._activeSpline ? this._activeSpline.points.slice() : []);
+    const page = this.pages[this.state.currentPage];
+    if (page) page.strokes.forEach(s => { if (s.type === 'line' && s.points) candidates.push(...s.points); });
     if (candidates && candidates.length) {
       const scale = this.getDisplayScale();
       const radius = Math.max(10, 14 / scale);
