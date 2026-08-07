@@ -60,7 +60,10 @@
           <button onClick="{{ c.select }}" style="{{ c.style }}" title="{{ c.name }}"></button>
         </sc-for>
       </div>
-      <canvas ref="{{ canvasRef }}" onPointerDown="{{ onPointerDown }}" onPointerMove="{{ onPointerMove }}" onPointerUp="{{ onPointerUp }}" onPointerLeave="{{ onPointerUp }}" onDoubleClick="{{ onCanvasDoubleClick }}" style="{{ canvasStyle }}"></canvas>
+      <canvas ref="{{ canvasRef }}" onPointerDown="{{ onPointerDown }}" onPointerMove="{{ onPointerMove }}" onPointerUp="{{ onPointerUp }}" onPointerLeave="{{ onPointerUp }}" onDoubleClick="{{ onCanvasDoubleClick }}" onContextMenu="{{ onCanvasContextMenu }}" style="{{ canvasStyle }}"></canvas>
+      <sc-if value="{{ lineHintVisible }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:#1e90ff;background:rgba(0,0,0,0.6);padding:6px 14px;white-space:nowrap;">Line — Click Points, Double-Click/Right-Click/Esc to Finish, Ctrl 90°, Ctrl+Shift 30°</div>
+      </sc-if>
       <sc-if value="{{ editingTextVisible }}" hint-placeholder-val="{{ false }}">
         <input ref="{{ editTextInputRef }}" value="{{ editingTextDraft }}" onChange="{{ onEditTextChange }}" onKeyDown="{{ onEditTextKeyDown }}" onBlur="{{ commitEditText }}" style="{{ editTextStyle }}"></input>
       </sc-if>
@@ -177,7 +180,7 @@ class Component extends DCLogic {
     zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, justCropped: false, zoomPendingRect: null, rectMode: 'crop',
     isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
     editingTextId: null, editingTextDraft: '',
-    rotateMode: false, loadProgress: '', measureMode: false
+    rotateMode: false, loadProgress: '', measureMode: false, lineMode: false
   };
 
   componentDidMount() {
@@ -196,10 +199,19 @@ class Component extends DCLogic {
   }
   onWindowResize = () => { if (this.state.zoomRect) this.applyZoomStyle(this.state.zoomRect); };
   onKeyDown = (e) => {
+    if (e.key.toLowerCase() === 'l' && this.state.isDesktop) {
+      const tag = (e.target && e.target.tagName) || '';
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') { e.preventDefault(); this.toggleLineMode(); return; }
+    }
     if ((e.key === 'Delete' || e.key === 'Backspace') && this.state.selectMode && this.state.selectedIds.length) {
       e.preventDefault(); this.deleteSelected(); return;
     }
     if (e.key === 'Escape') {
+      if (this.state.lineMode) {
+        if (this._activeLine && this._activeLine.points.length >= 2) this.finalizeLine();
+        else { this._activeLine = null; this._lineHoverPt = null; this.redraw(); }
+        return;
+      }
       if (this.state.textMode) { this._textDown = false; this._textClickFirst = null; this._textHover = null; this.setState({ textMode: false }, () => this.redraw()); return; }
       if (this.state.selectMode) { this.setState({ selectMode: false, selectedIds: [] }, () => this.redraw()); return; }
       if (this.state.zoomMode) { this.exitZoomSelect(); return; }
@@ -515,7 +527,54 @@ class Component extends DCLogic {
   clearToolModes() {
     this._activeSpline = null; this._freehandPts = null;
     this._measureDown = false; this._measureStart = null; this._measureCurrent = null;
+    this._activeLine = null; this._lineHoverPt = null; this._lineLastClickTime = null;
   }
+  toggleLineMode = () => {
+    if (this.state.lineMode) {
+      if (this._activeLine && this._activeLine.points.length >= 2) this.finalizeLine();
+      else { this._activeLine = null; this._lineHoverPt = null; }
+      this.setState({ lineMode: false }, () => this.redraw());
+      return;
+    }
+    this.clearToolModes();
+    this.setState({ lineMode: true, selectMode: false, textMode: false, zoomMode: false, measureMode: false, selectedIds: [] });
+  };
+  linePointerMove(e) {
+    if (!this._activeLine || !this._activeLine.points.length) return;
+    const p = this.getPoint(e);
+    const pts = this._activeLine.points;
+    this._lineHoverPt = this.applySplineSnap(pts[pts.length - 1], p, e);
+    this.redraw(true);
+  }
+  linePointerUp(e) {
+    const p = this.getPoint(e);
+    const now = Date.now();
+    const isDbl = this._lineLastClickTime && (now - this._lineLastClickTime < 450) && this._lineLastClickPos && Math.hypot(p.x - this._lineLastClickPos.x, p.y - this._lineLastClickPos.y) < 14;
+    if (isDbl) { this.finalizeLine(); return; }
+    if (!this._activeLine) this._activeLine = { points: [] };
+    const pts0 = this._activeLine.points;
+    const placedPt = pts0.length ? this.applySplineSnap(pts0[pts0.length - 1], p, e) : p;
+    this._activeLine.points.push(placedPt);
+    this._lineLastClickTime = now; this._lineLastClickPos = p;
+    this._lineHoverPt = null;
+    this.redraw(true);
+  }
+  finalizeLine() {
+    const page = this.pages[this.state.currentPage];
+    if (page && this._activeLine && this._activeLine.points.length >= 2) {
+      const prevStrokes = this.cloneStrokes(page.strokes);
+      page.strokes.push({ type: 'line', color: '#1e90ff', width: 1, points: this._activeLine.points, id: ++this._strokeIdSeq });
+      this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
+    }
+    this._activeLine = null; this._lineHoverPt = null; this._lineLastClickTime = null;
+    this.redraw(); this.forceUpdate();
+  }
+  onCanvasContextMenu = (e) => {
+    if (!this.state.lineMode) return;
+    e.preventDefault();
+    if (this._activeLine && this._activeLine.points.length >= 2) this.finalizeLine();
+    else { this._activeLine = null; this._lineHoverPt = null; this.redraw(); }
+  };
   computeRealInches(page, p1, p2) {
     const pxPerInch = (page && page.pxPerInch) || 96;
     const scale = (page && page.scale) || { ratio: 1, unit: 'imperial' };
@@ -700,6 +759,7 @@ class Component extends DCLogic {
 
   onPointerDown = (e) => {
     e.preventDefault();
+    if (this.state.lineMode) return;
     if (this.state.textMode) return this.textPointerDown(e);
     if (this.state.selectMode) {
       const p = this.getPoint(e);
@@ -749,6 +809,7 @@ class Component extends DCLogic {
   };
   onPointerMove = (e) => {
     if (!this.canvasRef.current) return;
+    if (this.state.lineMode) return this.linePointerMove(e);
     if (this.state.textMode) return this.textPointerMove(e);
     if (this.state.selectMode && this._tipDragId != null) {
       const p = this.getPoint(e);
@@ -794,6 +855,7 @@ class Component extends DCLogic {
     return { x: from.x + dist * Math.cos(angle), y: from.y + dist * Math.sin(angle) };
   }
   onPointerUp = (e) => {
+    if (this.state.lineMode) return this.linePointerUp(e);
     if (this.state.textMode) return this.textPointerUp(e);
     if (this._tipDragId != null) {
       if (this._tipDragMoved && this._tipDragPrevStrokes) this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes: this._tipDragPrevStrokes });
@@ -858,6 +920,12 @@ class Component extends DCLogic {
       if (this._freehandPts && this._freehandPts.length > 1) this.drawStroke(ctx, { type: 'freehand', color: this.state.color, width: this.state.strokeWidth, points: this._freehandPts });
       if (this.state.measureMode && this._measureDown && this._measureStart && this._measureCurrent) {
         this.drawStroke(ctx, { type: 'measure', width: 4, color: '#00e04a', points: [this._measureStart, this._measureCurrent], label: this.formatMeasureLabel(page, this._measureStart, this._measureCurrent) });
+      }
+      if (this.state.lineMode && this._activeLine && this._activeLine.points.length) {
+        const pts = this._lineHoverPt ? [...this._activeLine.points, this._lineHoverPt] : this._activeLine.points;
+        if (pts.length > 1) this.drawStroke(ctx, { type: 'line', color: '#1e90ff', width: 1, points: pts });
+        ctx.fillStyle = '#1e90ff';
+        this._activeLine.points.forEach(pt => { ctx.beginPath(); ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2); ctx.fill(); });
       }
       if (this._activeSpline && this._activeSpline.points.length) {
         const pts = this._hoverPt ? [...this._activeSpline.points, this._hoverPt] : this._activeSpline.points;
@@ -1019,7 +1087,7 @@ class Component extends DCLogic {
     ctx.strokeStyle = stroke.color; ctx.lineWidth = stroke.width; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     ctx.setLineDash(dashed ? [8, 8] : []);
     ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
-    if (stroke.type === 'freehand') {
+    if (stroke.type === 'freehand' || stroke.type === 'line') {
       for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
     } else {
       for (let i = 1; i < pts.length - 1; i++) {
@@ -1329,7 +1397,7 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#c9601a 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#3a2210 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#f0902f 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#5e3212 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#b5551c 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#2a1608 40%,transparent 41%),#8c4718"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#8c1414 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#2a0a0a 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#c92e2e 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#4a1010 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#a11e1e 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#1c0606 40%,transparent 41%),#6e1616"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
@@ -1375,7 +1443,9 @@ class Component extends DCLogic {
       lengthFt: this.getLengthFields().ft, lengthIn: this.getLengthFields().inch,
       onLengthFtChange: (e) => this.onLengthFieldChange('ft', e.target.value),
       onLengthInChange: (e) => this.onLengthFieldChange('in', e.target.value),
-      onAddScaleClick: this.onAddScaleClick
+      onAddScaleClick: this.onAddScaleClick,
+      onCanvasContextMenu: this.onCanvasContextMenu,
+      lineHintVisible: this.state.lineMode
     };
   }
 }
