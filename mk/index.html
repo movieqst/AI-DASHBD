@@ -31,6 +31,7 @@
         </div>
       </sc-if>
       <button onClick="{{ topActionHandler }}" style="{{ topActionStyle }}">{{ topActionLabel }}</button>
+      <button onClick="{{ onBrowseClick }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open  Img</button>
     </div>
 
     <div ref="{{ canvasAreaRef }}" onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" style="{{ canvasAreaStyle }}">
@@ -77,24 +78,25 @@
           </sc-if>
         </div>
       </sc-if>
-      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;">
-        <sc-if value="{{ lengthScaleBarVisible }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex;align-items:center;gap:8px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+        <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:flex-start;">
+          <sc-if value="{{ lengthScaleBarVisible }}" hint-placeholder-val="{{ false }}">
             <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Length:</div>
-            <input value="{{ lengthFt }}" onChange="{{ onLengthFtChange }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
+            <input value="{{ lengthFt }}" onChange="{{ onLengthFtChange }}" onKeyDown="{{ onLengthKeyDown }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
             <div style="font-size:12px;color:rgba(255,255,255,0.5);">ft</div>
-            <input value="{{ lengthIn }}" onChange="{{ onLengthInChange }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
+            <input value="{{ lengthIn }}" onChange="{{ onLengthInChange }}" onKeyDown="{{ onLengthKeyDown }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
             <div style="font-size:12px;color:rgba(255,255,255,0.5);">in</div>
-          </div>
-        </sc-if>
+          </sc-if>
+        </div>
         <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;">
           <button onClick="{{ clearBtnHandler }}" style="{{ clearBtnStyle }}">{{ clearBtnLabel }}</button>
           <button onClick="{{ toggleZoomMode }}" style="{{ zoomBtnStyle }}">Zoom</button>
-          <button onClick="{{ onBrowseClick }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open  Img</button>
         </div>
-        <sc-if value="{{ lengthScaleBarVisible }}" hint-placeholder-val="{{ false }}">
-          <div style="font-size:13px;letter-spacing:0.04em;color:var(--color-accent-300,#a9c1d6);white-space:nowrap;">Scale {{ scaleLabel }}</div>
-        </sc-if>
+        <div style="flex:1;text-align:right;">
+          <sc-if value="{{ lengthScaleBarVisible }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:13px;letter-spacing:0.04em;color:var(--color-accent-300,#a9c1d6);white-space:nowrap;display:inline-block;">Scale {{ scaleLabel }}</div>
+          </sc-if>
+        </div>
       </div>
     </div>
   </sc-if>
@@ -180,7 +182,8 @@ class Component extends DCLogic {
     zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, justCropped: false, zoomPendingRect: null, rectMode: 'crop',
     isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
     editingTextId: null, editingTextDraft: '',
-    rotateMode: false, loadProgress: '', measureMode: false, lineMode: false
+    rotateMode: false, loadProgress: '', measureMode: false, lineMode: false,
+    lengthFrozen: false, lineLengthFt: '', lineLengthIn: ''
   };
 
   componentDidMount() {
@@ -199,14 +202,20 @@ class Component extends DCLogic {
   }
   onWindowResize = () => { if (this.state.zoomRect) this.applyZoomStyle(this.state.zoomRect); };
   onKeyDown = (e) => {
-    if (e.key.toLowerCase() === 'l' && this.state.isDesktop) {
+    if ((e.key.toLowerCase() === 'l' || e.key.toLowerCase() === 'r') && this.state.isDesktop) {
       const tag = (e.target && e.target.tagName) || '';
-      if (tag !== 'INPUT' && tag !== 'TEXTAREA') { e.preventDefault(); this.toggleLineMode(); return; }
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+        e.preventDefault();
+        if (this.state.lineMode && this._activeLine && this._activeLine.points.length >= 1) { this.freezeLineLength(); return; }
+        if (e.key.toLowerCase() === 'l') { this.toggleLineMode(); return; }
+        return;
+      }
     }
     if ((e.key === 'Delete' || e.key === 'Backspace') && this.state.selectMode && this.state.selectedIds.length) {
       e.preventDefault(); this.deleteSelected(); return;
     }
     if (e.key === 'Escape') {
+      if (this.state.lengthFrozen) { this.setState({ lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw()); return; }
       if (this.state.lineMode) {
         if (this._activeLine && this._activeLine.points.length >= 2) this.finalizeLine();
         else { this._activeLine = null; this._lineHoverPt = null; this.redraw(); }
@@ -533,13 +542,42 @@ class Component extends DCLogic {
     if (this.state.lineMode) {
       if (this._activeLine && this._activeLine.points.length >= 2) this.finalizeLine();
       else { this._activeLine = null; this._lineHoverPt = null; }
-      this.setState({ lineMode: false }, () => this.redraw());
+      this.setState({ lineMode: false, lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw());
       return;
     }
     this.clearToolModes();
-    this.setState({ lineMode: true, selectMode: false, textMode: false, zoomMode: false, measureMode: false, selectedIds: [] });
+    this.setState({ lineMode: true, selectMode: false, textMode: false, zoomMode: false, measureMode: false, selectedIds: [], lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' });
+  };
+  realInchesToPx(page, realInches) {
+    const pxPerInch = (page && page.pxPerInch) || 96;
+    const scale = (page && page.scale) || { ratio: 1 };
+    const paperInches = realInches / (scale.ratio || 1);
+    return paperInches * pxPerInch;
+  }
+  freezeLineLength = () => {
+    if (!this._activeLine || !this._activeLine.points.length) return;
+    const pts = this._activeLine.points;
+    const anchor = pts[pts.length - 1];
+    const hover = this._lineHoverPt || anchor;
+    this._lineLockAngle = Math.atan2(hover.y - anchor.y, hover.x - anchor.x);
+    this.setState({ lengthFrozen: true, lineLengthFt: '', lineLengthIn: '' });
+  };
+  onLineLengthFtChange = (e) => { this.setState({ lineLengthFt: e.target.value, lineLengthIn: '0' }, () => this.redraw()); };
+  onLineLengthInChange = (e) => { this.setState({ lineLengthIn: e.target.value }, () => this.redraw()); };
+  onLineLengthKeyDown = (e) => { if (e.key === 'Enter') { e.preventDefault(); this.commitFrozenLineLength(); } };
+  commitFrozenLineLength = () => {
+    if (!this.state.lengthFrozen || !this._activeLine || !this._activeLine.points.length) return;
+    const page = this.pages[this.state.currentPage];
+    const anchor = this._activeLine.points[this._activeLine.points.length - 1];
+    const realInches = (parseFloat(this.state.lineLengthFt) || 0) * 12 + (parseFloat(this.state.lineLengthIn) || 0);
+    const px = this.realInchesToPx(page, realInches);
+    const pt = { x: anchor.x + px * Math.cos(this._lineLockAngle), y: anchor.y + px * Math.sin(this._lineLockAngle) };
+    this._activeLine.points.push(pt);
+    this._lineHoverPt = null;
+    this.setState({ lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw());
   };
   linePointerMove(e) {
+    if (this.state.lengthFrozen) return;
     if (!this._activeLine || !this._activeLine.points.length) return;
     const p = this.getPoint(e);
     const pts = this._activeLine.points;
@@ -922,7 +960,14 @@ class Component extends DCLogic {
         this.drawStroke(ctx, { type: 'measure', width: 4, color: '#00e04a', points: [this._measureStart, this._measureCurrent], label: this.formatMeasureLabel(page, this._measureStart, this._measureCurrent) });
       }
       if (this.state.lineMode && this._activeLine && this._activeLine.points.length) {
-        const pts = this._lineHoverPt ? [...this._activeLine.points, this._lineHoverPt] : this._activeLine.points;
+        let hoverPt = this._lineHoverPt;
+        if (this.state.lengthFrozen) {
+          const anchor = this._activeLine.points[this._activeLine.points.length - 1];
+          const realInches = (parseFloat(this.state.lineLengthFt) || 0) * 12 + (parseFloat(this.state.lineLengthIn) || 0);
+          const px = this.realInchesToPx(page, realInches);
+          hoverPt = { x: anchor.x + px * Math.cos(this._lineLockAngle), y: anchor.y + px * Math.sin(this._lineLockAngle) };
+        }
+        const pts = hoverPt ? [...this._activeLine.points, hoverPt] : this._activeLine.points;
         if (pts.length > 1) this.drawStroke(ctx, { type: 'line', color: '#1e90ff', width: 1, points: pts });
         ctx.fillStyle = '#1e90ff';
         this._activeLine.points.forEach(pt => { ctx.beginPath(); ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2); ctx.fill(); });
@@ -1406,7 +1451,7 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#e0c200 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#c2007a 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#fff066 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#ff5cb3 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#f2d600 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#d6006b 40%,transparent 41%),#f0a300"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#5a0f1e 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#200609 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#7c1a2e 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#33080f 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#6b1424 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#160305 40%,transparent 41%),#4a0d19"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
@@ -1450,13 +1495,15 @@ class Component extends DCLogic {
       rotateBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.rotateMode ? '#e2ff00' : 'transparent'};border:1px solid ${this.state.rotateMode ? '#e2ff00' : 'rgba(255,255,255,0.25)'};color:${this.state.rotateMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       measureMode: this.state.measureMode, toggleMeasureMode: this.toggleMeasureMode,
       measureBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${this.state.measureMode ? '#00e04a' : 'transparent'};border:1px solid ${this.state.measureMode ? '#00e04a' : 'rgba(255,255,255,0.25)'};color:${this.state.measureMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
-      lengthFt: this.getLengthFields().ft, lengthIn: this.getLengthFields().inch,
-      onLengthFtChange: (e) => this.onLengthFieldChange('ft', e.target.value),
-      onLengthInChange: (e) => this.onLengthFieldChange('in', e.target.value),
+      lengthFt: this.state.lengthFrozen ? this.state.lineLengthFt : this.getLengthFields().ft,
+      lengthIn: this.state.lengthFrozen ? this.state.lineLengthIn : this.getLengthFields().inch,
+      onLengthFtChange: this.state.lengthFrozen ? this.onLineLengthFtChange : (e) => this.onLengthFieldChange('ft', e.target.value),
+      onLengthInChange: this.state.lengthFrozen ? this.onLineLengthInChange : (e) => this.onLengthFieldChange('in', e.target.value),
       onAddScaleClick: this.onAddScaleClick,
       onCanvasContextMenu: this.onCanvasContextMenu,
       lineHintVisible: this.state.lineMode,
-      lengthScaleBarVisible: this.state.isDesktop && this.state.isPdf && !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale && !this.pages[this.state.currentPage].scale.assumed)
+      lengthScaleBarVisible: this.state.isDesktop && (this.state.lengthFrozen || !!(this.state.isPdf && this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale && !this.pages[this.state.currentPage].scale.assumed)),
+      onLengthKeyDown: this.state.lengthFrozen ? this.onLineLengthKeyDown : undefined
     };
   }
 }
