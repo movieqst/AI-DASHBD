@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#0a0a0a&quot;,&quot;#111c30&quot;,&quot;#c9a13b&quot;,&quot;#8a8f99&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blobs&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#3d4a3a&quot;,&quot;#6e7566&quot;,&quot;#2a2e26&quot;,&quot;#8a8f7a&quot;,&quot;#1a1c17&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blocks&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -929,7 +929,7 @@ class Component extends DCLogic {
       }
     }
     this._activeLine.points.push(placedPt);
-    this._lineLastClickTime = now; this._lineLastClickPos = p;
+    this._lineLastClickTime = now; this._lineLastClickPos = placedPt;
     this._lineHoverPt = null; this._lineSnapPoint = null;
     if (closedLoop) { this.finalizeLine(); return; }
     this.redraw(true);
@@ -1076,13 +1076,8 @@ class Component extends DCLogic {
     if (s.type === 'text') { s.x += dx; s.y += dy; }
     else { s.points = s.points.map(pt => ({ x: pt.x + dx, y: pt.y + dy })); }
   }
-  textPointerDown(e) { this._textDown = true; }
-  textPointerMove(e) {
-    if (this._textClickFirst) { this._textHover = this.getPoint(e); this.redraw(); }
-  }
-  textPointerUp(e) {
-    if (!this._textDown) return;
-    this._textDown = false;
+  textPointerDown(e) {
+    if (e.type !== 'pointerdown') return;
     const p = this.getPoint(e);
     if (!this._textClickFirst) {
       const page = this.pages[this.state.currentPage];
@@ -1098,6 +1093,9 @@ class Component extends DCLogic {
     page.strokes.push(textObj);
     this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
     this.redraw(); this.forceUpdate();
+  }
+  textPointerMove(e) {
+    if (this._textClickFirst) { this._textHover = this.getPoint(e); this.redraw(); }
   }
   hitTestTextBoxAt(p, page) {
     const ctx = this.canvasRef.current && this.canvasRef.current.getContext('2d');
@@ -1287,7 +1285,7 @@ class Component extends DCLogic {
   }
   onPointerUp = (e) => {
     if (this.state.lineMode) return;
-    if (this.state.textMode) return this.textPointerUp(e);
+    if (this.state.textMode) return;
     if (this._tipDragId != null) {
       if (this._tipDragMoved && this._tipDragPrevStrokes) this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes: this._tipDragPrevStrokes });
       this._tipDragId = null; this._tipDragPrevStrokes = null; this._tipDragMoved = false;
