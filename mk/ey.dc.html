@@ -32,6 +32,13 @@
       </sc-if>
       <button onClick="{{ topActionHandler }}" style="{{ topActionStyle }}">{{ topActionLabel }}</button>
       <button onClick="{{ onBrowseClick }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open  Img</button>
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleRotateMode }}" style="{{ rotateBtnStyle }}"><span>Rotate</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
+        <sc-if value="{{ rotateMode }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ rotateCCW }}" title="Rotate counter-clockwise" style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #e2ff00;color:#e2ff00;font-size:18px;cursor:pointer;">↺</button>
+          <button onClick="{{ rotateCW }}" title="Rotate clockwise" style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #e2ff00;color:#e2ff00;font-size:18px;cursor:pointer;">↻</button>
+        </sc-if>
+      </sc-if>
     </div>
 
     <div ref="{{ canvasAreaRef }}" onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" style="{{ canvasAreaStyle }}">
@@ -47,15 +54,11 @@
       </div>
       <input type="color" ref="{{ colorPickerRef }}" onChange="{{ onCustomColorChange }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;"></input>
       <canvas ref="{{ canvasRef }}" onPointerDown="{{ onPointerDown }}" onPointerMove="{{ onPointerMove }}" onPointerUp="{{ onPointerUp }}" onPointerLeave="{{ onPointerUp }}" onDoubleClick="{{ onCanvasDoubleClick }}" onContextMenu="{{ onCanvasContextMenu }}" style="{{ canvasStyle }}"></canvas>
-      <sc-if value="{{ lineHintVisible }}" hint-placeholder-val="{{ false }}">
-        <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:#1e90ff;background:rgba(0,0,0,0.6);padding:6px 14px;white-space:nowrap;">Line — Click Points, Double-Click/Right-Click/Esc to Finish, Ctrl 90°, Ctrl+Shift 30°</div>
-      </sc-if>
+
       <sc-if value="{{ editingTextVisible }}" hint-placeholder-val="{{ false }}">
         <input ref="{{ editTextInputRef }}" value="{{ editingTextDraft }}" onChange="{{ onEditTextChange }}" onKeyDown="{{ onEditTextKeyDown }}" onBlur="{{ commitEditText }}" style="{{ editTextStyle }}"></input>
       </sc-if>
-      <sc-if value="{{ zoomHintVisible }}" hint-placeholder-val="{{ false }}">
-        <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-accent-300,#a9c1d6);background:rgba(0,0,0,0.6);padding:6px 14px;white-space:nowrap;">Drag a Rectangle, or Click Two Points to Zoom — Esc to Cancel</div>
-      </sc-if>
+
       <sc-if value="{{ pageRenderingVisible }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-family:var(--font-body,'Barlow',sans-serif);font-size:12px;letter-spacing:0.04em;text-transform:uppercase;color:rgba(255,255,255,0.6);background:rgba(0,0,0,0.55);padding:6px 14px;white-space:nowrap;">Rendering full detail…</div>
       </sc-if>
@@ -71,11 +74,6 @@
           <button onClick="{{ toggleTextMode }}" style="{{ textBtnStyle }}"><span>Text</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <sc-if value="{{ showDeleteBtn }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ deleteSelected }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #ff1a2e;color:#ff1a2e;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Delete</button>
-          </sc-if>
-          <button onClick="{{ toggleRotateMode }}" style="{{ rotateBtnStyle }}"><span>Rotate</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
-          <sc-if value="{{ rotateMode }}" hint-placeholder-val="{{ false }}">
-            <button onClick="{{ rotateCCW }}" title="Rotate counter-clockwise" style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #e2ff00;color:#e2ff00;font-size:18px;cursor:pointer;">↺</button>
-            <button onClick="{{ rotateCW }}" title="Rotate clockwise" style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #e2ff00;color:#e2ff00;font-size:18px;cursor:pointer;">↻</button>
           </sc-if>
         </div>
       </sc-if>
@@ -179,7 +177,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#c7e57a&quot;,&quot;#7fb832&quot;,&quot;#f2f0d8&quot;,&quot;#3a7d2c&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blobs&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#1a1408&quot;,&quot;#3a2f1a&quot;,&quot;#5c4a2a&quot;,&quot;#2e2a1f&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blobs&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
