@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#2a0e4f&quot;,&quot;#6a2fb0&quot;,&quot;#9d7fd6&quot;,&quot;#150726&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#0a0014&quot;,&quot;#4b0082&quot;,&quot;#9d4edd&quot;,&quot;#e0aaff&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -236,8 +236,44 @@ class Component extends DCLogic {
     ctx.closePath();
     ctx.fill();
   }
+  generateDzRainPattern(palette) {
+    const N = 480;
+    const canvas = document.createElement('canvas');
+    canvas.width = N; canvas.height = N;
+    const ctx = canvas.getContext('2d');
+    const lum = hex => { const h = hex.replace('#', ''); const r = parseInt(h.substring(0, 2), 16) || 0, g = parseInt(h.substring(2, 4), 16) || 0, b = parseInt(h.substring(4, 6), 16) || 0; return 0.299 * r + 0.587 * g + 0.114 * b; };
+    const sorted = [...palette].sort((a, b) => lum(a) - lum(b));
+    const bg = sorted[0];
+    const streakColors = sorted.slice(1).length ? sorted.slice(1) : sorted;
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, N, N);
+    const streakCount = 260;
+    for (let i = 0; i < streakCount; i++) {
+      const x = Math.random() * N;
+      const len = 18 + Math.random() * 130;
+      const y0 = Math.random() * N - len * 0.5;
+      const width = 1 + Math.random() * 2.5;
+      ctx.globalAlpha = 0.35 + Math.random() * 0.65;
+      ctx.fillStyle = streakColors[Math.floor(Math.random() * streakColors.length)];
+      ctx.fillRect(x, y0, width, len);
+    }
+    ctx.globalAlpha = 1;
+    return canvas;
+  }
   generateDzPattern() {
     const palette = this.props.dzPalette && this.props.dzPalette.length ? this.props.dzPalette : ['#f4f7f9', '#d8e0e5', '#eef2f5', '#b9c4ca'];
+    if (this.props.dzStyle === 'rain') {
+      const canvas = this.generateDzRainPattern(palette);
+      const url = canvas.toDataURL('image/png');
+      this.setState({ dzPatternReady: true }, () => {
+        if (this.dzBgRef.current) {
+          this.dzBgRef.current.style.backgroundImage = `url("${url}")`;
+          this.dzBgRef.current.style.backgroundRepeat = 'no-repeat';
+          this.dzBgRef.current.style.backgroundSize = 'cover';
+        }
+      });
+      return;
+    }
     const n = palette.length;
     let weights;
     if (n === 4) {
@@ -309,7 +345,7 @@ class Component extends DCLogic {
     });
   }
   componentDidUpdate(prevProps) {
-    if (JSON.stringify(prevProps.dzPalette) !== JSON.stringify(this.props.dzPalette)) this.generateDzPattern();
+    if (JSON.stringify(prevProps.dzPalette) !== JSON.stringify(this.props.dzPalette) || prevProps.dzStyle !== this.props.dzStyle) this.generateDzPattern();
     if (this.dzBgRef.current && !this.dzBgRef.current.style.backgroundImage && this.state.dzPatternReady) this.generateDzPattern();
   }
   onWindowResize = () => { if (this.state.zoomRect) this.applyZoomStyle(this.state.zoomRect); };
@@ -734,6 +770,10 @@ class Component extends DCLogic {
     const pts = this._activeLine.points;
     let hp = this.applySplineSnap(pts[pts.length - 1], p, e);
     this._lineSnapPoint = null;
+    if (!(e.ctrlKey || e.shiftKey)) {
+      const snap = this.findLineSnapPoint(p);
+      if (snap) { hp = snap; this._lineSnapPoint = snap; }
+    }
     this._lineHoverPt = hp;
     this.redraw(true);
     this.forceUpdate();
@@ -755,6 +795,10 @@ class Component extends DCLogic {
     if (!this._activeLine) this._activeLine = { points: [] };
     const pts0 = this._activeLine.points;
     let placedPt = pts0.length ? this.applySplineSnap(pts0[pts0.length - 1], p, e) : p;
+    if (pts0.length && !(e.ctrlKey || e.shiftKey)) {
+      const snap = this.findLineSnapPoint(p);
+      if (snap) placedPt = snap;
+    }
     this._activeLine.points.push(placedPt);
     this._lineLastClickTime = now; this._lineLastClickPos = p;
     this._lineHoverPt = null; this._lineSnapPoint = null;
