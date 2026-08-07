@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#2b1400&quot;,&quot;#ff7a1a&quot;,&quot;#ffb347&quot;,&quot;#fff4e0&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#0d1a0d&quot;,&quot;#c8102e&quot;,&quot;#0f7a3e&quot;,&quot;#f0e6c8&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -256,9 +256,14 @@ class Component extends DCLogic {
       const len = minLen + Math.random() * maxLen;
       const y0 = Math.random() * N - len * 0.5;
       const width = 1 + Math.random() * (1.5 + intensity * 1.5);
+      const tilt = (5 + (Math.random() * 2 - 1)) * Math.PI / 180;
       ctx.globalAlpha = alphaBoost + Math.random() * (0.65 - intensity * 0.15);
       ctx.fillStyle = streakColors[Math.floor(Math.random() * streakColors.length)];
-      ctx.fillRect(x, y0, width, len);
+      ctx.save();
+      ctx.translate(x, y0);
+      ctx.rotate(tilt);
+      ctx.fillRect(0, 0, width, len);
+      ctx.restore();
     }
     ctx.globalAlpha = 1;
     return canvas;
@@ -779,14 +784,20 @@ class Component extends DCLogic {
     this.setState({ lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw());
   };
   findLineSnapPoint(p) {
-    if (!this._activeLine || this._activeLine.points.length < 1) return null;
     const scale = this.getDisplayScale();
     const tol = Math.max(10, 14 / scale);
-    const pts = this._activeLine.points;
     let best = null, bestDist = tol;
-    for (let i = 0; i < pts.length - 1; i++) {
-      const d = Math.hypot(p.x - pts[i].x, p.y - pts[i].y);
-      if (d <= bestDist) { bestDist = d; best = pts[i]; }
+    const consider = (pts, excludeLast) => {
+      const len = excludeLast ? pts.length - 1 : pts.length;
+      for (let i = 0; i < len; i++) {
+        const d = Math.hypot(p.x - pts[i].x, p.y - pts[i].y);
+        if (d <= bestDist) { bestDist = d; best = pts[i]; }
+      }
+    };
+    if (this._activeLine && this._activeLine.points.length) consider(this._activeLine.points, true);
+    const page = this.pages[this.state.currentPage];
+    if (page) {
+      page.strokes.forEach(s => { if (s.type === 'line' && s.points) consider(s.points, false); });
     }
     return best;
   }
@@ -824,7 +835,7 @@ class Component extends DCLogic {
     const originalLen = pts0.length;
     let placedPt = originalLen ? this.applySplineSnap(pts0[originalLen - 1], p, e) : p;
     let closedLoop = false;
-    if (originalLen && !(e.ctrlKey || e.shiftKey)) {
+    if (!(e.ctrlKey || e.shiftKey)) {
       const snap = this.findLineSnapPoint(p);
       if (snap) {
         placedPt = snap;
@@ -1311,25 +1322,26 @@ class Component extends DCLogic {
       const hoverP = this._textHoverPoint;
       const boxHover = !!(hoverP && hoverP.x >= stroke.x - 10 && hoverP.x <= stroke.x + w + 10 && hoverP.y >= stroke.y - h / 2 - 10 && hoverP.y <= stroke.y + h / 2 + 10);
       ctx.save();
-      if (boxHover) { ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 18; }
-      ctx.strokeStyle = '#1e90ff'; ctx.lineWidth = Math.max(1.5, 2.5 / scale); ctx.setLineDash([6 / scale, 6 / scale]);
+      ctx.shadowColor = '#ff9500'; ctx.shadowBlur = boxHover ? 20 : 10;
+      ctx.strokeStyle = '#ff9500'; ctx.lineWidth = Math.max(1.5, 2.5 / scale); ctx.setLineDash([6 / scale, 6 / scale]);
       ctx.strokeRect(stroke.x - 10, stroke.y - h / 2 - 10, w + 20, h + 20);
       ctx.restore();
       if (stroke.arrowFrom) {
         const dotTol = Math.max(10, 16 / scale);
         const dotHover = !!(hoverP && !boxHover && Math.hypot(hoverP.x - stroke.arrowFrom.x, hoverP.y - stroke.arrowFrom.y) <= dotTol);
         ctx.save();
-        if (dotHover) { ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 16; }
+        ctx.shadowColor = '#ff9500'; ctx.shadowBlur = dotHover ? 16 : 8;
         ctx.beginPath(); ctx.arc(stroke.arrowFrom.x, stroke.arrowFrom.y, 2 / scale, 0, Math.PI * 2);
         ctx.fillStyle = '#ffffff'; ctx.fill();
-        ctx.lineWidth = Math.max(0.5, 1 / scale); ctx.strokeStyle = '#1e90ff'; ctx.stroke();
+        ctx.lineWidth = Math.max(0.5, 1 / scale); ctx.strokeStyle = '#ff9500'; ctx.stroke();
         ctx.restore();
       }
       return;
     }
     const pts = stroke.points; if (!pts || pts.length < 2) return;
     ctx.save();
-    ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = stroke.width + 10 / scale; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.shadowColor = '#ff9500'; ctx.shadowBlur = 14;
+    ctx.strokeStyle = '#ff9500'; ctx.lineWidth = stroke.width + 8 / scale; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     ctx.setLineDash([6 / scale, 6 / scale]);
     ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
     for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
@@ -1539,8 +1551,7 @@ class Component extends DCLogic {
     if (!rect) return;
     const margin = 0.015;
     const adjust = { x: rect.x + rect.w * margin, y: rect.y + rect.h * margin, w: rect.w * (1 - 2 * margin), h: rect.h * (1 - 2 * margin) };
-    const resumeLine = this._lineSuspended; this._lineSuspended = false;
-    this.setState({ zoomPendingRect: null, zoomRect: rect, cropAdjustRect: adjust, rectMode: 'zoom', lineMode: resumeLine || this.state.lineMode }, () => { this.applyZoomStyle(rect); this.redraw(); });
+    this.setState({ zoomPendingRect: null, zoomRect: rect, cropAdjustRect: adjust, rectMode: 'zoom' }, () => { this.applyZoomStyle(rect); this.redraw(); });
   };
   executeNestedZoom = () => {
     const rect = this.state.cropAdjustRect;
@@ -1600,7 +1611,8 @@ class Component extends DCLogic {
     this.setState({ zoomMode: false, zoomPendingRect: null, lineMode: resumeLine || this.state.lineMode }, () => this.redraw());
   };
   exitZoom = () => {
-    this.setState({ zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, zoomPendingRect: null, rectMode: 'crop' }, () => this.redraw());
+    const resumeLine = this._lineSuspended; this._lineSuspended = false;
+    this.setState({ zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, zoomPendingRect: null, rectMode: 'crop', lineMode: resumeLine || this.state.lineMode }, () => this.redraw());
   };
   handleTopAction = () => {
     if (this.state.zoomPendingRect && !this.state.zoomRect) {
