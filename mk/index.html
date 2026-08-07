@@ -926,13 +926,19 @@ class Component extends DCLogic {
     }
   };
   applySplineSnap(from, to, e) {
-    if (!(e.ctrlKey || e.shiftKey)) return to;
+    if (!(e.ctrlKey || e.shiftKey)) { this._angleLockActive = false; return to; }
     const incDeg = (e.ctrlKey && e.shiftKey) ? 30 : 90;
+    const key = `${from.x},${from.y}`;
+    if (!this._angleLockActive || this._angleLockFromKey !== key || this._angleLockIncDeg !== incDeg) {
+      const dx0 = to.x - from.x, dy0 = to.y - from.y;
+      const inc0 = incDeg * Math.PI / 180;
+      this._angleLockAngle = Math.round(Math.atan2(dy0, dx0) / inc0) * inc0;
+      this._angleLockActive = true;
+      this._angleLockFromKey = key;
+      this._angleLockIncDeg = incDeg;
+    }
+    const angle = this._angleLockAngle;
     const dx = to.x - from.x, dy = to.y - from.y;
-    const dist = Math.hypot(dx, dy);
-    if (dist < 0.0001) return to;
-    const inc = incDeg * Math.PI / 180;
-    const angle = Math.round(Math.atan2(dy, dx) / inc) * inc;
     const proj = dx * Math.cos(angle) + dy * Math.sin(angle);
     return { x: from.x + proj * Math.cos(angle), y: from.y + proj * Math.sin(angle) };
   }
@@ -1217,7 +1223,7 @@ class Component extends DCLogic {
     } else if (!this._zoomClickFirst) {
       this._zoomClickFirst = p; this._zoomClickFirstTime = Date.now(); this.redraw();
     } else {
-      if (Date.now() - (this._zoomClickFirstTime || 0) < 2000) return;
+      if (Date.now() - (this._zoomClickFirstTime || 0) < 450) return;
       this.finalizeZoomRect(this._zoomClickFirst, p);
       this._zoomClickFirst = null; this._zoomHover = null;
     }
@@ -1515,7 +1521,7 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : '#0a0a0a'};cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#ff8c3c 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#fff0d9 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#ffb066 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#ffe0b3 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#ff9a4d 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#fff7ec 40%,transparent 41%),#ffab5c"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
