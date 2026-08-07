@@ -176,7 +176,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#e0b13f&quot;,&quot;#4a7ba6&quot;,&quot;#6b8f3f&quot;,&quot;#7a5a34&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#2c4a3e&quot;,&quot;#4a6b7a&quot;,&quot;#8a9a95&quot;,&quot;#1a2b28&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -594,7 +594,7 @@ class Component extends DCLogic {
   clearToolModes() {
     this._activeSpline = null; this._freehandPts = null;
     this._measureDown = false; this._measureStart = null; this._measureCurrent = null;
-    this._activeLine = null; this._lineHoverPt = null; this._lineLastClickTime = null; this._lineSnapPoint = null;
+    this._activeLine = null; this._lineHoverPt = null; this._lineLastClickTime = null; this._lineSnapPoint = null; this._lineMagnetPoint = null;
   }
   toggleLineMode = () => {
     if (this.state.lineMode) {
@@ -1013,7 +1013,7 @@ class Component extends DCLogic {
     }
   };
   applySplineSnap(from, to, e) {
-    if (!(e.ctrlKey || e.shiftKey)) { this._angleLockActive = false; return to; }
+    if (!(e.ctrlKey || e.shiftKey)) { this._angleLockActive = false; this._lineMagnetPoint = null; return to; }
     const incDeg = (e.ctrlKey && e.shiftKey) ? 30 : (e.shiftKey ? 45 : 90);
     const key = `${from.x},${from.y}`;
     if (!this._angleLockActive || this._angleLockFromKey !== key || this._angleLockIncDeg !== incDeg) {
@@ -1025,9 +1025,24 @@ class Component extends DCLogic {
       this._angleLockIncDeg = incDeg;
     }
     const angle = this._angleLockAngle;
+    const dirX = Math.cos(angle), dirY = Math.sin(angle);
     const dx = to.x - from.x, dy = to.y - from.y;
-    const proj = dx * Math.cos(angle) + dy * Math.sin(angle);
-    return { x: from.x + proj * Math.cos(angle), y: from.y + proj * Math.sin(angle) };
+    let proj = dx * dirX + dy * dirY;
+    this._lineMagnetPoint = null;
+    const candidates = this._activeLine ? this._activeLine.points : (this._activeSpline ? this._activeSpline.points : []);
+    if (candidates && candidates.length) {
+      const scale = this.getDisplayScale();
+      const tol = Math.max(10, 14 / scale);
+      let best = null, bestPerp = tol;
+      candidates.forEach(pt => {
+        if (pt === from) return;
+        const vx = pt.x - from.x, vy = pt.y - from.y;
+        const perp = Math.abs(vx * -dirY + vy * dirX);
+        if (perp <= bestPerp) { bestPerp = perp; best = { proj: vx * dirX + vy * dirY, pt }; }
+      });
+      if (best) { proj = best.proj; this._lineMagnetPoint = best.pt; }
+    }
+    return { x: from.x + proj * dirX, y: from.y + proj * dirY };
   }
   onPointerUp = (e) => {
     if (this.state.lineMode) return this.linePointerUp(e);
@@ -1114,6 +1129,13 @@ class Component extends DCLogic {
           ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 16;
           ctx.strokeStyle = '#1e90ff'; ctx.lineWidth = Math.max(1.5, 2 / scale);
           ctx.beginPath(); ctx.arc(this._lineSnapPoint.x, this._lineSnapPoint.y, 9 / scale, 0, Math.PI * 2); ctx.stroke();
+          ctx.restore();
+        } else if (this._lineMagnetPoint) {
+          const scale = this.getDisplayScale();
+          ctx.save();
+          ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 14;
+          ctx.strokeStyle = '#1e90ff'; ctx.lineWidth = Math.max(1.5, 2 / scale);
+          ctx.beginPath(); ctx.arc(this._lineMagnetPoint.x, this._lineMagnetPoint.y, 7 / scale, 0, Math.PI * 2); ctx.stroke();
           ctx.restore();
         }
       }
