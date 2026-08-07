@@ -176,7 +176,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#2c4a3e&quot;,&quot;#4a6b7a&quot;,&quot;#8a9a95&quot;,&quot;#1a2b28&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#4a2f1c&quot;,&quot;#6b4423&quot;,&quot;#8a5a2f&quot;,&quot;#3a2414&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -227,8 +227,18 @@ class Component extends DCLogic {
   }
   generateDzPattern() {
     const palette = this.props.dzPalette && this.props.dzPalette.length ? this.props.dzPalette : ['#f4f7f9', '#d8e0e5', '#eef2f5', '#b9c4ca'];
-    const weights = palette.length === 4 ? [0.32, 0.30, 0.28, 0.10] : palette.map(() => 1 / palette.length);
-    const N = 160, cell = 8;
+    const n = palette.length;
+    let weights;
+    if (n === 4) {
+      weights = [0.32, 0.30, 0.28, 0.10];
+    } else if (n <= 2) {
+      weights = palette.map(() => 1 / n);
+    } else {
+      const baseCount = Math.ceil(n / 2), accentCount = n - baseCount;
+      const baseW = 0.85 / baseCount, accentW = accentCount ? 0.15 / accentCount : 0;
+      weights = palette.map((_, i) => (i < baseCount ? baseW : accentW));
+    }
+    const N = 160, cell = 16;
     const canvas = document.createElement('canvas');
     canvas.width = N; canvas.height = N;
     const ctx = canvas.getContext('2d');
@@ -961,6 +971,11 @@ class Component extends DCLogic {
         const page = this.pages[this.state.currentPage];
         this._adjustTarget = 'zoomPendingRect'; this._adjustBounds = { x: 0, y: 0, w: page.canvas.width, h: page.canvas.height }; this._adjustEdge = edge; this._adjustStartRect = { ...this.state.zoomPendingRect }; if (e.target.setPointerCapture) e.target.setPointerCapture(e.pointerId); return;
       }
+      const r = this.state.zoomPendingRect;
+      if (this.state.rectMode === 'zoom' && p0.x >= r.x && p0.x <= r.x + r.w && p0.y >= r.y && p0.y <= r.y + r.h) {
+        this.executeZoom();
+        return;
+      }
     }
     if (!this.state.penMode) return;
     const p = this.getPoint(e);
@@ -1030,15 +1045,17 @@ class Component extends DCLogic {
     let proj = dx * dirX + dy * dirY;
     this._lineMagnetPoint = null;
     const candidates = this._activeLine ? this._activeLine.points : (this._activeSpline ? this._activeSpline.points : []);
-    if (candidates && candidates.length) {
+    if (candidates && candidates.length && Math.abs(proj) > 4) {
       const scale = this.getDisplayScale();
       const tol = Math.max(10, 14 / scale);
       let best = null, bestPerp = tol;
       candidates.forEach(pt => {
         if (pt === from) return;
         const vx = pt.x - from.x, vy = pt.y - from.y;
+        const vProj = vx * dirX + vy * dirY;
+        if (Math.sign(vProj) !== Math.sign(proj)) return;
         const perp = Math.abs(vx * -dirY + vy * dirX);
-        if (perp <= bestPerp) { bestPerp = perp; best = { proj: vx * dirX + vy * dirY, pt }; }
+        if (perp <= bestPerp) { bestPerp = perp; best = { proj: vProj, pt }; }
       });
       if (best) { proj = best.proj; this._lineMagnetPoint = best.pt; }
     }
