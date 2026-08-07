@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#3d4a3a&quot;,&quot;#6e7566&quot;,&quot;#2a2e26&quot;,&quot;#8a8f7a&quot;,&quot;#1a1c17&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blocks&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#f4f7f9&quot;,&quot;#d8e0e5&quot;,&quot;#eef2f5&quot;,&quot;#b9c4ca&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blobs&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -1146,8 +1146,17 @@ class Component extends DCLogic {
 
   onPointerDown = (e) => {
     e.preventDefault();
-    if (this.state.lineMode) return this.linePointerDown(e);
-    if (this.state.textMode) return this.textPointerDown(e);
+    if (this.state.lineMode) {
+      const p0b = this.getPoint(e);
+      const tolb = Math.max(6, 14 / this.getDisplayScale());
+      if (this.state.zoomRect && this.state.cropAdjustRect && this.hitTestCropEdge(p0b, this.state.cropAdjustRect, tolb)) {
+        // fall through to rect-handle logic below
+      } else if (this.state.zoomPendingRect && this.hitTestCropEdge(p0b, this.state.zoomPendingRect, tolb)) {
+        // fall through to rect-handle logic below
+      } else {
+        return this.linePointerDown(e);
+      }
+    } else if (this.state.textMode) return this.textPointerDown(e);
     if (this.state.selectMode) {
       const p = this.getPoint(e);
       const page = this.pages[this.state.currentPage];
