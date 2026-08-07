@@ -107,7 +107,7 @@
 
   <sc-if value="{{ notLoaded }}" hint-placeholder-val="{{ true }}">
     <div onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onClick="{{ onBrowseClick }}" style="{{ dropZoneStyle }}">
-      <div ref="{{ dzBgRef }}" style="position:absolute;inset:0;z-index:0;image-rendering:pixelated;"></div>
+      <div ref="{{ dzBgRef }}" style="position:absolute;inset:0;z-index:0;"></div>
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=6&data=http%3A%2F%2Faidashbd.com%2FEEZMARKUP%2F" alt="QR code to open EEZMARKUP" style="width:140px;height:140px;background:#fff;margin-bottom:18px;position:relative;z-index:1;box-shadow:3px 3px 6px 0 rgba(0,0,0,0.7);"/>
       <div style="{{ dzCaptionStyle }}">JPG · PNG · GIF · WEBP · PDF</div>
       <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:1;">
@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#3a3a3a&quot;,&quot;#c9a13b&quot;,&quot;#0f6b5c&quot;,&quot;#7a1f2b&quot;,&quot;#1c1c1c&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#2a0e4f&quot;,&quot;#6a2fb0&quot;,&quot;#9d7fd6&quot;,&quot;#150726&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -231,14 +231,8 @@ class Component extends DCLogic {
   drawSmoothBlob(ctx, pts) {
     if (pts.length < 3) return;
     ctx.beginPath();
-    const mid = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
-    let m0 = mid(pts[pts.length - 1], pts[0]);
-    ctx.moveTo(m0.x, m0.y);
-    for (let i = 0; i < pts.length; i++) {
-      const cur = pts[i], next = pts[(i + 1) % pts.length];
-      const m = mid(cur, next);
-      ctx.quadraticCurveTo(cur.x, cur.y, m.x, m.y);
-    }
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
     ctx.closePath();
     ctx.fill();
   }
@@ -255,7 +249,7 @@ class Component extends DCLogic {
       const baseW = 0.85 / baseCount, accentW = accentCount ? 0.15 / accentCount : 0;
       weights = palette.map((_, i) => (i < baseCount ? baseW : accentW));
     }
-    const N = 360;
+    const N = 480;
     const canvas = document.createElement('canvas');
     canvas.width = N; canvas.height = N;
     const ctx = canvas.getContext('2d');
@@ -752,8 +746,8 @@ class Component extends DCLogic {
     const pxPerInch = (page && page.pxPerInch) || 96;
     return (pxDist / pxPerInch) * scale.ratio;
   }
-  linePointerUp(e) {
-    if (e.type !== 'pointerup') return;
+  linePointerDown(e) {
+    if (e.type !== 'pointerdown') return;
     const p = this.getPoint(e);
     const now = Date.now();
     const isDbl = this._lineLastClickTime && (now - this._lineLastClickTime < 450) && this._lineLastClickPos && Math.hypot(p.x - this._lineLastClickPos.x, p.y - this._lineLastClickPos.y) < 14;
@@ -979,7 +973,7 @@ class Component extends DCLogic {
 
   onPointerDown = (e) => {
     e.preventDefault();
-    if (this.state.lineMode) return;
+    if (this.state.lineMode) return this.linePointerDown(e);
     if (this.state.textMode) return this.textPointerDown(e);
     if (this.state.selectMode) {
       const p = this.getPoint(e);
@@ -1115,7 +1109,7 @@ class Component extends DCLogic {
     return { x: from.x + proj * dirX, y: from.y + proj * dirY };
   }
   onPointerUp = (e) => {
-    if (this.state.lineMode) return this.linePointerUp(e);
+    if (this.state.lineMode) return;
     if (this.state.textMode) return this.textPointerUp(e);
     if (this._tipDragId != null) {
       if (this._tipDragMoved && this._tipDragPrevStrokes) this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes: this._tipDragPrevStrokes });
