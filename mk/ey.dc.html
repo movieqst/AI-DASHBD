@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#f5e6c8&quot;,&quot;#8b1a1a&quot;,&quot;#1a3a8b&quot;,&quot;#2e2e2e&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blocks&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#e63946&quot;,&quot;#f4a900&quot;,&quot;#6a994e&quot;,&quot;#5e3c99&quot;,&quot;#f2e9e4&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blobs&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -913,24 +913,22 @@ class Component extends DCLogic {
   linePointerDown(e) {
     if (e.type !== 'pointerdown') return;
     const p = this.getPoint(e);
-    const now = Date.now();
-    const dblTol = Math.max(10, 16 / this.getDisplayScale());
-    const isDbl = this._lineLastClickTime && (now - this._lineLastClickTime < 600) && this._lineLastClickPos && Math.hypot(p.x - this._lineLastClickPos.x, p.y - this._lineLastClickPos.y) < dblTol;
-    if (isDbl) { this.finalizeLine(); return; }
     if (!this._activeLine) this._activeLine = { points: [] };
     const pts0 = this._activeLine.points;
     const originalLen = pts0.length;
     let placedPt = originalLen ? this.applySplineSnap(pts0[originalLen - 1], p, e) : p;
     let closedLoop = false;
+    let snap = null;
     if (!(e.ctrlKey || e.shiftKey)) {
-      const snap = this.findLineSnapPoint(p);
+      snap = this.findLineSnapPoint(p);
       if (snap) {
         placedPt = snap;
         if (originalLen >= 3 && snap === pts0[0]) closedLoop = true;
       }
     }
+    // Clicking again on the node you just placed ends the line (no zero-length segment added).
+    if (originalLen >= 2 && snap && snap === pts0[originalLen - 1]) { this.finalizeLine(); return; }
     this._activeLine.points.push(placedPt);
-    this._lineLastClickTime = now; this._lineLastClickPos = placedPt;
     this._lineHoverPt = null; this._lineSnapPoint = null;
     if (closedLoop) { this.finalizeLine(); return; }
     this.redraw(true);
