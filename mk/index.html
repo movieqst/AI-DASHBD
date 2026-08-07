@@ -150,6 +150,9 @@
         <sc-if value="{{ showInstallBtn }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ onInstallClick }}" style="{{ dzButtonStyle }}">Install  App</button>
         </sc-if>
+        <sc-if value="{{ showIosInstallHint }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:240px;text-align:center;font-size:12px;line-height:1.5;color:rgba(255,255,255,0.75);font-family:var(--font-body,'Barlow',sans-serif);">Install this app: tap <strong>Share</strong> ⬆ then <strong>Add to Home Screen</strong></div>
+        </sc-if>
         <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ true }}">
           <button onClick="{{ onCameraClick }}" style="{{ dzButtonStyle }}">Take  Photo</button>
         </sc-if>
@@ -249,7 +252,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#2b3a1f&quot;,&quot;#4a5d2e&quot;,&quot;#3a2e1f&quot;,&quot;#6b6248&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#3a3f2e&quot;,&quot;#5a5f47&quot;,&quot;#2b2e22&quot;,&quot;#1a1c15&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blocks&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -288,6 +291,7 @@ class Component extends DCLogic {
     window.addEventListener('paste', this.onPaste);
     window.addEventListener('beforeinstallprompt', this.onBeforeInstallPrompt);
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
+    if (this.isIosSafari()) this.setState({ showIosInstallHint: true });
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('resize', this.onWindowResize);
     if (window.matchMedia) this.setState({ isDesktop: window.matchMedia('(pointer: fine)').matches });
@@ -783,6 +787,12 @@ class Component extends DCLogic {
   onDragOver = (e) => { e.preventDefault(); if (!this.state.dragActive) this.setState({ dragActive: true }); };
   onDragLeave = (e) => { e.preventDefault(); this.setState({ dragActive: false }); };
   onBeforeInstallPrompt = (e) => { e.preventDefault(); this._installPromptEvent = e; this.setState({ canInstall: true }); };
+  isIosSafari() {
+    const ua = navigator.userAgent || '';
+    const isIos = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+    return isIos && !isStandalone;
+  }
   onInstallClick = () => {
     if (!this._installPromptEvent) return;
     this._installPromptEvent.prompt();
@@ -2396,6 +2406,7 @@ class Component extends DCLogic {
       dropZoneStyle: `position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : '#0a0a0a'};cursor:pointer;transition:background 0.15s;`,
       dzBgRef: this.dzBgRef,
       showInstallBtn: !!this.state.canInstall, onInstallClick: this.onInstallClick,
+      showIosInstallHint: !!this.state.showIosInstallHint,
       onReturnToDropZone: this.onReturnToDropZone,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
