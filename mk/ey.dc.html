@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#0a0014&quot;,&quot;#4b0082&quot;,&quot;#9d4edd&quot;,&quot;#e0aaff&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#2b1400&quot;,&quot;#ff7a1a&quot;,&quot;#ffb347&quot;,&quot;#fff4e0&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -247,33 +247,52 @@ class Component extends DCLogic {
     const streakColors = sorted.slice(1).length ? sorted.slice(1) : sorted;
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, N, N);
-    const streakCount = 260;
+    const intensity = Math.random();
+    const streakCount = Math.round(90 + intensity * 340);
+    const minLen = 10 + intensity * 20, maxLen = 40 + intensity * 220;
+    const alphaBoost = 0.25 + intensity * 0.35;
     for (let i = 0; i < streakCount; i++) {
       const x = Math.random() * N;
-      const len = 18 + Math.random() * 130;
+      const len = minLen + Math.random() * maxLen;
       const y0 = Math.random() * N - len * 0.5;
-      const width = 1 + Math.random() * 2.5;
-      ctx.globalAlpha = 0.35 + Math.random() * 0.65;
+      const width = 1 + Math.random() * (1.5 + intensity * 1.5);
+      ctx.globalAlpha = alphaBoost + Math.random() * (0.65 - intensity * 0.15);
       ctx.fillStyle = streakColors[Math.floor(Math.random() * streakColors.length)];
       ctx.fillRect(x, y0, width, len);
     }
     ctx.globalAlpha = 1;
     return canvas;
   }
-  generateDzPattern() {
-    const palette = this.props.dzPalette && this.props.dzPalette.length ? this.props.dzPalette : ['#f4f7f9', '#d8e0e5', '#eef2f5', '#b9c4ca'];
-    if (this.props.dzStyle === 'rain') {
-      const canvas = this.generateDzRainPattern(palette);
-      const url = canvas.toDataURL('image/png');
-      this.setState({ dzPatternReady: true }, () => {
-        if (this.dzBgRef.current) {
-          this.dzBgRef.current.style.backgroundImage = `url("${url}")`;
-          this.dzBgRef.current.style.backgroundRepeat = 'no-repeat';
-          this.dzBgRef.current.style.backgroundSize = 'cover';
-        }
-      });
-      return;
+  generateDzBlockPattern(palette) {
+    const n = palette.length;
+    let weights;
+    if (n === 4) {
+      weights = [0.32, 0.30, 0.28, 0.10];
+    } else if (n <= 2) {
+      weights = palette.map(() => 1 / n);
+    } else {
+      const baseCount = Math.ceil(n / 2), accentCount = n - baseCount;
+      const baseW = 0.85 / baseCount, accentW = accentCount ? 0.15 / accentCount : 0;
+      weights = palette.map((_, i) => (i < baseCount ? baseW : accentW));
     }
+    const N = 160, cell = 16;
+    const canvas = document.createElement('canvas');
+    canvas.width = N; canvas.height = N;
+    const ctx = canvas.getContext('2d');
+    const pick = () => {
+      const r = Math.random(); let acc = 0;
+      for (let i = 0; i < weights.length; i++) { acc += weights[i]; if (r <= acc) return i; }
+      return 0;
+    };
+    for (let by = 0; by < N; by += cell) {
+      for (let bx = 0; bx < N; bx += cell) {
+        ctx.fillStyle = palette[pick()];
+        ctx.fillRect(bx, by, cell, cell);
+      }
+    }
+    return canvas;
+  }
+  generateDzBlobPattern(palette) {
     const n = palette.length;
     let weights;
     if (n === 4) {
@@ -333,14 +352,22 @@ class Component extends DCLogic {
         pts.push({ x: cx + lx * Math.cos(rot) - ly * Math.sin(rot), y: cy + lx * Math.sin(rot) + ly * Math.cos(rot) });
       }
       this.drawSmoothBlob(ctx, pts);
-      ctx.fill();
     }
+    return canvas;
+  }
+  generateDzPattern() {
+    const palette = this.props.dzPalette && this.props.dzPalette.length ? this.props.dzPalette : ['#f4f7f9', '#d8e0e5', '#eef2f5', '#b9c4ca'];
+    const style = this.props.dzStyle || 'blobs';
+    let canvas;
+    if (style === 'rain') canvas = this.generateDzRainPattern(palette);
+    else if (style === 'blocks') canvas = this.generateDzBlockPattern(palette);
+    else canvas = this.generateDzBlobPattern(palette);
     const url = canvas.toDataURL('image/png');
     this.setState({ dzPatternReady: true }, () => {
       if (this.dzBgRef.current) {
         this.dzBgRef.current.style.backgroundImage = `url("${url}")`;
-        this.dzBgRef.current.style.backgroundRepeat = 'no-repeat';
-        this.dzBgRef.current.style.backgroundSize = 'cover';
+        this.dzBgRef.current.style.backgroundRepeat = style === 'blocks' ? 'repeat' : 'no-repeat';
+        this.dzBgRef.current.style.backgroundSize = style === 'blocks' ? '220px 220px' : 'cover';
       }
     });
   }
@@ -794,14 +821,20 @@ class Component extends DCLogic {
     if (isDbl) { this.finalizeLine(); return; }
     if (!this._activeLine) this._activeLine = { points: [] };
     const pts0 = this._activeLine.points;
-    let placedPt = pts0.length ? this.applySplineSnap(pts0[pts0.length - 1], p, e) : p;
-    if (pts0.length && !(e.ctrlKey || e.shiftKey)) {
+    const originalLen = pts0.length;
+    let placedPt = originalLen ? this.applySplineSnap(pts0[originalLen - 1], p, e) : p;
+    let closedLoop = false;
+    if (originalLen && !(e.ctrlKey || e.shiftKey)) {
       const snap = this.findLineSnapPoint(p);
-      if (snap) placedPt = snap;
+      if (snap) {
+        placedPt = snap;
+        if (originalLen >= 3 && snap === pts0[0]) closedLoop = true;
+      }
     }
     this._activeLine.points.push(placedPt);
     this._lineLastClickTime = now; this._lineLastClickPos = p;
     this._lineHoverPt = null; this._lineSnapPoint = null;
+    if (closedLoop) { this.finalizeLine(); return; }
     this.redraw(true);
   }
   finalizeLine() {
