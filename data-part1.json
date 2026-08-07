@@ -1319,29 +1319,6 @@
     "order": 56
   },
   {
-    "name": "Elicit",
-    "icon": "📚",
-    "desc": "Academic research assistant for finding and analyzing papers.",
-    "rating": 8.2,
-    "traffic": 100000,
-    "url": "elicit.org",
-    "free": true,
-    "categories": [
-      "niche"
-    ],
-    "affiliate": false,
-    "overview": "Elicit is an AI research assistant purpose-built for academic and scientific literature work — searching over 138 million academic papers (via Semantic Scholar) plus 545,000+ clinical trials, and extracting structured data (study design, sample size, outcomes, effect sizes) into sortable, customizable tables rather than producing a single prose summary. Unlike a general chatbot, its core workflow is built around systematic review and evidence-synthesis tasks: finding papers, screening them, and synthesizing findings with reproducible, auditable outputs. 2026 pricing runs Free/Basic ($0, unlimited search and summaries, limited automated reports), Plus (~$10–12/month, exports and higher usage), Pro (~$42–49/month, full extraction tables, systematic review workflows, Research Agents), and Scale/Team (~$169/month per user or ~$79/month, collaborative and higher-volume features), plus custom Enterprise.",
-    "benefits": [
-      "Purpose-built structured extraction (sortable tables of study design, sample size, effect sizes, etc.) gives far more rigor and reproducibility for literature reviews than asking a general chatbot to summarize papers",
-      "The free tier is unusually generous for a research tool — unlimited search and summarization across its full paper index — making it genuinely usable for light research without paying"
-    ],
-    "drawbacks": [
-      "The features that matter most for serious systematic reviews (bulk extraction, Research Agents, full systematic review workflow) are locked behind the $42–49/month Pro tier, a real cost for individual researchers or students",
-      "It's a narrow, single-purpose tool — not a general assistant — so anyone needing broader writing, coding, or non-academic research help will need a separate product alongside it"
-    ],
-    "order": 57
-  },
-  {
     "name": "Make",
     "icon": "🔧",
     "desc": "Visual multi-step automation for complex business workflows.",
