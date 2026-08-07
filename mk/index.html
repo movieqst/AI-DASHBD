@@ -150,7 +150,10 @@
       <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:1;">
         <button onClick="{{ onBrowseClick }}" style="{{ dzButtonStyle }}">Open  Img</button>
         <sc-if value="{{ showInstallBtn }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ onInstallClick }}" style="{{ dzButtonStyle }}">Install  App</button>
+          <div onClick="{{ onInstallClick }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;">
+            <img src="./icons/icon-192.png" alt="Install app icon" style="width:64px;height:64px;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,0.4);"></img>
+            <span style="font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:rgba(255,255,255,0.7);font-family:var(--font-body,'Barlow',sans-serif);">Add to Home Screen</span>
+          </div>
         </sc-if>
         <sc-if value="{{ showIosInstallHint }}" hint-placeholder-val="{{ false }}">
           <div style="max-width:240px;text-align:center;font-size:12px;line-height:1.5;color:rgba(255,255,255,0.75);font-family:var(--font-body,'Barlow',sans-serif);">Install this app: tap <strong>Share</strong> ⬆ then <strong>Add to Home Screen</strong></div>
@@ -254,7 +257,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#c8102e&quot;,&quot;#f2c14e&quot;,&quot;#2e7d4f&quot;,&quot;#e8dcc0&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blobs&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#f4c542&quot;,&quot;#f5f0e6&quot;,&quot;#e0623d&quot;,&quot;#7a4a2b&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
