@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#f4f7f9&quot;,&quot;#d8e0e5&quot;,&quot;#eef2f5&quot;,&quot;#b9c4ca&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blobs&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#8a8f99&quot;,&quot;#c8102e&quot;,&quot;#1f4e9c&quot;,&quot;#d4af37&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -1426,26 +1426,26 @@ class Component extends DCLogic {
       const hoverP = this._textHoverPoint;
       const boxHover = !!(hoverP && hoverP.x >= stroke.x - 10 && hoverP.x <= stroke.x + w + 10 && hoverP.y >= stroke.y - h / 2 - 10 && hoverP.y <= stroke.y + h / 2 + 10);
       ctx.save();
-      ctx.shadowColor = '#1a237e'; ctx.shadowBlur = boxHover ? 5 : 2.5;
-      ctx.strokeStyle = '#1a237e'; ctx.lineWidth = Math.max(1.5, 2.5 / scale); ctx.setLineDash([6 / scale, 6 / scale]);
+      ctx.shadowColor = 'rgba(200,0,0,0.1)'; ctx.shadowBlur = 4; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 2;
+      ctx.strokeStyle = '#c80000'; ctx.lineWidth = Math.max(1.5, 2.5 / scale); ctx.setLineDash([6 / scale, 6 / scale]);
       ctx.strokeRect(stroke.x - 10, stroke.y - h / 2 - 10, w + 20, h + 20);
       ctx.restore();
       if (stroke.arrowFrom) {
         const dotTol = Math.max(10, 16 / scale);
         const dotHover = !!(hoverP && !boxHover && Math.hypot(hoverP.x - stroke.arrowFrom.x, hoverP.y - stroke.arrowFrom.y) <= dotTol);
         ctx.save();
-        ctx.shadowColor = '#1a237e'; ctx.shadowBlur = dotHover ? 4 : 2;
+        ctx.shadowColor = 'rgba(200,0,0,0.1)'; ctx.shadowBlur = 4; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 2;
         ctx.beginPath(); ctx.arc(stroke.arrowFrom.x, stroke.arrowFrom.y, 2 / scale, 0, Math.PI * 2);
         ctx.fillStyle = '#ffffff'; ctx.fill();
-        ctx.lineWidth = Math.max(0.5, 1 / scale); ctx.strokeStyle = '#1a237e'; ctx.stroke();
+        ctx.lineWidth = Math.max(0.5, 1 / scale); ctx.strokeStyle = '#c80000'; ctx.stroke();
         ctx.restore();
       }
       return;
     }
     const pts = stroke.points; if (!pts || pts.length < 2) return;
     ctx.save();
-    ctx.shadowColor = '#1a237e'; ctx.shadowBlur = 3.5;
-    ctx.strokeStyle = '#1a237e'; ctx.lineWidth = stroke.width + 8 / scale; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.shadowColor = 'rgba(200,0,0,0.1)'; ctx.shadowBlur = 4; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 2;
+    ctx.strokeStyle = '#c80000'; ctx.lineWidth = stroke.width + 8 / scale; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     ctx.setLineDash([6 / scale, 6 / scale]);
     ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
     for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
