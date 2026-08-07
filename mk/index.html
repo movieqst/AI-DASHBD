@@ -176,7 +176,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#0a4d68&quot;,&quot;#088395&quot;,&quot;#05bfdb&quot;,&quot;#eaf6f6&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#2e3b1f&quot;,&quot;#0e0e0c&quot;,&quot;#5c4a2e&quot;,&quot;#7a6a3f&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -249,10 +249,10 @@ class Component extends DCLogic {
     };
     ctx.fillStyle = palette[0];
     ctx.fillRect(0, 0, N, N);
-    const blobCount = 42;
+    const blobCount = 180;
     for (let i = 0; i < blobCount; i++) {
       const cx = Math.random() * N, cy = Math.random() * N;
-      const baseR = 24 + Math.random() * 40;
+      const baseR = 12 + Math.random() * 20;
       ctx.fillStyle = palette[pick()];
       ctx.beginPath();
       const lobes = 5 + Math.floor(Math.random() * 3);
@@ -695,9 +695,7 @@ class Component extends DCLogic {
     const p = this.getPoint(e);
     const pts = this._activeLine.points;
     let hp = this.applySplineSnap(pts[pts.length - 1], p, e);
-    const snap = this.findLineSnapPoint(p);
-    this._lineSnapPoint = snap;
-    if (snap) hp = snap;
+    this._lineSnapPoint = null;
     this._lineHoverPt = hp;
     this.redraw(true);
     this.forceUpdate();
@@ -719,8 +717,6 @@ class Component extends DCLogic {
     if (!this._activeLine) this._activeLine = { points: [] };
     const pts0 = this._activeLine.points;
     let placedPt = pts0.length ? this.applySplineSnap(pts0[pts0.length - 1], p, e) : p;
-    const snap = this.findLineSnapPoint(p);
-    if (snap) placedPt = snap;
     this._activeLine.points.push(placedPt);
     this._lineLastClickTime = now; this._lineLastClickPos = p;
     this._lineHoverPt = null; this._lineSnapPoint = null;
