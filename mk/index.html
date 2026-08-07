@@ -82,7 +82,7 @@
         <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:flex-start;">
           <sc-if value="{{ lengthScaleBarVisible }}" hint-placeholder-val="{{ false }}">
             <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Length:</div>
-            <input value="{{ lengthFt }}" onChange="{{ onLengthFtChange }}" onKeyDown="{{ onLengthKeyDown }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
+            <input ref="{{ lengthFtInputRef }}" value="{{ lengthFt }}" onChange="{{ onLengthFtChange }}" onKeyDown="{{ onLengthKeyDown }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
             <div style="font-size:12px;color:rgba(255,255,255,0.5);">ft</div>
             <input value="{{ lengthIn }}" onChange="{{ onLengthInChange }}" onKeyDown="{{ onLengthKeyDown }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
             <div style="font-size:12px;color:rgba(255,255,255,0.5);">in</div>
@@ -167,6 +167,7 @@ class Component extends DCLogic {
   canvasRef = React.createRef();
   canvasAreaRef = React.createRef();
   editTextInputRef = React.createRef();
+  lengthFtInputRef = React.createRef();
   fileInputRef = React.createRef();
   cameraInputRef = React.createRef();
   colorPickerRef = React.createRef();
@@ -218,7 +219,8 @@ class Component extends DCLogic {
       if (this.state.lengthFrozen) { this.setState({ lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw()); return; }
       if (this.state.lineMode) {
         if (this._activeLine && this._activeLine.points.length >= 2) this.finalizeLine();
-        else { this._activeLine = null; this._lineHoverPt = null; this.redraw(); }
+        else { this._activeLine = null; this._lineHoverPt = null; }
+        this.setState({ lineMode: false, lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw());
         return;
       }
       if (this.state.textMode) { this._textDown = false; this._textClickFirst = null; this._textHover = null; this.setState({ textMode: false }, () => this.redraw()); return; }
@@ -560,7 +562,9 @@ class Component extends DCLogic {
     const anchor = pts[pts.length - 1];
     const hover = this._lineHoverPt || anchor;
     this._lineLockAngle = Math.atan2(hover.y - anchor.y, hover.x - anchor.x);
-    this.setState({ lengthFrozen: true, lineLengthFt: '', lineLengthIn: '' });
+    this.setState({ lengthFrozen: true, lineLengthFt: '', lineLengthIn: '' }, () => {
+      if (this.lengthFtInputRef.current) { this.lengthFtInputRef.current.focus(); this.lengthFtInputRef.current.select(); }
+    });
   };
   onLineLengthFtChange = (e) => { this.setState({ lineLengthFt: e.target.value, lineLengthIn: '0' }, () => this.redraw()); };
   onLineLengthInChange = (e) => { this.setState({ lineLengthIn: e.target.value }, () => this.redraw()); };
@@ -1451,7 +1455,7 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#5a0f1e 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#200609 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#7c1a2e 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#33080f 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#6b1424 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#160305 40%,transparent 41%),#4a0d19"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#c9b28a 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#a68c62 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#e6d3ae 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#b39c74 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#d6c19a 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#8f7a54 40%,transparent 41%),#cbb488"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
@@ -1503,7 +1507,8 @@ class Component extends DCLogic {
       onCanvasContextMenu: this.onCanvasContextMenu,
       lineHintVisible: this.state.lineMode,
       lengthScaleBarVisible: this.state.isDesktop && (this.state.lengthFrozen || !!(this.state.isPdf && this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale && !this.pages[this.state.currentPage].scale.assumed)),
-      onLengthKeyDown: this.state.lengthFrozen ? this.onLineLengthKeyDown : undefined
+      onLengthKeyDown: this.state.lengthFrozen ? this.onLineLengthKeyDown : undefined,
+      lengthFtInputRef: this.lengthFtInputRef
     };
   }
 }
