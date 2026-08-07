@@ -55,6 +55,15 @@
       <input type="color" ref="{{ colorPickerRef }}" onChange="{{ onCustomColorChange }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;"></input>
       <canvas ref="{{ canvasRef }}" onPointerDown="{{ onPointerDown }}" onPointerMove="{{ onPointerMove }}" onPointerUp="{{ onPointerUp }}" onPointerLeave="{{ onPointerUp }}" onDoubleClick="{{ onCanvasDoubleClick }}" onContextMenu="{{ onCanvasContextMenu }}" style="{{ canvasStyle }}"></canvas>
 
+      <sc-if value="{{ showTipMenu }}" hint-placeholder-val="{{ false }}">
+        <div style="{{ tipMenuOverlayStyle }}" onClick="{{ closeTipMenu }}">
+          <div style="{{ tipMenuStyle }}" onClick="{{ stopPropagation }}">
+            <button onClick="{{ chooseMovePoint }}" style="{{ tipMenuBtnStyle }}">Move Point</button>
+            <button onClick="{{ chooseAddBubble }}" style="{{ tipMenuBtnStyle }}">Add Bubble Cloud</button>
+          </div>
+        </div>
+      </sc-if>
+
       <sc-if value="{{ editingTextVisible }}" hint-placeholder-val="{{ false }}">
         <input ref="{{ editTextInputRef }}" value="{{ editingTextDraft }}" onChange="{{ onEditTextChange }}" onKeyDown="{{ onEditTextKeyDown }}" onBlur="{{ commitEditText }}" style="{{ editTextStyle }}"></input>
       </sc-if>
@@ -72,6 +81,9 @@
           <button onClick="{{ toggleSelectMode }}" style="{{ selectBtnStyle }}"><span>Select</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <button onClick="{{ togglePenMode }}" style="{{ penBtnStyle }}"><span>Pen</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <button onClick="{{ toggleTextMode }}" style="{{ textBtnStyle }}"><span>Text</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
+          <sc-if value="{{ showRenumberBtn }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ renumberCallouts }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Renumber</button>
+          </sc-if>
           <sc-if value="{{ showDeleteBtn }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ deleteSelected }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #ff1a2e;color:#ff1a2e;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Delete</button>
           </sc-if>
@@ -151,11 +163,27 @@
 
         <sc-if value="{{ isPdf }}" hint-placeholder-val="{{ false }}">
           <div style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:8px;">Pages</div>
-          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;">
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
             <sc-for list="{{ scopes }}" as="s" hint-placeholder-count="3">
               <button onClick="{{ s.select }}" style="{{ s.style }}">{{ s.label }}</button>
             </sc-for>
           </div>
+          <sc-if value="{{ showPageChooser }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:4px;max-height:160px;overflow-y:auto;border:1px solid rgba(255,255,255,0.2);padding:8px;margin-bottom:20px;">
+              <sc-for list="{{ pageChoices }}" as="pc" hint-placeholder-count="4">
+                <label style="{{ pc.rowStyle }}">
+                  <input type="checkbox" checked="{{ pc.checked }}" onChange="{{ pc.toggle }}" style="accent-color:var(--color-accent-500,#5980a6);cursor:pointer;"></input>
+                  <span>{{ pc.label }}</span>
+                </label>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ showAnnotationListToggle }}" hint-placeholder-val="{{ false }}">
+            <label style="display:flex;align-items:center;gap:8px;padding:6px 2px;margin-bottom:20px;font-size:13px;color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);cursor:pointer;">
+              <input type="checkbox" checked="{{ includeAnnotationList }}" onChange="{{ toggleAnnotationList }}" style="accent-color:var(--color-accent-500,#5980a6);cursor:pointer;"></input>
+              <span>Include Annotation List page</span>
+            </label>
+          </sc-if>
         </sc-if>
 
         <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:24px;word-break:break-all;">{{ filenamePreview }}</div>
@@ -177,7 +205,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#1a1408&quot;,&quot;#3a2f1a&quot;,&quot;#5c4a2a&quot;,&quot;#2e2a1f&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blobs&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#0a3d2e&quot;,&quot;#ff6f61&quot;,&quot;#1fa8a8&quot;,&quot;#f2d94e&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blobs&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -201,10 +229,10 @@ class Component extends DCLogic {
     strokeWidth: 84, dragActive: false, processing: false,
     showSaveDialog: false,
     saveFormat: 'jpg',
-    saveScope: 'active',
+    saveScope: 'active', selectedSavePages: [], includeAnnotationList: false,
     zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, justCropped: false, zoomPendingRect: null, rectMode: 'crop',
     isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
-    editingTextId: null, editingTextDraft: '',
+    editingTextId: null, editingTextDraft: '', tipMenu: null,
     rotateMode: false, loadProgress: '', measureMode: false, lineMode: false,
     lengthFrozen: false, lineLengthFt: '', lineLengthIn: '', penMode: true, zoomLock: false
   };
@@ -378,71 +406,12 @@ class Component extends DCLogic {
     }
     return canvas;
   }
-  buildFibSquares(n, unit) {
-    const fib = [1, 1];
-    for (let i = 2; i < n; i++) fib.push(fib[i - 1] + fib[i - 2]);
-    const squares = [{ x: 0, y: 0, w: fib[0] * unit, h: fib[0] * unit }];
-    squares.push({ x: fib[0] * unit, y: 0, w: fib[1] * unit, h: fib[1] * unit });
-    let boundX = 0, boundY = 0, boundW = fib[0] * unit + fib[1] * unit, boundH = fib[1] * unit;
-    let dir = 0;
-    for (let i = 2; i < n; i++) {
-      const s = fib[i] * unit;
-      let nx, ny;
-      switch (dir % 4) {
-        case 0: nx = boundX; ny = boundY - s; break;
-        case 1: nx = boundX - s; ny = boundY; break;
-        case 2: nx = boundX; ny = boundY + boundH; break;
-        default: nx = boundX + boundW; ny = boundY; break;
-      }
-      squares.push({ x: nx, y: ny, w: s, h: s });
-      const newX = Math.min(boundX, nx), newY = Math.min(boundY, ny);
-      boundW = Math.max(boundX + boundW, nx + s) - newX;
-      boundH = Math.max(boundY + boundH, ny + s) - newY;
-      boundX = newX; boundY = newY;
-      dir++;
-    }
-    return squares;
-  }
-  generateDzFibonacciPattern(palette) {
-    const N = 480;
-    const canvas = document.createElement('canvas');
-    canvas.width = N; canvas.height = N;
-    const ctx = canvas.getContext('2d');
-    const lum = hex => { const h = hex.replace('#', ''); const r = parseInt(h.substring(0, 2), 16) || 0, g = parseInt(h.substring(2, 4), 16) || 0, b = parseInt(h.substring(4, 6), 16) || 0; return 0.299 * r + 0.587 * g + 0.114 * b; };
-    const sorted = [...palette].sort((a, b) => lum(a) - lum(b));
-    ctx.fillStyle = sorted[0];
-    ctx.fillRect(0, 0, N, N);
-    const clusters = 80;
-    for (let c = 0; c < clusters; c++) {
-      const unit = 1.5 + Math.random() * 2.5;
-      const squares = this.buildFibSquares(6, unit);
-      const last = squares[squares.length - 1];
-      const spanW = Math.max(...squares.map(s => s.x + s.w)) - Math.min(...squares.map(s => s.x));
-      const spanH = Math.max(...squares.map(s => s.y + s.h)) - Math.min(...squares.map(s => s.y));
-      const minX = Math.min(...squares.map(s => s.x)), minY = Math.min(...squares.map(s => s.y));
-      const cx = Math.random() * N, cy = Math.random() * N;
-      const rot = Math.random() * Math.PI * 2;
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(rot);
-      ctx.translate(-spanW / 2, -spanH / 2);
-      squares.forEach((sq, i) => {
-        ctx.fillStyle = palette[(i + c) % palette.length];
-        ctx.globalAlpha = 0.55 + Math.random() * 0.4;
-        ctx.fillRect(sq.x - minX, sq.y - minY, sq.w, sq.h);
-      });
-      ctx.globalAlpha = 1;
-      ctx.restore();
-    }
-    return canvas;
-  }
   generateDzPattern() {
     const palette = this.props.dzPalette && this.props.dzPalette.length ? this.props.dzPalette : ['#f4f7f9', '#d8e0e5', '#eef2f5', '#b9c4ca'];
     const style = this.props.dzStyle || 'blobs';
     let canvas;
     if (style === 'rain') canvas = this.generateDzRainPattern(palette);
     else if (style === 'blocks') canvas = this.generateDzBlockPattern(palette);
-    else if (style === 'fibonacci') canvas = this.generateDzFibonacciPattern(palette);
     else canvas = this.generateDzBlobPattern(palette);
     const url = canvas.toDataURL('image/png');
     this.setState({ dzPatternReady: true }, () => {
@@ -470,6 +439,14 @@ class Component extends DCLogic {
         return;
       }
     }
+    if (e.key.toLowerCase() === 'a' && this.state.isDesktop && !this.state.lineMode) {
+      const tag = (e.target && e.target.tagName) || '';
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') { e.preventDefault(); this.toggleAreaMode(); return; }
+    }
+    if (e.key.toLowerCase() === 'd' && this.state.isDesktop && !this.state.dimensionMode) {
+      const tag = (e.target && e.target.tagName) || '';
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') { e.preventDefault(); this.toggleDimensionMode(); return; }
+    }
     if ((e.key === 'Delete' || e.key === 'Backspace') && this.state.selectMode && this.state.selectedIds.length) {
       e.preventDefault(); this.deleteSelected(); return;
     }
@@ -484,6 +461,7 @@ class Component extends DCLogic {
       if (this.state.textMode) { this._textDown = false; this._textClickFirst = null; this._textHover = null; this.redraw(); return; }
       if (this.state.selectMode) { this.setState({ selectedIds: [] }, () => this.redraw()); return; }
       if (this.state.zoomMode) { this._zoomClickFirst = null; this._zoomHover = null; this._zoomDown = false; this._zoomDragged = false; this.setState({ zoomPendingRect: null }, () => this.redraw()); return; }
+      if (this.state.dimensionMode) { this.exitDimensionMode(); return; }
       if (this.state.zoomPendingRect) { const resumeLine = this._lineSuspended; this._lineSuspended = false; this.setState({ zoomPendingRect: null, lineMode: resumeLine || this.state.lineMode }, () => this.redraw()); return; }
       if (this.state.zoomRect) { this.exitZoom(); return; }
     }
@@ -518,6 +496,31 @@ class Component extends DCLogic {
     this.undoStack.push({ pageIndex, ...snapshot });
     if (this.undoStack.length > 70) this.undoStack.shift();
     this.redoStack = [];
+    this.scheduleAutosave();
+  }
+  sessionKey() { return `eezmarkup_session_${this.state.fileBase}.${this.state.fileExt}_${this.pages ? this.pages.length : 0}`; }
+  scheduleAutosave() {
+    clearTimeout(this._autosaveTimer);
+    this._autosaveTimer = setTimeout(() => this.saveSession(), 800);
+  }
+  saveSession() {
+    if (!this.pages || !this.state.fileBase) return;
+    try {
+      const data = { savedAt: Date.now(), pagesStrokes: this.pages.map(p => this.cloneStrokes(p.strokes)) };
+      localStorage.setItem(this.sessionKey(), JSON.stringify(data));
+    } catch (err) { /* quota or serialization issue — skip silently */ }
+  }
+  restoreSession() {
+    if (!this.pages || !this.state.fileBase) return;
+    try {
+      const raw = localStorage.getItem(this.sessionKey());
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      if (data && Array.isArray(data.pagesStrokes) && data.pagesStrokes.length === this.pages.length) {
+        data.pagesStrokes.forEach((strokes, i) => { this.pages[i].strokes = strokes; });
+        this.redraw(); this.forceUpdate();
+      }
+    } catch (err) { /* ignore corrupt session data */ }
   }
   undo = () => {
     if (!this.undoStack.length) return;
@@ -587,7 +590,7 @@ class Component extends DCLogic {
       this.pages = [{ canvas, strokes: [], scale: { raw: '1:1 (assumed)', ratio: 1, unit: 'imperial', assumed: true }, pxPerInch: 96 }];
       this.undoStack = []; this.redoStack = []; this._cropStack = [];
       URL.revokeObjectURL(url);
-      this.setState({ loaded: true, isPdf: false, fileBase: this.stripExt(file.name), fileExt: this.extOf(file.name) || 'png', currentPage: 0, processing: false, zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => this.redraw());
+      this.setState({ loaded: true, isPdf: false, fileBase: this.stripExt(file.name), fileExt: this.extOf(file.name) || 'png', currentPage: 0, processing: false, zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => { this.restoreSession(); this.redraw(); });
     };
     img.onerror = () => { this.setState({ processing: false }); alert('Could not load image.'); };
     img.src = url;
@@ -691,7 +694,7 @@ class Component extends DCLogic {
         const pxPerInch = targetScale * 72;
         pages.push({ canvas, strokes: [], _pdfPage: page, _vp0: vp0, _rendered: false, scale, pxPerInch });
         if (i === 1) {
-          this.setState({ loaded: true, isPdf: true, fileBase: this.stripExt(file.name), fileExt: 'pdf', currentPage: 0, processing: false, loadProgress: '', zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => this.redraw());
+          this.setState({ loaded: true, isPdf: true, fileBase: this.stripExt(file.name), fileExt: 'pdf', currentPage: 0, processing: false, loadProgress: '', zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => { this.restoreSession(); this.redraw(); });
         }
       }
       this.setState({ processing: false, loadProgress: '' });
@@ -797,7 +800,81 @@ class Component extends DCLogic {
     this._activeSpline = null; this._freehandPts = null;
     this._measureDown = false; this._measureStart = null; this._measureCurrent = null;
     this._activeLine = null; this._lineHoverPt = null; this._lineLastClickTime = null; this._lineSnapPoint = null; this._lineMagnetPoint = null;
+    this._activeDim = null; this._dimOffsetPhase = false; this._dimHoverPt = null;
   }
+  projectAlongAngle(anchor, angle, p) {
+    const dirX = Math.cos(angle), dirY = Math.sin(angle);
+    const proj = (p.x - anchor.x) * dirX + (p.y - anchor.y) * dirY;
+    return { x: anchor.x + proj * dirX, y: anchor.y + proj * dirY };
+  }
+  toggleDimensionMode = () => {
+    if (this.state.dimensionMode) return;
+    this.clearToolModes();
+    this.setState({ dimensionMode: true, lineMode: false, selectMode: false, textMode: false, zoomMode: false, measureMode: false, penMode: false, selectedIds: [] });
+  };
+  exitDimensionMode = () => {
+    this._activeDim = null; this._dimOffsetPhase = false; this._dimHoverPt = null;
+    this.setState({ dimensionMode: false }, () => this.redraw());
+  };
+  dimensionPointerDown(e) {
+    if (e.type !== 'pointerdown') return;
+    const p = this.getPoint(e);
+    if (!this._activeDim) this._activeDim = { points: [] };
+    const pts = this._activeDim.points;
+    if (this._dimOffsetPhase) {
+      const angle = Math.atan2(pts[1].y - pts[0].y, pts[1].x - pts[0].x);
+      const normal = angle + Math.PI / 2;
+      const offset = (p.x - pts[0].x) * Math.cos(normal) + (p.y - pts[0].y) * Math.sin(normal);
+      const page = this.pages[this.state.currentPage];
+      const segmentLabels = [];
+      for (let i = 0; i < pts.length - 1; i++) {
+        const realInches = this.computeRealInches(page, pts[i], pts[i + 1]);
+        segmentLabels.push(this.formatFromInches(realInches, (page && page.scale && page.scale.unit) || 'imperial'));
+      }
+      const prevStrokes = this.cloneStrokes(page.strokes);
+      page.strokes.push({ type: 'dimension', color: '#111111', width: 1.5, points: pts, offset, segmentLabels, id: ++this._strokeIdSeq });
+      this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
+      this._activeDim = null; this._dimOffsetPhase = false; this._dimHoverPt = null;
+      this.redraw(); this.forceUpdate();
+      return;
+    }
+    const now = Date.now();
+    const dblTol = Math.max(10, 16 / this.getDisplayScale());
+    const isDbl = pts.length >= 2 && this._dimLastClickTime && (now - this._dimLastClickTime < 600) && this._dimLastClickPos && Math.hypot(p.x - this._dimLastClickPos.x, p.y - this._dimLastClickPos.y) < dblTol;
+    if (isDbl) { this._dimOffsetPhase = true; this._dimHoverPt = null; this.redraw(true); return; }
+    let placedPt;
+    if (pts.length < 2) {
+      placedPt = this.findLineSnapPoint(p) || p;
+    } else {
+      const angle = Math.atan2(pts[1].y - pts[0].y, pts[1].x - pts[0].x);
+      const snapped = this.findLineSnapPoint(p) || p;
+      placedPt = this.projectAlongAngle(pts[0], angle, snapped);
+    }
+    pts.push(placedPt);
+    this._dimLastClickTime = now; this._dimLastClickPos = placedPt;
+    this.redraw(true);
+  }
+  dimensionPointerMove(e) {
+    if (!this.state.dimensionMode) return;
+    const p = this.getPoint(e);
+    if (this._dimOffsetPhase) { this._dimHoverPt = p; this.redraw(true); return; }
+    if (this._activeDim && this._activeDim.points.length) {
+      const pts = this._activeDim.points;
+      let hoverPt;
+      if (pts.length < 2) hoverPt = this.findLineSnapPoint(p) || p;
+      else {
+        const angle = Math.atan2(pts[1].y - pts[0].y, pts[1].x - pts[0].x);
+        const snapped = this.findLineSnapPoint(p) || p;
+        hoverPt = this.projectAlongAngle(pts[0], angle, snapped);
+      }
+      this._dimHoverPt = hoverPt; this.redraw(true);
+    }
+  }
+  toggleAreaMode = () => {
+    if (this.state.lineMode) return;
+    this._isAreaSession = true;
+    this.toggleLineMode();
+  };
   toggleLineMode = () => {
     if (this.state.lineMode) {
       if (this._activeLine && this._activeLine.points.length >= 2) this.finalizeLine();
@@ -933,13 +1010,39 @@ class Component extends DCLogic {
   }
   finalizeLine() {
     const page = this.pages[this.state.currentPage];
-    if (page && this._activeLine && this._activeLine.points.length >= 2) {
+    const isArea = this._isAreaSession;
+    this._isAreaSession = false;
+    if (page && this._activeLine && this._activeLine.points.length >= (isArea ? 3 : 2)) {
       const prevStrokes = this.cloneStrokes(page.strokes);
-      page.strokes.push({ type: 'line', color: '#1e90ff', width: 1, points: this._activeLine.points, id: ++this._strokeIdSeq });
+      if (isArea) {
+        const areaLabel = this.computeAreaLabel(page, this._activeLine.points);
+        page.strokes.push({ type: 'area', color: '#00c853', width: 2, points: this._activeLine.points, id: ++this._strokeIdSeq, areaLabel });
+      } else {
+        page.strokes.push({ type: 'line', color: '#1e90ff', width: 1, points: this._activeLine.points, id: ++this._strokeIdSeq });
+      }
       this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
+    } else if (isArea) {
+      alert('Need at least 3 points to compute an area.');
     }
     this._activeLine = null; this._lineHoverPt = null; this._lineLastClickTime = null;
     this.redraw(); this.forceUpdate();
+  }
+  computeAreaLabel(page, points) {
+    const pxPerInch = (page && page.pxPerInch) || 96;
+    const scale = (page && page.scale) || { ratio: 1, unit: 'imperial' };
+    let sum = 0;
+    for (let i = 0; i < points.length; i++) {
+      const a = points[i], b = points[(i + 1) % points.length];
+      sum += a.x * b.y - b.x * a.y;
+    }
+    const pxArea = Math.abs(sum) / 2;
+    const realSqIn = (pxArea / (pxPerInch * pxPerInch)) * (scale.ratio * scale.ratio);
+    if (scale.unit === 'metric') {
+      const sqm = realSqIn * 0.00064516;
+      return sqm >= 1 ? `${sqm.toFixed(2)} m²` : `${(realSqIn * 6.4516).toFixed(0)} cm²`;
+    }
+    const sqft = realSqIn / 144;
+    return sqft >= 1 ? `${sqft.toFixed(1)} sq ft` : `${realSqIn.toFixed(0)} sq in`;
   }
   onCanvasContextMenu = (e) => {
     if (!this.state.lineMode) return;
@@ -1086,7 +1189,7 @@ class Component extends DCLogic {
     this._textClickFirst = null; this._textHover = null;
     const page = this.pages[this.state.currentPage];
     const prevStrokes = this.cloneStrokes(page.strokes);
-    const textObj = { type: 'text', id: ++this._strokeIdSeq, x: p.x, y: p.y, text: '', color: this.state.color, fontSize: 40, arrowFrom };
+    const textObj = { type: 'text', id: ++this._strokeIdSeq, x: p.x, y: p.y, text: '', color: this.state.color, fontSize: 40, arrowFrom, number: this.nextCalloutNumber() };
     page.strokes.push(textObj);
     this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
     this.redraw(); this.forceUpdate();
@@ -1140,9 +1243,22 @@ class Component extends DCLogic {
     this.setState({ editingTextId: null, editingTextDraft: '' }, () => this.redraw());
   };
   cancelEditText = () => { this.setState({ editingTextId: null, editingTextDraft: '' }, () => this.redraw()); };
+  openTipMenu = (id, e) => {
+    const rect = this.canvasAreaRef.current.getBoundingClientRect();
+    const x = (e.clientX != null ? e.clientX : rect.left) - rect.left;
+    const y = (e.clientY != null ? e.clientY : rect.top) - rect.top;
+    this.setState({ tipMenu: { id, x, y } });
+  };
+  closeTipMenu = () => this.setState({ tipMenu: null });
+  chooseMovePoint = () => this.closeTipMenu();
+  chooseAddBubble = () => {
+    const id = this.state.tipMenu && this.state.tipMenu.id;
+    this.setState({ tipMenu: null }, () => { this._bubbleArmId = id; this._bubblePreview = null; });
+  };
 
   onPointerDown = (e) => {
     e.preventDefault();
+    if (this.state.dimensionMode) return this.dimensionPointerDown(e);
     if (this.state.lineMode) {
       const p0b = this.getPoint(e);
       const tolb = Math.max(6, 14 / this.getDisplayScale());
@@ -1209,7 +1325,9 @@ class Component extends DCLogic {
   onPointerMove = (e) => {
     if (!this.canvasRef.current) return;
     if (this.state.lineMode) return this.linePointerMove(e);
+    if (this.state.dimensionMode) return this.dimensionPointerMove(e);
     if (this.state.textMode) return this.textPointerMove(e);
+    if (this._bubbleArmId != null) { this._bubblePreview = this.getPoint(e); this.redraw(true); return; }
     if (this.state.selectMode && this._tipDragId != null) {
       const p = this.getPoint(e);
       const page = this.pages[this.state.currentPage];
@@ -1291,10 +1409,32 @@ class Component extends DCLogic {
   }
   onPointerUp = (e) => {
     if (this.state.lineMode) return;
+    if (this.state.dimensionMode) return;
     if (this.state.textMode) return;
     if (this._tipDragId != null) {
-      if (this._tipDragMoved && this._tipDragPrevStrokes) this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes: this._tipDragPrevStrokes });
+      if (this._tipDragMoved && this._tipDragPrevStrokes) {
+        this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes: this._tipDragPrevStrokes });
+        this._tipDragId = null; this._tipDragPrevStrokes = null; this._tipDragMoved = false;
+        return;
+      }
+      const id = this._tipDragId;
       this._tipDragId = null; this._tipDragPrevStrokes = null; this._tipDragMoved = false;
+      this.openTipMenu(id, e);
+      return;
+    }
+    if (this._bubbleArmId != null) {
+      const p = this.getPoint(e);
+      const page = this.pages[this.state.currentPage];
+      const s = page && page.strokes.find(st => st.id === this._bubbleArmId);
+      if (s && s.arrowFrom) {
+        const rx = Math.max(20, Math.abs(p.x - s.arrowFrom.x));
+        const ry = Math.max(20, Math.abs(p.y - s.arrowFrom.y));
+        const prevStrokes = this.cloneStrokes(page.strokes);
+        s.bubble = { rx, ry };
+        this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
+      }
+      this._bubbleArmId = null; this._bubblePreview = null;
+      this.redraw(); this.forceUpdate();
       return;
     }
     if (this.state.selectMode && this._selectDragIds) {
@@ -1312,7 +1452,7 @@ class Component extends DCLogic {
       const page = this.pages[this.state.currentPage];
       if (page && this._freehandPts.length > 1) {
         const prevStrokes = this.cloneStrokes(page.strokes);
-        page.strokes.push({ type: 'freehand', color: this.state.color, width: this.state.strokeWidth, points: this._freehandPts, id: ++this._strokeIdSeq });
+        page.strokes.push({ type: 'freehand', color: this.state.color, width: this.getEffectiveStrokeWidth(), points: this._freehandPts, id: ++this._strokeIdSeq });
         this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
       }
       this._freehandPts = null; this._dragged = false;
@@ -1329,7 +1469,7 @@ class Component extends DCLogic {
         const page = this.pages[this.state.currentPage];
         if (page && this._activeSpline.points.length >= 2) {
           const prevStrokes = this.cloneStrokes(page.strokes);
-          page.strokes.push({ type: 'spline', color: this.state.color, width: this.state.strokeWidth, points: this._activeSpline.points, id: ++this._strokeIdSeq });
+          page.strokes.push({ type: 'spline', color: this.state.color, width: this.getEffectiveStrokeWidth(), points: this._activeSpline.points, id: ++this._strokeIdSeq });
           this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes });
         }
         this._activeSpline = null; this._lastClickTime = null; this._hoverPt = null;
@@ -1351,8 +1491,24 @@ class Component extends DCLogic {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(page.canvas, 0, 0);
     page.strokes.forEach(s => this.drawStroke(ctx, s));
+    if (this._bubbleArmId != null && this._bubblePreview) {
+      const s = page.strokes.find(st => st.id === this._bubbleArmId);
+      if (s && s.arrowFrom) {
+        const rx = Math.max(20, Math.abs(this._bubblePreview.x - s.arrowFrom.x));
+        const ry = Math.max(20, Math.abs(this._bubblePreview.y - s.arrowFrom.y));
+        const scale = this.getDisplayScale();
+        ctx.save();
+        ctx.setLineDash([6 / scale, 5 / scale]);
+        ctx.lineWidth = Math.max(1.5, 2 / scale);
+        ctx.strokeStyle = s.color;
+        ctx.beginPath();
+        ctx.ellipse(s.arrowFrom.x, s.arrowFrom.y, rx, ry, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
     if (includeInProgress) {
-      if (this._freehandPts && this._freehandPts.length > 1) this.drawStroke(ctx, { type: 'freehand', color: this.state.color, width: this.state.strokeWidth, points: this._freehandPts });
+      if (this._freehandPts && this._freehandPts.length > 1) this.drawStroke(ctx, { type: 'freehand', color: this.state.color, width: this.getEffectiveStrokeWidth(), points: this._freehandPts });
       if (this.state.measureMode && this._measureDown && this._measureStart && this._measureCurrent) {
         this.drawStroke(ctx, { type: 'measure', width: 4, color: '#00e04a', points: [this._measureStart, this._measureCurrent], label: this.formatMeasureLabel(page, this._measureStart, this._measureCurrent) });
       }
@@ -1362,6 +1518,30 @@ class Component extends DCLogic {
         ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 16;
         ctx.strokeStyle = '#1e90ff'; ctx.lineWidth = Math.max(1.5, 2 / scale);
         ctx.beginPath(); ctx.arc(this._lineSnapPoint.x, this._lineSnapPoint.y, 9 / scale, 0, Math.PI * 2); ctx.stroke();
+        ctx.restore();
+      }
+      if (this.state.dimensionMode && this._activeDim && this._activeDim.points.length) {
+        const dpts = this._activeDim.points;
+        const scale2 = this.getDisplayScale();
+        ctx.save();
+        ctx.strokeStyle = '#111111'; ctx.lineWidth = 1.5; ctx.setLineDash([5 / scale2, 4 / scale2]);
+        if (this._dimOffsetPhase && this._dimHoverPt && dpts.length >= 2) {
+          const angle = Math.atan2(dpts[1].y - dpts[0].y, dpts[1].x - dpts[0].x);
+          const normal = angle + Math.PI / 2;
+          const offset = (this._dimHoverPt.x - dpts[0].x) * Math.cos(normal) + (this._dimHoverPt.y - dpts[0].y) * Math.sin(normal);
+          const off = dpts.map(p => ({ x: p.x + Math.cos(normal) * offset, y: p.y + Math.sin(normal) * offset }));
+          dpts.forEach((p, i) => { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(off[i].x, off[i].y); ctx.stroke(); });
+          ctx.beginPath(); ctx.moveTo(off[0].x, off[0].y);
+          for (let i = 1; i < off.length; i++) ctx.lineTo(off[i].x, off[i].y);
+          ctx.stroke();
+        } else {
+          const drawPts = this._dimHoverPt ? [...dpts, this._dimHoverPt] : dpts;
+          ctx.beginPath(); ctx.moveTo(drawPts[0].x, drawPts[0].y);
+          for (let i = 1; i < drawPts.length; i++) ctx.lineTo(drawPts[i].x, drawPts[i].y);
+          ctx.stroke();
+        }
+        ctx.setLineDash([]); ctx.fillStyle = '#111111';
+        dpts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 4 / scale2, 0, Math.PI * 2); ctx.fill(); });
         ctx.restore();
       }
       if (this.state.lineMode && this._activeLine && this._activeLine.points.length) {
@@ -1394,7 +1574,7 @@ class Component extends DCLogic {
       }
       if (this._activeSpline && this._activeSpline.points.length) {
         const pts = this._hoverPt ? [...this._activeSpline.points, this._hoverPt] : this._activeSpline.points;
-        if (pts.length > 1) this.drawStroke(ctx, { type: 'spline', color: this.state.color, width: this.state.strokeWidth, points: pts }, true);
+        if (pts.length > 1) this.drawStroke(ctx, { type: 'spline', color: this.state.color, width: this.getEffectiveStrokeWidth(), points: pts }, true);
         ctx.fillStyle = this.state.color;
         this._activeSpline.points.forEach(pt => { ctx.beginPath(); ctx.arc(pt.x, pt.y, Math.max(3, this.state.strokeWidth * 0.8), 0, Math.PI * 2); ctx.fill(); });
       }
@@ -1516,13 +1696,24 @@ class Component extends DCLogic {
     ctx.save();
     ctx.font = `600 ${stroke.fontSize || 40}px 'Barlow', sans-serif`;
     ctx.textBaseline = 'middle';
-    const w = Math.max(90, ctx.measureText(stroke.text || '').width); const h = stroke.fontSize || 40;
+    const label = stroke.number ? `${stroke.number}. ${stroke.text || ''}` : (stroke.text || '');
+    const w = Math.max(90, ctx.measureText(label).width); const h = stroke.fontSize || 40;
     const pad = 10;
     ctx.strokeStyle = stroke.color; ctx.fillStyle = stroke.color; ctx.lineWidth = 3; ctx.setLineDash([]);
     if (stroke.arrowFrom) {
       const attach = this.getTextAttachPoint(stroke, w);
       const scale = this.getDisplayScale();
       ctx.beginPath(); ctx.moveTo(attach.x, attach.y); ctx.lineTo(stroke.arrowFrom.x, stroke.arrowFrom.y); ctx.stroke();
+      if (stroke.bubble) {
+        ctx.save();
+        ctx.setLineDash([6 / scale, 5 / scale]);
+        ctx.lineWidth = Math.max(1.5, 2 / scale);
+        ctx.strokeStyle = stroke.color;
+        ctx.beginPath();
+        ctx.ellipse(stroke.arrowFrom.x, stroke.arrowFrom.y, stroke.bubble.rx, stroke.bubble.ry, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
       ctx.beginPath(); ctx.arc(stroke.arrowFrom.x, stroke.arrowFrom.y, 1 / scale, 0, Math.PI * 2);
       ctx.fillStyle = stroke.color; ctx.fill();
       ctx.lineWidth = Math.max(1, 1.5 / scale); ctx.strokeStyle = '#ffffff'; ctx.stroke();
@@ -1533,7 +1724,62 @@ class Component extends DCLogic {
       ctx.strokeStyle = stroke.color; ctx.lineWidth = 2;
       ctx.strokeRect(stroke.x - pad, stroke.y - h / 2 - pad, w + pad * 2, h + pad * 2);
       ctx.fillStyle = '#000000';
-      if (stroke.text) ctx.fillText(stroke.text, stroke.x, stroke.y);
+      if (label) ctx.fillText(label, stroke.x, stroke.y);
+    }
+    ctx.restore();
+  }
+  drawAreaStroke(ctx, stroke) {
+    const pts = stroke.points; if (!pts || pts.length < 3) return;
+    const scale = this.getDisplayScale();
+    ctx.save();
+    ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(0,200,83,0.16)'; ctx.fill();
+    ctx.strokeStyle = stroke.color; ctx.lineWidth = stroke.width; ctx.lineJoin = 'round';
+    ctx.stroke();
+    if (stroke.areaLabel) {
+      const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
+      const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
+      ctx.font = `700 ${16 / scale}px 'Barlow', sans-serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const w = ctx.measureText(stroke.areaLabel).width, pad = 6 / scale;
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(cx - w / 2 - pad, cy - 10 / scale - pad, w + pad * 2, 20 / scale + pad * 2);
+      ctx.fillStyle = stroke.color; ctx.fillText(stroke.areaLabel, cx, cy);
+    }
+    ctx.restore();
+  }
+  drawDimensionStroke(ctx, stroke) {
+    const pts = stroke.points; if (!pts || pts.length < 2) return;
+    const scale = this.getDisplayScale();
+    const angle = Math.atan2(pts[1].y - pts[0].y, pts[1].x - pts[0].x);
+    const normal = angle + Math.PI / 2;
+    const ox = Math.cos(normal) * stroke.offset, oy = Math.sin(normal) * stroke.offset;
+    const off = pts.map(p => ({ x: p.x + ox, y: p.y + oy }));
+    ctx.save();
+    ctx.strokeStyle = stroke.color; ctx.lineWidth = stroke.width; ctx.setLineDash([]);
+    pts.forEach((p, i) => { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(off[i].x, off[i].y); ctx.stroke(); });
+    ctx.beginPath(); ctx.moveTo(off[0].x, off[0].y);
+    for (let i = 1; i < off.length; i++) ctx.lineTo(off[i].x, off[i].y);
+    ctx.stroke();
+    const tick = 6 / scale;
+    off.forEach(p => {
+      ctx.beginPath();
+      ctx.moveTo(p.x - tick * Math.cos(angle + Math.PI / 4), p.y - tick * Math.sin(angle + Math.PI / 4));
+      ctx.lineTo(p.x + tick * Math.cos(angle + Math.PI / 4), p.y + tick * Math.sin(angle + Math.PI / 4));
+      ctx.stroke();
+    });
+    if (stroke.segmentLabels) {
+      ctx.font = `600 ${13 / scale}px 'Barlow', sans-serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.fillStyle = stroke.color;
+      for (let i = 0; i < off.length - 1 && i < stroke.segmentLabels.length; i++) {
+        const mx = (off[i].x + off[i + 1].x) / 2, my = (off[i].y + off[i + 1].y) / 2;
+        ctx.save();
+        ctx.translate(mx, my); ctx.rotate(angle);
+        ctx.fillText(stroke.segmentLabels[i], 0, -4 / scale);
+        ctx.restore();
+      }
     }
     ctx.restore();
   }
@@ -1566,6 +1812,8 @@ class Component extends DCLogic {
   drawStroke(ctx, stroke, dashed) {
     if (stroke.type === 'text') return this.drawTextStroke(ctx, stroke);
     if (stroke.type === 'measure') return this.drawMeasureStroke(ctx, stroke);
+    if (stroke.type === 'area') return this.drawAreaStroke(ctx, stroke);
+    if (stroke.type === 'dimension') return this.drawDimensionStroke(ctx, stroke);
     const pts = stroke.points; if (!pts || pts.length < 2) return;
     ctx.save();
     ctx.globalAlpha = this.opacityForWidth(stroke.width);
@@ -1807,9 +2055,45 @@ class Component extends DCLogic {
   };
   toggleZoomLock = () => this.setState({ zoomLock: !this.state.zoomLock });
 
-  openSaveDialog = () => this.setState({ showSaveDialog: true, saveScope: this.state.isPdf ? 'full' : 'active' });
+  openSaveDialog = () => {
+    const pageChoices = this.state.isPdf && this.pages ? this.pages.map(() => true) : [];
+    this.setState({ showSaveDialog: true, saveScope: this.state.isPdf ? 'full' : 'active', selectedSavePages: pageChoices });
+  };
+  togglePageChoice = (i) => {
+    const arr = this.state.selectedSavePages.slice();
+    arr[i] = !arr[i];
+    this.setState({ selectedSavePages: arr });
+  };
   closeSaveDialog = () => this.setState({ showSaveDialog: false });
 
+  hasAnyCallouts() { return (this.pages || []).some(pg => pg.strokes.some(s => s.type === 'text' && s.number)); }
+  buildLegendCanvas(refPage) {
+    const W = (refPage && refPage.canvas && refPage.canvas.width) || 1700, H = (refPage && refPage.canvas && refPage.canvas.height) || 2200;
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#111111';
+    ctx.font = '700 42px Barlow, sans-serif';
+    ctx.fillText('Annotation List', 60, 80);
+    ctx.font = '400 20px Barlow, sans-serif';
+    let y = 150;
+    const entries = [];
+    this.pages.forEach((pg, pi) => pg.strokes.forEach(s => { if (s.type === 'text' && s.number) entries.push({ n: s.number, text: s.text || '', page: pi + 1 }); }));
+    entries.sort((a, b) => a.n - b.n);
+    const lineH = 34, maxW = W - 140;
+    entries.forEach(en => {
+      if (y > H - 60) return;
+      const label = `${en.n}.`;
+      ctx.font = '700 20px Barlow, sans-serif';
+      ctx.fillText(label, 60, y);
+      ctx.font = '400 20px Barlow, sans-serif';
+      const body = `${en.text}  (Page ${en.page})`;
+      ctx.fillText(body.length > 90 ? body.slice(0, 90) + '…' : body, 110, y);
+      y += lineH;
+    });
+    return canvas;
+  }
   flattenPage(page) {
     const merged = document.createElement('canvas');
     merged.width = page.canvas.width; merged.height = page.canvas.height;
@@ -1835,12 +2119,23 @@ class Component extends DCLogic {
       merged.toBlob(blob => { this.downloadBlob(blob, name); this.bumpCounter(); this.setState({ showSaveDialog: false }); }, mime, 0.92);
       return;
     }
-    const chosen = this.state.saveScope === 'full' ? this.pages : this.pages.filter(p => p.strokes.length > 0);
-    if (chosen.length === 0) { alert('No pages have markup.'); return; }
+    let chosen;
+    if (this.state.saveScope === 'choose') chosen = this.pages.filter((p, i) => this.state.selectedSavePages[i]);
+    else chosen = this.pages;
+    if (chosen.length === 0) { alert('Select at least one page.'); return; }
     const jsPDFCtor = window.jspdf && window.jspdf.jsPDF;
     if (!jsPDFCtor) { alert('PDF export not available.'); return; }
     let doc = null;
+    if (this.state.includeAnnotationList && this.hasAnyCallouts()) chosen = [...chosen, { _legend: true, canvas: this.buildLegendCanvas(chosen[0]) }];
     chosen.forEach((page, i) => {
+      if (page._legend) {
+        const dataUrl0 = page.canvas.toDataURL('image/jpeg', 0.95);
+        const w0 = page.canvas.width, h0 = page.canvas.height;
+        if (i === 0) doc = new jsPDFCtor({ unit: 'px', format: [w0, h0], orientation: w0 >= h0 ? 'l' : 'p' });
+        else doc.addPage([w0, h0], w0 >= h0 ? 'l' : 'p');
+        doc.addImage(dataUrl0, 'JPEG', 0, 0, w0, h0);
+        return;
+      }
       const merged = this.flattenPage(page);
       const dataUrl = merged.toDataURL('image/jpeg', 0.92);
       const w = merged.width, h = merged.height;
@@ -1870,8 +2165,23 @@ class Component extends DCLogic {
   }
   openColorPicker = () => { if (this.colorPickerRef.current) this.colorPickerRef.current.click(); };
   onCustomColorChange = (e) => { this.setState({ color: e.target.value }); };
+  getEffectiveStrokeWidth() { return this.state.isDesktop ? this.state.strokeWidth : this.state.strokeWidth * 3; }
+  nextCalloutNumber() {
+    let max = 0;
+    (this.pages || []).forEach(pg => pg.strokes.forEach(s => { if (s.type === 'text' && s.number > max) max = s.number; }));
+    return max + 1;
+  }
+  renumberCallouts = () => {
+    if (!this.pages) return;
+    const all = [];
+    this.pages.forEach(pg => pg.strokes.forEach(s => { if (s.type === 'text') all.push(s); }));
+    all.sort((a, b) => a.id - b.id);
+    all.forEach((s, i) => { s.number = i + 1; });
+    this.redraw(); this.forceUpdate();
+    this.scheduleAutosave();
+  };
   buildWidthItems() {
-    const items = [3, 16, 36, 54, 84, 124].map(v => {
+    const items = [3, 16, 400, 54, 84, 124].map(v => {
       const selected = this.state.strokeWidth === v;
       const diameter = Math.min(34, Math.round(6 + Math.sqrt(v) * 3));
       return {
@@ -1901,8 +2211,17 @@ class Component extends DCLogic {
       style: `padding:8px 14px;background:${this.state.saveFormat === v ? 'var(--color-accent-500,#5980a6)' : 'transparent'};border:1px solid ${this.state.saveFormat === v ? 'var(--color-accent-500,#5980a6)' : 'rgba(255,255,255,0.3)'};color:${this.state.saveFormat === v ? '#04121d' : '#f2f2f3'};font-size:13px;cursor:pointer;`
     }));
   }
+  buildPageChoiceItems() {
+    if (!this.pages) return [];
+    return this.pages.map((p, i) => ({
+      checked: !!this.state.selectedSavePages[i],
+      label: `Page ${i + 1}${p.strokes.length ? ' (marked up)' : ''}`,
+      toggle: () => this.togglePageChoice(i),
+      rowStyle: `display:flex;align-items:center;gap:8px;padding:6px 8px;font-size:13px;color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);cursor:pointer;`
+    }));
+  }
   buildScopeItems() {
-    return [['full', 'Full PDF'], ['active', 'Active Page'], ['markup', 'Markup Pages Only']].map(([v, label]) => ({
+    return [['active', 'Single Page'], ['choose', 'Choose Pages'], ['full', 'Full PDF (All Pages)']].map(([v, label]) => ({
       value: v, label, select: () => this.setState({ saveScope: v }),
       style: `padding:10px 14px;text-align:left;background:${this.state.saveScope === v ? 'var(--color-accent-500,#5980a6)' : 'transparent'};border:1px solid ${this.state.saveScope === v ? 'var(--color-accent-500,#5980a6)' : 'rgba(255,255,255,0.3)'};color:${this.state.saveScope === v ? '#04121d' : '#f2f2f3'};font-size:13px;cursor:pointer;`
     }));
@@ -1915,7 +2234,8 @@ class Component extends DCLogic {
     const canvas = this.canvasRef.current; if (!canvas || !this.canvasAreaRef.current) return '';
     const ctx = canvas.getContext('2d');
     ctx.font = `600 ${s.fontSize || 40}px 'Barlow', sans-serif`;
-    const w = Math.max(90, ctx.measureText(this.state.editingTextDraft || '').width);
+    const label = s.number ? `${s.number}. ${this.state.editingTextDraft || ''}` : (this.state.editingTextDraft || '');
+    const w = Math.max(90, ctx.measureText(label).width);
     const h = s.fontSize || 40, pad = 10;
     const scale = this.getDisplayScale();
     const canvasRect = canvas.getBoundingClientRect();
@@ -1954,6 +2274,10 @@ class Component extends DCLogic {
       clearPage: this.clearPage, openSaveDialog: this.openSaveDialog,
       showSaveDialog: this.state.showSaveDialog,
       formats: this.buildFormatItems(), scopes: this.buildScopeItems(),
+      showPageChooser: this.state.saveScope === 'choose', pageChoices: this.buildPageChoiceItems(),
+      showAnnotationListToggle: this.state.isPdf && this.hasAnyCallouts(),
+      includeAnnotationList: this.state.includeAnnotationList,
+      toggleAnnotationList: () => this.setState({ includeAnnotationList: !this.state.includeAnnotationList }),
       filenamePreview: this.filenamePreview(),
       closeSaveDialog: this.closeSaveDialog, performSave: this.performSave, performCrop: this.performCrop,
       isDesktop: this.state.isDesktop, isMobile: !this.state.isDesktop, undo: this.undo, redo: this.redo,
@@ -1961,6 +2285,8 @@ class Component extends DCLogic {
       textMode: this.state.textMode, toggleTextMode: this.toggleTextMode, onCanvasDoubleClick: this.onCanvasDoubleClick,
       textBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.textMode ? this.state.textColor : 'transparent'};border:1px solid ${this.state.textMode ? this.state.textColor : 'rgba(255,255,255,0.25)'};color:${this.state.textMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       showDeleteBtn: this.state.selectMode && this.state.selectedIds.length > 0,
+      renumberCallouts: this.renumberCallouts,
+      showRenumberBtn: this.state.loaded && (this.pages || []).some(pg => pg.strokes.some(s => s.type === 'text')),
       selectBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.selectMode ? '#7a7a7a' : 'transparent'};border:1px solid ${this.state.selectMode ? '#7a7a7a' : 'rgba(255,255,255,0.25)'};color:${this.state.selectMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       showCornerMarks: this.props.showCornerMarks ?? true,
       togglePenMode: this.togglePenMode,
@@ -1975,6 +2301,12 @@ class Component extends DCLogic {
       zoomBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'transparent'};border:1px solid ${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '18px' : '13px'};letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;${((this.state.zoomPendingRect || this.state.cropAdjustRect) && this.state.rectMode === 'zoom') ? 'box-shadow:0 0 14px 4px #ffffff;' : ''}`,
       zoomHintVisible: this.state.zoomMode,
       editingTextVisible: this.state.editingTextId != null,
+      showTipMenu: !!this.state.tipMenu,
+      closeTipMenu: this.closeTipMenu, stopPropagation: (e) => e.stopPropagation(),
+      chooseMovePoint: this.chooseMovePoint, chooseAddBubble: this.chooseAddBubble,
+      tipMenuOverlayStyle: `position:absolute;inset:0;z-index:29;`,
+      tipMenuStyle: this.state.tipMenu ? `position:absolute;left:${this.state.tipMenu.x + 10}px;top:${this.state.tipMenu.y + 10}px;background:#0c0c0d;border:1px solid var(--color-accent-700,#3d5872);display:flex;flex-direction:column;gap:2px;padding:6px;z-index:30;box-shadow:0 4px 16px rgba(0,0,0,0.5);` : '',
+      tipMenuBtnStyle: `padding:8px 14px;background:transparent;border:none;color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;text-align:left;cursor:pointer;white-space:nowrap;`,
       editTextInputRef: this.editTextInputRef,
       editingTextDraft: this.state.editingTextDraft || '',
       onEditTextChange: this.onEditTextChange, onEditTextKeyDown: this.onEditTextKeyDown, commitEditText: this.commitEditText,
