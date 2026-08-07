@@ -176,7 +176,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#4a2f1c&quot;,&quot;#6b4423&quot;,&quot;#8a5a2f&quot;,&quot;#3a2414&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#0a4d68&quot;,&quot;#088395&quot;,&quot;#05bfdb&quot;,&quot;#eaf6f6&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -238,7 +238,7 @@ class Component extends DCLogic {
       const baseW = 0.85 / baseCount, accentW = accentCount ? 0.15 / accentCount : 0;
       weights = palette.map((_, i) => (i < baseCount ? baseW : accentW));
     }
-    const N = 160, cell = 16;
+    const N = 360;
     const canvas = document.createElement('canvas');
     canvas.width = N; canvas.height = N;
     const ctx = canvas.getContext('2d');
@@ -247,18 +247,30 @@ class Component extends DCLogic {
       for (let i = 0; i < weights.length; i++) { acc += weights[i]; if (r <= acc) return i; }
       return 0;
     };
-    for (let by = 0; by < N; by += cell) {
-      for (let bx = 0; bx < N; bx += cell) {
-        ctx.fillStyle = palette[pick()];
-        ctx.fillRect(bx, by, cell, cell);
+    ctx.fillStyle = palette[0];
+    ctx.fillRect(0, 0, N, N);
+    const blobCount = 42;
+    for (let i = 0; i < blobCount; i++) {
+      const cx = Math.random() * N, cy = Math.random() * N;
+      const baseR = 24 + Math.random() * 40;
+      ctx.fillStyle = palette[pick()];
+      ctx.beginPath();
+      const lobes = 5 + Math.floor(Math.random() * 3);
+      for (let a = 0; a <= lobes; a++) {
+        const ang = (a / lobes) * Math.PI * 2;
+        const r = baseR * (0.75 + Math.random() * 0.5);
+        const x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r;
+        if (a === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
+      ctx.closePath();
+      ctx.fill();
     }
     const url = canvas.toDataURL('image/png');
     this.setState({ dzPatternReady: true }, () => {
       if (this.dzBgRef.current) {
         this.dzBgRef.current.style.backgroundImage = `url("${url}")`;
-        this.dzBgRef.current.style.backgroundRepeat = 'repeat';
-        this.dzBgRef.current.style.backgroundSize = '220px 220px';
+        this.dzBgRef.current.style.backgroundRepeat = 'no-repeat';
+        this.dzBgRef.current.style.backgroundSize = 'cover';
       }
     });
   }
@@ -1045,19 +1057,20 @@ class Component extends DCLogic {
     let proj = dx * dirX + dy * dirY;
     this._lineMagnetPoint = null;
     const candidates = this._activeLine ? this._activeLine.points : (this._activeSpline ? this._activeSpline.points : []);
-    if (candidates && candidates.length && Math.abs(proj) > 4) {
+    if (candidates && candidates.length) {
       const scale = this.getDisplayScale();
-      const tol = Math.max(10, 14 / scale);
-      let best = null, bestPerp = tol;
+      const radius = Math.max(10, 14 / scale);
+      let best = null, bestDist = radius;
       candidates.forEach(pt => {
         if (pt === from) return;
-        const vx = pt.x - from.x, vy = pt.y - from.y;
-        const vProj = vx * dirX + vy * dirY;
-        if (Math.sign(vProj) !== Math.sign(proj)) return;
-        const perp = Math.abs(vx * -dirY + vy * dirX);
-        if (perp <= bestPerp) { bestPerp = perp; best = { proj: vProj, pt }; }
+        const d = Math.hypot(pt.x - to.x, pt.y - to.y);
+        if (d < bestDist) { bestDist = d; best = pt; }
       });
-      if (best) { proj = best.proj; this._lineMagnetPoint = best.pt; }
+      if (best) {
+        const vx = best.x - from.x, vy = best.y - from.y;
+        proj = vx * dirX + vy * dirY;
+        this._lineMagnetPoint = best;
+      }
     }
     return { x: from.x + proj * dirX, y: from.y + proj * dirY };
   }
