@@ -1414,8 +1414,9 @@ class Component extends DCLogic {
     const page = this.pages[this.state.currentPage];
     if (page && page.strokes.length) { this.pushUndo(this.state.currentPage, { kind: 'strokes', prevStrokes: this.cloneStrokes(page.strokes) }); page.strokes = []; }
     this._activeSpline = null; this._freehandPts = null;
+    this._activeLine = null; this._lineHoverPt = null; this._lineLastClickTime = null; this._lineSuspended = false;
     this._zoomClickFirst = null; this._zoomHover = null; this._zoomDown = false; this._zoomDragged = false;
-    this.setState({ zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, zoomPendingRect: null, justCropped: false }, () => this.redraw());
+    this.setState({ zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, zoomPendingRect: null, justCropped: false, lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw());
   };
 
   openSaveDialog = () => this.setState({ showSaveDialog: true, saveScope: this.state.isPdf ? 'full' : 'active' });
@@ -1546,7 +1547,7 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#0d7a75 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#0a0a0a 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#ff2fa1 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#ffffff 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#1fc4bb 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#141414 40%,transparent 41%),#0f8f89"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "url('_ds/winter_cadpat.png')"};background-repeat:repeat;background-size:220px 220px;image-rendering:pixelated;cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
@@ -1574,7 +1575,7 @@ class Component extends DCLogic {
       onThicknessChange: this.onThicknessChange, strokeWidth: this.state.strokeWidth,
       thicknessPreviewStyle: `width:100%;height:${Math.min(150, this.state.strokeWidth)}px;background:${this.state.color};border-radius:${Math.min(150, this.state.strokeWidth) / 2}px;`,
       toggleZoomMode: this.toggleZoomMode,
-      zoomBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'transparent'};border:1px solid ${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:18px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;${((this.state.zoomPendingRect || this.state.cropAdjustRect) && this.state.rectMode === 'zoom') ? 'box-shadow:0 0 14px 4px #ffffff;' : ''}`,
+      zoomBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'transparent'};border:1px solid ${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '18px' : '13px'};letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;${((this.state.zoomPendingRect || this.state.cropAdjustRect) && this.state.rectMode === 'zoom') ? 'box-shadow:0 0 14px 4px #ffffff;' : ''}`,
       zoomHintVisible: this.state.zoomMode,
       editingTextVisible: this.state.editingTextId != null,
       editTextInputRef: this.editTextInputRef,
