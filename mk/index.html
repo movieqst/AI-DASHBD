@@ -67,6 +67,7 @@
           <button onClick="{{ undo }}" style="width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);"><span>Unmark</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <button onClick="{{ redo }}" style="width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);"><span>Remark</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <button onClick="{{ toggleSelectMode }}" style="{{ selectBtnStyle }}"><span>Select</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
+          <button onClick="{{ togglePenMode }}" style="{{ penBtnStyle }}"><span>Pen</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <button onClick="{{ toggleTextMode }}" style="{{ textBtnStyle }}"><span>Text</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <sc-if value="{{ showDeleteBtn }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ deleteSelected }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #ff1a2e;color:#ff1a2e;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Delete</button>
@@ -103,15 +104,16 @@
 
   <sc-if value="{{ notLoaded }}" hint-placeholder-val="{{ true }}">
     <div onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onClick="{{ onBrowseClick }}" style="{{ dropZoneStyle }}">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=6&data=http%3A%2F%2Faidashbd.com%2FEEZMARKUP%2F" alt="QR code to open EEZMARKUP" style="width:140px;height:140px;background:#fff;margin-bottom:18px;"/>
-      <div style="font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;color:#ffee00;text-transform:uppercase;">JPG · PNG · GIF · WEBP · PDF</div>
-      <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;">
+      <div ref="{{ dzBgRef }}" style="position:absolute;inset:0;z-index:0;image-rendering:pixelated;"></div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=6&data=http%3A%2F%2Faidashbd.com%2FEEZMARKUP%2F" alt="QR code to open EEZMARKUP" style="width:140px;height:140px;background:#fff;margin-bottom:18px;position:relative;z-index:1;"/>
+      <div style="font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;color:#333333;-webkit-text-stroke:1px #ffffff;text-shadow:0 0 2px #ffffff,0 0 2px #ffffff;text-transform:uppercase;position:relative;z-index:1;">JPG · PNG · GIF · WEBP · PDF</div>
+      <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:1;">
         <button onClick="{{ onBrowseClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #ffee00;color:#ffee00;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:#ff9500;color:#ff9500;">Open  Img</button>
         <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ true }}">
           <button onClick="{{ onCameraClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Take  Photo</button>
         </sc-if>
       </div>
-      <div style="margin-top:20px;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-accent-300,#a9c1d6);">{{ processingLabel }}</div>
+      <div style="margin-top:20px;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-accent-300,#a9c1d6);position:relative;z-index:1;">{{ processingLabel }}</div>
     </div>
   </sc-if>
 
@@ -174,7 +176,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#ff6b81&quot;,&quot;#fff0f3&quot;,&quot;#ffb3c1&quot;,&quot;#c94f6d&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -186,6 +188,7 @@ class Component extends DCLogic {
   lengthFtInputRef = React.createRef();
   fileInputRef = React.createRef();
   cameraInputRef = React.createRef();
+  dzBgRef = React.createRef();
   colorPickerRef = React.createRef();
 
   state = {
@@ -200,10 +203,11 @@ class Component extends DCLogic {
     isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
     editingTextId: null, editingTextDraft: '',
     rotateMode: false, loadProgress: '', measureMode: false, lineMode: false,
-    lengthFrozen: false, lineLengthFt: '', lineLengthIn: ''
+    lengthFrozen: false, lineLengthFt: '', lineLengthIn: '', penMode: true
   };
 
   componentDidMount() {
+    this.generateDzPattern();
     window.addEventListener('paste', this.onPaste);
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('resize', this.onWindowResize);
@@ -216,6 +220,37 @@ class Component extends DCLogic {
     window.removeEventListener('paste', this.onPaste);
     window.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('resize', this.onWindowResize);
+  }
+  generateDzPattern() {
+    const palette = this.props.dzPalette && this.props.dzPalette.length ? this.props.dzPalette : ['#f4f7f9', '#d8e0e5', '#eef2f5', '#b9c4ca'];
+    const weights = palette.length === 4 ? [0.32, 0.30, 0.28, 0.10] : palette.map(() => 1 / palette.length);
+    const N = 160, cell = 8;
+    const canvas = document.createElement('canvas');
+    canvas.width = N; canvas.height = N;
+    const ctx = canvas.getContext('2d');
+    const pick = () => {
+      const r = Math.random(); let acc = 0;
+      for (let i = 0; i < weights.length; i++) { acc += weights[i]; if (r <= acc) return i; }
+      return 0;
+    };
+    for (let by = 0; by < N; by += cell) {
+      for (let bx = 0; bx < N; bx += cell) {
+        ctx.fillStyle = palette[pick()];
+        ctx.fillRect(bx, by, cell, cell);
+      }
+    }
+    const url = canvas.toDataURL('image/png');
+    this.setState({ dzPatternReady: true }, () => {
+      if (this.dzBgRef.current) {
+        this.dzBgRef.current.style.backgroundImage = `url("${url}")`;
+        this.dzBgRef.current.style.backgroundRepeat = 'repeat';
+        this.dzBgRef.current.style.backgroundSize = '220px 220px';
+      }
+    });
+  }
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps.dzPalette) !== JSON.stringify(this.props.dzPalette)) this.generateDzPattern();
+    if (this.dzBgRef.current && !this.dzBgRef.current.style.backgroundImage && this.state.dzPatternReady) this.generateDzPattern();
   }
   onWindowResize = () => { if (this.state.zoomRect) this.applyZoomStyle(this.state.zoomRect); };
   onKeyDown = (e) => {
@@ -235,13 +270,12 @@ class Component extends DCLogic {
       if (this.state.lengthFrozen) { if (this.lengthFtInputRef.current) this.lengthFtInputRef.current.blur(); this.setState({ lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw()); return; }
       if (this.state.lineMode) {
         if (this._activeLine && this._activeLine.points.length >= 2) this.finalizeLine();
-        else { this._activeLine = null; this._lineHoverPt = null; }
-        this.setState({ lineMode: false, lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw());
+        else { this._activeLine = null; this._lineHoverPt = null; this.redraw(); }
         return;
       }
-      if (this.state.textMode) { this._textDown = false; this._textClickFirst = null; this._textHover = null; this.setState({ textMode: false }, () => this.redraw()); return; }
-      if (this.state.selectMode) { this.setState({ selectMode: false, selectedIds: [] }, () => this.redraw()); return; }
-      if (this.state.zoomMode) { this.exitZoomSelect(); return; }
+      if (this.state.textMode) { this._textDown = false; this._textClickFirst = null; this._textHover = null; this.redraw(); return; }
+      if (this.state.selectMode) { this.setState({ selectedIds: [] }, () => this.redraw()); return; }
+      if (this.state.zoomMode) { this._zoomClickFirst = null; this._zoomHover = null; this._zoomDown = false; this._zoomDragged = false; this.setState({ zoomPendingRect: null }, () => this.redraw()); return; }
       if (this.state.zoomPendingRect) { const resumeLine = this._lineSuspended; this._lineSuspended = false; this.setState({ zoomPendingRect: null, lineMode: resumeLine || this.state.lineMode }, () => this.redraw()); return; }
       if (this.state.zoomRect) { this.exitZoom(); return; }
     }
@@ -564,7 +598,12 @@ class Component extends DCLogic {
       return;
     }
     this.clearToolModes();
-    this.setState({ lineMode: true, selectMode: false, textMode: false, zoomMode: false, measureMode: false, selectedIds: [], lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' });
+    this.setState({ lineMode: true, selectMode: false, textMode: false, zoomMode: false, measureMode: false, penMode: false, selectedIds: [], lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' });
+  };
+  togglePenMode = () => {
+    if (this.state.penMode) return;
+    this.clearToolModes();
+    this.setState({ penMode: true, lineMode: false, selectMode: false, textMode: false, zoomMode: false, measureMode: false, selectedIds: [] });
   };
   realInchesToPx(page, realInches) {
     const pxPerInch = (page && page.pxPerInch) || 96;
@@ -720,7 +759,7 @@ class Component extends DCLogic {
   toggleMeasureMode = () => {
     if (this.state.measureMode) { this.clearToolModes(); this.setState({ measureMode: false }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ measureMode: true, selectMode: false, textMode: false, zoomMode: false, selectedIds: [] });
+    this.setState({ measureMode: true, selectMode: false, textMode: false, zoomMode: false, penMode: false, selectedIds: [] });
   };
   measurePointerDown(e) {
     this._measureDown = true; this._measureStart = this.getPoint(e); this._measureCurrent = this._measureStart;
@@ -748,12 +787,12 @@ class Component extends DCLogic {
   toggleSelectMode = () => {
     if (this.state.selectMode) { this.setState({ selectMode: false, selectedIds: [] }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ selectMode: true, selectedIds: [], textMode: false });
+    this.setState({ selectMode: true, selectedIds: [], textMode: false, penMode: false });
   };
   toggleTextMode = () => {
     if (this.state.textMode) { this._textClickFirst = null; this._textHover = null; this.setState({ textMode: false }, () => this.redraw()); return; }
     this.clearToolModes();
-    this.setState({ textMode: true, selectMode: false, selectedIds: [] });
+    this.setState({ textMode: true, selectMode: false, selectedIds: [], penMode: false });
   };
   deleteSelected = () => {
     const page = this.pages[this.state.currentPage];
@@ -885,6 +924,7 @@ class Component extends DCLogic {
         this._adjustTarget = 'zoomPendingRect'; this._adjustBounds = { x: 0, y: 0, w: page.canvas.width, h: page.canvas.height }; this._adjustEdge = edge; this._adjustStartRect = { ...this.state.zoomPendingRect }; if (e.target.setPointerCapture) e.target.setPointerCapture(e.pointerId); return;
       }
     }
+    if (!this.state.penMode) return;
     const p = this.getPoint(e);
     this._down = true; this._dragged = false; this._startPt = p; this._freehandPts = [p];
   };
@@ -917,6 +957,7 @@ class Component extends DCLogic {
     }
     if (this.state.zoomMode) return this.zoomPointerMove(e);
     if (this.state.measureMode) return this.measurePointerMove(e);
+    if (!this.state.penMode) return;
     const p = this.getPoint(e);
     if (this._down) {
       const dx = p.x - this._startPt.x, dy = p.y - this._startPt.y;
@@ -1325,7 +1366,7 @@ class Component extends DCLogic {
       return;
     }
     this.clearToolModes();
-    this.setState({ zoomMode: true, textMode: false, selectMode: false, selectedIds: [] });
+    this.setState({ zoomMode: true, textMode: false, selectMode: false, selectedIds: [], penMode: false });
   };
   exitZoomSelect = () => {
     this._zoomClickFirst = null; this._zoomHover = null; this._zoomDown = false; this._zoomDragged = false;
@@ -1547,7 +1588,8 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "url('_ds/winter_cadpat.png')"};background-repeat:repeat;background-size:220px 220px;image-rendering:pixelated;cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : '#0a0a0a'};cursor:pointer;transition:background 0.15s;`,
+      dzBgRef: this.dzBgRef,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
@@ -1571,6 +1613,8 @@ class Component extends DCLogic {
       showDeleteBtn: this.state.selectMode && this.state.selectedIds.length > 0,
       selectBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.selectMode ? '#1e90ff' : 'transparent'};border:1px solid ${this.state.selectMode ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${this.state.selectMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       showCornerMarks: this.props.showCornerMarks ?? true,
+      togglePenMode: this.togglePenMode,
+      penBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.penMode ? '#00c2a8' : 'transparent'};border:1px solid ${this.state.penMode ? '#00c2a8' : 'rgba(255,255,255,0.25)'};color:${this.state.penMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       showThicknessPopup: this.state.showThicknessPopup, closeThicknessPopup: this.closeThicknessPopup,
       onThicknessChange: this.onThicknessChange, strokeWidth: this.state.strokeWidth,
       thicknessPreviewStyle: `width:100%;height:${Math.min(150, this.state.strokeWidth)}px;background:${this.state.color};border-radius:${Math.min(150, this.state.strokeWidth) / 2}px;`,
