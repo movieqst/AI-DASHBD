@@ -118,6 +118,22 @@
   <input type="file" ref="{{ fileInputRef }}" accept="image/*,.pdf,application/pdf" style="display:none" onChange="{{ onFileInputChange }}"/>
   <input type="file" ref="{{ cameraInputRef }}" accept="image/*" capture="environment" style="display:none" onChange="{{ onFileInputChange }}"/>
 
+  <sc-if value="{{ showThicknessPopup }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:rgba(0,0,0,0.72);display:flex;align-items:center;justify-content:center;z-index:50;">
+      <div style="background:#0c0c0d;border:1px solid var(--color-accent-700,#3d5872);padding:32px;width:320px;">
+        <div style="font-family:var(--font-heading,'Barlow Condensed',sans-serif);font-size:22px;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-accent-300,#a9c1d6);margin-bottom:20px;">Custom Thickness</div>
+        <div style="{{ thicknessPreviewStyle }}"></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:24px;">
+          <input type="range" min="1" max="150" value="{{ strokeWidth }}" onChange="{{ onThicknessChange }}" style="flex:1;"></input>
+          <input type="number" min="1" max="150" value="{{ strokeWidth }}" onChange="{{ onThicknessChange }}" style="width:64px;height:32px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:14px;text-align:center;"></input>
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin-top:24px;">
+          <button onClick="{{ closeThicknessPopup }}" style="padding:10px 18px;background:var(--color-accent-500,#5980a6);border:1px solid var(--color-accent-500,#5980a6);color:#04121d;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:0.04em;cursor:pointer;">Done</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ showSaveDialog }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;background:rgba(0,0,0,0.72);display:flex;align-items:center;justify-content:center;z-index:50;">
       <div style="background:#0c0c0d;border:1px solid var(--color-accent-700,#3d5872);padding:32px;width:380px;position:relative;">
@@ -216,7 +232,7 @@ class Component extends DCLogic {
       e.preventDefault(); this.deleteSelected(); return;
     }
     if (e.key === 'Escape') {
-      if (this.state.lengthFrozen) { this.setState({ lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw()); return; }
+      if (this.state.lengthFrozen) { if (this.lengthFtInputRef.current) this.lengthFtInputRef.current.blur(); this.setState({ lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw()); return; }
       if (this.state.lineMode) {
         if (this._activeLine && this._activeLine.points.length >= 2) this.finalizeLine();
         else { this._activeLine = null; this._lineHoverPt = null; }
@@ -578,6 +594,7 @@ class Component extends DCLogic {
     const pt = { x: anchor.x + px * Math.cos(this._lineLockAngle), y: anchor.y + px * Math.sin(this._lineLockAngle) };
     this._activeLine.points.push(pt);
     this._lineHoverPt = null;
+    if (this.lengthFtInputRef.current) this.lengthFtInputRef.current.blur();
     this.setState({ lengthFrozen: false, lineLengthFt: '', lineLengthIn: '' }, () => this.redraw());
   };
   linePointerMove(e) {
@@ -1151,7 +1168,7 @@ class Component extends DCLogic {
 
   zoomPointerDown(e) {
     const p = this.getPoint(e);
-    this._zoomDown = true; this._zoomDragged = false; this._zoomStart = p; this._zoomCurrent = p;
+    this._zoomDown = true; this._zoomDragged = false; this._zoomStart = p; this._zoomCurrent = p; this._zoomDownTime = Date.now();
   }
   zoomPointerMove(e) {
     const p = this.getPoint(e);
@@ -1166,12 +1183,18 @@ class Component extends DCLogic {
     const p = this.getPoint(e);
     this._zoomDown = false;
     if (this._zoomDragged) {
+      if (Date.now() - (this._zoomDownTime || 0) < 1000) {
+        this._zoomDragged = false;
+        this._zoomClickFirst = this._zoomStart; this._zoomClickFirstTime = Date.now(); this._zoomHover = p;
+        this.redraw();
+        return;
+      }
       this.finalizeZoomRect(this._zoomStart, p);
       this._zoomDragged = false;
     } else if (!this._zoomClickFirst) {
       this._zoomClickFirst = p; this._zoomClickFirstTime = Date.now(); this.redraw();
     } else {
-      if (Date.now() - (this._zoomClickFirstTime || 0) < 3000) return;
+      if (Date.now() - (this._zoomClickFirstTime || 0) < 2000) return;
       this.finalizeZoomRect(this._zoomClickFirst, p);
       this._zoomClickFirst = null; this._zoomHover = null;
     }
@@ -1405,16 +1428,30 @@ class Component extends DCLogic {
   openColorPicker = () => { if (this.colorPickerRef.current) this.colorPickerRef.current.click(); };
   onCustomColorChange = (e) => { this.setState({ color: e.target.value }); };
   buildWidthItems() {
-    return [3, 16, 36, 54, 84, 124].map(v => {
+    const items = [3, 16, 36, 54, 84, 124].map(v => {
       const selected = this.state.strokeWidth === v;
       const diameter = Math.min(34, Math.round(6 + Math.sqrt(v) * 3));
       return {
-        value: v, label: String(v), select: () => this.setState({ strokeWidth: v }),
+        value: v, label: String(v), isCustom: false, select: () => this.setState({ strokeWidth: v }),
         style: `width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:${selected ? 'var(--color-accent-500,#5980a6)' : 'transparent'};border:1px solid rgba(255,255,255,0.35);cursor:pointer;padding:0;flex-shrink:0;`,
         dotStyle: `width:${diameter}px;height:${diameter}px;border-radius:50%;background:${selected ? '#04121d' : '#f2f2f3'};`
       };
     });
+    if (this.state.isDesktop) {
+      items.splice(3, 0, {
+        value: 'custom', label: '', isCustom: true, select: this.openThicknessPopup,
+        style: `width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--color-accent-400,#7398b8);cursor:pointer;padding:0;flex-shrink:0;`,
+        dotStyle: `width:26px;height:16px;background:#f2f2f3;clip-path:polygon(0 46%,100% 4%,100% 96%,0 54%);`
+      });
+    }
+    return items;
   }
+  openThicknessPopup = () => this.setState({ showThicknessPopup: true });
+  closeThicknessPopup = () => this.setState({ showThicknessPopup: false });
+  onThicknessChange = (e) => {
+    const v = Math.max(1, Math.min(150, parseInt(e.target.value, 10) || 1));
+    this.setState({ strokeWidth: v });
+  };
   buildFormatItems() {
     return [['jpg', 'JPG'], ['png', 'PNG'], ['webp', 'WEBP']].map(([v, label]) => ({
       value: v, label, select: () => this.setState({ saveFormat: v }),
@@ -1455,7 +1492,7 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#c9b28a 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#a68c62 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#e6d3ae 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#b39c74 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#d6c19a 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#8f7a54 40%,transparent 41%),#cbb488"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#7a0f9e 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#c4001f 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#a92ecc 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#e6002e 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#5c0a78 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#8f0019 40%,transparent 41%),#6e0e8c"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
@@ -1479,6 +1516,9 @@ class Component extends DCLogic {
       showDeleteBtn: this.state.selectMode && this.state.selectedIds.length > 0,
       selectBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.selectMode ? '#1e90ff' : 'transparent'};border:1px solid ${this.state.selectMode ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${this.state.selectMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       showCornerMarks: this.props.showCornerMarks ?? true,
+      showThicknessPopup: this.state.showThicknessPopup, closeThicknessPopup: this.closeThicknessPopup,
+      onThicknessChange: this.onThicknessChange, strokeWidth: this.state.strokeWidth,
+      thicknessPreviewStyle: `width:100%;height:${Math.min(150, this.state.strokeWidth)}px;background:${this.state.color};border-radius:${Math.min(150, this.state.strokeWidth) / 2}px;`,
       toggleZoomMode: this.toggleZoomMode,
       zoomBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'transparent'};border:1px solid ${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${(this.state.zoomMode || this.state.zoomPendingRect || (this.state.isDesktop && this.state.zoomRect)) ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       zoomHintVisible: this.state.zoomMode,
@@ -1489,11 +1529,11 @@ class Component extends DCLogic {
       editTextStyle: this.computeTextEditStyle(),
       canvasStyle: (zoomed && this.state.zoomCanvasStyle) ? this.state.zoomCanvasStyle : 'max-width:100%;max-height:100%;width:auto;height:auto;touch-action:none;cursor:crosshair;border:1px solid rgba(255,255,255,0.12);',
       canvasAreaStyle: `flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background:#000;border:2px dashed ${this.state.dragActive ? 'var(--color-accent-400,#7398b8)' : 'transparent'};`,
-      topActionLabel: zoomed ? 'Crop' : 'Save Markup',
+      topActionLabel: zoomed ? 'Crop' : 'Save',
       topActionHandler: this.handleTopAction,
       topActionStyle: zoomed
-        ? `padding:8px 20px;background:#ff1a2e;border:1px solid #ff1a2e;color:#ffffff;font-family:var(--font-body,'Barlow',sans-serif);font-weight:700;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`
-        : `padding:8px 16px;background:var(--color-accent-500,#5980a6);border:1px solid var(--color-accent-500,#5980a6);color:#04121d;font-family:var(--font-body,'Barlow',sans-serif);font-weight:600;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
+        ? `padding:8px 20px;background:#ff1a2e;border:1px solid #ff1a2e;color:#ffffff;font-family:var(--font-body,'Barlow',sans-serif);font-weight:700;font-size:18px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`
+        : `padding:8px 16px;background:var(--color-accent-500,#5980a6);border:2px solid #ffee00;box-shadow:0 0 8px #ffee00;color:#04121d;font-family:var(--font-body,'Barlow',sans-serif);font-weight:600;font-size:18px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       pageRenderingVisible: !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage]._pdfPage && !this.pages[this.state.currentPage]._rendered),
       rotateMode: this.state.rotateMode, toggleRotateMode: this.toggleRotateMode, rotateCW: this.rotateCW, rotateCCW: this.rotateCCW,
       rotateBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.rotateMode ? '#e2ff00' : 'transparent'};border:1px solid ${this.state.rotateMode ? '#e2ff00' : 'rgba(255,255,255,0.25)'};color:${this.state.rotateMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
