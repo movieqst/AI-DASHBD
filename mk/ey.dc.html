@@ -33,22 +33,6 @@
       <button onClick="{{ topActionHandler }}" style="{{ topActionStyle }}">{{ topActionLabel }}</button>
     </div>
 
-    <sc-if value="{{ scaleLabelVisible }}" hint-placeholder-val="{{ false }}">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 16px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.14);background:#000;flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Length:</div>
-          <input value="{{ lengthFt }}" onChange="{{ onLengthFtChange }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
-          <div style="font-size:12px;color:rgba(255,255,255,0.5);">ft</div>
-          <input value="{{ lengthIn }}" onChange="{{ onLengthInChange }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
-          <div style="font-size:12px;color:rgba(255,255,255,0.5);">in</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="font-size:13px;letter-spacing:0.04em;color:var(--color-accent-300,#a9c1d6);white-space:nowrap;">Scale {{ scaleLabel }}</div>
-        </div>
-      </div>
-    </sc-if>
-
-
     <div ref="{{ canvasAreaRef }}" onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" style="{{ canvasAreaStyle }}">
       <div style="position:absolute;left:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:7px;background:rgba(0,0,0,0.55);padding:8px;z-index:10;">
         <sc-for list="{{ widths }}" as="w" hint-placeholder-count="6">
@@ -60,6 +44,7 @@
           <button onClick="{{ c.select }}" style="{{ c.style }}" title="{{ c.name }}"></button>
         </sc-for>
       </div>
+      <input type="color" ref="{{ colorPickerRef }}" onChange="{{ onCustomColorChange }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;"></input>
       <canvas ref="{{ canvasRef }}" onPointerDown="{{ onPointerDown }}" onPointerMove="{{ onPointerMove }}" onPointerUp="{{ onPointerUp }}" onPointerLeave="{{ onPointerUp }}" onDoubleClick="{{ onCanvasDoubleClick }}" onContextMenu="{{ onCanvasContextMenu }}" style="{{ canvasStyle }}"></canvas>
       <sc-if value="{{ lineHintVisible }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:#1e90ff;background:rgba(0,0,0,0.6);padding:6px 14px;white-space:nowrap;">Line — Click Points, Double-Click/Right-Click/Esc to Finish, Ctrl 90°, Ctrl+Shift 30°</div>
@@ -92,10 +77,24 @@
           </sc-if>
         </div>
       </sc-if>
-      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;">
-        <button onClick="{{ clearBtnHandler }}" style="{{ clearBtnStyle }}">{{ clearBtnLabel }}</button>
-        <button onClick="{{ toggleZoomMode }}" style="{{ zoomBtnStyle }}">Zoom</button>
-        <button onClick="{{ onBrowseClick }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open  Img</button>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;">
+        <sc-if value="{{ lengthScaleBarVisible }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Length:</div>
+            <input value="{{ lengthFt }}" onChange="{{ onLengthFtChange }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">ft</div>
+            <input value="{{ lengthIn }}" onChange="{{ onLengthInChange }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">in</div>
+          </div>
+        </sc-if>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;">
+          <button onClick="{{ clearBtnHandler }}" style="{{ clearBtnStyle }}">{{ clearBtnLabel }}</button>
+          <button onClick="{{ toggleZoomMode }}" style="{{ zoomBtnStyle }}">Zoom</button>
+          <button onClick="{{ onBrowseClick }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open  Img</button>
+        </div>
+        <sc-if value="{{ lengthScaleBarVisible }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:13px;letter-spacing:0.04em;color:var(--color-accent-300,#a9c1d6);white-space:nowrap;">Scale {{ scaleLabel }}</div>
+        </sc-if>
       </div>
     </div>
   </sc-if>
@@ -103,9 +102,9 @@
   <sc-if value="{{ notLoaded }}" hint-placeholder-val="{{ true }}">
     <div onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onClick="{{ onBrowseClick }}" style="{{ dropZoneStyle }}">
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=6&data=http%3A%2F%2Faidashbd.com%2FEEZMARKUP%2F" alt="QR code to open EEZMARKUP" style="width:140px;height:140px;background:#fff;margin-bottom:18px;"/>
-      <div style="font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;color:rgba(255,255,255,0.5);text-transform:uppercase;">JPG · PNG · GIF · WEBP · PDF</div>
+      <div style="font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;color:#ffee00;text-transform:uppercase;">JPG · PNG · GIF · WEBP · PDF</div>
       <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;">
-        <button onClick="{{ onBrowseClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open  Img</button>
+        <button onClick="{{ onBrowseClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #ffee00;color:#ffee00;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:#ff9500;color:#ff9500;">Open  Img</button>
         <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ true }}">
           <button onClick="{{ onCameraClick }}" style="width:130px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:16px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Take  Photo</button>
         </sc-if>
@@ -168,6 +167,7 @@ class Component extends DCLogic {
   editTextInputRef = React.createRef();
   fileInputRef = React.createRef();
   cameraInputRef = React.createRef();
+  colorPickerRef = React.createRef();
 
   state = {
     loaded: false, isPdf: false, currentPage: 0,
@@ -1341,11 +1341,20 @@ class Component extends DCLogic {
 
   buildColorItems() {
     const list = [['#ffffff', 'White'], ['#ff7a00', 'Orange'], ['#e2ff00', 'Yellow'], ['#00e04a', 'Green'], ['#1e90ff', 'Blue'], ['#b026ff', 'Purple'], ['#ff1a2e', 'Red'], ['#000000', 'Black']];
-    return list.map(([hex, name]) => ({
-      hex, name, select: () => this.setState({ color: hex }),
+    const items = list.map(([hex, name]) => ({
+      hex, name, isRainbow: false, select: () => this.setState({ color: hex }),
       style: `width:32px;height:32px;background:${hex};border:${this.state.color === hex ? '3px solid #ffffff' : '1px solid rgba(255,255,255,0.35)'};cursor:pointer;padding:0;flex-shrink:0;`
     }));
+    if (this.state.isDesktop) {
+      items.splice(4, 0, {
+        hex: 'rainbow', name: 'Custom', isRainbow: true, select: this.openColorPicker,
+        style: `width:32px;height:32px;background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red);border:1px solid rgba(255,255,255,0.35);cursor:pointer;padding:0;flex-shrink:0;`
+      });
+    }
+    return items;
   }
+  openColorPicker = () => { if (this.colorPickerRef.current) this.colorPickerRef.current.click(); };
+  onCustomColorChange = (e) => { this.setState({ color: e.target.value }); };
   buildWidthItems() {
     return [3, 16, 36, 54, 84, 124].map(v => {
       const selected = this.state.strokeWidth === v;
@@ -1397,12 +1406,13 @@ class Component extends DCLogic {
       notLoaded: !this.state.loaded,
       isPdf: this.state.isPdf,
       processingLabel: this.state.processing ? (this.state.loadProgress || 'Loading…') : '',
-      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : "radial-gradient(ellipse 190px 100px at 15% 25%,#8c1414 40%,transparent 41%),radial-gradient(ellipse 160px 120px at 65% 15%,#2a0a0a 40%,transparent 41%),radial-gradient(ellipse 210px 110px at 45% 65%,#c92e2e 40%,transparent 41%),radial-gradient(ellipse 170px 95px at 88% 60%,#4a1010 40%,transparent 41%),radial-gradient(ellipse 150px 85px at 10% 85%,#a11e1e 40%,transparent 41%),radial-gradient(ellipse 180px 100px at 80% 90%,#1c0606 40%,transparent 41%),#6e1616"};background-repeat:repeat;background-size:483px 483px;background-position:center center;cursor:pointer;transition:background 0.15s;`,
+      dropZoneStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : '#ffffff'};cursor:pointer;transition:background 0.15s;`,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
       onPointerDown: this.onPointerDown, onPointerMove: this.onPointerMove, onPointerUp: this.onPointerUp,
       colors: this.buildColorItems(), widths: this.buildWidthItems(),
+      colorPickerRef: this.colorPickerRef, onCustomColorChange: this.onCustomColorChange,
       fileLabel: this.state.loaded ? `${this.state.fileBase}.${this.state.fileExt}` : '',
       pageLabel: `Page ${this.state.currentPage + 1} / ${this.pages.length}`,
       scaleLabelVisible: this.state.isPdf && !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale && !this.pages[this.state.currentPage].scale.assumed),
@@ -1445,7 +1455,8 @@ class Component extends DCLogic {
       onLengthInChange: (e) => this.onLengthFieldChange('in', e.target.value),
       onAddScaleClick: this.onAddScaleClick,
       onCanvasContextMenu: this.onCanvasContextMenu,
-      lineHintVisible: this.state.lineMode
+      lineHintVisible: this.state.lineMode,
+      lengthScaleBarVisible: this.state.isDesktop && this.state.isPdf && !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage].scale && !this.pages[this.state.currentPage].scale.assumed)
     };
   }
 }
