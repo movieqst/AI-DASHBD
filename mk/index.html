@@ -22,11 +22,11 @@
 
   <sc-if value="{{ loaded }}" hint-placeholder-val="{{ false }}">
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 16px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.14);background:#000;">
-      <div style="font-size:13px;color:rgba(255,255,255,0.6);white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis;">{{ fileLabel }}</div>
+      <div style="color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis;">{{ fileLabel }}</div>
       <sc-if value="{{ isPdf }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;align-items:center;gap:8px;">
           <button onClick="{{ prevPage }}" style="width:28px;height:28px;background:transparent;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;cursor:pointer;">‹</button>
-          <div style="font-size:13px;color:rgba(255,255,255,0.7);white-space:nowrap;">{{ pageLabel }}</div>
+          <div style="color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;">{{ pageLabel }}</div>
           <button onClick="{{ nextPage }}" style="width:28px;height:28px;background:transparent;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;cursor:pointer;">›</button>
         </div>
       </sc-if>
@@ -82,11 +82,11 @@
       <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
         <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:flex-start;">
           <sc-if value="{{ lengthScaleBarVisible }}" hint-placeholder-val="{{ false }}">
-            <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Length:</div>
+            <div style="color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;">Length:</div>
             <input ref="{{ lengthFtInputRef }}" value="{{ lengthFt }}" onChange="{{ onLengthFtChange }}" onKeyDown="{{ onLengthKeyDown }}" readOnly="{{ lengthReadOnly }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
-            <div style="font-size:12px;color:rgba(255,255,255,0.5);">ft</div>
+            <div style="color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;">ft</div>
             <input ref="{{ lengthInInputRef }}" value="{{ lengthIn }}" onChange="{{ onLengthInChange }}" onKeyDown="{{ onLengthKeyDown }}" readOnly="{{ lengthReadOnly }}" placeholder="0" style="width:52px;height:28px;background:#0c0c0d;border:1px solid rgba(255,255,255,0.3);color:#f2f2f3;font-size:13px;text-align:center;"></input>
-            <div style="font-size:12px;color:rgba(255,255,255,0.5);">in</div>
+            <div style="color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;">in</div>
           </sc-if>
         </div>
         <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;">
@@ -98,7 +98,7 @@
         </div>
         <div style="flex:1;text-align:right;">
           <sc-if value="{{ lengthScaleBarVisible }}" hint-placeholder-val="{{ false }}">
-            <div style="font-size:13px;letter-spacing:0.04em;color:var(--color-accent-300,#a9c1d6);white-space:nowrap;display:inline-block;">Scale {{ scaleLabel }}</div>
+            <div style="color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;display:inline-block;">Scale {{ scaleLabel }}</div>
           </sc-if>
         </div>
       </div>
@@ -179,7 +179,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#0a1a3a&quot;,&quot;#c8102e&quot;,&quot;#ffffff&quot;,&quot;#1f4e9c&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#000000&quot;,&quot;#ffffff&quot;,&quot;#ff6a00&quot;,&quot;#8a0303&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -198,8 +198,8 @@ class Component extends DCLogic {
   state = {
     loaded: false, isPdf: false, currentPage: 0,
     fileBase: '', fileExt: '',
-    color: '#e2ff00',
-    strokeWidth: 36, dragActive: false, processing: false,
+    color: '#ff7a00',
+    strokeWidth: 84, dragActive: false, processing: false,
     showSaveDialog: false,
     saveFormat: 'jpg',
     saveScope: 'active',
@@ -379,12 +379,71 @@ class Component extends DCLogic {
     }
     return canvas;
   }
+  buildFibSquares(n, unit) {
+    const fib = [1, 1];
+    for (let i = 2; i < n; i++) fib.push(fib[i - 1] + fib[i - 2]);
+    const squares = [{ x: 0, y: 0, w: fib[0] * unit, h: fib[0] * unit }];
+    squares.push({ x: fib[0] * unit, y: 0, w: fib[1] * unit, h: fib[1] * unit });
+    let boundX = 0, boundY = 0, boundW = fib[0] * unit + fib[1] * unit, boundH = fib[1] * unit;
+    let dir = 0;
+    for (let i = 2; i < n; i++) {
+      const s = fib[i] * unit;
+      let nx, ny;
+      switch (dir % 4) {
+        case 0: nx = boundX; ny = boundY - s; break;
+        case 1: nx = boundX - s; ny = boundY; break;
+        case 2: nx = boundX; ny = boundY + boundH; break;
+        default: nx = boundX + boundW; ny = boundY; break;
+      }
+      squares.push({ x: nx, y: ny, w: s, h: s });
+      const newX = Math.min(boundX, nx), newY = Math.min(boundY, ny);
+      boundW = Math.max(boundX + boundW, nx + s) - newX;
+      boundH = Math.max(boundY + boundH, ny + s) - newY;
+      boundX = newX; boundY = newY;
+      dir++;
+    }
+    return squares;
+  }
+  generateDzFibonacciPattern(palette) {
+    const N = 480;
+    const canvas = document.createElement('canvas');
+    canvas.width = N; canvas.height = N;
+    const ctx = canvas.getContext('2d');
+    const lum = hex => { const h = hex.replace('#', ''); const r = parseInt(h.substring(0, 2), 16) || 0, g = parseInt(h.substring(2, 4), 16) || 0, b = parseInt(h.substring(4, 6), 16) || 0; return 0.299 * r + 0.587 * g + 0.114 * b; };
+    const sorted = [...palette].sort((a, b) => lum(a) - lum(b));
+    ctx.fillStyle = sorted[0];
+    ctx.fillRect(0, 0, N, N);
+    const clusters = 80;
+    for (let c = 0; c < clusters; c++) {
+      const unit = 1.5 + Math.random() * 2.5;
+      const squares = this.buildFibSquares(6, unit);
+      const last = squares[squares.length - 1];
+      const spanW = Math.max(...squares.map(s => s.x + s.w)) - Math.min(...squares.map(s => s.x));
+      const spanH = Math.max(...squares.map(s => s.y + s.h)) - Math.min(...squares.map(s => s.y));
+      const minX = Math.min(...squares.map(s => s.x)), minY = Math.min(...squares.map(s => s.y));
+      const cx = Math.random() * N, cy = Math.random() * N;
+      const rot = Math.random() * Math.PI * 2;
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(rot);
+      ctx.translate(-spanW / 2, -spanH / 2);
+      squares.forEach((sq, i) => {
+        ctx.fillStyle = palette[(i + c) % palette.length];
+        ctx.globalAlpha = 0.55 + Math.random() * 0.4;
+        ctx.fillRect(sq.x - minX, sq.y - minY, sq.w, sq.h);
+      });
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+    return canvas;
+  }
   generateDzPattern() {
     const palette = this.props.dzPalette && this.props.dzPalette.length ? this.props.dzPalette : ['#f4f7f9', '#d8e0e5', '#eef2f5', '#b9c4ca'];
     const style = this.props.dzStyle || 'blobs';
     let canvas;
     if (style === 'rain') canvas = this.generateDzRainPattern(palette);
     else if (style === 'blocks') canvas = this.generateDzBlockPattern(palette);
+    else if (style === 'fibonacci') canvas = this.generateDzFibonacciPattern(palette);
     else canvas = this.generateDzBlobPattern(palette);
     const url = canvas.toDataURL('image/png');
     this.setState({ dzPatternReady: true }, () => {
@@ -823,8 +882,14 @@ class Component extends DCLogic {
   }
   linePointerMove(e) {
     if (this.state.lengthFrozen) return;
-    if (!this._activeLine || !this._activeLine.points.length) return;
+    if (!this.state.lineMode) return;
     const p = this.getPoint(e);
+    if (!this._activeLine || !this._activeLine.points.length) {
+      this._lineSnapPoint = (e.ctrlKey || e.shiftKey) ? null : this.findLineSnapPoint(p);
+      this.redraw(true);
+      this.forceUpdate();
+      return;
+    }
     const pts = this._activeLine.points;
     let hp = this.applySplineSnap(pts[pts.length - 1], p, e);
     this._lineSnapPoint = null;
@@ -1284,6 +1349,14 @@ class Component extends DCLogic {
       if (this._freehandPts && this._freehandPts.length > 1) this.drawStroke(ctx, { type: 'freehand', color: this.state.color, width: this.state.strokeWidth, points: this._freehandPts });
       if (this.state.measureMode && this._measureDown && this._measureStart && this._measureCurrent) {
         this.drawStroke(ctx, { type: 'measure', width: 4, color: '#00e04a', points: [this._measureStart, this._measureCurrent], label: this.formatMeasureLabel(page, this._measureStart, this._measureCurrent) });
+      }
+      if (this.state.lineMode && (!this._activeLine || !this._activeLine.points.length) && this._lineSnapPoint) {
+        const scale = this.getDisplayScale();
+        ctx.save();
+        ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 16;
+        ctx.strokeStyle = '#1e90ff'; ctx.lineWidth = Math.max(1.5, 2 / scale);
+        ctx.beginPath(); ctx.arc(this._lineSnapPoint.x, this._lineSnapPoint.y, 9 / scale, 0, Math.PI * 2); ctx.stroke();
+        ctx.restore();
       }
       if (this.state.lineMode && this._activeLine && this._activeLine.points.length) {
         let hoverPt = this._lineHoverPt;
@@ -1882,10 +1955,10 @@ class Component extends DCLogic {
       textMode: this.state.textMode, toggleTextMode: this.toggleTextMode, onCanvasDoubleClick: this.onCanvasDoubleClick,
       textBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.textMode ? '#b026ff' : 'transparent'};border:1px solid ${this.state.textMode ? '#b026ff' : 'rgba(255,255,255,0.25)'};color:${this.state.textMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       showDeleteBtn: this.state.selectMode && this.state.selectedIds.length > 0,
-      selectBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.selectMode ? '#1e90ff' : 'transparent'};border:1px solid ${this.state.selectMode ? '#1e90ff' : 'rgba(255,255,255,0.25)'};color:${this.state.selectMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
+      selectBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.selectMode ? '#7a7a7a' : 'transparent'};border:1px solid ${this.state.selectMode ? '#7a7a7a' : 'rgba(255,255,255,0.25)'};color:${this.state.selectMode ? '#ffffff' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       showCornerMarks: this.props.showCornerMarks ?? true,
       togglePenMode: this.togglePenMode,
-      penBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.penMode ? '#00c2a8' : 'transparent'};border:1px solid ${this.state.penMode ? '#00c2a8' : 'rgba(255,255,255,0.25)'};color:${this.state.penMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
+      penBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.penMode ? '#ff7a00' : 'transparent'};border:1px solid ${this.state.penMode ? '#ff7a00' : 'rgba(255,255,255,0.25)'};color:${this.state.penMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       zoomLockVisible: this.state.isDesktop && !!this.state.zoomRect,
       toggleZoomLock: this.toggleZoomLock,
       zoomLockBtnStyle: `width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:#000000;border:1px solid #ffffff;color:#ffffff;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;${this.state.zoomLock ? 'box-shadow:inset 0 0 10px 3px #ff9500;' : ''}`,
@@ -1906,7 +1979,7 @@ class Component extends DCLogic {
       topActionHandler: this.handleTopAction,
       topActionStyle: zoomed
         ? `padding:8px 20px;background:#ff1a2e;border:1px solid #ff1a2e;color:#ffffff;font-family:var(--font-body,'Barlow',sans-serif);font-weight:700;font-size:18px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;${this.state.rectMode === 'crop' ? 'box-shadow:0 0 14px 4px #ffffff;' : ''}`
-        : `padding:8px 16px;background:var(--color-accent-500,#5980a6);border:2px solid #ffee00;box-shadow:0 0 8px #ffee00;color:#04121d;font-family:var(--font-body,'Barlow',sans-serif);font-weight:600;font-size:18px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
+        : `padding:8px 16px;background:#1fa851;border:2px solid #1fa851;color:#ffffff;font-family:var(--font-body,'Barlow',sans-serif);font-weight:600;font-size:18px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
       pageRenderingVisible: !!(this.pages[this.state.currentPage] && this.pages[this.state.currentPage]._pdfPage && !this.pages[this.state.currentPage]._rendered),
       rotateMode: this.state.rotateMode, toggleRotateMode: this.toggleRotateMode, rotateCW: this.rotateCW, rotateCCW: this.rotateCCW,
       rotateBtnStyle: `width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${this.state.rotateMode ? '#e2ff00' : 'transparent'};border:1px solid ${this.state.rotateMode ? '#e2ff00' : 'rgba(255,255,255,0.25)'};color:${this.state.rotateMode ? '#04121d' : '#f2f2f3'};font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;`,
