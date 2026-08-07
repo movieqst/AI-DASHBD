@@ -84,7 +84,9 @@
           <button onClick="{{ redo }}" style="width:78px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);"><span>Remark</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <button onClick="{{ togglePenMode }}" style="{{ penBtnStyle }}"><span>Pen</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           <div style="position:relative;">
-            <button onClick="{{ openAnnoNotepad }}" title="Annotation Notes" style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:22px;height:14px;padding:0;background:#1a1c1f;border:1px solid rgba(255,255,255,0.35);border-bottom:none;border-radius:3px 3px 0 0;color:#f2f2f3;font-size:8px;line-height:1;cursor:pointer;z-index:2;">▤</button>
+            <sc-if value="{{ showAnnoTabBtn }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ openAnnoNotepad }}" title="Annotation Notes" style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:22px;height:14px;padding:0;background:#1a1c1f;border:1px solid rgba(255,255,255,0.35);border-bottom:none;border-radius:3px 3px 0 0;color:#f2f2f3;font-size:8px;line-height:1;cursor:pointer;z-index:2;">▤</button>
+            </sc-if>
             <button onClick="{{ toggleTextMode }}" style="{{ textBtnStyle }}"><span>Text</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
           </div>
           <sc-if value="{{ showAnnoNotepad }}" hint-placeholder-val="{{ false }}">
@@ -252,7 +254,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#3a3f2e&quot;,&quot;#5a5f47&quot;,&quot;#2b2e22&quot;,&quot;#1a1c15&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blocks&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#c8102e&quot;,&quot;#f2c14e&quot;,&quot;#2e7d4f&quot;,&quot;#e8dcc0&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;blobs&quot;,&quot;options&quot;:[&quot;blocks&quot;,&quot;blobs&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -865,7 +867,7 @@ class Component extends DCLogic {
     this._activeSpline = null; this._freehandPts = null;
     this._measureDown = false; this._measureStart = null; this._measureCurrent = null;
     this._activeLine = null; this._lineHoverPt = null; this._lineLastClickTime = null; this._lineSnapPoint = null; this._lineMagnetPoint = null;
-    this._activeDim = null; this._dimOffsetPhase = false; this._dimHoverPt = null;
+    this._activeDim = null; this._dimOffsetPhase = false; this._dimHoverPt = null; this._dimSnapPoint = null;
   }
   projectAlongAngle(anchor, angle, p) {
     const dirX = Math.cos(angle), dirY = Math.sin(angle);
@@ -878,7 +880,7 @@ class Component extends DCLogic {
     this.setState({ dimensionMode: true, lineMode: false, selectMode: false, textMode: false, zoomMode: false, measureMode: false, penMode: false, selectedIds: [] });
   };
   exitDimensionMode = () => {
-    this._activeDim = null; this._dimOffsetPhase = false; this._dimHoverPt = null;
+    this._activeDim = null; this._dimOffsetPhase = false; this._dimHoverPt = null; this._dimSnapPoint = null;
     this.setState({ dimensionMode: false }, () => this.redraw());
   };
   dimensionPointerDown(e) {
@@ -923,17 +925,19 @@ class Component extends DCLogic {
     if (!this.state.dimensionMode) return;
     const p = this.getPoint(e);
     if (this._dimOffsetPhase) { this._dimHoverPt = p; this.redraw(true); return; }
+    const snap = this.findLineSnapPoint(p);
+    this._dimSnapPoint = snap || null;
     if (this._activeDim && this._activeDim.points.length) {
       const pts = this._activeDim.points;
       let hoverPt;
-      if (pts.length < 2) hoverPt = this.findLineSnapPoint(p) || p;
+      if (pts.length < 2) hoverPt = snap || p;
       else {
         const angle = Math.atan2(pts[1].y - pts[0].y, pts[1].x - pts[0].x);
-        const snapped = this.findLineSnapPoint(p) || p;
-        hoverPt = this.projectAlongAngle(pts[0], angle, snapped);
+        hoverPt = this.projectAlongAngle(pts[0], angle, snap || p);
       }
-      this._dimHoverPt = hoverPt; this.redraw(true);
+      this._dimHoverPt = hoverPt;
     }
+    this.redraw(true);
   }
   toggleAreaMode = () => {
     if (this.state.lineMode) return;
@@ -1038,6 +1042,10 @@ class Component extends DCLogic {
       const snap = this.findLineSnapPoint(p);
       if (snap) { hp = snap; this._lineSnapPoint = snap; }
     }
+    if (this._isAreaSession && pts.length >= 3 && !this._lineSnapPoint) {
+      const bigTol = Math.max(26, 36 / this.getDisplayScale());
+      if (Math.hypot(p.x - pts[0].x, p.y - pts[0].y) <= bigTol) { hp = pts[0]; this._lineSnapPoint = pts[0]; }
+    }
     this._lineHoverPt = hp;
     this.redraw(true);
     this.forceUpdate();
@@ -1066,6 +1074,10 @@ class Component extends DCLogic {
         if (originalLen >= 3 && snap === pts0[0]) closedLoop = true;
       }
     }
+    if (this._isAreaSession && originalLen >= 3 && !closedLoop) {
+      const bigTol = Math.max(26, 36 / this.getDisplayScale());
+      if (Math.hypot(p.x - pts0[0].x, p.y - pts0[0].y) <= bigTol) { placedPt = pts0[0]; closedLoop = true; }
+    }
     // Clicking again on the node you just placed ends the line (no zero-length segment added).
     if (originalLen >= 2 && snap && snap === pts0[originalLen - 1]) { this.finalizeLine(); return; }
     this._activeLine.points.push(placedPt);
@@ -1081,7 +1093,7 @@ class Component extends DCLogic {
       const prevStrokes = this.cloneStrokes(page.strokes);
       if (isArea) {
         const areaLabel = this.computeAreaLabel(page, this._activeLine.points);
-        page.strokes.push({ type: 'area', color: '#00c853', width: 2, points: this._activeLine.points, id: ++this._strokeIdSeq, areaLabel });
+        page.strokes.push({ type: 'area', color: '#00c853', width: 2.5, points: this._activeLine.points, id: ++this._strokeIdSeq, areaLabel });
       } else {
         page.strokes.push({ type: 'line', color: '#1e90ff', width: 1, points: this._activeLine.points, id: ++this._strokeIdSeq });
       }
@@ -1386,6 +1398,7 @@ class Component extends DCLogic {
     if (!this.state.penMode) return;
     const p = this.getPoint(e);
     this._down = true; this._dragged = false; this._startPt = p; this._freehandPts = [p];
+    if (e.target.setPointerCapture) { try { e.target.setPointerCapture(e.pointerId); } catch (err) {} }
   };
   onPointerMove = (e) => {
     if (!this.canvasRef.current) return;
@@ -1609,6 +1622,14 @@ class Component extends DCLogic {
         dpts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 4 / scale2, 0, Math.PI * 2); ctx.fill(); });
         ctx.restore();
       }
+      if (this.state.dimensionMode && this._dimSnapPoint) {
+        const scale3 = this.getDisplayScale();
+        ctx.save();
+        ctx.shadowColor = '#ff9500'; ctx.shadowBlur = 16;
+        ctx.strokeStyle = '#ff9500'; ctx.lineWidth = Math.max(1.5, 2 / scale3);
+        ctx.beginPath(); ctx.arc(this._dimSnapPoint.x, this._dimSnapPoint.y, 8 / scale3, 0, Math.PI * 2); ctx.stroke();
+        ctx.restore();
+      }
       if (this.state.lineMode && this._activeLine && this._activeLine.points.length) {
         let hoverPt = this._lineHoverPt;
         if (this.state.lengthFrozen) {
@@ -1617,15 +1638,16 @@ class Component extends DCLogic {
           const px = this.realInchesToPx(page, realInches);
           hoverPt = { x: anchor.x + px * Math.cos(this._lineLockAngle), y: anchor.y + px * Math.sin(this._lineLockAngle) };
         }
+        const draftColor = this._isAreaSession ? '#00c853' : '#1e90ff';
         const pts = hoverPt ? [...this._activeLine.points, hoverPt] : this._activeLine.points;
-        if (pts.length > 1) this.drawStroke(ctx, { type: 'line', color: '#1e90ff', width: 1, points: pts });
-        ctx.fillStyle = '#1e90ff';
+        if (pts.length > 1) this.drawStroke(ctx, { type: 'line', color: draftColor, width: this._isAreaSession ? 2.5 : 1, points: pts });
+        ctx.fillStyle = draftColor;
         this._activeLine.points.forEach(pt => { ctx.beginPath(); ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2); ctx.fill(); });
         if (this._lineSnapPoint) {
           const scale = this.getDisplayScale();
           ctx.save();
-          ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 16;
-          ctx.strokeStyle = '#1e90ff'; ctx.lineWidth = Math.max(1.5, 2 / scale);
+          ctx.shadowColor = draftColor; ctx.shadowBlur = 16;
+          ctx.strokeStyle = draftColor; ctx.lineWidth = Math.max(1.5, 2 / scale);
           ctx.beginPath(); ctx.arc(this._lineSnapPoint.x, this._lineSnapPoint.y, 9 / scale, 0, Math.PI * 2); ctx.stroke();
           ctx.restore();
         } else if (this._lineMagnetPoint) {
@@ -1665,30 +1687,48 @@ class Component extends DCLogic {
       const ctx2 = this.canvasRef.current.getContext('2d');
       ctx2.font = `600 ${stroke.fontSize || 40}px 'Barlow', sans-serif`;
       const w = Math.max(90, ctx2.measureText(stroke.text || '').width); const h = stroke.fontSize || 40;
-      ctx.save();
-      ctx.shadowColor = 'rgba(255,59,48,0.9)'; ctx.shadowBlur = 16 / scale; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
-      ctx.strokeStyle = 'rgba(255,59,48,0.35)'; ctx.lineWidth = Math.max(1, 2 / scale); ctx.setLineDash([]);
-      ctx.strokeRect(stroke.x - 10, stroke.y - h / 2 - 10, w + 20, h + 20);
-      ctx.restore();
-      if (stroke.arrowFrom) {
+      const glowLayers = [
+        { blur: 40, width: 2, alpha: 0.08 },
+        { blur: 28, width: 2, alpha: 0.14 },
+        { blur: 18, width: 2, alpha: 0.22 },
+        { blur: 9, width: 2, alpha: 0.32 }
+      ];
+      glowLayers.forEach(g => {
         ctx.save();
-        ctx.shadowColor = 'rgba(255,59,48,0.9)'; ctx.shadowBlur = 12 / scale; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
-        ctx.beginPath(); ctx.arc(stroke.arrowFrom.x, stroke.arrowFrom.y, 2 / scale, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255,59,48,0.35)'; ctx.fill();
+        ctx.shadowColor = `rgba(255,59,48,${g.alpha})`; ctx.shadowBlur = g.blur / scale; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+        ctx.strokeStyle = `rgba(255,59,48,${g.alpha})`; ctx.lineWidth = Math.max(1, g.width / scale); ctx.setLineDash([]);
+        ctx.strokeRect(stroke.x - 10, stroke.y - h / 2 - 10, w + 20, h + 20);
         ctx.restore();
+      });
+      if (stroke.arrowFrom) {
+        glowLayers.forEach(g => {
+          ctx.save();
+          ctx.shadowColor = `rgba(255,59,48,${g.alpha})`; ctx.shadowBlur = (g.blur * 0.75) / scale; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+          ctx.beginPath(); ctx.arc(stroke.arrowFrom.x, stroke.arrowFrom.y, 2 / scale, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,59,48,${g.alpha})`; ctx.fill();
+          ctx.restore();
+        });
       }
       this.drawTextStroke(ctx, stroke);
       return;
     }
     const pts = stroke.points; if (!pts || pts.length < 2) return;
-    ctx.save();
-    ctx.shadowColor = 'rgba(255,59,48,0.9)'; ctx.shadowBlur = 18 / scale; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
-    ctx.strokeStyle = 'rgba(255,59,48,0.3)'; ctx.lineWidth = stroke.width + 18 / scale; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    ctx.setLineDash([]);
-    ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
-    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
-    ctx.stroke();
-    ctx.restore();
+    const glowLayers = [
+      { blur: 46, extra: 34, alpha: 0.07 },
+      { blur: 32, extra: 24, alpha: 0.12 },
+      { blur: 20, extra: 14, alpha: 0.2 },
+      { blur: 10, extra: 6, alpha: 0.3 }
+    ];
+    glowLayers.forEach(g => {
+      ctx.save();
+      ctx.shadowColor = `rgba(255,59,48,${g.alpha})`; ctx.shadowBlur = g.blur / scale; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+      ctx.strokeStyle = `rgba(255,59,48,${g.alpha})`; ctx.lineWidth = stroke.width + g.extra / scale; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.stroke();
+      ctx.restore();
+    });
     this.drawStroke(ctx, stroke);
   }
 
@@ -2128,7 +2168,8 @@ class Component extends DCLogic {
   };
   closeSaveDialog = () => this.setState({ showSaveDialog: false });
 
-  hasAnyCallouts() { return (this.pages || []).some(pg => pg.strokes.some(s => s.type === 'text' && s.number)); }
+  countCallouts() { let n = 0; (this.pages || []).forEach(pg => pg.strokes.forEach(s => { if (s.type === 'text' && s.number) n++; })); return n; }
+  hasAnyCallouts() { return this.countCallouts() >= 3; }
   rotateCanvas(canvas, deg) {
     if (!deg) return canvas;
     const swap = deg === 90 || deg === 270;
@@ -2441,6 +2482,7 @@ class Component extends DCLogic {
       showDeleteBtn: this.state.selectMode && this.state.selectedIds.length > 0,
       renumberCallouts: this.renumberCallouts,
       openAnnoNotepad: this.openAnnoNotepad, closeAnnoNotepad: this.closeAnnoNotepad,
+      showAnnoTabBtn: this.hasAnyCallouts(),
       onNotepadDragStart: this.onNotepadDragStart,
       showAnnoNotepad: this.state.annoNotepadOpen,
       annoEntries: this.buildAnnoEntries(),
