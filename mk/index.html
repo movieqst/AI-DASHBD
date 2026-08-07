@@ -8,6 +8,9 @@
 <body>
 <x-dc>
 <helmet>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icons/icon-192.png">
+  <meta name="theme-color" content="#0c0c0d">
   <link rel="stylesheet" href="_ds/industry-d2fd2168-52fe-46e0-884d-4a7d5e106dde/styles.css">
   <script src="_ds/industry-d2fd2168-52fe-46e0-884d-4a7d5e106dde/_ds_bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -31,7 +34,7 @@
         </div>
       </sc-if>
       <button onClick="{{ topActionHandler }}" style="{{ topActionStyle }}">{{ topActionLabel }}</button>
-      <button onClick="{{ onBrowseClick }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open  Img</button>
+      <button onClick="{{ onReturnToDropZone }}" style="width:78px;height:38px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);font-size:13px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;white-space:pre;" style-hover="border-color:var(--color-accent-400,#7398b8);color:var(--color-accent-300,#a9c1d6);">Open  Img</button>
       <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ false }}">
         <button onClick="{{ toggleRotateMode }}" style="{{ rotateBtnStyle }}"><span>Rotate</span><span style="font-size:4px;line-height:1;opacity:0.6;">DESKTOP</span></button>
         <sc-if value="{{ rotateMode }}" hint-placeholder-val="{{ false }}">
@@ -122,6 +125,9 @@
       <div style="{{ dzCaptionStyle }}">JPG · PNG · GIF · WEBP · PDF</div>
       <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:1;">
         <button onClick="{{ onBrowseClick }}" style="{{ dzButtonStyle }}">Open  Img</button>
+        <sc-if value="{{ showInstallBtn }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ onInstallClick }}" style="{{ dzButtonStyle }}">Install  App</button>
+        </sc-if>
         <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ true }}">
           <button onClick="{{ onCameraClick }}" style="{{ dzButtonStyle }}">Take  Photo</button>
         </sc-if>
@@ -179,9 +185,15 @@
             </div>
           </sc-if>
           <sc-if value="{{ showAnnotationListToggle }}" hint-placeholder-val="{{ false }}">
-            <label style="display:flex;align-items:center;gap:8px;padding:6px 2px;margin-bottom:20px;font-size:13px;color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);cursor:pointer;">
+            <label style="display:flex;align-items:center;gap:8px;padding:6px 2px;font-size:13px;color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);cursor:pointer;">
               <input type="checkbox" checked="{{ includeAnnotationList }}" onChange="{{ toggleAnnotationList }}" style="accent-color:var(--color-accent-500,#5980a6);cursor:pointer;"></input>
               <span>Include Annotation List page</span>
+            </label>
+          </sc-if>
+          <sc-if value="{{ showStripTextToggle }}" hint-placeholder-val="{{ false }}">
+            <label style="display:flex;align-items:center;gap:8px;padding:6px 2px 20px 26px;font-size:13px;color:rgba(255,255,255,0.75);font-family:var(--font-body,'Barlow',sans-serif);cursor:pointer;">
+              <input type="checkbox" checked="{{ stripAnnotationText }}" onChange="{{ toggleStripAnnotationText }}" style="accent-color:var(--color-accent-500,#5980a6);cursor:pointer;"></input>
+              <span>Remove callout text from photos (keep dot &amp; number only)</span>
             </label>
           </sc-if>
         </sc-if>
@@ -229,7 +241,7 @@ class Component extends DCLogic {
     strokeWidth: 84, dragActive: false, processing: false,
     showSaveDialog: false,
     saveFormat: 'jpg',
-    saveScope: 'active', selectedSavePages: [], includeAnnotationList: false,
+    saveScope: 'active', selectedSavePages: [], includeAnnotationList: false, stripAnnotationText: false,
     zoomMode: false, zoomRect: null, zoomCanvasStyle: null, cropAdjustRect: null, justCropped: false, zoomPendingRect: null, rectMode: 'crop',
     isDesktop: false, selectMode: false, selectedIds: [], textMode: false,
     editingTextId: null, editingTextDraft: '', tipMenu: null,
@@ -240,6 +252,8 @@ class Component extends DCLogic {
   componentDidMount() {
     this.generateDzPattern();
     window.addEventListener('paste', this.onPaste);
+    window.addEventListener('beforeinstallprompt', this.onBeforeInstallPrompt);
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('resize', this.onWindowResize);
     if (window.matchMedia) this.setState({ isDesktop: window.matchMedia('(pointer: fine)').matches });
@@ -734,7 +748,14 @@ class Component extends DCLogic {
   onDrop = (e) => { e.preventDefault(); this.setState({ dragActive: false }); const files = e.dataTransfer.files; if (files && files.length) this.handleFile(files[0]); };
   onDragOver = (e) => { e.preventDefault(); if (!this.state.dragActive) this.setState({ dragActive: true }); };
   onDragLeave = (e) => { e.preventDefault(); this.setState({ dragActive: false }); };
+  onBeforeInstallPrompt = (e) => { e.preventDefault(); this._installPromptEvent = e; this.setState({ canInstall: true }); };
+  onInstallClick = () => {
+    if (!this._installPromptEvent) return;
+    this._installPromptEvent.prompt();
+    this._installPromptEvent.userChoice.finally(() => { this._installPromptEvent = null; this.setState({ canInstall: false }); });
+  };
   onBrowseClick = () => { this.fileInputRef.current && this.fileInputRef.current.click(); };
+  onReturnToDropZone = () => { this.setState({ loaded: false, zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, lineMode: false, dimensionMode: false, textMode: false, selectMode: false, measureMode: false, showSaveDialog: false }); };
   onCameraClick = () => { this.cameraInputRef.current && this.cameraInputRef.current.click(); };
   onFileInputChange = (e) => { const f = e.target.files && e.target.files[0]; if (f) this.handleFile(f); e.target.value = ''; };
   onPaste = (e) => {
@@ -1692,11 +1713,11 @@ class Component extends DCLogic {
     ctx.moveTo(to.x, to.y); ctx.lineTo(to.x - headLen * Math.cos(angle + Math.PI / 6), to.y - headLen * Math.sin(angle + Math.PI / 6));
     ctx.stroke();
   }
-  drawTextStroke(ctx, stroke) {
+  drawTextStroke(ctx, stroke, numberOnly) {
     ctx.save();
     ctx.font = `600 ${stroke.fontSize || 40}px 'Barlow', sans-serif`;
     ctx.textBaseline = 'middle';
-    const label = stroke.number ? `${stroke.number}. ${stroke.text || ''}` : (stroke.text || '');
+    const label = numberOnly && stroke.number ? `${stroke.number}` : (stroke.number ? `${stroke.number}. ${stroke.text || ''}` : (stroke.text || ''));
     const w = Math.max(90, ctx.measureText(label).width); const h = stroke.fontSize || 40;
     const pad = 10;
     ctx.strokeStyle = stroke.color; ctx.fillStyle = stroke.color; ctx.lineWidth = 3; ctx.setLineDash([]);
@@ -1809,8 +1830,8 @@ class Component extends DCLogic {
     ctx.textAlign = 'left';
     ctx.restore();
   }
-  drawStroke(ctx, stroke, dashed) {
-    if (stroke.type === 'text') return this.drawTextStroke(ctx, stroke);
+  drawStroke(ctx, stroke, dashed, numberOnly) {
+    if (stroke.type === 'text') return this.drawTextStroke(ctx, stroke, numberOnly);
     if (stroke.type === 'measure') return this.drawMeasureStroke(ctx, stroke);
     if (stroke.type === 'area') return this.drawAreaStroke(ctx, stroke);
     if (stroke.type === 'dimension') return this.drawDimensionStroke(ctx, stroke);
@@ -2094,12 +2115,12 @@ class Component extends DCLogic {
     });
     return canvas;
   }
-  flattenPage(page) {
+  flattenPage(page, numberOnly) {
     const merged = document.createElement('canvas');
     merged.width = page.canvas.width; merged.height = page.canvas.height;
     const ctx = merged.getContext('2d');
     ctx.drawImage(page.canvas, 0, 0);
-    page.strokes.forEach(s => this.drawStroke(ctx, s));
+    page.strokes.forEach(s => this.drawStroke(ctx, s, false, numberOnly));
     return merged;
   }
   downloadBlob(blob, name) {
@@ -2114,7 +2135,7 @@ class Component extends DCLogic {
     const mime = fmt === 'png' ? 'image/png' : fmt === 'webp' ? 'image/webp' : 'image/jpeg';
     if (!this.state.isPdf || this.state.saveScope === 'active') {
       const page = this.pages[this.state.currentPage];
-      const merged = this.flattenPage(page);
+      const merged = this.flattenPage(page, this.state.includeAnnotationList && this.state.stripAnnotationText);
       const name = this.buildFilename(fmt);
       merged.toBlob(blob => { this.downloadBlob(blob, name); this.bumpCounter(); this.setState({ showSaveDialog: false }); }, mime, 0.92);
       return;
@@ -2136,7 +2157,7 @@ class Component extends DCLogic {
         doc.addImage(dataUrl0, 'JPEG', 0, 0, w0, h0);
         return;
       }
-      const merged = this.flattenPage(page);
+      const merged = this.flattenPage(page, this.state.includeAnnotationList && this.state.stripAnnotationText);
       const dataUrl = merged.toDataURL('image/jpeg', 0.92);
       const w = merged.width, h = merged.height;
       const orientation = w >= h ? 'l' : 'p';
@@ -2260,6 +2281,8 @@ class Component extends DCLogic {
       dzProcessingStyle: `margin-top:20px;font-family:'Arial Narrow',Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:${this.getDzTextColor()};position:relative;z-index:1;text-shadow:3px 3px 3px #000000;`,
       dropZoneStyle: `position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;background:${this.state.dragActive ? 'rgba(89,128,166,0.12)' : '#0a0a0a'};cursor:pointer;transition:background 0.15s;`,
       dzBgRef: this.dzBgRef,
+      showInstallBtn: !!this.state.canInstall, onInstallClick: this.onInstallClick,
+      onReturnToDropZone: this.onReturnToDropZone,
       onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
       onBrowseClick: this.onBrowseClick, onCameraClick: this.onCameraClick, onFileInputChange: this.onFileInputChange,
       fileInputRef: this.fileInputRef, cameraInputRef: this.cameraInputRef, canvasRef: this.canvasRef, canvasAreaRef: this.canvasAreaRef,
@@ -2278,6 +2301,9 @@ class Component extends DCLogic {
       showAnnotationListToggle: this.state.isPdf && this.hasAnyCallouts(),
       includeAnnotationList: this.state.includeAnnotationList,
       toggleAnnotationList: () => this.setState({ includeAnnotationList: !this.state.includeAnnotationList }),
+      showStripTextToggle: this.state.includeAnnotationList,
+      stripAnnotationText: this.state.stripAnnotationText,
+      toggleStripAnnotationText: () => this.setState({ stripAnnotationText: !this.state.stripAnnotationText }),
       filenamePreview: this.filenamePreview(),
       closeSaveDialog: this.closeSaveDialog, performSave: this.performSave, performCrop: this.performCrop,
       isDesktop: this.state.isDesktop, isMobile: !this.state.isDesktop, undo: this.undo, redo: this.redo,
