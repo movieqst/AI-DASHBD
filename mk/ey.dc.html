@@ -155,7 +155,7 @@
     <div onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onClick="{{ onBrowseClick }}" style="{{ dropZoneStyle }}">
       <div ref="{{ dzBgRef }}" style="position:absolute;inset:0;z-index:0;"></div>
       <div style="position:absolute;inset:0;background:#000;opacity:0.2;z-index:0;"></div>
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=6&data=http%3A%2F%2Faidashbd.com%2FEEZMARKUP%2F" alt="QR code to open EEZMARKUP" onClick="{{ onQrClick }}" style="width:140px;height:140px;background:#fff;margin-bottom:18px;position:relative;z-index:1;box-shadow:3px 3px 6px 0 rgba(0,0,0,0.7);cursor:pointer;"/>
+      <img src="./icons/qr-dzmarkup.png" alt="QR code to open EEZMARKUP" onClick="{{ onQrClick }}" style="width:140px;height:140px;background:#fff;margin-bottom:18px;position:relative;z-index:1;box-shadow:3px 3px 6px 0 rgba(0,0,0,0.7);cursor:pointer;"/>
       <div style="{{ dzCaptionStyle }}">JPG · PNG · GIF · WEBP · PDF</div>
       <div style="margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;z-index:1;width:100%;">
         <button onClick="{{ onBrowseClick }}" style="{{ dzButtonStyle }}">Open  Img</button>
@@ -255,7 +255,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#f4c430&quot;,&quot;#8a6d3b&quot;,&quot;#c9a876&quot;,&quot;#4a3a28&quot;,&quot;#e8d9a0&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;rain&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;cadpat&quot;,&quot;camo&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCornerMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dzPalette&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:[&quot;#f2f2f2&quot;,&quot;#1a1a1a&quot;,&quot;#c9a876&quot;,&quot;#8a6d3b&quot;,&quot;#5c3a1e&quot;],&quot;tsType&quot;:&quot;string[]&quot;,&quot;section&quot;:&quot;Drop Zone&quot;},&quot;dzStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;cadpat&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;cadpat&quot;,&quot;camo&quot;,&quot;rain&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Drop Zone&quot;}}">
 class Component extends DCLogic {
   pages = [];
   undoStack = [];
@@ -318,9 +318,27 @@ class Component extends DCLogic {
   }
   __unused() {}
   paintLogos = () => {
+    if (!this.logoImg || !this.logoImg.complete || !this.logoImg.naturalWidth) {
+      const retryImg = new Image();
+      retryImg.onload = () => { this.logoImg = retryImg; this.paintLogos(); };
+      retryImg.src = './icons/dzmarkup-logo.png';
+      return;
+    }
     const shuffled = [...this.logoColorPairs].sort(() => Math.random() - 0.5);
     this.paintLogo(this.logoLeftRef.current, shuffled[0]);
     this.paintLogo(this.logoRightRef.current, shuffled[1]);
+  };
+  isCanvasBlank(c) {
+    if (!c || !c.width || !c.height) return true;
+    try { const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; for (let i = 3; i < d.length; i += 4) if (d[i] !== 0) return false; return true; } catch (e) { return true; }
+  }
+  ensureLogosPainted = (attempt) => {
+    attempt = attempt || 0;
+    const canLeft = this.logoLeftRef.current, canRight = this.logoRightRef.current;
+    if (!canLeft || !canRight || this.isCanvasBlank(canLeft) || this.isCanvasBlank(canRight)) {
+      this.paintLogos();
+      if (attempt < 15) setTimeout(() => this.ensureLogosPainted(attempt + 1), 120);
+    }
   };
   componentDidMount() {
     this.logoImg = new Image();
@@ -534,11 +552,7 @@ class Component extends DCLogic {
   componentDidUpdate(prevProps, prevState) {
     if (JSON.stringify(prevProps.dzPalette) !== JSON.stringify(this.props.dzPalette) || prevProps.dzStyle !== this.props.dzStyle) this.generateDzPattern();
     if (this.dzBgRef.current && !this.dzBgRef.current.style.backgroundImage && this.state.dzPatternReady) this.generateDzPattern();
-    if (this.state.loaded) {
-      const canLeft = this.logoLeftRef.current, canRight = this.logoRightRef.current;
-      const blank = (c) => { try { const d = c.getContext('2d').getImageData(0,0,c.width,c.height).data; for (let i = 3; i < d.length; i += 4) if (d[i] !== 0) return false; return true; } catch(e) { return true; } };
-      if ((canLeft && blank(canLeft)) || (canRight && blank(canRight))) this.paintLogos();
-    }
+    if (this.state.loaded && !prevState.loaded) this.ensureLogosPainted();
   }
   onWindowResize = () => { if (this.state.zoomRect) this.applyZoomStyle(this.state.zoomRect); };
   onKeyDown = (e) => {
@@ -704,6 +718,7 @@ class Component extends DCLogic {
       this.pages = [{ canvas, strokes: [], scale: { raw: '1:1 (assumed)', ratio: 1, unit: 'imperial', assumed: true }, pxPerInch: 96 }];
       this.undoStack = []; this.redoStack = []; this._cropStack = [];
       URL.revokeObjectURL(url);
+      this.ensureLogosPainted();
       this.setState({ loaded: true, isPdf: false, fileBase: this.stripExt(file.name), fileExt: this.extOf(file.name) || 'png', currentPage: 0, processing: false, zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => { this.restoreSession(); this.redraw(); });
     };
     img.onerror = () => { this.setState({ processing: false }); alert('Could not load image.'); };
@@ -808,6 +823,7 @@ class Component extends DCLogic {
         const pxPerInch = targetScale * 72;
         pages.push({ canvas, strokes: [], _pdfPage: page, _vp0: vp0, _rendered: false, scale, pxPerInch });
         if (i === 1) {
+          this.ensureLogosPainted();
           this.setState({ loaded: true, isPdf: true, fileBase: this.stripExt(file.name), fileExt: 'pdf', currentPage: 0, processing: false, loadProgress: '', zoomMode: false, zoomRect: null, zoomCanvasStyle: null, zoomPendingRect: null, showSaveDialog: false }, () => { this.restoreSession(); this.redraw(); });
         }
       }
