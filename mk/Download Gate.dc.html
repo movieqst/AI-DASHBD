@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <style>
+    @font-face { font-family: 'Barlow'; src: local('Barlow'); }
+    body { margin: 0; background: #0c0c0d; }
+    .dg-email::placeholder { color: #a9c1d6; opacity: 0.8; }
+  </style>
+</helmet>
+<div style="position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:28px;padding:80px 20px 40px;box-sizing:border-box;font-family:'Barlow',sans-serif;overflow:hidden;">
+  <a href="./index.html" ref="{{ bgRef }}" style="position:absolute;inset:0;z-index:0;display:block;"></a>
+  <a href="./index.html" style="position:absolute;inset:0;background:rgba(0,0,0,0.72);z-index:0;display:block;"></a>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;width:280px;">
+    <a href="./index.html" style="{{ btnDarkStyle }}" onMouseEnter="{{ onHoverDark }}" onMouseLeave="{{ onHoverEnd }}">Use Web App</a>
+    <button onClick="{{ onAddHomeScreen }}" style="{{ actionBtnStyle }}background:transparent;border-color:#5980a6;color:#a9c1d6;cursor:pointer;font-weight:400;" style-hover="box-shadow:0 0 18px 4px rgba(89,128,166,0.6);">Add to Home Screen</button>
+    <a href="./index.html" style="position:relative;z-index:1;display:block;line-height:0;"><img src="./icons/icon-192.png" alt="App icon" style="width:88px;height:88px;border-radius:18px;filter:drop-shadow(0 6px 20px rgba(0,0,0,0.5)) brightness(1);transition:filter 0.2s;" style-hover="filter:drop-shadow(0 6px 20px rgba(0,0,0,0.5)) drop-shadow(0 0 16px rgba(89,128,166,0.9)) brightness(1.25) saturate(1.2);"></img></a>
+    <div style="{{ formVisibility }}display:flex;flex-direction:column;gap:14px;width:100%;">
+      <input type="email" placeholder="you@example.com" value="{{ email }}" onChange="{{ onEmailChange }}" className="dg-email" style="padding:14px;background:transparent;border:1px solid #5980a6;color:#a9c1d6;font-size:14px;text-align:center;border-radius:4px;box-sizing:border-box;width:100%;line-height:normal;" style-hover="color:#ffffff;box-shadow:inset 0 0 18px 4px rgba(89,128,166,0.6);"></input>
+      <button onClick="{{ onSubmit }}" style="{{ submitBtnStyle }}" onMouseEnter="{{ onHoverLight }}" onMouseLeave="{{ onHoverEnd }}">{{ submitLabel }}</button>
+    </div>
+    <sc-if value="{{ revealed }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:14px;color:#f2f2f3;font-family:var(--font-body,'Barlow',sans-serif);letter-spacing:0.04em;text-transform:uppercase;text-align:center;">Your link is ready.</div>
+      <a href="./index.html" style="{{ btnLightStyle }}" onMouseEnter="{{ onHoverLight }}" onMouseLeave="{{ onHoverEnd }}">Open EzMarkUP</a>
+    </sc-if>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+class Component extends DCLogic {
+  state = { email: '', revealed: false, submitting: false, hoverBtn: null };
+  setHover = (key) => () => this.setState({ hoverBtn: key });
+  clearHover = () => this.setState({ hoverBtn: null });
+  bgRef = React.createRef();
+  shadeHex(hex, amt) {
+    const h = hex.replace('#', '');
+    let r = parseInt(h.substring(0, 2), 16), g = parseInt(h.substring(2, 4), 16), b = parseInt(h.substring(4, 6), 16);
+    const mix = (c) => Math.round(amt > 0 ? c + (255 - c) * amt : c + c * amt);
+    r = Math.max(0, Math.min(255, mix(r))); g = Math.max(0, Math.min(255, mix(g))); b = Math.max(0, Math.min(255, mix(b)));
+    return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+  }
+  hexToRgba(hex, a) {
+    const h = hex.replace('#', '');
+    const r = parseInt(h.substring(0, 2), 16), g = parseInt(h.substring(2, 4), 16), b = parseInt(h.substring(4, 6), 16);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+  hslToHex(h, s, l) {
+    s /= 100; l /= 100;
+    const k = n => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    const toHex = v => Math.round(v * 255).toString(16).padStart(2, '0');
+    return '#' + toHex(f(0)) + toHex(f(8)) + toHex(f(4));
+  }
+  pickButtonColor() {
+    const hueRanges = [[200, 220], [205, 235], [270, 300], [95, 145], [15, 40], [350, 15]];
+    const range = hueRanges[Math.floor(Math.random() * hueRanges.length)];
+    let hue;
+    if (range[0] > range[1]) { hue = (range[0] + Math.random() * (360 - range[0] + range[1])) % 360; }
+    else { hue = range[0] + Math.random() * (range[1] - range[0]); }
+    const sat = 65 + Math.random() * 30;
+    const base = this.hslToHex(hue, sat, 50);
+    const light = this.shadeHex(base, 0.28), dark = this.shadeHex(base, -0.35);
+    return { light, dark, glowLight: this.hexToRgba(light, 0.65), glowDark: this.hexToRgba(dark, 0.65) };
+  }
+  btnColors = this.pickButtonColor();
+  componentDidMount() {
+    const palette = ['#0a1f44', '#1e5fae', '#3fa9f5', '#0d3b66'];
+    const N = 480;
+    const canvas = document.createElement('canvas');
+    canvas.width = N; canvas.height = N;
+    const ctx = canvas.getContext('2d');
+    const lum = hex => { const h = hex.replace('#', ''); const r = parseInt(h.substring(0, 2), 16) || 0, g = parseInt(h.substring(2, 4), 16) || 0, b = parseInt(h.substring(4, 6), 16) || 0; return 0.299 * r + 0.587 * g + 0.114 * b; };
+    const sorted = [...palette].sort((a, b) => lum(a) - lum(b));
+    const bg = sorted[0];
+    const streakColors = sorted.slice(1).length ? sorted.slice(1) : sorted;
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, N, N);
+    const intensity = Math.random();
+    const streakCount = Math.round(90 + intensity * 340);
+    const minLen = 10 + intensity * 20, maxLen = 40 + intensity * 220;
+    const alphaBoost = 0.25 + intensity * 0.35;
+    const baseTilt = Math.random() * 16 - 8;
+    for (let i = 0; i < streakCount; i++) {
+      const x = Math.random() * N;
+      const len = minLen + Math.random() * maxLen;
+      const y0 = Math.random() * N - len * 0.5;
+      const width = 1 + Math.random() * (1.5 + intensity * 1.5);
+      const tilt = (baseTilt + (Math.random() * 2 - 1)) * Math.PI / 180;
+      ctx.globalAlpha = alphaBoost + Math.random() * (0.65 - intensity * 0.15);
+      ctx.fillStyle = streakColors[Math.floor(Math.random() * streakColors.length)];
+      ctx.save();
+      ctx.translate(x, y0);
+      ctx.rotate(tilt);
+      ctx.fillRect(0, 0, width, len);
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+    if (this.bgRef.current) {
+      this.bgRef.current.style.backgroundImage = `url("${canvas.toDataURL('image/png')}")`;
+      this.bgRef.current.style.backgroundSize = 'cover';
+    }
+  }
+  isIosSafari() {
+    const ua = navigator.userAgent || '';
+    const isIos = /iPad|iPhone|iPod/.test(ua) || (ua.includes('Macintosh') && navigator.maxTouchPoints > 1);
+    const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+    return isIos && !isStandalone;
+  }
+  onAddHomeScreen = () => {
+    if (window.__installPromptEvent) { window.__installPromptEvent.prompt(); return; }
+    if (this.isIosSafari()) { window.alert('To add EEZMARKUP to your Home Screen: tap the Share icon, then "Add to Home Screen".'); return; }
+    window.alert('Use your browser menu > "Install app" or "Add to Home Screen" to add the shortcut.');
+  };
+  actionBtnStyleBase() {
+    return `width:100%;box-sizing:border-box;padding:14px 0;border:1px solid;font-family:var(--font-body,'Barlow',sans-serif);font-weight:700;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;border-radius:4px;text-align:center;display:block;`;
+  }
+  onEmailChange = (e) => this.setState({ email: e.target.value });
+  isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+  onSubmit = () => {
+    const email = this.state.email.trim();
+    this.setState({ submitting: true });
+    if (!this.isValidEmail(email)) { this.setState({ revealed: true, submitting: false }); return; }
+    // Replace this URL with your own Formspree endpoint (formspree.io -> create a form -> copy its endpoint).
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+    fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    }).catch(() => {}).finally(() => {
+      this.setState({ revealed: true, submitting: false });
+    });
+  };
+  renderVals() {
+    return {
+      bgRef: this.bgRef,
+      email: this.state.email,
+      onEmailChange: this.onEmailChange,
+      onSubmit: this.onSubmit,
+      onAddHomeScreen: this.onAddHomeScreen,
+      revealed: this.state.revealed,
+      formVisibility: this.state.revealed ? 'display:none;' : 'display:flex;',
+      submitLabel: this.state.submitting ? 'Sending…' : 'Get Download Link',
+      actionBtnStyle: `width:100%;box-sizing:border-box;padding:14px 0;border:1px solid;font-family:var(--font-body,'Barlow',sans-serif);font-weight:700;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;border-radius:4px;text-align:center;display:block;`,
+      onHoverLight: this.setHover('light'),
+      onHoverDark: this.setHover('dark'),
+      onHoverEnd: this.clearHover,
+      btnLightStyle: `${this.actionBtnStyleBase()}background:${this.btnColors.light};border-color:${this.btnColors.light};color:#ffffff;${this.state.hoverBtn === 'light' ? `box-shadow:0 0 18px 4px ${this.btnColors.glowLight};` : ''}`,
+      btnDarkStyle: `${this.actionBtnStyleBase()}background:${this.btnColors.dark};border-color:${this.btnColors.dark};color:#ffffff;${this.state.hoverBtn === 'dark' ? `box-shadow:0 0 18px 4px ${this.btnColors.glowDark};` : ''}`,
+      submitBtnStyle: (() => {
+        const ready = this.isValidEmail(this.state.email.trim());
+        const bg = ready ? this.shadeHex(this.btnColors.light, -0.5) : (this.state.submitting ? this.btnColors.dark : this.btnColors.light);
+        const border = ready ? '2px solid #ff1a2e' : `1px solid ${this.btnColors.light}`;
+        const glow = this.state.hoverBtn === 'light' ? `box-shadow:0 0 18px 4px ${this.btnColors.glowLight};` : '';
+        return `width:100%;box-sizing:border-box;padding:14px 0;background:${bg};border:${border};color:#ffffff;font-family:var(--font-body,'Barlow',sans-serif);font-weight:700;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;border-radius:4px;cursor:pointer;${glow}`;
+      })()
+    };
+  }
+}
+
+</script>
+</body>
+</html>
