@@ -1566,5 +1566,30 @@
       "Submission limits reset monthly and can be exhausted quickly during marketing campaigns or high-traffic events, forcing mid-cycle upgrades",
       "The App Builder cannot publish to iOS or Android app stores, only shareable links and QR codes, which limits distribution for mobile-first use cases"
     ]
+  },
+  {
+    "name": "JotForm QR Code Generator",
+    "icon": "\ud83d\udcf1",
+    "desc": "Free, no-signup QR code generator supporting 50+ data types with brand customization and logo upload.",
+    "rating": 10,
+    "traffic": 8000000,
+    "url": "jotform.com/qr-code-generator",
+    "free": true,
+    "categories": [
+      "niche"
+    ],
+    "affiliate": false,
+    "order": 189,
+    "overview": "JotForm QR Code Generator is a standalone, browser-based tool for creating custom QR codes without signing up for an account or entering payment details. As of mid-2026, it supports over 50 link types beyond simple URLs \u2014 Wi-Fi credentials, phone numbers, email addresses, vCards, PayPal links, SMS messages, and social media profiles \u2014 making it genuinely versatile for business cards, event signage, restaurant menus, and payment collection. The interface is deliberately minimal: paste your link or data, pick a layout style, customize colors to match branding, add a text label so users know what to expect, upload a logo for the center of the code, and download a high-resolution PNG in under a minute.\n\nThe tool is completely free with no usage caps, no watermarks, and no expiry \u2014 a genuine differentiator in a category where most competitors gate dynamic editing, analytics, or high-res exports behind paid tiers. However, it generates static QR codes only: once downloaded, the encoded data cannot be changed without generating a new code and reprinting materials. There is also no built-in scan tracking or analytics, and downloads are PNG-only \u2014 no SVG, EPS, or PDF vector formats for large-format print work.\n\nFor users already inside the JotForm ecosystem, the platform offers deeper QR functionality through its form builder: a dynamic QR code widget can generate unique codes based on form responses (for example, displaying a different coupon QR depending on which answer a user selects), and every JotForm form can be shared via an auto-generated QR code directly from the Publish tab. But the standalone generator at jotform.com/qr-code-generator/ is positioned as a quick, zero-friction entry point for anyone who just needs a clean, branded QR code fast \u2014 not a full campaign management platform.",
+    "benefits": [
+      "Completely free with no signup, no usage limits, no watermarks, and no expiry \u2014 one of the only QR generators with genuinely zero friction for casual and business use",
+      "Supports 50+ data types including Wi-Fi, vCard, PayPal, SMS, email, and social media links \u2014 far more versatile than URL-only generators",
+      "Clean customization with brand colors, logo upload, text labels, and pattern styles that produce professional-looking codes suitable for print and signage"
+    ],
+    "drawbacks": [
+      "Static QR codes only \u2014 once printed or shared, the destination cannot be edited without generating and redistributing an entirely new code",
+      "No scan tracking, analytics, or geographic/device data \u2014 impossible to measure campaign performance or engagement without a separate tool",
+      "PNG download only with no vector format support (SVG, EPS, PDF), which limits scalability for large-format printing like billboards or vehicle wraps"
+    ]
   }
 ]
