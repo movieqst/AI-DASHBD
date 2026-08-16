@@ -883,26 +883,28 @@
   {
     "name": "Fal.ai",
     "icon": "⚡",
-    "desc": "Developer platform for running generative media models (serverless inference / fast deployments).",
-    "rating": 8.5,
+    "desc": "Developer infrastructure platform for running 1,000+ generative media models — image, video, audio, 3D — with serverless GPU inference, sub-second cold starts, and unified API access.",
+    "rating": 10,
     "traffic": 300000,
     "url": "fal.ai",
     "free": false,
     "categories": [
+      "code",
       "video-gen",
-      "image-gen",
-      "code"
+      "image-gen"
     ],
     "affiliate": false,
     "order": 161,
-    "overview": "fal.ai provides developer infrastructure to run and deploy generative AI models (often image/video) with API access and performance-oriented serving.",
+    "overview": "Fal.ai is a generative media infrastructure platform purpose-built for developers, hosting over 1,000 production-grade AI models behind a single unified API. As of mid-2026, the platform serves 2.5 million+ developers and powers generative features inside products from Canva, Perplexity, HeyGen, Krea, and Veed. Its proprietary Inference Engine delivers up to 10× faster diffusion performance than standard implementations, with sub-second cold starts that make it viable for real-time consumer applications.\n\nThe platform is organized around three core products. Model APIs provide pay-per-output access to the full model catalog — including FLUX, Kling, Veo, Stable Diffusion, and hundreds of specialized checkpoints — with one-line integration. Fal Serverless lets developers deploy custom models on autoscaling GPU infrastructure without managing clusters, scaling from zero to thousands of concurrent requests. Fal Compute offers dedicated H100, H200, and B200 GPU clusters for teams training or fine-tuning their own models at scale.\n\nPricing is purely usage-based with no subscriptions or platform fees: images start at roughly $0.02 per megapixel, video from $0.05 per second, and H100 serverless instances from $1.89 per hour. This model scales cleanly from prototype to millions of daily inference calls. The platform maintains 99.99% uptime and processes millions of inference requests daily across its global GPU network.\n\nUser feedback highlights Fal.ai's speed and developer experience as genuine differentiators — the sub-second cold start eliminates the queue-based delays common on competing platforms, and the unified API means swapping from one model to another (e.g., FLUX to Kling to Veo) requires changing a single parameter rather than rewriting integration code. However, video generation costs escalate quickly at scale — premium models like Veo run approximately $0.40 per second, so production apps require rigorous cost modeling. The platform is strictly developer-facing with no no-code interface, meaning every integration requires API or SDK work. Additionally, because the catalog spans 1,000+ models from different creators, output schemas, content filters, and behavior vary across endpoints, requiring teams to validate each integration independently.",
     "benefits": [
-      "Developer-friendly model serving for generative media",
-      "Can reduce infra burden versus self-hosting GPUs"
+      "10× faster inference with sub-second cold starts — the fastest generative media infrastructure available for production apps, eliminating queue-based delays common on competing platforms",
+      "1,000+ models behind one unified API — swap from FLUX to Kling to Veo by changing one line of code, with no need to rewrite integration logic for each new model",
+      "Pure usage-based pricing with no subscriptions — pay per output or GPU hour, scaling cleanly from weekend prototypes to millions of daily inference calls without platform fees"
     ],
     "drawbacks": [
-      "Costs depend on usage and model choice",
-      "Requires engineering to integrate safely and reliably"
+      "Video costs escalate fast at scale — premium models like Veo run $0.40/second, so rigorous cost modeling is essential before committing to production video pipelines",
+      "Strictly developer-facing with no no-code interface — everything requires API/SDK integration, making it inaccessible to non-technical teams who need a visual builder",
+      "Model schemas vary across the 1,000+ model catalog — teams must independently validate behavior, content filters, and output formats for each endpoint they integrate"
     ]
   },
   {
