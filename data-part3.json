@@ -1591,7 +1591,7 @@
       "Complex multi-page applications or designs requiring custom backends exceed its scope; it's optimized for single-view components and simple interactive demos",
       "Output quality depends heavily on the underlying Claude model tier — free-tier users may hit rate limits during extended design sessions, and complex visual reasoning tasks perform better on Opus than Sonnet"
     ],
-    "order": 999
+    "order": 189
   },
   {
     "name": "JotForm QR Code Generator",
@@ -1605,7 +1605,7 @@
       "niche"
     ],
     "affiliate": false,
-    "order": 189,
+    "order": 190,
     "overview": "JotForm QR Code Generator is a standalone, browser-based tool for creating custom QR codes without signing up for an account or entering payment details. As of mid-2026, it supports over 50 link types beyond simple URLs — Wi-Fi credentials, phone numbers, email addresses, vCards, PayPal links, SMS messages, and social media profiles — making it genuinely versatile for business cards, event signage, restaurant menus, and payment collection. The interface is deliberately minimal: paste your link or data, pick a layout style, customize colors to match branding, add a text label so users know what to expect, upload a logo for the center of the code, and download a high-resolution PNG in under a minute.\n\nThe tool is completely free with no usage caps, no watermarks, and no expiry — a genuine differentiator in a category where most competitors gate dynamic editing, analytics, or high-res exports behind paid tiers. However, it generates static QR codes only: once downloaded, the encoded data cannot be changed without generating a new code and reprinting materials. There is also no built-in scan tracking or analytics, and downloads are PNG-only — no SVG, EPS, or PDF vector formats for large-format print work.\n\nFor users already inside the JotForm ecosystem, the platform offers deeper QR functionality through its form builder: a dynamic QR code widget can generate unique codes based on form responses (for example, displaying a different coupon QR depending on which answer a user selects), and every JotForm form can be shared via an auto-generated QR code directly from the Publish tab. But the standalone generator at jotform.com/qr-code-generator/ is positioned as a quick, zero-friction entry point for anyone who just needs a clean, branded QR code fast — not a full campaign management platform.",
     "benefits": [
       "Completely free with no signup, no usage limits, no watermarks, and no expiry — one of the only QR generators with genuinely zero friction for casual and business use",
@@ -1618,4 +1618,34 @@
       "PNG download only with no vector format support (SVG, EPS, PDF), which limits scalability for large-format printing like billboards or vehicle wraps"
     ]
   }
+
+
+{
+  "name": "Retool",
+  "icon": "🛠️",
+  "desc": "Low-code platform for building internal tools, dashboards, and AI-powered apps and workflows, with drag-and-drop UI and direct database/API connections.",
+  "rating": 9.9,
+  "traffic": 1500000,
+  "url": "retool.com",
+  "free": true,
+  "categories": [
+    "code",
+    "niche"
+  ],
+  "affiliate": false,
+  "overview": "Retool is a low-code development platform used by hundreds of thousands of developers at companies like Amazon, OpenAI, DoorDash, and Brex to rapidly build internal tools — admin panels, dashboards, CRUD apps, and operational workflows — that connect directly to databases, REST/GraphQL APIs, and 100+ pre-built integrations. Rather than building CRUD UIs from scratch, developers drag and drop pre-built components (tables, forms, charts, buttons) onto a canvas and wire them to queries, cutting typical build time from weeks to hours or days. As of 2026 the platform has expanded well beyond drag-and-drop app building: Retool AI lets teams embed LLM-powered features (chatbots, document processing, RAG search) directly into apps using any major model provider, Retool Workflows provides a code- or visual-based backend automation and orchestration layer (a competitor to scripts/cron/Zapier-style automation), and Retool Agents/Retool Mobile extend the platform to autonomous AI agents and native mobile app delivery from the same underlying resources. Pricing is seat-based across Free (5 users, core app building), Team (~$10/user/month), Business (~$50/user/month, SSO and audit logs), and Enterprise (custom, on-prem/VPC deployment options), with Workflows and AI usage billed on top for heavier automation and inference volume.",
+  "benefits": [
+    "Drastically cuts the time to build internal tools and admin dashboards by connecting directly to existing databases and APIs instead of building CRUD UIs from scratch",
+    "Retool AI and Workflows extend the same platform into LLM-powered features and backend automation, so teams don't need a separate stack for AI agents or scheduled jobs",
+    "Deep library of 100+ pre-built integrations (Postgres, MySQL, Slack, Stripe, Salesforce, S3, and more) plus self-hosted/on-prem options for security-sensitive teams"
+  ],
+  "drawbacks": [
+    "Seat-based pricing scales quickly for larger teams, and several of the more advanced capabilities (SSO, audit logs, on-prem) are locked behind the pricier Business/Enterprise tiers",
+    "Best suited to internal, operational tools rather than polished customer-facing products — the generated UI is functional but not intended to be a pixel-perfect consumer app builder",
+    "Has a real learning curve for advanced use (JS transformers, complex query chaining), so non-technical users generally still need some developer involvement"
+  ],
+  "order": 191
+}
+  
+  
 ]
