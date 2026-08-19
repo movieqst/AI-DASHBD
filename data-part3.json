@@ -1619,5 +1619,29 @@
       "No scan tracking, analytics, or geographic/device data — impossible to measure campaign performance or engagement without a separate tool",
       "PNG download only with no vector format support (SVG, EPS, PDF), which limits scalability for large-format printing like billboards or vehicle wraps"
     ]
-  }
+  },
+
+
+  {
+  "name": "WaveSpeedAI",
+  "category": "AI AGGREGATOR",
+  "rating": 10,
+  "traffic": "1M",
+  "tags": ["VIDEO GEN", "IMAGE GEN", "AUDIO AI", "API"],
+  "link": "https://wavespeed.ai/",
+  "icon": "⚡",
+  "order": 189,
+  "description": "WaveSpeedAI is a high-performance AI media generation platform that turns text, image, or audio prompts into professional-quality images in under 2 seconds and videos in under 2 minutes. It aggregates 1000+ cutting-edge models across image, video, audio, and 3D — including Flux 2, Seedream 4.5, Nano Banana Pro, Qwen Image 2, WAN 2.6, Seedance 1.5, Kling 3.0, Hailuo 2.3, Grok, and Runway Gen-4 — all accessible through a single API. With built-in editing tools like background removal and text overlays, plus pay-as-you-go pricing, it's built for developers and creators who need to generate and scale visual content fast without juggling multiple model subscriptions."
+},
+{
+  "name": "Cuty.ai",
+  "category": "VIDEO GEN",
+  "rating": 10,
+  "traffic": "500K",
+  "tags": ["VIDEO GEN", "IMAGE GEN", "FREE"],
+  "link": "https://www.cuty.ai/",
+  "icon": "✂️",
+  "order": 190,
+  "description": "Cuty.ai is an AI video and image generation platform focused on quickly turning photos and text prompts into short, shareable clips. It offers a variety of ready-made templates and effects for creating viral-style animations and transformations, with no editing skills required — upload a photo, pick an effect, and generate. Aimed at casual creators and social media users, it emphasizes fast results, a simple interface, and a free tier with paid options for heavier use."
+}
 ]
