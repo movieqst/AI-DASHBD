@@ -472,7 +472,7 @@ async function loadData() {
     const data1 = await res1.json();
     const data2 = await res2.json();
     const data3 = await res3.json();
-    allData = [...data1, ...data2, ...data3];
+    allData = [...data1.apps, ...data2.apps, ...data3.apps];
     applyUrlParams();
     render();
     const counter = document.getElementById('appCounter');
