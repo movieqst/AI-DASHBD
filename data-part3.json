@@ -1,4 +1,37 @@
 [
+ 
+  {
+  "name": "Kie.ai",
+  "icon": "🧩",
+  "desc": "Unified API aggregator for video, image, and music generation models.",
+  "rating": "10.0",
+  "traffic": 100000,
+  "url": "kie.ai",
+  "free": false,
+  "categories": [
+    "video-gen",
+    "image-gen",
+    "audio"
+  ],
+  "affiliate": false,
+  "overview": "Kie.ai is an API aggregation platform that provides unified access to multiple leading AI generation models — including video generators like Veo and Kling, image models like Flux, and music generation via Suno — through a single API key and billing account. Rather than maintaining separate developer accounts, pricing tiers, and integrations with each provider, developers can call multiple model families through one consistent interface and switch between them per request. The platform positions itself as a cost-effective alternative to official provider APIs, using a pay-as-you-go credit model rather than monthly subscriptions, which suits developers with variable or experimental workloads. The Models Gallery on the site lets users browse and compare available models by category (video, image, music) before integrating. [VERIFY: current model lineup, exact credit pricing per model, and whether any free trial credits are offered.]",
+  "benefits": [
+    "Single API key and billing relationship for multiple frontier models across video, image, and music — eliminates the overhead of managing separate accounts with OpenAI, Google, Suno, and others",
+    "Pay-as-you-go credit pricing with no subscription commitment, making it practical for prototyping, side projects, and workloads with unpredictable volume"
+  ],
+  "drawbacks": [
+    "As a third-party reseller/aggregator, it adds a dependency layer — model availability, latency, and pricing can shift based on Kie.ai's upstream relationships rather than the provider's official terms",
+    "Less transparency and fewer enterprise guarantees (SLAs, compliance certifications, data-handling agreements) than going direct to major providers, which matters for production or regulated use cases"
+  ],
+  "order": 200
+}
+  
+  
+  
+  
+  
+  
+  
   {
     "name": "SchoolAI",
     "icon": "🏫",
